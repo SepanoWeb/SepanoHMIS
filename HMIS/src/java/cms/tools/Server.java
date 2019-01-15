@@ -1,0 +1,648 @@
+package cms.tools;
+
+import cms.access.*;
+import cms.cms.*;
+import java.io.*;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import jj.jjCalendar_IR;
+import jj.jjDatabaseWeb;
+
+public class Server extends HttpServlet {
+
+    //    // -------------------------- IranSepano.ir
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_sepanoshop";
+//    public static String userName = "root";
+//    public static String password = "m123456";
+//    public static String userNameSMS = "mrsalesi";
+////    public static String userNameSMS = "0";
+//    public static String passwordSMS = "1234";
+////    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "715048506846346750557A50337A334247654E5677413D3D";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "iranSepano";// comment answer sender
+//    public static String emailAccount = "info@iranSepano";
+//    public static String passEmail = "4waRYLP";
+//    public static String smtpAcount = "mail.iranSepano";
+//    public static String mainPage = "index.html";
+    //    // -------------------------- tanasobshop.ir
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_tanasobshop";
+//    public static String userName = "user_tanasobshop";
+//    public static String password = "pass_tanasob56";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "715048506846346750557A50337A334247654E5677413D3D";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "tanasobshop.ir";// comment answer sender
+//    public static String emailAccount = "info@ipp-co.ir";
+//    public static String passEmail = "Fv6-jC{";
+//    public static String smtpAcount = "mail.ipp-co.ir";
+//    public static String mainPage = "index_tanasobshop.html";
+    //    // -------------------------- handcraftorder.ir
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_handcraftorder";
+//    public static String userName = "user_hndcftordr";
+//    public static String password = "hndcftQAZ123_";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "715048506846346750557A50337A334247654E5677413D3D";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "handcraftorder.ir";// comment answer sender
+//    public static String emailAccount = "info@handcraftorder.ir";
+//    public static String passEmail = "6IP.0vE";
+//    public static String smtpAcount = "mail.ipp-co.ir";
+//    public static String mainPage = "index_handcraftorder.html";
+    //    // -------------------------- mercy.ir
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_mercy";
+//    public static String userName = "user_mercy";
+//    public static String password = "pass_mercy_159";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "715048506846346750557A50337A334247654E5677413D3D";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "mercy.ir";// comment answer sender
+//    public static String emailAccount = "info@mercy.ir";
+//    public static String passEmail = "Fv6-jC{";
+//    public static String smtpAcount = "mail.mercy.ir";
+//    public static String mainPage = "index_mercy.html";
+    //    // -------------------------- fioretech.ir
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_fioretech";
+//    public static String userName = "user_fioretech";
+//    public static String password = "ps_fioretech_m123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "715048506846346750557A50337A334247654E5677413D3D";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "fioretech.ir";// comment answer sender
+//    public static String emailAccount = "info@fioretech.ir";
+//    public static String passEmail = "-Hc-nD-lFn";
+//    public static String smtpAcount = "mail." + Server.siteName.toLowerCase();
+//    public static String mainPage = "index_fioretech.html";
+    //    // -------------------------- sepanotech.ir
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_sepanotech";
+//    public static String userName = "user_sepanotech";
+//    public static String password = "ps_sepanotech_m123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "715048506846346750557A50337A334247654E5677413D3D";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "sepanotech.ir";// comment answer sender
+//    public static String emailAccount = "info@sepanotech.ir";
+//    public static String passEmail = "-Hc-nD-lFn";
+//    public static String smtpAcount = "mail." + Server.siteName.toLowerCase();
+//    public static String mainPage = "index_sepanotech.html";
+    //    // -------------------------- white-dream.ir
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_whitedream";
+//    public static String userName = "user_whitedream";
+//    public static String password = "pass_whitedream_m123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "white-dream.ir";// comment answer sender
+//    public static String emailAccount = "whitedream.ir@gmail.com";
+//    public static String passEmail = "white123dream123";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_whitedream.html";
+    //    // -------------------------- tamarkozlaser
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_tamarkozlaser";
+//    public static String userName = "user_tamarkoz";
+//    public static String password = "pass_tamarkozlaser_m123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "tamarkozlaser.ir";// comment answer sender
+//    public static String emailAccount = "whitedream.ir@gmail.com";
+//    public static String passEmail = "white123dream123";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_tamarkozlaser.html";
+//        //    // -------------------------- iranhealthmarketing.ir
+//    public static sites mainSite = sites.ir
+    //    // -------------------------- komeilipooranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_iranhealth";
+//    public static String userName = "user_iranhealth";
+//    public static String password = "pass_iranhealth_m123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "iranhealthmarketing.ir";// comment answer sender
+//    public static String emailAccount = "iranhealthmarketing.ir@gmail.com";
+//    public static String passEmail = "iranhealth123marketing123";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_health.html";.ir
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_komeilipoor";
+//    public static String userName = "user_komeilipoor";
+//    public static String password = "pass_komeilipoor_m123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "komeilipoor.ir";// comment answer sender
+//    public static String emailAccount = "komeilipoor.ir@gmail.com";
+//    public static String passEmail = "komeilipoor123";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_komeilipoor.html";
+    //    // -------------------------- najarbashi.com
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_najarbashi";
+//    public static String userName = "user_najarbashi";
+//    public static String password = "pass_njr_m123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "komeilipoor.ir";// comment answer sender
+//    public static String emailAccount = "komeilipoor.ir@gmail.com";
+//    public static String passEmail = "ko";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_najarbashi.html";
+    //    // -------------------------- arminpolymer.com
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_arminpolymer";
+//    public static String userName = "user_armnplymer";
+//    public static String password = "pass_arn_plm123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "arminpolymer.com";// comment answer sender
+//    public static String emailAccount = "arminpishrosanatepolymer@gmail.com";
+//    public static String passEmail = "armin2017";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_arminpolymer.html";
+    //    // -------------------------- golinehfajr.com
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_golinefajr";
+//    public static String userName = "user_glnfajr";
+//    public static String password = "pass_glfjr_123";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "0";
+//    public static String siteName = "golinehfajr.com";// comment answer sender
+//    public static String emailAccount = "hafteghlim.ins.com@gmail.com";
+//    public static String passEmail = "110110110";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_golinehfajr.html";
+//    public static String newsJSP = "index_golinehfajr_news.jsp";
+//    public static String productJSP = "index_product.jsp";
+    ////---------------------------------ipp-co.com
+    public static sites mainSite = sites.iranSepano;
+    public static String portalPage = "";
+    public static String databaseName = "db_ippco_com";
+    public static String userName = "user_ippco_com";
+    public static String password = "pass_ipp123_!#";
+    public static String userNameSMS = "0";
+    public static String passwordSMS = "0";
+    public static String defaultLang = "1"; // fa
+    public static String smsKey = "0";
+    public static String smsPanelNumber = "0";
+    public static String siteName = "ipp-co.com";// comment answer sender
+    public static String emailAccount = "ipp.info@gmail.com";
+    public static String passEmail = "110110110";
+    public static String smtpAcount = "smtp.gmail.com";
+    public static String mainPage = "images_ipp_co2/index.jsp";
+    public static String contentJSP = "images_ipp_co2/content.jsp";
+    public static String newsJSP = "index_news.jsp";
+    public static String productJSP = "index_product.jsp";
+    //********************************************************************
+    //********************************************************************
+//        public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_arminpolymer";
+//    public static String userName = "root";
+//    public static String password = "m123456";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "arminpolymer.com";// comment answer sender
+//    public static String emailAccount = "arminpishrosanatepolymer@gmail.com";
+//    public static String passEmail = "armin2017";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_arminpolymer.html";
+    //********************************************************************
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_firooozi";
+//    public static String userName = "root";
+//    public static String password = "m123456";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "firooozi.com";// comment answer sender
+//    public static String emailAccount = "firooozi@gmail.com";
+//    public static String passEmail = "armin2017";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_firooozi.html";
+//    public static String newsJSP = "index_firooozi_news.jsp";
+//    public static String productJSP = "index_florit_product.jsp";
+    //********************************************************************
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_luxmanzel";
+//    public static String userName = "root";
+//    public static String password = "m123456";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "30006703323323";
+//    public static String siteName = "luxmanzel.com";// comment answer sender
+//    public static String emailAccount = "arminpishrosanatepolymer@gmail.com";
+//    public static String passEmail = "armin2017";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_luxmanzel.htm";
+//    public static String newsJSP = "index_golinehfajr_news.jsp";
+//    ********************************************************************
+//    public static sites mainSite = sites.iranSepano;
+//    public static String portalPage = "";
+//    public static String databaseName = "db_florit";
+//    public static String userName = "root";
+//    public static String password = "m123456";
+////    public static String userNameSMS = "mrsalesi";
+//    public static String userNameSMS = "0";
+////    public static String passwordSMS = "1234";
+//    public static String passwordSMS = "0";
+//    public static String defaultLang = "1"; // fa
+//    public static String smsKey = "0";
+//    public static String smsPanelNumber = "0";
+//    public static String siteName = "http://floritdesign.com";// comment answer sender
+//    public static String emailAccount = "floritdesign.com@gmail.com";
+//    public static String passEmail = "armin2017";
+//    public static String smtpAcount = "smtp.gmail.com";
+//    public static String mainPage = "index_florit.html";
+//    public static String newsJSP = "index_golinehfajr_news.jsp";
+//    public static String productJSP = "index_florit_product.jsp";
+//    public static String imagesFolder = "images_florit/";
+//    ********************************************************************
+
+    public static jjDatabaseWeb db;
+    public static final String port = "3306";
+//    public static final String port = "3307";
+    public static final String serverHostIP = "localhost";
+    public static boolean pollNeedLogin = false;
+    public static boolean pollShowAfterVote = true;
+    public static HttpServletResponse Publicresponse;//By Md
+
+    public static enum sites {
+
+        iranSepano;
+    }
+    private static final List<Class> clazzes = new ArrayList<>();
+
+    public static List<Class> getClazzes() {
+        if (clazzes.isEmpty()) {
+            clazzes.add(Content.class);
+            clazzes.add(News.class);
+            clazzes.add(Pic.class);
+            clazzes.add(Category_Gallery.class);
+            clazzes.add(Category_News.class);
+            clazzes.add(Category_Forum.class);
+            clazzes.add(Category_Product.class);
+            clazzes.add(Category_Poll.class);
+            clazzes.add(Comment.class);
+            clazzes.add(Access_Group.class);
+            clazzes.add(Access_Group_User.class);
+            clazzes.add(Access_User.class);
+            clazzes.add(Product.class);
+            clazzes.add(Forum.class);
+            clazzes.add(Backup.class);
+            clazzes.add(Poll.class);
+            clazzes.add(sms.class);// ADDED BY RASHIDI
+            clazzes.add(smsSetting.class);// ADDED BY RASHIDI
+            clazzes.add(Enrolment.class);
+            clazzes.add(Enrolment3.class);
+            clazzes.add(Portal.class);
+            clazzes.add(PortalUser.class);
+            clazzes.add(Factor.class);
+            clazzes.add(Payment.class);
+            clazzes.add(PaymentSetting.class);
+            clazzes.add(Customer.class);
+            clazzes.add(tags.class);//SHAHSANAEI
+            clazzes.add(Language.class);// ADDED BY RASHIDI
+            clazzes.add(email.class);
+            clazzes.add(Search.class);
+        }
+        return clazzes;
+    }
+
+    protected void run(HttpServletRequest request, HttpServletResponse response, boolean isFromClient) throws ServletException, IOException, Exception {
+        Publicresponse = response;
+        Connect();
+//            jjTools.setLang(request);
+//            request.getSession(true).setMaxInactiveInterval(6000);
+//            script.append(jjTools.setLang(request));/////*****************/*/*/*/*/*/*/*/*/
+        jjTools.setPoolStatus(request);
+        String Action = jjTools.getParameter(request, "do");
+        String clazz = jjTools.getParameter(request, "tbl");
+        String method = jjTools.getParameter(request, "act");
+//            String dbName = jjTools.getParameter(request, "db");
+//            if (!dbName.equals("")) {
+//                databaseName = dbName;
+//                jjTools.setSessionAttribute(request, "databaseName", dbName);
+//            }
+//            databaseName = jjTools.getSessionAttribute(request, "databaseName").equals("") ? databaseName : jjTools.getSessionAttribute(request, "databaseName");
+        int dot = Action.indexOf(".");
+        if (dot > -1) {
+            clazz = Action.substring(0, dot);
+            method = Action.substring(dot + 1, Action.length());
+        }
+        // -----------------------------------------------------------------
+        
+        StringBuilder script = new StringBuilder();
+        script.append(run(getClazzes(), clazz, method, request, db, isFromClient));
+        if(script.length()==0){// یعنی اگر پاسخ در ران تهی بود یعنی ریکوئست پاس داده شده به یک فایل جی اس پی
+            ServerLog.Print("***request has been passed to one jsp, Finish Server.java jobs... ***");//By MrSalesi
+            return;
+        }
+        response.addHeader("Access-Control-Allow-Origin", "*");// برای فعال کردن ایجکس در مرورگر ها لازم است
+        try (PrintWriter out = jjTools.getWriterUTF8(request, response)) {
+            ServerLog.Print(script);//By Md
+            //ServerLog.Print(script.toString());
+            out.print(script);
+        } //By Md
+        script.append(Language.setLang(request));
+        // Runtime.getRuntime().gc();
+        System.gc();
+
+    }
+
+    public static void Connect() {
+        if (db == null) {
+            db = new jjDatabaseWeb(userName, password, databaseName, serverHostIP, port);
+        }
+        db.ConnectCustom();
+    }
+
+    public static String run(List<Class> clazz, String className, String methodName, HttpServletRequest request, jjDatabaseWeb db, boolean isFromCient) throws Exception {
+        try {
+            jjTools.ShowAllParameter(request);
+            Language.setLang(request);//============ BY RASHIDI ========
+//            jjTools.ShowAllAttribute(request);
+            String Action = jjTools.getParameter(request, "do");
+            String reqClazz = jjTools.getParameter(request, "tbl");
+            String method = jjTools.getParameter(request, "act");
+//            String dbName = jjTools.getParameter(request, "db");
+//            if (!dbName.equals("")) {
+//                databaseName = dbName;
+//                jjTools.setSessionAttribute(request, "databaseName", dbName);
+//            }
+//            databaseName = jjTools.getSessionAttribute(request, "databaseName").equals("") ? databaseName : jjTools.getSessionAttribute(request, "databaseName");
+            int dot = Action.indexOf(".");
+            if (dot > -1) {
+                reqClazz = Action.substring(0, dot);
+                method = Action.substring(dot + 1, Action.length());
+            }
+            for (int j = 0; j < clazz.size(); j++) {
+                if (clazz.get(j).getSimpleName().equals(className)) {
+                    Method[] methods = clazz.get(j).getMethods();
+                    for (int i = 0; i < methods.length; i++) {
+                        if (methods[i].getName().equals(methodName)) {
+                            ServerLog.Print("Run: " + className + "." + methods[i].getName() + "()");
+                            return (String) methods[i].invoke(null, request, db, isFromCient);
+                        }
+                    }
+                }
+            }
+            return "";
+        } catch (Exception ex) {
+            return ErrorHandler(ex);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            run(request, response, true);
+        } catch (Exception ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            run(request, response, true);
+        } catch (Exception ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static String noAjaxRun(String parameters, HttpServletRequest request) {
+        try {
+            ServerLog.Print("------- noAjaxRun ---------");
+            String action = parameters;
+            String reqClazz = "";
+            String method = "";
+            int index1 = action.indexOf("do=");
+            int index2 = action.indexOf(".");
+            if (index1 >= 0 && index2 > 0) {// do  وجود دارد؟
+                index1 = action.indexOf("=", index1) + 1;
+                reqClazz = action.substring(index1, index2);
+                index1 = index2 + 1;// بعد از  نقطه برای پیدا کردن تابع
+                index2 = action.indexOf("&");// بعد از  نقطه برای پیدا کردن تابع
+                method = action.substring(index1, index2);
+            }
+            String attributes[] = parameters.split("&");
+            for (int i = 0; i < attributes.length; i++) {
+                if (attributes[i].matches(".*=.*")) {
+                    ServerLog.Print(attributes[i]);
+                    String attribNameAndValue[] = attributes[i].split("=");
+                    request.setAttribute(attribNameAndValue[0], attribNameAndValue[1]);
+                }
+            }
+            jjTools.ShowAllAttribute(request);
+//            String reqClazz = jjTools.getParameter(request, "tbl");
+//            String method = jjTools.getParameter(request, "act");
+//            String method = jjTools.getParameter(request, "act");
+
+//            String reqClazz = jjTools.getParameter(request, "tbl");
+            int dot = action.indexOf(".");
+            String content = cms.tools.Server.run(Server.getClazzes(), reqClazz, method, request, db, false);
+            return content;
+        } catch (Exception ex) {
+            ServerLog.Print(ex);
+            ServerLog.Print(ex);
+            return ex.toString();
+        }
+    }
+
+    public static String ErrorHandler(Exception ex) {
+        ex.printStackTrace();
+        try {
+            db.ConnectCustom();
+            System.err.println(ex.toString());
+            StringBuilder dbErrorWrite = new StringBuilder();
+//            StringBuffer returnDialog = new StringBuffer();
+            StackTraceElement[] stackTrace = ex.getStackTrace();
+            for (int i = 0; i < stackTrace.length; i++) {
+                StackTraceElement st = stackTrace[i];
+                if (st.getClassName().startsWith("cms") || st.getClassName().startsWith("tice")) {
+                    if (!st.getClassName().startsWith("cms.tools.Server")) {
+                        dbErrorWrite.append("<p style='direction:ltr'>").append(st.getClassName()).append(".").append(st.getMethodName()).append(" > line:").append(st.getLineNumber()).append("</p>");
+                    }
+                }
+            }
+            dbErrorWrite.append("<p style='direction:ltr'>").append(ex.toString()).append("</p>");
+//            returnDialog.append("<p style='float: left;direction:ltr'>" + ex.toString() + "</p>");
+
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put(Comment._date, new jjCalendar_IR().getDBFormat_8length());
+            map.put(Comment._email, "mrsalesi@gmail.com");
+            map.put(Comment._name_Full, "سیستم");
+            map.put(Comment._tell, "03112683807");
+            map.put(Comment._text, dbErrorWrite.toString());
+            map.put(Comment._title, "مشکلی در سیستم");
+            map.put(Comment._answer, "");
+            db.insert(Comment.tableName, map);
+            return Js.dialog(dbErrorWrite.toString());
+        } catch (Exception ex2) {
+            return Js.dialog("Error in Server ErrorHandler");
+        }
+    }
+//    public static void setSettingProject(String siteName, String userName, String password, String databaseName, String defaultLang) {
+//        Server.siteName = siteName;
+//        Server.userName = userName;
+//        Server.password = password;
+//        Server.databaseName = databaseName;
+//        Server.defaultLang = defaultLang;
+//    }
+
+    public static boolean sendEmail(String from, String to, String subject, String body, boolean isRtl, HttpServletRequest request) {
+//        String host = "mail.hafteghlim-ins.com";
+//        String user = "mail@hafteghlim-ins.com";
+//        String pass = "m!@#$%&*()";
+        String host = Server.smtpAcount;
+        String user = Server.emailAccount;
+        String pass = Server.passEmail;
+        Properties props = System.getProperties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.localhost", host);
+        props.put("mail.smtp.user", user);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        Session session = Session.getDefaultInstance(props);
+        MimeMessage message = new MimeMessage(session);
+        try {
+            message.setFrom(new InternetAddress(from));
+            InternetAddress[] address = new InternetAddress[0];
+            if (to.indexOf(",") > 0) {
+                String[] split = to.split(",");
+                address = new InternetAddress[split.length];
+                for (int i = 0; i < split.length; i++) {
+                    address[i] = new InternetAddress(split[i]);
+                }
+            } else {
+                address = new InternetAddress[1];
+                address[0] = new InternetAddress(to);
+            }
+            message.setRecipients(Message.RecipientType.TO, address);
+
+            message.setSubject(subject, "UTF-8");
+            message.setHeader("Content-Type", "UTF-8");
+//            File file = new File(request.getServletContext().getRealPath("/print") + "/email.html");
+//            if (file.exists()) {
+//                body = jjFileTxt.read(file).replace("bodybody", body);
+//            } else {
+            message.setText(body, "UTF-8");
+//            }
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, user, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        } catch (AddressException ae) {
+            ae.printStackTrace();
+        } catch (MessagingException me) {
+            me.printStackTrace();
+        }
+        ServerLog.Print("");
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Server.sendEmail("mail@hafteghlim-ins.com", "mrsalesi@gmail.com", "تست", "تست test ", true, null);
+    }
+}
