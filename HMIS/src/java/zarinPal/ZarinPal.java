@@ -31,8 +31,8 @@ import javax.xml.ws.Holder;
 import jj.jjCalendar_IR;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
-import zarinPall.PaymentGatewayImplementationService;
-import zarinPall.PaymentGatewayImplementationServicePortType;
+//import zarinPall.PaymentGatewayImplementationService;
+//import zarinPall.PaymentGatewayImplementationServicePortType;
 
 /**
  *
@@ -75,11 +75,11 @@ public class ZarinPal {
             Description = jjTools.getParameter(request, "description");
             Holder<Integer> status = new Holder<Integer>();
             Holder<String> authority = new Holder<String>();
-            PaymentGatewayImplementationServicePortType soap;
-            PaymentGatewayImplementationService ws = new PaymentGatewayImplementationService();
-            soap = ws.getPaymentGatewayImplementationServicePort();
-
-            soap.paymentRequest(MerchantID, Amount, "شناسه سفارش: " + orderId, userEmail, userMobile, CallbackURL, status, authority);
+//            PaymentGatewayImplementationServicePortType soap;
+//            PaymentGatewayImplementationService ws = new PaymentGatewayImplementationService();
+//            soap = ws.getPaymentGatewayImplementationServicePort();
+//
+//            soap.paymentRequest(MerchantID, Amount, "شناسه سفارش: " + orderId, userEmail, userMobile, CallbackURL, status, authority);
             ServerLog.Print(status.value == null ? "null" : status.value.toString());
             ServerLog.Print(authority.value == null ? "null" : authority.value.toString());
             ServerLog.Print(authority.value == null ? "null" : authority.value.toString());
