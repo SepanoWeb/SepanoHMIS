@@ -1,0 +1,72 @@
+<body>
+    <div class="card bd-primary mg-t-20">
+        <div class="card-header bg-primary tx-white">گالری تصاویر</div>
+        <div class="card-body pd-sm-30">
+            <p class="mg-b-20 mg-sm-b-30">افزودن</p>
+            <div class="col-lg-3">
+                بارگذاری تصاویر
+                <br/>
+                <label class="custom-file">
+                    <input type="file" id="file2" class="custom-file-input">
+                    <span class="custom-file-control custom-file-control-primary"></span>
+                </label>
+
+            </div><!-- col --> 
+            <div class="table-wrapper">
+
+                <br/>
+                <table id="datatable1" class="table display responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th class="wd-15p">کد</th>
+                            <th class="wd-15p">عنوان</th>
+                            <th class="wd-15p">نام فایل</th>
+                            <th class="wd-15p">حجم فایل</th>
+                            <th class="wd-15p">تصویر کوچک</th>
+                            <th class="wd-15p">دسته</th>
+                            <th class="wd-20p">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="mousePointer odd"><td class="c  sorting_1">243</td><td class="r ">بخش چشم پزشکی</td><td class="l ">p2967151321.jpg</td><td class="l "></td><td class="c "><img style="max-height:40px" src="upload/p8544090733_small.jpg"></td><td class="l ">/1/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01galleries();"></i></td></tr>
+                        <tr class="mousePointer even"><td class="c  sorting_1">242</td><td class="r ">بخش جراحی</td><td class="l ">p6770220396.jpg</td><td class="l "></td><td class="c "><img style="max-height:40px" src="upload/p9120939470_small.jpg"></td><td class="l ">/5/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01galleries();"></i></td></tr>
+                        <tr class="mousePointer odd"><td class="c  sorting_1">239</td><td class="r ">اورژانس</td><td class="l ">p2516200242.jpg</td><td class="l "></td><td class="c "><img style="max-height:40px" src="upload/p9162995825_small.jpg"></td><td class="l ">/5/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01galleries();"></i></td></tr>
+                        <tr class="mousePointer even"><td class="c  sorting_1">238</td><td class="r ">دندانپزشکی</td><td class="l ">p8113785481.jpg</td><td class="l "></td><td class="c "><img style="max-height:40px" src="upload/p3068948767_small.png"></td><td class="l ">/4/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01galleries();"></i></td></tr>
+                        <tr class="mousePointer odd"><td class="c  sorting_1">237</td><td class="r ">بستری</td><td class="l ">p6517017425.jpg</td><td class="l "></td><td class="c "><img style="max-height:40px" src="upload/p3900234135_small.jpg"></td><td class="l ">/5/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01galleries();"></i></td></tr>
+                        <tr class="mousePointer even"><td class="c  sorting_1">236</td><td class="r ">اورژانس قلب</td><td class="l ">f_48.jpg</td><td class="l "></td><td class="c "><img style="max-height:40px" src="upload/p6560579627_small.jpg"></td><td class="l ">/5/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01galleries();"></i></td></tr>
+                        <tr class="mousePointer odd"><td class="c  sorting_1">235</td><td class="r "> داخلی</td><td class="l ">f_47.jpg</td><td class="l "></td><td class="c "><img style="max-height:40px" src="upload/p7217077643_small.jpg"></td><td class="l ">/5/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01galleries();"></i></td></tr>
+                        <tr class="mousePointer even"><td class="c  sorting_1">234</td><td class="r ">لمینت و ایمپلنت</td><td class="l ">f_45.jpg</td><td class="l "></td><td class="c "><img style="max-height:40px" src="upload/p8195556058_small.jpg"></td><td class="l ">/5/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01galleries();"></i></td></tr>
+                    </tbody>
+                </table>
+            </div><!-- table-wrapper -->
+        </div><!-- card-body -->
+    </div><!-- card -->
+    <!-- sh-mainpanel -->
+    <script>
+        var show01galleries = function () {
+            $('.sh-mainpanel').load('01textEditor.html', null, function () {
+            });
+            return false;
+        };
+
+        $(function () {
+            'use strict';
+
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'جستجو...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+
+            // Select2
+            $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+        });
+    </script>
+
+
+</body>

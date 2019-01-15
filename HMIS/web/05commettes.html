@@ -1,0 +1,59 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card-header bg-primary tx-white">لیست کمیته ها و کارگروه ها</div>
+    <div class="card-body pd-sm-30">
+        <p class="mg-b-20 mg-sm-b-30">
+            <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('05newCommette.html', null, function () {
+                    });
+                    return false;" > کمیته ی جدید</a>
+        </p>
+        <div class="table-wrapper">
+            <table id="datatable1" class="table display responsive">
+                <thead>
+                    <tr>
+                        <th class=" r">کد</th>
+                        <td class=" r">نام کمیته</td>
+                        <th class=" r">دبیر کمیته</th>
+                        <th class=" r">رئیس کمیته</th>
+                        <td class=" r">دعوتنامه</td>                        
+                        <th class=" c">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>10</td><td>کمیته ی مدیریت اجرایی</td><td>مدیر</td><td>رئیس بیمارستان<br></td><td><i style="color: #ffcd00"  class="icon ion-email" onclick="show05inviteCommete()();"></i></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show05newCommette();"></i></td>
+                    </tr><tr><td>11</td><td>کمیته ی سنجش و پایش کیفیت</td><td>مسئول بهبود کیفیت</td><td>رئیس بیمارستان</td><td><i style="color: #ffcd00"  class="icon ion-email" onclick="show05inviteCommete()();"></i></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show05newCommette();"></i></td>
+                    </tr><tr><td>12</td><td>کمیته ی کنترل عفونت<br></td><td>مسئول کنترل عفونت</td><td>رئیس بیمارستان<br></td><td><i style="color: #ffcd00"  class="icon ion-email" onclick="show05inviteCommete()();"></i></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show05newCommette();"></i></td>
+                    </tr><tr><td>13</td><td>کمیته مرگ و میر و آسیب شناسی نسوج<br></td><td>کارشناس ایمنی بیمار</td><td>رئیس بیمارستان<br></td><td><i style="color: #ffcd00"  class="icon ion-email" onclick="show05inviteCommete()();"></i></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show05newCommette();"></i></td>
+                    </tr><tr><td>14</td><td>کمیته ی بهداشت محیط</td><td>مسئول بهداشت<br></td><td>رئیس بیمارستان<br></td><td><i style="color: #ffcd00"  class="icon ion-email" onclick="show05inviteCommete()();"></i></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show05newCommette();"></i></td>
+                    </tr><tr><td>15</td><td>کمیته ی طب انتقال خون</td><td>مسئول بانک خون</td><td>رئیس بیمارستان</td><td><i style="color: #ffcd00"  class="icon ion-email" onclick="show05inviteCommete()();"></i></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show05newCommette();"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><!-- table-wrapper -->
+    </div><!-- card-body -->
+</div><!-- card -->
+
+
+
+<!-- sh-mainpanel -->
+
+
+
+<script>
+
+    $(function () {
+        'use strict';
+        $('#datatable1').DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'جستجو...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+
+        // Select2
+        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+    });
+</script>

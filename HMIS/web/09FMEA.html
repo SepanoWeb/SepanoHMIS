@@ -1,0 +1,430 @@
+<div  class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">برنامه عملیاتی هوشمند</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="sh-pagetitle">
+            <!--        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </span> input-group-btn 
+                    </div> input-group -->
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <span>ارزیابی ریسک</span>
+                    <h2>FMEA</h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div  class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-body pd-sm-30">
+                    <p class="mg-b-20 mg-sm-b-30"></p>
+                    <div class="col-lg-3">
+                        <div class="form-group has-success mg-b-0">                            
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="card-header bg-primary tx-white c"> جدول وخامت خطر</div>
+                    <table id="datatable1" class="table display responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th class="wd-15p r"></th>
+                                <td class="wd-15p r">شدت</td><th class="wd-15p r">شرح</th><td class="wd-15p r">رتبه</td>
+                                <th class="wd-20p c"></th>
+                                <th class="wd-20p c"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td></td><td>خطرناک – بدون هشدار<br></td><td>وخامت تاسف بار است مثل خطر مرگ 0 تخریب کامل</td><td><input class="form-control is-valid"  type="text" value="" /></td><td class="c "></td>
+                            </tr><tr><td></td><td>خطرناک – با هشدار<br></td><td>وخامت تاسف بار است اما همراه با هشدار است</td><td>9</td><td class="c "></td>
+                            </tr><tr><td></td><td>خیلی زیاد<br></td><td>وخامت جبران ناپیر است – عدم توانایی انجام وظیفه اصلی از دست دادن یک عضو بدن</td><td>8</td><td class="c "></td>
+                            </tr><tr><td></td><td>زیاد<br></td><td>وخامت زیاد است همانند آتش گرفتن تجهیزات سوختگی بدن</td><td>7</td><td class="c "></td>
+                            </tr><tr><td></td><td>متوسط<br></td><td>وخامت کم است مانند ضرب دیدگی مسمومیت خفیف غذایی</td><td>6</td><td class="c "></td>
+                            </tr><tr><td></td><td>کم<br></td><td>وخامت خیلی کم است مانند ضرب دیدگی مسمومیت خفیف غذایی</td><td>5</td><td class="c "></td>
+                            </tr><tr><td></td><td>خیلی کم<br></td><td>وخامت خیلی کم است ولی بیشتر افراد آن را احساس می کنند نشت جزیی گاز</td><td>4</td><td class="c "></td>
+                            </tr><tr><td><br></td><td>اثرات جزیی<br></td><td>اثر جزیی بر جا می گذارد مثل خراش دست دست به هنگام تراشکاری<br></td><td>3</td><td class="c "><br></td><td class="c "><br></td></tr>
+                            <tr><td><br></td><td>خیلی جزیی<br></td><td>اثر خیلی جزیی دارد<br></td><td>2</td><td class="c "><br></td><td class="c "><br></td></tr>
+                            <tr><td><br></td><td>هیچ<br></td><td>بدون اثر<br></td><td>1</td><td class="c "><br></td><td class="c "><br></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-body pd-sm-30">
+                    <p class="mg-b-20 mg-sm-b-30"></p>
+                    <div class="col-lg-3">
+                        <div class="form-group has-success mg-b-0">
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div align="right">
+                        <div class="card-header bg-primary tx-white c">جدول احتمال وقوع خطر</div>
+                        <table id="datatable1" class="table display responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="wd-15p"><br></th>
+                                    <th class="wd-15p">احتمال رخداد خطر</th>
+                                    <td class="wd-20p" style="text-align: center;">نرخ های احتمالی خطر</td><td class="wd-20p" style="text-align: center;">رتبه</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><br></td><td>بسیار زیاد – خطر تقریبا اجتناب ناپذیر است&nbsp;&nbsp;</td><td class="c ">1 در 2 یا بیش از آن<br>&nbsp;1 در 3&nbsp;<br></td><td class="c ">10<br>9</td>
+                                </tr><tr><td><br></td><td>زیاد خطرهای تکراری<br></td><td class="c ">1 در 8<br>&nbsp;1 در 20&nbsp;<br></td><td class="c ">8<br>7</td>
+                                </tr><tr><td><br></td><td>متوسط – خطرهای مورد&nbsp;<br></td><td class="c ">1 در 80<br>&nbsp;1 در 400 <br>1 در 2000<br></td><td class="c ">6<br>5<br>4</td>
+                                </tr><tr><td><br></td><td>کم – خطرهای نسبتا نادر&nbsp;<br></td><td class="c ">1در 15000 <br>1 در 1500000</td><td class="c ">3<br>2</td>
+                                </tr><tr><td><br></td><td>بعید – خطر نا محتمل است&nbsp;&nbsp;</td><td class="c ">کمتر از 1 در 15000000<br></td><td class="c ">1</td>
+                                </tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-body pd-sm-30">
+                    <p class="mg-b-20 mg-sm-b-30"></p>
+                    <div class="col-lg-3">
+                        <div class="form-group has-success mg-b-0">
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div align="right">
+                        <div class="card-header bg-primary tx-white c">جدول احتمال کشف خطر:</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="wd-15p r"></th>
+                                    <th class="wd-15p r">احتمال کشف خطر</th>
+                                    <th class="wd-20p c">قابلیت کشف</th><td class="wd-20p c">رتبه</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td></td><td>هیچ کنترلی وجود ندارد و یا در صورت وجود قادر به کشف خطر بالقوه نیست<br></td><td class="c ">مطلقا هیچ</td><td class="c ">10</td>
+                                </tr><tr><td></td><td>احتمال خیلی ناچیزی دارد که با کنترلهای موجود خطر ردیابی و آشکار شود<br></td><td class="c ">خیلی ناچیز</td><td class="c ">9</td>
+                                </tr><tr><td></td><td>احتمال ناچیزی دارد که با کنترلهای موجود خطر ردیابی و آشکار شود<br></td><td class="c ">ناچیز</td><td class="c ">8</td>
+                                </tr><tr><td></td><td>احتمال خیلی کمی دارد که با کنترلهای موجود خطر ردیابی و آشکار شود<br></td><td class="c ">خیلی کم</td><td class="c ">7</td>
+                                </tr><tr><td></td><td>احتمال کمی دارد که با کنترلهای موجود خطر ردیابی و آشکار شود<br></td><td class="c ">کم</td><td class="c ">6</td>
+                                </tr><tr><td></td><td>در نیمی از موارد محتمل است که با کنترل موجود خطر باقوه ردیابی و آشکار شود<br></td><td class="c ">متوسط</td><td class="c ">5</td>
+                                </tr><tr><td><br></td><td>احتمال نسبتا زیادی وجود دارد که با کنترل موجود خطر بالقوه ردیابی و آشکار شود<br></td><td class="c ">نسبتا زیاد<br></td><td class="c ">4</td></tr>
+                                <tr><td><br></td><td>احتمال زیاد وجود دارد که با کنترل موجود خطر بالقوه ردیابی و آشکار شود<br></td><td class="c ">زیاد<br></td><td class="c ">3</td></tr>
+                                <tr><td><br></td><td>احتمال خیلی زیاد وجود دارد<br></td><td class="c ">خیلی زیاد<br></td><td class="c ">2</td><td class="c "><br></td></tr>
+                                <tr><td><br></td><td>تقریبا به طور حتم با کنترلهای موجود خطر بالقوه ردیابی و آشکال می شود<br></td><td class="c ">تقریبا حتمی<br></td><td class="c ">1</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  id="FMEATableOne" class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-header bg-danger tx-white c">جدول FMEA قبل از اقدام اصلاحی</div>
+                <div class="card-body pd-sm-30">
+                    <p class="mg-b-20 mg-sm-b-30"></p>
+                    <div class="col-lg-12">
+                        <div class="form-group has-success mg-b-0">
+
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+
+                    <div align="right">
+                        <div class="card-header bg-primary tx-white c">جدول وخامت خطر</div>
+                        <table id="tableFMEA1_1"  class="table display responsive">
+                            <thead>
+                                <tr>
+                                    <th class=" r">کد</th>
+                                    <td class=" r">حالت خطا یا شکست</td>
+                                    <td class=" r">اثرات وقوع خطا</td>
+                                    <th class=" r">نفر&nbsp; اول</th><th class=" r">نفر دوم</th><td class=" r">نفر سوم</td><td class=" r">نفر چهارم</td><td class=" r">نفر پنج</td><td class=" r">میانگین</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid" type="text" value="" /> </td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input  class="form-control is-valid"  type="text" value="" /></td>
+                                </tr><tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="card-header bg-primary tx-white c">جدول احتمال وقوع خطر</div>
+                        <table id="tableFMEA1_2"  class="table display responsive">
+                            <thead>
+                                <tr>
+                                    <th class=" r">کد</th>
+                                    <td class=" r">حالت خطا یا شکست	</td>
+                                    <td class=" r">علل شکست بالقوه</td>
+                                    <th class=" r">نفر&nbsp; اول</th><th class=" r">نفر دوم</th><td class=" r">نفر سوم</td><td class=" r">نفر چهارم</td><td class=" r">نفر پنج</td><td class=" r">میانگین</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr><tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr></tbody>
+                        </table>
+                        <div class="card-header bg-primary tx-white c">جدول احتمال کشف خطر</div>
+                        <table id="tableFMEA1_3" class="table display responsive">
+                            <thead>
+                                <tr>
+                                    <th class=" r">کد</th>
+                                    <td class=" r">حالت خطا یا شکست	</td>
+                                    <td class=" r">روش شناسایی</td>
+                                    <th class=" r">نفر&nbsp; اول</th><th class=" r">نفر دوم</th><td class=" r">نفر سوم</td><td class=" r">نفر چهارم</td><td class=" r">نفر پنج</td><td class=" r">میانگین</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr><tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr></tbody>
+                        </table>
+                        <div class="card-header bg-warning tx-white c">محاسبه RPNقبل از اقدام اصلاحی</div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <table id="tableFMEA1_4" class="table display responsive col-lg-4">
+                                    <thead>
+                                        <tr>
+                                            <th class=" r">کد</th>
+                                            <td class=" r">حالات خطا یا شکست</td>
+                                            <th class=" r">عدد RPN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td><br></td>
+                                            <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                            <td><input class="form-control is-valid"  type="text" value="" /></td>
+                                        </tr><tr><td><br></td>
+                                            <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                            <td><input class="form-control is-valid"  type="text" value="" /></td>
+                                        </tr></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row l">
+                        <div class="col-lg-2">
+                            .
+                            <button class="btn btn-success btn-block mg-b-10" onclick="printDiv('FMEATableOne');">چاپ</button>
+                        </div><!-- col -->
+                        <div class="col-lg-2">
+                            .
+                            <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت انجام گرفت');">ثبت</button>
+                        </div><!-- col -->
+                        <div class="col-lg-2">
+                            .
+                            <button class="btn btn-block btn-block mg-b-10" onclick="$('.sh-mainpanel').load('09FMEA.html', null, function () {
+                                    });
+                                    return false;">لغو</button>
+                        </div><!-- col -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  id="FMEATableTow" class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-header bg-success tx-white c">جدول FMEA بعد از اقدام اصلاحی</div>
+                <div class="card-body pd-sm-30">
+                    <p class="mg-b-20 mg-sm-b-30"></p>
+                    <div class="col-lg-12">
+                        <div class="form-group has-success mg-b-0">
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div align="right">
+                        <div class="card-header bg-primary tx-white c">جدول وخامت خطر</div>
+                        <table id="tableFMEA2_1"  class="table display responsive">
+                            <thead>
+                                <tr>
+                                    <th class=" r"></th>
+                                    <td class=" r">حالت خطا یا شکست</td>
+                                    <td class=" r">اقدام اصلاحی</td>
+                                    <th class=" r">نفر&nbsp; اول</th><th class=" r">نفر دوم</th><td class=" r">نفر سوم</td><td class=" r">نفر چهارم</td><td class=" r">نفر پنج</td><td class=" r">میانگین</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid" type="text" value="" /> </td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input  class="form-control is-valid"  type="text" value="" /></td>
+                                </tr><tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="card-header bg-primary tx-white c">جدول احتمال وقوع خطر</div>
+                        <table id="tableFMEA2_2"  class="table display responsive">
+                            <thead>
+                                <tr>
+                                    <th class=" r">کد</th>
+                                    <td class=" r">حالت خطا یا شکست	</td>
+                                    <td class=" r">اقدام اصلاحی</td>
+                                    <th class=" r">نفر&nbsp; اول</th><th class=" r">نفر دوم</th><td class=" r">نفر سوم</td><td class=" r">نفر چهارم</td><td class=" r">نفر پنج</td><td class=" r">میانگین</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr><tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr></tbody>
+                        </table>
+                        <div class="card-header bg-primary tx-white c">جدول احتمال کشف خطر</div>
+                        <table id="tableFMEA2_3" class="table display responsive">
+                            <thead>
+                                <tr>
+                                    <th class=" r"></th>
+                                    <td class=" r">حالت خطا یا شکست	</td>
+                                    <td class=" r">اقدام اصلاحی</td>
+                                    <th class=" r">نفر&nbsp; اول</th><th class=" r">نفر دوم</th><td class=" r">نفر سوم</td><td class=" r">نفر چهارم</td><td class=" r">نفر پنج</td><td class=" r">میانگین</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr><tr><td><br></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                    <td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td><td><input class="form-control is-valid"  type="text" value="" /></td>
+                                </tr></tbody>
+                        </table>
+                        <div class="card-header bg-warning tx-white c">محاسبه RPNبعد از اقدام اصلاحی</div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <table id="tableFMEA2_4" class="table display responsive">
+                                    <thead>
+                                        <tr>
+                                            <th class=" r">کد</th>
+                                            <td class=" r">حالات خطا/شکست</td>
+                                            <th class=" r">عدد RPN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td><br></td>
+                                            <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                            <td><input class="form-control is-valid"  type="text" value="" /></td>
+                                        </tr><tr><td><br></td>
+                                            <td><textarea rows="2" cols="70" class="form-control is-valid" placeholder=""></textarea></td>
+                                            <td><input class="form-control is-valid"  type="text" value="" /></td>
+                                        </tr></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                تفاضل RPN2-RPN1
+                                <input id="finalResult1" class="form-control is-valid"  type="text" value="" />ّ
+
+                            </div>
+                            <div class="col-lg-6">
+                                تفاضل RPN2-RPN1
+                                <input id="finalResult2" class="form-control is-valid"  type="text" value="" />ّ
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header bg-primary tx-white c">اعضا</div>
+            <textarea rows="3" cols="70" class="form-control is-valid" placeholder="">مسئول کنترل کیفیت - مدیر
+            </textarea>
+            <div class="row l">
+                <div class="col-lg-2">
+                    .
+                    <button class="btn btn-success btn-block mg-b-10" onclick="printDiv('FMEATableTow');">چاپ</button>
+                </div><!-- col -->
+                <div class="col-lg-2">
+                    .
+                    <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت انجام گرفت');">ثبت</button>
+                </div><!-- col -->
+                <div class="col-lg-2">
+                    .
+                    <button class="btn btn-block btn-block mg-b-10" onclick="$('.sh-mainpanel').load('09FMEA.html', null, function () {
+                            });
+                            return false;">لغو</button>
+                </div><!-- col -->
+            </div>
+        </div>
+
+    </div>
+</div><!-- card -->
+
+
+<script>
+    $(document).ready(function () {
+        $('#FMEATableOne input.form-control.is-valid').on('keyup', function (ev) {
+            var sum = 0;
+            var j = 0;
+            for (var i = 0; i < 5; i++) {
+                var nextInput = $(this).parent().parent().find("input")[i];
+                if ($(nextInput).val() != "" && $(nextInput).val() != "0") {
+                    sum += parseFloat($(nextInput).val());
+                    j++;
+                }
+            }
+            var avgInput = $(this).parent().parent().find("input")[i];// خانه آخر 
+            $(avgInput).val(Math.round(sum / j));
+
+
+            for (var i = 1; i <= $("#tableFMEA1_4 tbody tr").length; i++) {// به تعداد سطر های جدول
+                var RPNresult = $("#tableFMEA1_1 tbody tr:nth-child(" + i + ") td:last-child input").val() * $("#tableFMEA1_2 tbody tr:nth-child(" + i + ")  td:last-child input").val() * $("#tableFMEA1_3 tbody tr:nth-child(" + i + ")  td:last-child input").val();
+                $("#tableFMEA1_4 tbody tr:nth-child(" + i + ") input:last-child").val(RPNresult);
+            }
+        });
+
+        $('#FMEATableTow input.form-control.is-valid').on('keyup', function (ev) {
+            var sum = 0;
+            var j = 0;
+            for (var i = 0; i < 5; i++) {
+                var nextInput = $(this).parent().parent().find("input")[i];
+                if ($(nextInput).val() != "" && $(nextInput).val() != "0") {
+                    sum += parseFloat($(nextInput).val());
+                    j++;
+                }
+            }
+            var avgInput = $(this).parent().parent().find("input")[i];// خانه آخر 
+            $(avgInput).val(Math.round(sum / j));
+
+            //            محاسبهحاصلضرب میانگین های جدول دوم
+            for (var i = 1; i <= $("#tableFMEA2_4 tbody tr").length; i++) {// به تعداد سطر های جدول
+                var RPNresult = $("#tableFMEA2_1 tbody tr:nth-child(" + i + ") td:last-child input").val() * $("#tableFMEA2_2 tbody tr:nth-child(" + i + ")  td:last-child input").val() * $("#tableFMEA2_3 tbody tr:nth-child(" + i + ")  td:last-child input").val();
+                $("#tableFMEA2_4 tbody tr:nth-child(" + i + ") input:last-child").val(RPNresult);
+
+            }
+            //            تفریق قبل و بعد برای هر ردیف
+            for (var i = 1; i <= $("#tableFMEA2_4 tbody tr").length; i++) {// به تعداد سطر های جدول
+                var rpn1 = $("#tableFMEA1_4 tbody tr:nth-child(" + i + ") input:last-child").val();
+                var rpn2 = $("#tableFMEA2_4 tbody tr:nth-child(" + i + ") input:last-child").val();
+                $("#finalResult" + i).val(rpn2 - rpn1);
+            }
+
+        });
+    });
+
+</script>

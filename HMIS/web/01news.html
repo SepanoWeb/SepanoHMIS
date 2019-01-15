@@ -1,0 +1,61 @@
+<body>
+    <div class="card bd-primary mg-t-20">
+        <div class="card-header bg-primary tx-white">اخبار سازمانی</div>
+        <div class="card-body pd-sm-30">
+            <p class="mg-b-20 mg-sm-b-30">جستجوی هوشمند</p>
+
+            <div class="table-wrapper">
+                <p class="mg-b-20 mg-sm-b-30">
+                    <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('01textEditor.html', null, function () {
+                            });
+                            return false;" >ایجاد خبر</a>
+                </p>
+                <table id="datatable1" class="table display responsive nowrap">
+                    <thead>
+                        <tr role="row" style="height: 0px;">
+                            <th   aria-sort="descending" aria-label="کد: activate to sort column ascending" width="5%">کد</th>
+                            <th   aria-label="تاریخ خبر: activate to sort column ascending" width="15%">تاریح خبر</th>
+                            <th   aria-label="عنوان خبر: activate to sort column ascending" width="70%">عنوان خبر</th>
+                            <th   aria-label="دسته: activate to sort column ascending" width="5%">دسته</th>
+                            <th  aria-label="عملیات: activate to sort column ascending" width="5%">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr onclick="cmsNews.m_select(83);" ><td class="c  ">83</td><td class="l ">1397/05/10</td><td class="r ">دوره های آموزشی جراحی کاشت ایمپلنت و جایگزینی دندانهای خراب</td><td class="r ">/39/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td></tr>
+                        <tr onclick="cmsNews.m_select(81);" ><td class="c  ">81</td><td class="l ">1397/07/19</td><td class="r ">ابلاغ افزایش مزایای پرسنل در سال 98</td><td class="r ">/1/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td></tr>
+                        <tr onclick="cmsNews.m_select(80);" ><td class="c  ">80</td><td class="l ">1396/08/21</td><td class="r ">برگزاری دوره ویژه سرپرستاران در دانشگاه علوم پزشکی اصفهان</td><td class="r ">/40/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td></tr>
+                        <tr onclick="cmsNews.m_select(78);" ><td class="c  ">78</td><td class="l ">1396/108/21</td><td class="r ">بازدید دوره ای خود ارزیابی بیمارستان در ماه  آینده</td><td class="r ">/1/</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td></tr>
+                    </tbody>
+                </table>
+            </div><!-- table-wrapper -->
+        </div><!-- card-body -->
+    </div><!-- card -->
+    <!-- sh-mainpanel -->
+    <script>
+        var show01TextEditor = function () {
+            $('.sh-mainpanel').load('textEditor.html', null, function () {
+            });
+            return false;
+        };
+
+        $(function () {
+            'use strict';
+
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'جستجو...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+
+            // Select2
+            $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+        });
+    </script>
+
+
+</body>

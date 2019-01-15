@@ -1,0 +1,168 @@
+
+<div class="sh-breadcrumb">
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+        <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+        <span class="breadcrumb-item active">مدیریت مستندات اعتبار بخشی</span>
+    </nav>
+</div><!-- sh-breadcrumb -->
+<div class="sh-pagetitle">
+    <!--        <div class="input-group">
+                <input type="search" class="form-control" placeholder="Search">
+                <span class="input-group-btn">
+                    <button class="btn"><i class="fa fa-search"></i></button>
+                </span> input-group-btn 
+            </div> input-group -->
+    <div class="sh-pagetitle-left">
+        <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+        <div class="sh-pagetitle-title">
+            <span>مدیریت استاندارد ها</span>
+            <h2>مدیریت مستندات استاندارد های اعتبار بخشی</h2>
+        </div><!-- sh-pagetitle-left-title -->
+    </div><!-- sh-pagetitle-left -->
+</div><!-- sh-pagetitle -->
+
+<div class="card bd-primary">
+    <div class="card-header bg-primary tx-white">Check Box هوشمند</div>
+    <div class="card-body pd-sm-30">
+
+        <p class="mg-b-20 mg-sm-b-30">
+
+        </p>
+        <br/>
+        <div class="row">
+            <!--این قسمت از برنامه استراتژیک بارگذاری می گردد-->
+            <div class="col-lg-4">
+                گروه مستند
+                <select class="form-control">                    
+                    <option value="">انتخاب</option>
+                    <option value="مستندات اعتبار بخشی">مستندات اعتبار بخشی</option>
+                    <option value="خط مشی">مدیریت خطا و خطر</option>
+                    <option value="مدیریت خطر، حوادث و بلایا">مدیریت خطر، حوادث و بلایا</option>
+                    <option value="آموزش">آموزش</option>
+                </select>
+            </div>            
+            <div class="col-lg-0">
+                .
+                <button class="btn btn-success btn-block mg-b-10" onclick="">...</button>
+            </div><!-- col -->
+        </div><!-- row -->
+        <div class="row">
+            <div class="col-lg-4">
+                نوع مستند
+                <select class="form-control">                    
+                    <option value="">انتخاب</option>
+                    <option value="دستور العمل">دستور العمل</option>
+                    <option value="خط مشی">خط مشی</option>
+                    <option value="روش اجرایی">روش اجرایی</option>
+                    <option value="فرآیند">فرآیند</option>
+                    <option value="کتابچه">کتابچه</option>
+                    <option value="سنجه های اعتبار بخشی">سنجه های اعتبار بخشی</option>
+                </select>
+            </div>
+            <div class="col-lg-0">
+                .
+                <button class="btn btn-success btn-block mg-b-10" onclick="">...</button>
+            </div><!-- col -->           
+        </div><!-- row -->
+        <div class="row">
+            <div class="col-lg-4" style="float: left">
+                بخش/واحد
+                <!--آپسن ها را از جدول بخش ها بیاورد-->
+                <select class="form-control" >
+                    <option value="">واحد را انتخاب کنید</option>
+                    <option value="1">بخش اطفال</option>
+                    <option value="2">جراحی</option>
+                    <option value="3">اتاق عمل</option>
+                    <option value="4">زنان</option>
+                    <option value="5">اورژانس</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                عنوان
+                <div class="form-group has-success mg-b-0">
+                    <input class="form-control is-valid" placeholder="عنوان" type="text" >
+                </div><!-- form-group -->
+            </div>
+            <div class="col-lg-6">
+                نام بارگذاری کننده
+                <div class="form-group has-success mg-b-0">
+                    <input class="form-control is-valid" disabled="disabled" placeholder="عنوان" type="text" value="مجید شریعتی">
+                </div><!-- form-group -->
+            </div>
+            <div class="col-lg-6">
+                سمت بارگذاری کننده
+                <div class="form-group has-success mg-b-0">
+                    <input class="form-control is-valid" disabled="disabled" placeholder="عنوان" type="text" value="مسئول کنترل کیفیت" >
+                </div><!-- form-group -->
+            </div>
+            <div class="col-lg-4">
+                بارگذاری مستندات:
+                <label class="custom-file">
+                    <input type="file" id="file2" class="custom-file-input">
+                    <span class="custom-file-control custom-file-control-primary"></span>
+                </label>
+            </div><!-- col -->   
+        </div>
+        <div class="row l">
+
+            <div class="col-lg-2">
+                <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت انجام شد');
+                        $('.sh-mainpanel').load('07otherDocuments.html', null, function () {
+                        });
+                        return false;">
+                    ثبت نهایی
+                    <i class="fa fa-star"></i>
+                </button>
+            </div><!-- col -->
+            <div class="col-lg-2">
+                <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت انجام شد');
+                        $('.sh-mainpanel').load('07otherDocuments.html', null, function () {
+                        });
+                        return false;">  ثبت</button>
+            </div><!-- col -->
+            <div class="col-lg-2">
+                <div class="form-group has-success mg-b-0">
+                    <button class="btn btn-secondary btn-block mg-b-10" onclick="$('.sh-mainpanel').load('07otherDocuments.html', null, function () {
+                            });
+                            return false;">
+                        لغو
+                    </button>
+                </div><!-- form-group -->
+            </div><!-- col -->
+        </div><!-- card -->
+    </div><!-- card-body -->
+    <div id="formQuestions">
+        <div class="card bd-primary mg-t-20" id="newFormQuestion">
+            <div class="card-header bg-primary tx-white">جدول مستندهای بارگذاری شده</div>
+            <div class="card-body pd-sm-30">
+                <p class="mg-b-20 mg-sm-b-30"></p>
+                <div class="row"> col 
+                    <table id='datatable1' class="table table-responsive table-wrapper">
+                <thead>
+                    <tr>
+                        <td>کد</td>
+                        <td>نوع مستند</td><td>بخش</td><td>عنوان مستند</td><td>مسئول بارگذاری</td>
+                        <td>نام بارگذاری کننده</td>
+
+                        <td>تاریخ بارگذاری</td>
+
+                        <td>دریافت مستندات</td><td>ویرایش</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ><td><br></td><td>دستورالعمل</td><td>مدیریت اجرایی</td><td><p>نظارت بر عملکرد پیمانکاران</p></td><td>مسئول اعتبار بخشی<br></td><td>مجید شریعتی</td><td>97/06/30</td><td><i style="color: #0000ff" class="fa fa-download"></i></td><td><i class="icon ion-ios-gear-outline" onclick="show07newDocumets();"></i></td></tr>                    
+                </tbody>
+            </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- card -->
+<br/>
+
+
+

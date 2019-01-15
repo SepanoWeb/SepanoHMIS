@@ -1,0 +1,81 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">بارش افکار</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="sh-pagetitle">
+            <!--        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </span> input-group-btn 
+                    </div> input-group -->
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <span>ماژول بارش افکار</span>
+                    <h2>
+                        آرشیو فرمهای  بارش افکار
+                    </h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div id="formQuestions" class="col-lg-12">
+            <p class="mg-b-20 mg-sm-b-30">
+                <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="show08newBreainStorm();return false;"> بارش افکار جدید</a>
+            </p>
+            <p class="mg-b-20 mg-sm-b-30">بارش افکار از جمله راهکار های موثر در رهبری سازمان ها می باشد</p>
+            <p class="mg-b-20 mg-sm-b-30">
+            </p>
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-header bg-primary tx-white">راهکار های افزایش مشارکت در گزارش دهی فرم های خطا و خطر</div>
+                <div class="card-body pd-sm-30">
+                    <table id="datatable1" class="table display responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th class="wd-15p r">کد</th>
+                                <th class="wd-15p r">عنوان</th>
+                                <th class="wd-20p c"></th>
+                                <th class="wd-20p c">مشاهده</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>افزایش گزارش دهی خطا</td><td class="c "></td><td class="c "><i class="fa fa-bar-chart" onclick="show08brainStormResults();"></i></td>
+                            </tr><tr><td>2</td><td>کاهش نقص فرم های خلاصه پرونده</td><td class="c "></td><td class="c "><i class="fa fa-bar-chart" onclick="show08brainStormResults();"></i></td>
+                            </tr><tr><td>3</td><td>کاهش نیدل استیک</td><td class="c "></td><td class="c "><i class="fa fa-bar-chart" onclick="show08brainStormResults();"></i></td>
+                            </tr><tr><td>4</td><td>افزایش رضایتمندی کارکنان</td><td class="c "></td><td class="c "><i class="fa fa-bar-chart" onclick="show08brainStormResults();"></i></td>
+                            </tr><tr><td>5</td><td>کاهش خطاهای ثبتی</td><td class="c "></td><td class="c "><i class="fa fa-bar-chart" onclick="show08brainStormResults();"></i></td>
+                            </tr><tr><td>6</td><td>کاهش کسورات مرکز</td><td class="c "></td><td class="c "><i class="fa fa-bar-chart" onclick="show08brainStormResults();"></i></td>
+                            </tr><tr><td>7</td><td>بهبود عملکرد پرستار در اعزام بیمار</td><td class="c "></td><td class="c "><i class="fa fa-bar-chart" onclick="show08brainStormResults();"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- card -->
+</div><!-- card-body -->
+
+<script>
+
+    $(function () {
+        'use strict';
+        $('#datatable1').DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'جستجو...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+
+        // Select2
+        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+    });
+</script>

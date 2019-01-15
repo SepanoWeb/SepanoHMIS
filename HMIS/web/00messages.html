@@ -1,0 +1,62 @@
+<body>
+    <div class="card bd-primary mg-t-20">
+        <div class="card-header bg-primary tx-white">مدیریت پیام ها و آلارم ها</div>
+        <div class="card-body pd-sm-30">
+            <p class="mg-b-20 mg-sm-b-30">پیام های سایر کاربران و پیام های سیستمی در این سامانه به شما اطلاع رسانی می گردد</p>
+            <p class="mg-b-20 mg-sm-b-30">
+                <!--                <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('01textEditor.html', null, function () {
+                                        });
+                                        return false;" >محتوای جدید</a>-->
+            </p>
+            <div class="table-wrapper">
+                <br/>
+                <table id="datatable1" class="table display responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th >کد</th>
+                            <th >تاریخ ارسال</th>
+                            <th >فرستنده</th>
+                            <th >متن پیام</th>
+                            <th >تاریخ مشاهده</th>
+                            <th >حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ><td>8074</td><td >1397/09/10-08:00</td><td >سمیرا محمدی</td><td > کارشناس بهبود کیفیت شاخص های سه ماهه سوم مالی را تحلیل و در سامانه ثبت نمایید</td><td>1397/09/10-08:00</td><td> <i class="icon ion-close"></i></td></tr>
+                        <tr ><td>8071</td><td >97/09/08-08:00</td><td >برنا سیدقلعه</td><td >کارشناس بهبود کیفیت کمیته ی بیمه منابع در تاریخ 1397/07/23 برگزار می گردد لطفا حضور بهم رسانید ماژول کمیته ها</p></td><td>97/09/08-08:00</td> <td><i class="icon ion-close"></i></td></tr>
+                        <tr ><td>8065</td><td >1397/09/04-08:00</td><td >علی رحمتی</td><td >سیستم یادآوربارگذاری اسناد استاندارد الف-1-2 سنجه شماره یک گام 1</p><span class="tx-12">1397/07/01 7:00</span></td><td>1397/09/04-08:00</td> <td><i class="icon ion-close"></i></td></tr>
+                        <tr ><td>8065</td><td >1397/09/04-08:00</td><td >علی رحمتی</td><td >سیستم یاد آورفرم خطا و خطر	بخش اطفال در اختیار شما قرار گرفته استماژول فرم ساز/تکمیل فرم های من</p></td><td>1397/09/04-08:00</td> <td><i class="icon ion-close"></i></td></tr>
+                    </tbody>
+                </table>
+            </div><!-- table-wrapper -->
+        </div><!-- card-body -->
+    </div><!-- card -->
+
+
+
+    <!-- sh-mainpanel -->
+
+
+
+    <script>
+
+        $(function () {
+            'use strict';
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'جستجو...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+
+            // Select2
+            $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+        });
+    </script>
+
+
+</body>

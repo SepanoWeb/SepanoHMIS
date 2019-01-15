@@ -1,0 +1,66 @@
+<body>
+    <div class="card bd-primary mg-t-20">
+        <div class="card-header bg-primary tx-white">مدیریت اطلاعات سازمانی</div>
+        <div class="card-body pd-sm-30">
+            <p class="mg-b-20 mg-sm-b-30">در این قسمت شما میتوانید محتوای سامانه را ایجاد و مدیریت کنید. محتوا به منظور انتشار متون html در قسمت های مختلف کاربرد دارند</p>
+            <p class="mg-b-20 mg-sm-b-30">
+                <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('01textEditor.html', null, function () {
+                        });
+                        return false;" >محتوای جدید</a>
+            </p>
+            <div class="table-wrapper">
+                <br/>
+                <table id="datatable1" class="table display responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th class="wd-15p">کد</th>
+                            <th class="wd-15p">عنوان</th>
+                            <th class="wd-20p">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td >1</td><td >شناسنامه سازمان </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >2</td><td >معرفی خدمات سازمان </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >3</td><td >معرفی بخش ها و واحد های سازمان </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >4</td><td >شرح وظایف سازمانی </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >5</td><td >سایر اطلاعات سازمانی</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >6</td><td >رسالت بیمارستان </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >7</td><td >دورنما و چشم انداز   </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >8</td><td >معرفی انواع خدمات بالینی ، پاراکلینکی   </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >9</td><td >معرفی پزشکان   </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >10</td><td >ارتباط با ما  </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >11</td><td >بیمارستان </td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr></tbody>
+                </table>
+            </div><!-- table-wrapper -->
+        </div><!-- card-body -->
+    </div><!-- card -->
+
+
+
+    <!-- sh-mainpanel -->
+
+
+
+    <script>
+        
+        $(function () {
+            'use strict';
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'جستجو...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+
+            // Select2
+            $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+        });
+    </script>
+
+
+</body>

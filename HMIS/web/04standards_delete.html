@@ -1,0 +1,61 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card-header bg-primary tx-white">سنجه های تعریف شده</div>
+    <div class="card-body pd-sm-30">
+        <p class="mg-b-20 mg-sm-b-30">
+            <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('04newPlan.html', null, function () {
+                    });
+                    return false;" > سنجه جدید</a>
+        </p>
+        <div class="table-wrapper">           
+            <p></p>
+            <div align="right">
+                <table id="datatable1" class="table display responsive">
+                    <thead>
+                        <tr>
+                            <th class=" r">کد</th>
+                            <td class=" r">بخش/واحد</td>
+                            <td class=" r"> استاندارد</td>
+                            <th class=" r">سنجه</th><td class=" r">گام</td>
+                            <th class=" r">مسئول بارگذاری</th>
+                            <td class=" r"> آخرین بارگذاری</td>
+                            <th class=" c">ویرایش</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>10</td><td>واحد بهبود کیفیت<br></td><td>الف-1-3</td><td>شماره 1&nbsp;</td><td>گام 1</td><td>مسئول اعتبار بخشی</td><td>1397/08/03</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="sow04newPlan();"></i></td>
+                        </tr><tr><td>11</td><td>واحد بهبود کیفیت<br></td><td>الف-1-3</td><td>شماره 1</td><td>گام 2<br></td><td>مسئول اعتبار بخشی<br></td><td>1397/08/03<br></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="sow04newPlan();"></i></td>
+                        </tr><tr><td>12</td><td>واحد بهداشت محیط<br></td><td>ه -1-1</td><td>شماره 1</td><td>گام 1</td><td>مسئول بهداشت</td><td>1397/08/03<br></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="sow04newPlan();"></i></td>
+                        </tr><tr><td>13</td><td>واحد بهداشت محیط<br></td><td>ه-1-1</td><td>شماره 2</td><td>گام 1</td><td>مسئول بهداشت</td><td>1397/08/03<br></td><td class="c "><i class="icon ion-ios-gear-outline" onclick="sow04newPlan();"></i></td>
+                        </tr>
+                    </tbody></table>
+            </div>
+
+        </div><!-- table-wrapper -->
+    </div><!-- card-body -->
+</div><!-- card -->
+
+
+
+<!-- sh-mainpanel -->
+
+
+
+<script>
+
+    $(function () {
+        'use strict';
+        $('#datatable1').DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'جستجو...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+
+        // Select2
+        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+    });
+</script>

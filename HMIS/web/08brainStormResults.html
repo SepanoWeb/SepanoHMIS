@@ -1,0 +1,72 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">برنامه عملیاتی هوشمند</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="sh-pagetitle">
+            <!--        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </span> input-group-btn 
+                    </div> input-group -->
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <span>ماژول برنامه عملیاتی</span>
+                    <h2>
+                        فرم بارش افکار
+                    </h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div id="formQuestions" class="col-lg-12">
+            <p class="mg-b-20 mg-sm-b-30">بارش افکار از جمله راهکار های موثر در رهبری سازمان ها می باشد</p>
+            <p class="mg-b-20 mg-sm-b-30">
+            </p>
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-header bg-primary tx-white">راهکار های افزایش مشارکت در گزارش دهی فرم های خطا و خطر</div>
+                <div class="card-body pd-sm-30">
+                    <table id="datatable1" class="table display responsive">
+                        <thead>
+                            <tr>
+                                <th class=" r">کد</th>
+                                <td class=" r">راهکار</td><th class=" r">نفر&nbsp; اول</th><th class=" r">نفر دوم</th><td class=" r">نفر سوم</td><td class=" r">نفر چهارم</td><td class=" r">نفر پنج</td><td class=" r">میانگین</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><br></td><td>بازخورد گزارش فرم خطا به بخش ها از طریق سامانه<br></td><td>4</td><td>5</td><td>6</td><td>8</td><td>10</td><td>5.6</td>
+                            </tr><tr><td><br></td><td>الکترونیکی کردن فرم خطا</td><td>3</td><td>5</td><td>7</td><td>9</td><td>4</td><td>6</td>
+                            </tr><tr><td><br></td><td>تشویق پرسنل و بخش از طریق کارانه<br></td><td>4</td><td>8</td><td>9</td><td>10</td><td>7</td><td>7.6</td>
+                            </tr><tr><td><br></td><td>برگزاری همایش خطاهای بالینی</td><td>6</td><td>5</td><td>3</td><td>7</td><td>8</td><td>5.6</td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!-- card -->
+</div><!-- card-body -->
+
+<script>
+
+    $(function () {
+        'use strict';
+        $('#datatable1').DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'جستجو...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+
+        // Select2
+        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+    });
+</script>

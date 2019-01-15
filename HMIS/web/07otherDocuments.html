@@ -1,0 +1,79 @@
+
+<div class="sh-breadcrumb">
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+        <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+        <span class="breadcrumb-item active">مدیریت مستندات اعتبار بخشی</span>
+    </nav>
+</div><!-- sh-breadcrumb -->
+<div class="sh-pagetitle">
+    <!--        <div class="input-group">
+                <input type="search" class="form-control" placeholder="Search">
+                <span class="input-group-btn">
+                    <button class="btn"><i class="fa fa-search"></i></button>
+                </span> input-group-btn 
+            </div> input-group -->
+    <div class="sh-pagetitle-left">
+        <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+        <div class="sh-pagetitle-title">
+            <span>مدیریت استاندارد ها</span>
+            <h2>مدیریت مستندات استاندارد های اعتبار بخشی</h2>
+        </div><!-- sh-pagetitle-left-title -->
+    </div><!-- sh-pagetitle-left -->
+</div><!-- sh-pagetitle -->
+
+<div class="card bd-primary">
+    <div class="card-header bg-primary tx-white">مدیریت مستندات</div>
+    <div class="card-body pd-sm-30">
+        <p class="mg-b-20 mg-sm-b-30">
+        <p class="mg-b-20 mg-sm-b-30">
+            <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('07newDocumets.html', null, function () {
+                    });
+                    return false;" >  جدید</a>
+        </p>
+        </p>
+        <div class="row">
+            <table id='datatable1' class="table table-responsive table-wrapper">
+                <thead>
+                    <tr>
+                        <td>کد</td>
+                        <td>نوع مستند</td><td>بخش</td><td>عنوان مستند</td><td>مسئول بارگذاری</td>
+                        <td>نام بارگذاری کننده</td>
+
+                        <td>تاریخ بارگذاری</td>
+
+                        <td>دریافت مستندات</td><td>ویرایش</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ><td><br></td><td>دستورالعمل</td><td>مدیریت اجرایی</td><td><p>نظارت بر عملکرد پیمانکاران</p></td><td>مسئول اعتبار بخشی<br></td><td>مجید شریعتی</td><td>97/06/30</td><td><i style="color: #0000ff" class="fa fa-download"></i></td><td><i class="icon ion-ios-gear-outline" onclick="show07newDocumets();"></i></td></tr>
+                    <tr ><td><br></td><td>دستورالعمل</td><td>اورژانس</td><td>احیای قلبی و ریوی<br></td><td>مسئول اورژانس</td><td>مینا رضایی<br></td><td>97/06/30<br></td><td><i style="color: #0000ff" class="fa fa-download"></i></td><td><i class="icon ion-ios-gear-outline" onclick="show07newDocumets();"></i></td></tr>
+                    <tr ><td><br></td><td>روش اجرایی</td><td>بهداشت محیط</td><td>انظارت بر رعایت ظوابط بهداشتی توزیع و سرو غذا<br></td><td>مسئول بهداشت محیط</td><td>مهدی محمدی<br></td><td>97/06/30<br></td><td><i style="color: #0000ff" class="fa fa-download"></i></td><td><i class="icon ion-ios-gear-outline" onclick="show07newDocumets();"></i></td></tr>
+                    <tr ><td><br></td><td>روش اجرایی</td><td>بهداشت محیط<br></td><td>پیشگیری و کاهش آلاینده های ناشی از ساخت و ساز</td><td>مسئول بهداشت محیط</td><td>مهدی محمدی</td><td>97/03/30<br></td><td><i style="color: #0000ff" class="fa fa-download" onclick="show07newDocumets();"></i></td><td><i class="icon ion-ios-gear-outline" onclick="show07newDocumets();"></i></td></tr>
+                    <tr ><td><br></td><td>خط مشی</td><td>مدیریت تامین</td><td><p>تهیه و توزیع ملزومات</p></td><td>مسئول امور عمومی</td><td>مهدی ایرجی<br></td><td>97/06/30<br></td><td><i style="color: #0000ff" class="fa fa-download"></i></td><td><i class="icon ion-ios-gear-outline" onclick="show07newDocumets();"></i></td></tr>
+                    <tr ><td><br></td><td>خط مشی</td><td>مراقبت های</td><td>مراقبت های فیزیولوژیک بیماران حت</td><td>مسئول آزمایشگاه</td><td>شهاب سیدی</td><td>97/03/30<br></td><td><i style="color: #0000ff" class="fa fa-download" onclick="show07newDocumets();"></i></td><td><i  class="icon ion-ios-gear-outline" onclick="show07newDocumets();"></i></td></tr>
+                </tbody>
+            </table>
+        </div><!-- card -->
+    </div><!-- card-body -->    
+</div><!-- card -->
+<br/>
+
+
+<script>
+    $(function () {
+        'use strict';
+        $('#datatable1').DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'جستجو...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+
+        // Select2
+        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+    });
+</script>

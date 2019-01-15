@@ -1,0 +1,278 @@
+
+<div class="sh-breadcrumb">
+    <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+        <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+        <span class="breadcrumb-item active">بارش افکار</span>
+    </nav>
+</div><!-- sh-breadcrumb -->
+<div class="sh-pagetitle">
+    <!--        <div class="input-group">
+                <input type="search" class="form-control" placeholder="Search">
+                <span class="input-group-btn">
+                    <button class="btn"><i class="fa fa-search"></i></button>
+                </span> input-group-btn 
+            </div> input-group -->
+    <div class="sh-pagetitle-left">
+        <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+        <div class="sh-pagetitle-title">
+            <span>ایجاد فرم بارش افکار جدید</span>
+            <h2>ماژول بارش افکار </h2>
+        </div><!-- sh-pagetitle-left-title -->
+    </div><!-- sh-pagetitle-left -->
+</div><!-- sh-pagetitle -->
+
+<div class="sh-pagebody">
+
+    <div class="card bd-primary">
+        <div class="card-header bg-primary tx-white">عنوان و توضیحات </div>
+        <div class="card-body pd-sm-30">
+            <p class="mg-b-20 mg-sm-b-30"></p>
+            <div class="row">
+                <div class="col-lg">
+                    <input class="form-control" placeholder="عنوان فرم بارش افکار" type="text">
+                </div>
+            </div><!-- row -->
+
+            <div class="row mg-t-20">
+                <div class="col-lg">
+                    <textarea rows="3" class="form-control" placeholder="توضیحات فرم بارش افکار"></textarea>
+                </div><!-- col -->                    
+            </div><!-- row -->
+        </div><!-- card-body -->
+    </div><!-- card -->
+    <div id="formQuestions">
+        <div class="card bd-primary mg-t-20" id="newFormQuestion">
+            <div class="card-header bg-primary tx-white">مدیریت سوالات فرم بارش افکار:</div>
+            <div class="card-body pd-sm-30">
+                <p class="mg-b-20 mg-sm-b-30">هر فرم بارش افکار از تعدادی سوال تشکیل شده و هر سوال چندین فیلد دارد</p>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-group has-success mg-b-0">
+                            <input class="form-control is-valid" placeholder="متن سوال را وارد کنید :" type="text">                            
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg mg-t-20 mg-lg-t-0">
+                        <div class="form-group has-warning mg-b-0">
+                            <input class="form-control is-valid" placeholder="وزن سوال:" type="text">                            
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg mg-t-20 mg-lg-t-0">
+                        <div class="form-group has-danger mg-b-0">
+                            <label class="ckbox">
+                                <input type="checkbox"><span>پاسخ اجباری باشد</span>
+                            </label>
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                </div><!-- row -->
+                <div class="row mg-t-10">
+                    <div class="col-lg-1">
+                        نوع فیلد:
+                        <ul class="choose_type list-group" style="display: inline-flex;flex-direction: row;">
+                            <li id="field_texte" class="list-group-item pull-left text-center pointer" title="متن" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideUp();">
+                                <p>
+                                    <i class="fa fa-file-text-o"></i></p>
+                            </li>
+                            <li id="field_textarea" class="list-group-item pull-left text-center pointer" title="متن چند خطی" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideUp();">
+                                <p>
+                                    <i class="fa fa-file-text"></i></p>
+                            </li>
+                            <li id="field_email" class="list-group-item pull-left text-center pointer" title="ایمیل" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideUp();">
+                                <p>
+                                    @                                    </p>
+                            </li>
+                            <li id="field_nombre" class="list-group-item pull-left text-center pointer" title="عدد" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideUp();">
+                                <p>
+                                    123                                    </p>
+                            </li>
+                            <li id="field_date" class="list-group-item pull-left text-center pointer" title="تاریخ/ساعت" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideUp();">
+                                <p>
+                                    <i class="fa fa-clock-o"></i></p>
+                            </li>
+                            <li id="field_geoloc" class="list-group-item pull-left text-center pointer" title="موقعیت جغرافیایی" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideUp();">
+                                <p>
+                                    <i class="fa fa-map"></i></p>
+                            </li>
+                            <li id="field_checkbox" class="list-group-item pull-left text-center pointer active" title="چک باکس" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideDown();">
+                                <p>
+                                    <i class="fa fa-check-square-o"></i></p>
+                            </li>
+                            <li id="field_radio" class="list-group-item pull-left text-center pointer" title="رادیو" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideDown();">
+                                <p>
+                                    <i class="fa fa-circle-o"></i></p>
+                            </li>
+                            <li id="field_select" class="list-group-item pull-left text-center pointer" title="کشویی" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideDown();">
+                                <p>
+                                    <i class="fa fa-caret-square-o-down"></i></p>
+                            </li>
+                            <li id="field_image" class="list-group-item pull-left text-center pointer" title="تصویر" onclick="$('.list-group-item.active').removeClass('active');
+                                    $(this).toggleClass('active');
+                                    $(this).parent().parent().parent().parent().parent().find('.optionsFortype').slideUp();">
+                                <p>
+                                    <i class="fa fa-file-picture-o"></i></p>
+                            </li>
+                        </ul>
+                    </div><!-- col-1 -->                
+                </div><!-- row -->
+                <div>
+                            <br/>
+                    <div class="row optionsFortype">
+                        <div class="col-lg">
+                            <div class="questionOption">
+                                <div class="form-group has-success row mg-b-25">
+                                    <br/>
+                                    <div class="col-lg-4">
+                                        <input class="form-control is-valid" placeholder="مقدار عددی" type="text" >
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <input class="form-control is-valid" placeholder="برچسب (اختیاری)" type="text" >
+                                    </div>
+                                    <div class="sh-pagetitle-icon " style="float: left;color: red;font-size: 30px;width: 30px;height: 30px;margin-bottom: 10px;" title="minus">
+                                        <i class="fa fa-minus"   onclick="$(this).parent().parent().remove();"></i>
+                                    </div>
+                                </div><!-- form-group -->
+                            </div>
+                            <div class="questionOption">
+                                <div class="form-group has-success row mg-b-25">
+                                    <br/>
+                                    <div class="col-lg-4">
+                                        <input class="form-control is-valid" placeholder="مقدار عددی" type="text" >
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <input class="form-control is-valid" placeholder="برچسب (اختیاری)" type="text" >
+                                    </div>
+                                    <div class="sh-pagetitle-icon " style="float: left;color: red;font-size: 30px;width: 30px;height: 30px;margin-bottom: 10px;" title="minus">
+                                        <i class="fa fa-minus"   onclick="$(this).parent().parent().remove();"></i>
+                                    </div>
+                                </div><!-- form-group -->
+                            </div>
+                            <div class="questionOption">
+                                <div class="form-group has-success row mg-b-25">
+                                    <br/>
+                                    <div class="col-lg-4">
+                                        <input class="form-control is-valid" placeholder="مقدار عددی" type="text" >
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <input class="form-control is-valid" placeholder="برچسب (اختیاری)" type="text" >
+                                    </div>
+                                    <div class="sh-pagetitle-icon " style="float: left;color: red;font-size: 30px;width: 30px;height: 30px;margin-bottom: 10px;" title="minus">
+                                        <i class="fa fa-minus"   onclick="$(this).parent().parent().remove();"></i>
+                                    </div>
+                                </div><!-- form-group -->
+                            </div>
+                            <div class="questionOption">
+                                <div class="form-group has-success row mg-b-25">
+                                    <br/>
+                                    <div class="col-lg-4">
+                                        <input class="form-control is-valid" placeholder="مقدار عددی" type="text" >
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <input class="form-control is-valid" placeholder="برچسب (اختیاری)" type="text" >
+                                    </div>
+                                    <div class="sh-pagetitle-icon " style="float: left;color: red;font-size: 30px;width: 30px;height: 30px;margin-bottom: 10px;" title="minus">
+                                        <i class="fa fa-minus"   onclick="$(this).parent().parent().remove();"></i>
+                                    </div>
+                                </div><!-- form-group -->
+                            </div>
+                            
+                        </div><!-- col-1 -->                
+                    </div><!-- row -->
+                    <br/>                    
+                    <div class="sh-pagetitle-icon "   title="plus">
+                        <i class="fa fa-plus" onclick="$(this).parent().parent().find('.questionOption').first().parent().append(examoption);"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <br/>
+                        <br/>
+                        <button class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#formQuestions').append($('#newFormQuestion').html());">افزودن بخش</button>
+                    </div><!-- col-1 -->                
+                </div><!-- row -->
+            </div><!-- card-body -->
+        </div><!-- formquestion-->
+    </div><!-- sh-pagebody -->
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group has-success mg-b-0">
+                <button class="btn btn-outline-dark active btn-block mg-b-10" onclick="show08brainStorms();">لغو</button>
+            </div><!-- form-group -->
+        </div><!-- col -->
+        <div class="col-lg-3">
+            <button class="btn btn-outline-success active btn-block mg-b-10" onclick="alert('فرم ثبت شد');show08brainStorms();">ثبت</button>
+        </div><!-- col -->
+    </div><!-- card -->
+
+
+
+    <script>
+
+    var examoption = '<div class="questionOption"><div class="form-group has-success row mg-b-25"><br/><div class="col-lg-4"><input class="form-control is-valid" placeholder="مقدار عددی" type="text" ></div><div class="col-lg-4"><input class="form-control is-valid" placeholder="برچسب (اختیاری)" type="text" ></div><div class="sh-pagetitle-icon " style="float: left;color: red;font-size: 30px;width: 30px;height: 30px;margin-bottom: 10px;" title="minus"><i class="fa fa-minus"   onclick="$(this).parent().parent().remove();"></i></div></div><!-- form-group --></div>';
+$(function () {
+
+'use strict';
+    $('.select2').select2({
+minimumResultsForSearch: Infinity
+});
+    // Select2 by showing the search
+    $('.select2-show-search').select2({
+minimumResultsForSearch: ''
+});
+    // Select2 with tagging support
+    $('.select2-tag').select2({
+tags: true,
+    tokenSeparators: [',', ' ']
+});
+    // Datepicker
+    $('.fc-datepicker').datepicker({
+showOtherMonths: true,
+    selectOtherMonths: true
+});
+    $('#datepickerNoOfMonths').datepicker({
+showOtherMonths: true,
+    selectOtherMonths: true,
+    numberOfMonths: 2
+});
+// Color picker
+$('#colorpicker').spectrum({
+color: '#17A2B8'
+});
+$('#showAlpha').spectrum({
+color: 'rgba(23,162,184,0.5)',
+showAlpha: true
+});
+
+$('#showPaletteOnly').spectrum({
+showPaletteOnly: true,
+showPalette: true,
+color: '#DC3545',
+palette: [
+['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+]
+});
+
+});
+    </script>

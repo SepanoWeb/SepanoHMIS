@@ -1,0 +1,86 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">برنامه عملیاتی هوشمند</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="sh-pagetitle">
+            <!--        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </span> input-group-btn 
+                    </div> input-group -->
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <span>شاخص ها</span>
+                    <h2>میز هوشمند شاخص ها</h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div id="formQuestions" class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-header bg-primary tx-white">جدول کلی شاخص ها:</div>
+                <div class="card-body pd-sm-30">
+                    <p class="mg-b-20 mg-sm-b-30">گام های اجرایی با توجه به مراحل پیش بینی شده اجرای برنامه تعیین می گردند</p>
+                    <div class="col-lg-3">
+                        <div class="form-group has-success mg-b-0">
+                            <button class="btn btn-outline-success active btn-block mg-b-10" onclick="show06newIndicator();">ایجاد شاخص جدید
+                            </button>
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <p></p><div align="right">
+                        <table id="datatable1" class="table display responsive nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="wd-15p r">کد</th>
+                                    <th class="wd-15p r">عنوان شاخص</th><td class="wd-15p r">بخش</td><th class="wd-15p r">مسئول شاخص</th><th class="wd-15p r">سمت تکمیل کننده</th><td class="wd-15p r">تناوب جمع آوری داده</td>
+                                    <th class="wd-15p r">آخرین</th><th class="wd-20p c">مشاهده</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color: #baffbc"><td>1</td><td>شاخص درصد اشغال تخت</td><td>مدارک پزشکی</td><td class="c ">مسئول مدارک پزشکی</td><td class="c ">مسئول درآمد</td><td class="c ">سه ماهه</td><td class="c "><span>85</span></td><td class="c "><i class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr><tr style="background-color: #ffbaba #ffbaba"><td>2</td><td>شاخص چرخش اشغال تخت</td><td>مدارک پزشکی</td><td class="c ">مسئول مدارک پزشکی</td><td class="c ">مسئول درآمد</td><td class="c ">ماهانه</td><td class="c "><span>25</span></td><td class="c "><i style=" color: black;" class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr><tr style="background-color: #ffbaba"><td>2</td><td>شاخص چرخش اشغال تخت</td><td>مدارک پزشکی</td><td class="c ">مسئول مدارک پزشکی</td><td class="c ">مسئول درآمد</td><td class="c ">ماهانه</td><td class="c "><span>25</span></td><td class="c "><i style=" color: black;" class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr><tr style="background-color: #fffcba"><td>3</td><td>شاخص درصد عفونت بیمارستانی</td><td>واحد کنترل عفونت</td><td class="c ">مسئول کنترل عفونت</td><td class="c ">مسئول درآمد</td><td class="c ">سه ماهه</td><td class="c "><span>5</span></td><td class="c "><i class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr><tr style="background-color: #fffcba"><td>3</td><td>شاخص درصد عفونت بیمارستانی</td><td>واحد کنترل عفونت</td><td class="c ">مسئول کنترل عفونت</td><td class="c ">مسئول درآمد</td><td class="c ">سه ماهه</td><td class="c "><span>5</span></td><td class="c "><i class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr><tr style="background-color: #fffcba"><td>3</td><td>شاخص درصد عفونت بیمارستانی</td><td>واحد کنترل عفونت</td><td class="c ">مسئول کنترل عفونت</td><td class="c ">مسئول درآمد</td><td class="c ">سه ماهه</td><td class="c "><span>5</span></td><td class="c "><i class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr><tr style="background-color: #baffbc"><td>4</td><td>میزان سقوط از تخت</td><td>ایمنی بیمار</td><td class="c ">کسئول ایمنی بیمار</td><td class="c ">مسئول درآمد</td><td class="c ">سه ماهه</td><td class="c "><span>0</span></td><td class="c "><i class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr><tr style="background-color: #baffbc"><td>4</td><td>میزان سقوط از تخت</td><td>ایمنی بیمار</td><td class="c ">کسئول ایمنی بیمار</td><td class="c ">مسئول درآمد</td><td class="c ">سه ماهه</td><td class="c "><span>0</span></td><td class="c "><i class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr><tr style="background-color: #baffbc"><td>4</td><td>میزان سقوط از تخت</td><td>ایمنی بیمار</td><td class="c ">کسئول ایمنی بیمار</td><td class="c ">مسئول درآمد</td><td class="c ">سه ماهه</td><td class="c "><span>0</span></td><td class="c "><i class="icon ion-eye" onclick="show06newIndicator();"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- card -->
+
+<script>
+
+    $(function () {
+        'use strict';
+        $('#datatable1').DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'جستجو...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+
+        // Select2
+        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+    });
+</script>

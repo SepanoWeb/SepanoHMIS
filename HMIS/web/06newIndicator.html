@@ -1,0 +1,713 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">ماژول شاخص ها</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="sh-pagetitle">
+            <!--        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </span> input-group-btn 
+                    </div> input-group -->
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <span>شاخص های هوشمند</span>
+                    <h2>شناسنامه و تحلیل شاخص</h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div  class="col-lg-12 card-body pd-sm-30">
+            <div class="card bd-primary mg-t-3">
+                <div class="card-header bg-primary tx-white">شناسنامه شاخص</div>
+                <div class="">
+                    <div class="row pd-sm-10">
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                کد:
+                                <input class="form-control is-valid" placeholder="کد دستی" type="text">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                عنوان:
+                                <input class="form-control is-valid" placeholder="عنوان:" type="text">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                نوع:
+                                <select class="form-control">
+                                    <option value="">پیامدی</option>
+                                    <option value="1">فرآیندی</option>
+                                    <option value="1">ساختاری</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                حیطه شاخص:
+                                <select class="form-control">
+                                    <option value="ایمنی">ایمنی</option>
+                                    <option value="کارایی">کارایی</option>
+                                    <option value="اثربخشی">اثربخشی</option>
+                                    <option value="عدالت"></option>
+                                    <option value="رضایتمندی">رضایتمندی</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                بخش/واحد:
+                                <select class="form-control">
+                                    <option value="1">اورژانش</option>
+                                    <option value="2">کنترل عفونت</option>
+                                    <option value="3">ایمنی</option>
+                                    <option value="اتاق عمل">اتاق عمل</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                بعد شاخص
+                                <select class="form-control">
+                                    <option value="بالینی">بالینی</option>
+                                    <option value="غیر بالینی">غیر بالینی</option>
+                                    <option value="">سایر</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                اولویت شاخص
+                                <input class="form-control is-valid" placeholder="عدد وارد کنید" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <div class="form-group has-warning mg-b-0">
+                                منبع و نحوه گردآوری شاخص
+                                <select class="form-control">
+                                    <!--فقط ذخیره میشود کار خاصی نمیخواهد بکند-->
+                                    <option value="چک لیست"> چک لیست</option>
+                                    <option value="HIS">HIS</option>
+                                    <option value="">سایر</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-6">
+                            تعریف شاخص:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تعریف شاخص" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->       
+                        <div class="col-lg-6">
+                            علت منطقی جمع آوری داده ها:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="علت منطقی جمع آوری داده ها" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->                        
+                        <div class="col-lg-12">
+                            سایر توضیحات:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="توضیحات" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->       
+                        <div class="col-lg-4">
+                            <div class="form-group has-warning mg-b-0">
+                                فرد مسئول جمع آوری کننده شاخص:
+                                <select class="form-control">
+                                    <!--این آپشن ها را از قسمت سمت باید بیاوریم-->
+                                    <option value="">انتخاب مسئول </option>
+                                    <option value="1">سرپرستار اورژانس</option>
+                                    <option value="2">مسئول کنترل عفونت</option>
+                                    <option value="3">مسئول بهداشت محیط</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->                          
+                        <div class="col-lg-4">
+                            <div class="form-group has-warning mg-b-0">
+                                تناوب جمع آوری داده ها	
+                                <select class="form-control">
+                                    <option value="ماهانه"> ماهانه</option>
+                                    <option value="سه ماهه">سه ماهه</option>
+                                    <option value="شش ماهه">شش ماهه</option>
+                                    <option value="سالانه">سالانه</option>
+                                    <option value="">سایر</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->                          
+                        <div class="col-lg-4">
+                            <div class="form-group has-warning mg-b-0">
+                                تناوب تحلیل شاخص
+                                <select class="form-control">
+                                    <option value="ماهانه"> ماهانه</option>
+                                    <option value="سه ماهه">سه ماهه</option>
+                                    <option value="شش ماهه">شش ماهه</option>
+                                    <option value="سالانه">سالانه</option>
+                                    <option value="">سایر</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->                          
+                        <div class="col-lg-3">
+                            <div class="form-group has-warning mg-b-0">
+                                فرمول شاخص
+                                <select class="form-control">
+                                    <!--فقط ذخیره میشود کار خاصی نمیخواهد بکند-->
+                                    <option value="/">x/y</option>
+                                    <option value="*"> x*Y</option>
+                                    <option value="+">x+y</option>
+                                    <option value="-">x-y</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                    </div>
+
+                    <div class="row card-body pd-sm-10 alert-success">
+                        <div class="col-lg-1">
+                            خوب 
+                        </div>
+                        <div class="col-lg-3">
+                            از مقدار
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="کد دستی" type="number">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            تا
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="کد دستی" type="number">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                    </div><!-- row -->
+                    <div class="row card-body pd-sm-10 alert-warning">
+                        <div class="col-lg-1">
+                            متوسط 
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            از مقدار
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="کد دستی" type="number">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            تا
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="کد دستی" type="number">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                    </div><!-- row -->
+                    <div class="row card-body pd-sm-10 alert-danger">
+                        <div class="col-lg-1">
+                            ضعیف
+                        </div><!-- col --> 
+                        <div class="col-lg-3">
+                            از مقدار
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="کد دستی" type="number">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            تا
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="کد دستی" type="number">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                    </div><!-- row -->
+                    <div class="row card-body pd-sm-10">
+                        <div class="col-lg-3">
+                            تاریخ بازنگری:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تهیه کننده" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->       
+                        <div class="col-lg-3">
+                            تاریخ ابلاغ:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تأیید کننده" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->       
+                        <div class="col-lg-3">
+                            تاریخ بازنگری بعدی:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تصویب کننده" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                    </div>
+                    <div class="row card-body pd-sm-10">
+                        <div class="col-lg-3">
+                            تهیه کننده:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تهیه کننده" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->       
+                        <div class="col-lg-3">
+                            تایید کننده:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تأیید کننده" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->       
+                        <div class="col-lg-3">
+                            تصویب کننده:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تصویب کننده" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                    </div>
+                    <div class="row l">
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                <button class="btn btn-secondary btn-block mg-b-10" onclick="$('.sh-mainpanel').load('06indicators.html', null, function () {
+                                        });
+                                        return false;">لغو</button>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <button class="btn btn-success btn-block mg-b-10" onclick="alert('با موفقیت ثبت شد');
+                                    $('.sh-mainpanel').load('06indicators.html', null, function () {
+                                    });
+                                    return false;">ذخیره</button>
+                        </div><!-- col -->
+                        <br/>
+                    </div>
+                </div>
+            </div>
+            <div  class="col-lg-12 card-body pd-sm-30">
+                <div class="card bd-primary mg-t-3">
+                    <div class="card-body pd-sm-30">                    
+                        <p class="mg-b-20 mg-sm-b-30">
+                            جدول مقادیر ثبت شده ی این شاخص
+                        </p>
+                            <div class="row card-body pd-sm-10">
+                                <div class="col-lg-3">
+                                    صورت:
+                                    <div class="form-group has-success mg-b-0">
+                                        <input id="input_x" class="form-control is-valid" placeholder="فقط عدد وارد کنید" type="number" value="100" >
+                                    </div><!-- form-group -->
+                                </div><!-- col -->       
+                                <div class="col-lg-3">
+                                    مخرج:
+                                    <div class="form-group has-success mg-b-0">
+                                        <input id="input_y" class="form-control is-valid" placeholder="فقط عدد وارد کنید" type="number" value="50">
+                                    </div><!-- form-group -->
+                                </div><!-- col -->       
+                                <div class="col-lg-3">
+                                    .
+                                    <button class="btn btn-success btn-block mg-b-10" onclick="addColomn();">
+                                        محاسبه
+                                    </button>
+                                </div><!-- col -->                                
+                            </div>
+                            <table id="formulTable" class="table table-responsive table-wrapper" style="direction: rtl;text-align: right">
+                                <thead>
+                                    <tr id="period_tr">                    
+                                        <th>کد</th>
+                                        <th>دوره1</th>
+                                        <th>دوره 2</th>
+                                        <th>دوره 3</th>
+                                        <th id="new_period"></th>
+                                        <th>میانگین</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="x_tr"><td>صورت</td><td>1006</td><td>917</td><td>1428</td><td id="new_x"></td><td id="avg_x"></td></tr>
+                                    <tr id="y_tr"><td>مخرج</td><td>912</td><td>1632</td><td>1334</td><td id="new_y"></td><td id="avg_y"></td></tr>
+                                    <tr id="sum_tr"><td>نتیجه</td><td>26.47</td><td>13.49</td><td>25.69</td><td id="new_sum"></td><td id="avg_sum"></td></tr>
+                                </tbody>
+                            </table>
+                        
+                <div class="row l">
+                    <div class="col-lg-3">
+                        <div class="form-group has-success mg-b-0">
+                            <button class="btn btn-secondary btn-block mg-b-10" onclick="$('.sh-mainpanel').load('06indicators.html', null, function () {
+                                    });
+                                    return false;">لغو</button>
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg-3">
+                        <button class="btn btn-success btn-block mg-b-10" onclick="alert('با موفقیت ثبت شد');">ذخیره</button>
+                    </div><!-- col -->
+                    <br/>
+                </div>
+                    </div>
+                </div>
+                <div class="card-header bg-info tx-white col-lg-12 pd-sm-10 c">نمودار ها</div>                
+                <div class="row row-sm">
+                    <div class="col-xl-6">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">نمودار نتایج داده های سیستمی</p>
+                                <canvas id="chartBar1" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                    <div class="col-xl-6 mg-t-25 mg-xl-t-0">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Multiple Color نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">نمودار نتایج داده های سیستمی</p>
+                                <canvas id="chartBar2" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                </div><!-- row -->
+
+                <div class="row row-sm mg-t-20">
+                    <div class="col-xl-6">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Horizontal نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">نمودار نتایج داده های سیستمی</p>
+                                <canvas id="chartBar3" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-bod -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                    <div class="col-xl-6 mg-t-25 mg-xl-t-0">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Horizontal نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">نمودار نتایج داده های سیستمی</p>
+                                <canvas id="chartBar4" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                </div><!-- row -->
+
+                <div class="row row-sm mg-t-20">
+                    <div class="col-xl-6">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Stacked نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">نمودار نتایج داده های سیستمی</p>
+                                <canvas id="chartStacked1" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                    <div class="col-xl-6 mg-t-25 mg-xl-t-0">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Stacked نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">نمودار نتایج داده های سیستمی</p>
+                                <canvas id="chartStacked2" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                </div><!-- row -->
+
+                <div class="row row-sm mg-t-20">
+                    <div class="col-xl-6">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Line نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">A line graph is a type of chart which displays information as a series of data points connected by straight line segments.</p>
+                                <canvas id="chartLine1" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                    <div class="col-xl-6 mg-t-25 mg-xl-t-0">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Line نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">A line graph is a type of chart which displays information as a series of data points connected by straight line segments.</p>
+                                <canvas id="chartLine2" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                </div><!-- row -->
+
+                <div class="row row-sm mg-t-20">
+                    <div class="col-xl-6">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Area نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">An area chart or area graph displays graphically quantitative data. It is based on the line chart.</p>
+                                <canvas id="chartArea1" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                    <div class="col-xl-6 mg-t-25 mg-xl-t-0">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Area نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">An area chart or area graph displays graphically quantitative data. It is based on the line chart.</p>
+                                <canvas id="chartArea2" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                </div><!-- row -->
+
+                <div class="row row-sm mg-t-20">
+                    <div class="col-xl-6">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Pie نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">A pie chart (or a circle chart) is a circular statistical graphic which is divided into slices to illustrate numerical proportion.</p>
+                                <canvas id="chartPie" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                    <div class="col-xl-6 mg-t-25 mg-xl-t-0">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-primary tx-white">Donut نمودار</div>
+                            <div class="card-body pd-sm-30"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                <p class="mg-b-20 mg-sm-b-30">A pie chart (or a circle chart) is a circular statistical graphic which is divided into slices to illustrate numerical proportion.</p>
+                                <canvas id="chartDonut" height="308" width="463" class="chartjs-render-monitor" style="display: block; width: 463px; height: 308px;"></canvas>
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                </div><!-- row -->
+                <div class="card-header bg-primary tx-white">تحلیل ها</div>
+                <br/>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <button class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#analyzeForm').slideDown();">
+                            ایجاد تحلیل جدید
+                        </button>
+                    </div><!-- col -->
+                </div>
+                <div id="analyzeForm" class="card-body pd-sm-30" style="display: none">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            عنوان تحلیل:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="مانند : تحلیل سه ماهه اول سال ..." type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->                                        
+                        <div class="col-lg-12">
+                            متن تحلیل:
+                            <div class="form-group has-success mg-b-0">
+                                <textarea rows="7" class="form-control is-valid mg-t-20" placeholder="تحلیل شما با توجه به وضعیت نمودارهای شاخص  چیست ؟">
+
+                                </textarea>  
+                            </div><!-- form-group -->
+                        </div><!-- col -->   
+
+                        <div class="col-lg-3">
+                            بارگذاری مستندات
+                            <br/>
+                            <label class="custom-file">
+                                <input type="file" id="file2" class="custom-file-input">
+                                <span class="custom-file-control custom-file-control-primary"></span>
+                            </label>
+                            <!--                                <a href="">
+                                                                <label class="custom-file">
+                                                                    مستندات بارگذاری شده:
+                                                                    <i class="icon ion-paperclip"></i>
+                                                                </label>
+                                                                <label class="custom-file">
+                                                                    مستندات بارگذاری شده:
+                                                                    <i class="icon ion-paperclip"></i>
+                                                                </label>
+                                                                <label class="custom-file">
+                                                                    مستندات بارگذاری شده:
+                                                                    <i class="icon ion-paperclip"></i>
+                                                                </label>
+                                                            </a>-->
+                        </div><!-- col -->   
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                <button class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#analyzeForm').slideUp();">لغو
+                                </button>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <button class="btn btn-outline-success active btn-block mg-b-10" onclick="alert('ثبت انجام شد');
+                                    $('#analyzeForm').slideUp();">ثبت
+                                <i class="fa fa-star"></i>
+                            </button>
+                        </div><!-- col -->
+                    </div>
+                </div><!-- card-body -->
+                <div class="row row-sm mg-t-20">
+                    <div class="col-xl-12">
+                        <div class="card bd-primary">
+                            <div class="card-header bg-info tx-white col-lg-12 pd-sm-10 c"> جدول سوابق تحلیل این شاخص</div>
+                            <div align="right">
+
+                                <table id="datatable2" class="table display responsive nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="wd-15p r">کد</th>
+                                            <th class="wd-15p r">عنوان</th><td class="wd-15p r">متن تحلیل</td>
+                                            <th class="wd-15p r">نام تکمیل کننده</th>
+                                            <th class="wd-15p r">سمت تکمیل کننده</th>
+                                            <th class="wd-15p r">تاریخ تکمیل</th>
+                                            <th class="wd-20p c">ویرایش</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td>تحلیل سه ماهه سوم 97</td><td>میانگین درآمد سه ماهه سوم 97 نسبت به سه ماهه متناظر سال قبل به علت حذف تمام وقتی سه نفز ار پزشکان جراح به میزان 20% کاهش پیدا کرده است</td><td class="c ">ریخته گران</td><td class="c ">مسئول درآمد</td><td class="c ">1397/09/20</td><td class="c "><i onclick="$('#analyzeForm').slideDown();" class="icon ion-gear-a"></i></td>
+                                        </tr><tr><td>2</td><td>تحلیل سه ماهه دوم 97</td><td>نسبت به دوره مشابه سال قبل تغییر معناداری نداشته است</td><td class="c ">ریخته گران</td><td class="c ">مسئول درآمد</td><td class="c ">1397/06/20</td><td class="c "><i onclick="$('#analyzeForm').slideDown();" class="icon ion-gear-a"></i></td>
+                                        </tr><tr><td>3</td><td>تحلیل سه ماهه اول 97</td><td>نسبت به دوره مشابه سال قبل تغییر معناداری نداشته است<br></td><td class="c ">ریخته گران</td><td class="c ">مسئول درآمد<br></td><td class="c ">1397/03/20</td><td class="c "><i onclick="$('#analyzeForm').slideDown();" class="icon ion-gear-a"></i></td>
+                                        </tr><tr><td>4</td><td>تحلیل سه ماهه چهارم سال 98</td><td>نسبت به دوره مشابه سال قبل تغییر معناداری نداشته است<br></td><td class="c ">ریخته گران</td><td class="c ">مسئول درآمد</td><td class="c ">1397/11/20</td><td class="c "><i onclick="$('#analyzeForm').slideDown();" class="icon ion-gear-a"></i></td>
+                                    </tbody></table></div>
+
+                        </div><!-- card -->
+                    </div><!-- col-6 -->
+                </div><!-- row -->
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group has-success mg-b-0">
+                            <button class="btn btn-outline-success active btn-block mg-b-10" onclick="window.print();">پرینت
+                            </button>
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg-3">
+                        <button class="btn btn-outline-success active btn-block mg-b-10" onclick="alert('ثبت انجام شد');
+                                $('#analyzeForm').slideUp();">خروجی اکسل                          
+                        </button>
+                    </div><!-- col -->
+                </div>
+            </div>
+            <div class="card-header bg-primary tx-white">میتوانید با توجه به وضعیت شاخص به کمیته ها و کارگروه های مرتبط پیشنهاد اقدام اصلاحی بدهید</div>
+
+            <p>این پیشنهادات در جلسه کمیته بررسی و در صورت صلاحدید نظر اعضای کمیته تصویب میشود</p>
+
+            <div class="col-lg-12 card-body pd-sm-30">
+                <div class="card bd-primary mg-t-3">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            پیشنهاد دهنده
+                            <input class="form-control" disabled="disabled" placeholder="کسی که این پیشنهاد را داده برای ذخیره در آرشیو اقدام های اصلاحی" type="text" value="رضا سعیدی - مسئول کنترل عفونت">
+                        </div>
+                        <div class="col-lg-4">
+                            عنوان مسئله
+                            <input class="form-control" placeholder="عنوان مسئله" type="text">
+                        </div>
+                        <div class="col-lg-4">
+                            علت مسئله
+                            <input class="form-control" placeholder="علت مسئله" type="text">
+                        </div>  
+                        <div class="col-lg-12">
+                            اقدام اصلاحی
+                            <input class="form-control" placeholder="پیشنهاد واضح شما برای اصلاح که در کمیته تصویب یا رد می شود" type="text">
+                        </div>                    
+                    </div><!-- row -->
+                    <div class="row">                
+                        <div class="col-lg-3">
+                            مسئول اجرا
+                            <select class="form-control">
+                                <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
+                                <option value="">انتخاب مسئول اجرا</option>
+                                <option value="1">مترون</option>
+                                <option value="2">سرپرستار چشم زنان</option>
+                                <option value="3">مسئول امور عمومی</option>
+                                <option value="4">مسئول تدارکات</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-3">
+                            مسئول پیگیری:
+                            <select class="form-control">
+                                <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
+                                <option value="">انتخاب مسئول پیگیری</option>
+                                <option value="1">مترون</option>
+                                <option value="2">سرپرستار چشم زنان</option>
+                                <option value="3">مسئول امور عمومی</option>
+                                <option value="4">مسئول تدارکات</option>
+                            </select>
+                        </div><!-- form-group -->
+                        <div class="col-lg-3">
+                            تاریخ شروع:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            تاریخ پایان:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            انتخاب کمیته
+                            <select class="form-control">
+                                <!--این آپشن ها را از قسمت مدیریت کمیته هاا بصورت اتوماتیک می آوریم-->
+                                <option value="اجباری">انتخاب کمیته</option>
+                                <option value="1">کمیته سنجش و پایش</option>
+                                <option value="2">کمیته ی مدیریت اجرایی</option>
+                                <option value="3">کمیته ی کنترل عفونت</option>
+                                <option value="4">کمیته ی ایمنی بیمار</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mg-t-20">
+                        <div class="col-lg-12">
+                            <textarea rows="3" class="form-control" placeholder="توضیحات برنامه عملیاتی"></textarea>
+                        </div><!-- col -->                    
+                    </div><!-- row -->
+                    <div class="row mg-t-20">
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                <button class="btn btn-secondary btn-block mg-b-10" onclick="">لغو</button>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <button class="btn btn-success btn-block mg-b-10" onclick="alert('به کمیته ی مورد نظر ارسال شد')">ارسال به کمیته جهت بررسی</button>
+                        </div><!-- col -->
+                    </div>
+                </div>
+            </div><!-- row -->
+
+            <!-- row -->
+        </div>
+
+    </div><!-- card -->
+</div><!-- card-body -->
+
+<script type="text/javascript">
+    var addColomn = function () {
+        var x = $("#input_x").val();
+        var y = $("#input_y").val();
+        var sum = x / y;
+
+        $("#new_x").html(x);
+        $("#new_y").html(y);
+        $("#new_sum").html(sum);
+        var num = $("#period_tr th").length;
+        $("#new_period").html("دوره " + (num - 2));
+
+        var avg_x = 0;
+// iterate through each td based on class and add the values
+        $("#x_tr td").each(function () {
+            var value = $(this).html();// add only if the value is number
+            if (!isNaN(value) && value.length != 0) {
+                avg_x += parseFloat(value);
+            }
+        });
+        $("#avg_x").html(Math.round(avg_x / ($("#x_tr td").length - 2)));
+
+        var avg_y = 0;
+        $("#y_tr td").each(function () {
+            var value = $(this).html();
+            if (!isNaN(value) && value.length != 0) {// add only if the value is number
+                avg_y += parseFloat(value);
+            }
+        });
+        $("#avg_y").html(Math.round(avg_y / ($("#y_tr td").length - 2)));
+
+        var avg_sum = 0;
+        $("#sum_tr td").each(function () {
+            var value = $(this).html();
+            if (!isNaN(value) && value.length != 0) {// add only if the value is number
+                avg_sum += parseFloat(value);
+            }
+        });
+        $("#avg_sum").html(Math.round(avg_sum / ($("#sum_tr td").length - 2)));
+        //افزودن ستون جدید
+//        $('#formulTable').find('tr').each(function () {
+//            $(this).find('th').eq(-1).after("<th id='new_period' >-</th>");
+//            $(this).find('td').eq(-1).after("<td id=''>ROW</td>");
+//        });
+    };
+
+
+
+</script>
+<script src="Manager/chart/chart.chartjs.js"></script>

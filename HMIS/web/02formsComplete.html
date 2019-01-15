@@ -1,0 +1,116 @@
+
+<div class="card bd-primary mg-t-20">
+    <div class="card-header bg-primary tx-white">فرم های تکمیل شده</div>
+    <div class="card-body pd-sm-30">
+<!--        <p class="mg-b-20 mg-sm-b-30">
+            <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('02newForm.html', null, function () {
+                        });
+                        return false;" >فرم جدید</a>
+        </p>-->
+
+        <div class="table-wrapper">
+            <table id="datatable1" class="table display responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th class="wd-15p r">کد</th>
+                            <th class="wd-15p r">عنوان</th>
+                            <th class="wd-15p r">نام تکمیل کننده</th>
+                            <th class="wd-15p r">سمت تکمیل کننده</th>
+                            <th class="wd-15p r">تاریخ تکمیل</th>
+                            <th class="wd-20p c">مشاهده</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>فرم چک لیست ارزیابی بهداشت حرفه ای 97</td><td class="c ">محمد رضا اعراب</td><td class="c ">سرپرستار</td><td class="c ">1397/09/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>2</td><td>فرم ایمنی بخش  اورزانس قلب </td><td class="c ">محمد رضا اعراب</td><td class="c ">سرپرستار</td><td class="c ">1397/08/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>3</td><td> اورزانس قلب بخش  اطفال</td><td class="c ">محمد رضا اعراب</td><td class="c ">سرپرستار</td><td class="c ">1397/07/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>4</td><td>فرم بهداشت محیط و پسماند بخش اورژانس</td><td class="c ">مرضیه سعیدی</td><td class="c ">سرپرستار</td><td class="c ">1397/06/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>5</td><td>فرم پرستاری بخش اورژانس قلب</td><td class="c "><p>	<br class="Apple-interchange-newline">مرضیه سعیدی<br></p></td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>6</td><td>فرم تجهیزات پزشکی بخش اورژانس قلب</td><td class="c ">مرضیه سعیدی</td><td class="c ">سرپرستار</td><td class="c ">1397/04/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>7</td><td>فرم چك ليست نهايي کنترل عفونت بخش اورژانس قلب </td><td class="c ">مرضیه سعیدی</td><td class="c ">سرپرستار</td><td class="c ">1397/03/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>8</td><td>فرم چک لیست ارزیابی بهداشت حرفه ای 97</td><td class="c ">محمد رضا اعراب</td><td class="c ">سرپرستار</td><td class="c ">1397/02/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>9</td><td>فرم ایمنیبخش  اورزانس قلب </td><td class="c ">مرضیه سعیدی</td><td class="c ">سرپرستار</td><td class="c ">1397/01/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>10</td><td> اورزانس قلب بخش  اطفال</td><td class="c ">مرضیه سعیدی</td><td class="c ">سرپرستار</td><td class="c ">1397/02/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>11</td><td>فرم بهداشت محیط و پسماند بخش اورژانس</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/03/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>12</td><td>فرم پرستاری بخش اورژانس قلب</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/04/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>13</td><td>فرم تجهیزات پزشکی بخش اورژانس قلب</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>14</td><td>فرم چك ليست نهايي کنترل عفونت بخش اورژانس قلب </td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/06/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>15</td><td>فرم چک لیست ارزیابی بهداشت حرفه ای 97</td><td class="c ">محمد رضا اعراب</td><td class="c ">سرپرستار</td><td class="c ">1397/07/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>16</td><td>فرم ایمنیبخش  اورزانس قلب </td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>17</td><td> اورزانس قلب بخش  اطفال</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>18</td><td>فرم بهداشت محیط و پسماند بخش اورژانس</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>19</td><td>فرم پرستاری بخش اورژانس قلب</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>20</td><td>فرم تجهیزات پزشکی بخش اورژانس قلب</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>21</td><td>فرم چك ليست نهايي کنترل عفونت بخش اورژانس قلب </td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>22</td><td>فرم چک لیست ارزیابی بهداشت حرفه ای 97</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>23</td><td>فرم ایمنیبخش  اورزانس قلب </td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>24</td><td> اورزانس قلب بخش  اطفال</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>25</td><td>فرم بهداشت محیط و پسماند بخش اورژانس</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>26</td><td>فرم پرستاری بخش اورژانس قلب</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>27</td><td>فرم تجهیزات پزشکی بخش اورژانس قلب</td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr><tr><td>28</td><td>فرم چك ليست نهايي کنترل عفونت بخش اورژانس قلب </td><td class="c ">الهه رضایی</td><td class="c ">سرپرستار</td><td class="c ">1397/05/20</td><td class="c "><i class="icon ion-eye" onclick="show02oneCompletedForm();"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div> table-wrapper 
+<!--        <div class="table-wrapper">
+            <table id="datatable1" class="table display responsive nowrap">
+                <thead>
+                    <tr>
+                        <th class="r">کد</th>
+                        <th class="r">عنوان</th>
+                        <th class="c">گزینه</th>
+                        <th class="c">گزینه</th>
+                        <th class="c">گزینه</th>
+                        <th class="c">گزینه</th>
+                        <th class="c">گزینه</th>
+                        <th class="c">گزینه</th>
+                        <th class="c">گزینه</th>
+                        <th class="c">عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr onclick="cmsPoll.m_select(6602);"><td >6602</td><td >فرم  آيا بر روي محلولهاي هندراب تاريخ زده شده است؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6601);"><td >6601</td><td >فرم آيا پوستر راهنماي وسايل حفاظت فردي در بخش نصب شده است؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6600);"><td >6600</td><td >فرم  اطلاع رسانی به موقع</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6599);"><td >6599</td><td >فرم  آيا زمان تعويض اتصالات بيمار (برانول، سرم و ...) رعايت مي گردد؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6598);"><td >6598</td><td >فرم  آيا در صورت بروز فلبيت كشت از نوك برانول جهت افتراق فلبيت عفوني از غير عفوني انجام مي شود؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6597);"><td >6597</td><td >فرم  آيا پرسنل از روش اجرايي پيشگيري و كنترل عفونت كتترهاي ادراري آگاهي داشته و طبق آن عمل مي كنند؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6596);"><td >6596</td><td >فرم  آيا پرسنل از تعريف عفونتهاي بيمارستاني و انواع آن آگاهي دارند؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6595);"><td >6595</td><td >فرم  آيا پرسنل از موارد مصرف مواد ضدعفوني و گندزدا و نحوه صحیح گندزدايي وسایل آشنایی کامل دارند؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6594);"><td >6594</td><td >فرم  آيا خدمه و كمك بهيار بخش از نحوه گندزدایی سطوح آلوده به خون و ترشحات اطلاع دارد؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6593);"><td >6593</td><td >فرم  آيا چراغ UV بخش سالم و كارت ساعات استفاده شده روي آن نصب است؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6592);"><td >6592</td><td >فرم  آيا ملحفه هاي عفوني و آغشته به مواد دفعي، جداگانه جمع آوري و با اصول بهداشتي به لندري حمل مي شود؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6591);"><td >6591</td><td >فرم آیا کارکنان لوازم حفاظت فردی را می شناسند؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                    <tr onclick="cmsPoll.m_select(6590);"><td >6590</td><td >فرم  آيا محلول هندراب با ديسپنسر به تعداد کافی و نزدیک تخت بیماران و استیشن پرستاری وجود دارد؟</td><td >فرم 0. عالی</td><td >فرم 0. خوب</td><td >فرم 0. متوسط</td><td >فرم 0. ضعیف</td><td >فرم 0. </td><td >فرم 0. </td><td class="c ">0</td><td class="c "><i class="fa fa-bar-chart" onclick="sow03newExam();"></i></td></tr>
+                </tbody>
+            </table>
+        </div> table-wrapper -->
+    </div><!-- card-body -->
+</div><!-- card -->
+
+
+
+<!-- sh-mainpanel -->
+
+
+
+<script>
+    
+    $(function () {
+        'use strict';
+        $('#datatable1').DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: 'جستجو...',
+                sSearch: '',
+                lengthMenu: '_MENU_ items/page',
+            }
+        });
+
+
+        // Select2
+        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+    });
+</script>

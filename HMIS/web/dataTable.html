@@ -1,0 +1,62 @@
+<body>
+    <div class="card bd-primary mg-t-20">
+        <div class="card-header bg-primary tx-white">مدیریت اطلاعات سازمانی</div>
+        <div class="card-body pd-sm-30">
+            <p class="mg-b-20 mg-sm-b-30">جستجوی هوشمند</p>
+
+            <div class="table-wrapper">
+                <table id="datatable1" class="table display responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th class="wd-15p">کد</th>
+                            <th class="wd-15p">عنوان</th>
+                            <th class="wd-20p">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td >68</td><td >معرفی بیمارستان</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >67</td><td >چارت سازمانی</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >66</td><td >شرح وضایف</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >65</td><td >آیین نامه پرسنلی و شخصی</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >64</td><td >دستور العمل اجرایی شماره 12</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr ><td >63</td><td >دستور العمل حقوق بیمار</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr><tr><td >63</td><td >ضوابط اجرایی اتاق عمل</td><td class="c "><i class="icon ion-ios-gear-outline" onclick="show01TextEditor();"></i></td>
+                        </tr></tbody>
+                </table>
+            </div><!-- table-wrapper -->
+        </div><!-- card-body -->
+    </div><!-- card -->
+
+
+
+    <!-- sh-mainpanel -->
+
+
+
+    <script>
+        var show01TextEditor = function () {
+            $('.sh-mainpanel').load('01textEditor.html', null, function () {
+            });
+            return false;
+        }
+        $(function () {
+            'use strict';
+
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'جستجو...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+
+            // Select2
+            $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+        });
+    </script>
+
+
+</body>
