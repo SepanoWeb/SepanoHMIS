@@ -24,9 +24,9 @@ public class Server extends HttpServlet {
     ////---------------------------------ipp-co.com
     public static sites mainSite = sites.iranSepano;
     public static String portalPage = "";
-    public static String databaseName = "db_ippco_com";
-    public static String userName = "user_ippco_com";
-    public static String password = "pass_ipp123_!#";
+    public static String databaseName = "db_hmis";
+    public static String userName = "root";
+    public static String password = "m123456";
     public static String userNameSMS = "0";
     public static String passwordSMS = "0";
     public static String defaultLang = "1"; // fa
