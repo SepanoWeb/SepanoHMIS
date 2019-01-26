@@ -1,6 +1,7 @@
 package cms.tools;
 
 import cms.access.*;
+import hmis.hmis.Part;
 import cms.cms.*;
 import static cms.tools.Server.getClazzes;
 import static cms.tools.Server.run;
