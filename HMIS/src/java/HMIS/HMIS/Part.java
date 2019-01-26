@@ -64,7 +64,7 @@ public class Part {
                     + "    <div class='card-header bg-primary tx-white'>بخش ها</div>"
                     + "    <div class='card-body pd-sm-30'>"
                     + "        <p class='mg-b-20 mg-sm-b-30'>"
-                    + "            <a  class='btn btn-success pd-sm-x-20 mg-sm-r-5' style='color: white;' onclick='cmsUser.m_add_new();' > بخش جدید</a>"
+                    + "            <a  class='btn btn-success pd-sm-x-20 mg-sm-r-5' style='color: white;' onclick='hmisPart.m_add_new();' > بخش جدید</a>"
                     + "        </p>");
 
             html.append("<table class='table display responsive nowrap' id='refreshParts' dir='rtl'><thead>");
