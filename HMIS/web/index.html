@@ -295,14 +295,15 @@
 
                         <li class="nav-item"><a href="#swPart"  class="nav-link ShowOneDiv" onclick="if ($('#swPartForm').html() == '') {
 //                                   
-                                    hmisPart.loadForm();
-                                    hmisPart.m_show_form();
+                                    hmisPart.m_refresh();
+//                                    hmisPart.loadForm();
+//                                    hmisPart.m_show_form();
 //                                 
 
                                 }
                                 ;
                                 hmisPart.mainTabSetSize();
-//                                hmisPart.loadForm();
+                                hmisPart.loadForm();
 
                                                 ">بخش ها</a></li>
 
@@ -322,7 +323,7 @@
 
 
 
-                        <li class="nav-item"><a href="#" onclick="alert('در حال حاظر شما به این قسمت دسترسی ندارید');return false" class="nav-link">تعریف سطوح دسترسی</a></li>
+                        <li class="nav-item"><a href="#" onclick="alert('در حال حاظر شما به این قسمت دسترسی ندارید');return false" class="nav-link">جدول نقش ها </a></li>
                         <!--<li class="nav-item"><a href="#" onclick=" $('.sh-mainpanel').load('13userGroup.html', null, function () {});return false;" class="nav-link">جدول گروه های کاربری</a></li>-->
                         <li  class="nav-item"><a href="#swGroup"  class="nav-link ShowOneDiv" onclick="if ($('#swGroupTbl').html() == '') {
                                     cmsGroup.m_refresh();
@@ -331,7 +332,7 @@
                                 ;
                                 cmsGroup.mainTabSetSize();
                                 cmsGroup.loadForm();
-                                                 ">جدول گروه های کاربری</a></li>
+                                                 ">تعریف سطوح دسترسی</a></li>
                     </ul>
                 </li><!-- nav-item -->
                 <li class="nav-item">

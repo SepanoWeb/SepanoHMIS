@@ -11,8 +11,8 @@ var hmisPart = {
     loadForm:function(){
         if($("#swPartForm").html()==''){
             $("#swPartForm").load("formHMIS/part.html", null, function(){
-//                 hmisPart.m_refresh();
-                   hmisPart.m_show_form();
+                 hmisPart.m_refresh();
+//                   hmisPart.m_show_form();
                 $("#cancel_Part").button().click(function(e) {
                     hmisPart.m_clean();
                     hmisPart.m_show_tbl();
