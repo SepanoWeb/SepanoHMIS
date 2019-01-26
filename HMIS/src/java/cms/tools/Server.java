@@ -25,7 +25,6 @@ import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
 
 public class Server extends HttpServlet {
-    
     ////---------------------------------ipp-co.com
     public static sites mainSite = sites.iranSepano;
     public static String portalPage = "";
