@@ -34,6 +34,12 @@ var hmisPart = {
         jj(param).jjAjax2(false);
         hmisPart.tabSizeTbl();
     },
+      m_add_new: function () {
+        jj("do=" + hmisPart.tableName + ".add_new").jjAjax2(false);
+        hmisPart.m_show_form();
+        hmisPart.m_clean();
+//        cmsUser.m_getGroups();
+    },
     m_show_form: function () {
         $('#swPartTbl').hide();
         $('#swPartForm').show();

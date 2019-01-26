@@ -633,6 +633,37 @@ public class Js {
             return cms + ".m_show_tbl();\n";
         }
     }
+    //////////////////بخش ها
+    public static class jjPart {
+
+        static String hmis = "hmisPart";
+
+        public static String insert() {
+            return "hmisPart.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisPart.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
 
     public static class jjGroup {
 

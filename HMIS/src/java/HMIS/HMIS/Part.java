@@ -103,6 +103,18 @@ public class Part {
             return Server.ErrorHandler(e);
         }
     }
-
+ public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+        StringBuilder html = new StringBuilder();
+        try {
+            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            if (accIns) {
+                html.append(Js.setHtml("#Part_button", "<div class='row'><div class='col-lg-6'><input type=\"button\" id=\"insert_Part_new\" value=\"" + lbl_insert + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div></div>"));
+                html.append(Js.buttonMouseClick("#insert_Part_new", Js.jjPart.insert()));
+            }
+            return html.toString();
+        } catch (Exception e) {
+            return Server.ErrorHandler(e);
+        }
+    }
    
 }
