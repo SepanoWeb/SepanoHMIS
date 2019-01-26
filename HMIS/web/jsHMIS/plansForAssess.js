@@ -11,7 +11,7 @@ var hmisPlansForAssess = {
 
     loadForm: function () {
         if ($("#swPlansForAssessForm").html() == '') {
-            $("#swPlansForAssessForm").load("formHmis/04newAssess.html", null, function () {
+            $("#swPlansForAssessForm").load("formHMIS/04newAssess.html", null, function () {
                 $("#cancel_PlansForAssess").button().click(function (e) {
                     hmisPlansForAssess.m_clean();
                     hmisPlansForAssess.m_show_tbl();

@@ -11,7 +11,7 @@ var hmisSteps = {
    
     loadForm: function () {
         if ($("#swStepsForm").html() == '') {
-            $("#swStepsForm").load("formHmis/04Steps.html", null, function () {
+            $("#swStepsForm").load("formHMIS/04Steps.html", null, function () {
 //             $("#cancel_Content").button().click(function (e) {
 //                    hmisSteps.m_clean();
 //                    hmisSteps.m_show_tbl();

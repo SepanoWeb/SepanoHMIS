@@ -11,7 +11,7 @@ var hmisReports = {
    
     loadForm: function () {
         if ($("#swReportsForm").html() == '') {
-            $("#swReportsForm").load("formHmis/04reports.html", null, function () {
+            $("#swReportsForm").load("formHMIS/04reports.html", null, function () {
              $("#cancel_Reports").button().click(function (e) {
                     hmisReports.m_clean();
                     hmisReports.m_show_tbl();
