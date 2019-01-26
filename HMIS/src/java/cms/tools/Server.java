@@ -2,6 +2,8 @@ package cms.tools;
 
 import cms.access.*;
 import cms.cms.*;
+import static cms.tools.Server.getClazzes;
+import static cms.tools.Server.run;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
@@ -24,22 +26,22 @@ public class Server extends HttpServlet {
     ////---------------------------------ipp-co.com
     public static sites mainSite = sites.iranSepano;
     public static String portalPage = "";
-    public static String databaseName = "db_ippco_com";
-    public static String userName = "user_ippco_com";
-    public static String password = "pass_ipp123_!#";
+    public static String databaseName = "db_hmis";
+    public static String userName = "root";
+    public static String password = "m123456";
     public static String userNameSMS = "0";
     public static String passwordSMS = "0";
     public static String defaultLang = "1"; // fa
     public static String smsKey = "0";
     public static String smsPanelNumber = "0";
-    public static String siteName = "ipp-co.com";// comment answer sender
+    public static String siteName = "hmis.com";// comment answer sender
     public static String emailAccount = "ipp.info@gmail.com";
     public static String passEmail = "110110110";
     public static String smtpAcount = "smtp.gmail.com";
-    public static String mainPage = "images_ipp_co2/index.jsp";
-    public static String contentJSP = "images_ipp_co2/content.jsp";
+    public static String mainPage = "login.html";
+    public static String contentJSP = "content.jsp";
     public static String newsJSP = "index_news.jsp";
-    public static String productJSP = "index_product.jsp";
+    public static String productJSP = "index.jsp";
     //********************************************************************
 
 
@@ -59,36 +61,38 @@ public class Server extends HttpServlet {
 
     public static List<Class> getClazzes() {
         if (clazzes.isEmpty()) {
-            clazzes.add(Content.class);
-            clazzes.add(News.class);
-            clazzes.add(Pic.class);
-            clazzes.add(Category_Gallery.class);
-            clazzes.add(Category_News.class);
-            clazzes.add(Category_Forum.class);
-            clazzes.add(Category_Product.class);
-            clazzes.add(Category_Poll.class);
-            clazzes.add(Comment.class);
+//            clazzes.add(Content.class);
+//            clazzes.add(News.class);
+//            clazzes.add(Pic.class);
+//            clazzes.add(Category_Gallery.class);
+//            clazzes.add(Category_News.class);
+//            clazzes.add(Category_Forum.class);
+//            clazzes.add(Category_Product.class);
+//            clazzes.add(Category_Poll.class);
+//            clazzes.add(Comment.class);
             clazzes.add(Access_Group.class);
             clazzes.add(Access_Group_User.class);
             clazzes.add(Access_User.class);
-            clazzes.add(Product.class);
-            clazzes.add(Forum.class);
-            clazzes.add(Backup.class);
-            clazzes.add(Poll.class);
-            clazzes.add(sms.class);// ADDED BY RASHIDI
-            clazzes.add(smsSetting.class);// ADDED BY RASHIDI
-            clazzes.add(Enrolment.class);
-            clazzes.add(Enrolment3.class);
-            clazzes.add(Portal.class);
-            clazzes.add(PortalUser.class);
-            clazzes.add(Factor.class);
-            clazzes.add(Payment.class);
-            clazzes.add(PaymentSetting.class);
-            clazzes.add(Customer.class);
-            clazzes.add(tags.class);//SHAHSANAEI
-            clazzes.add(Language.class);// ADDED BY RASHIDI
-            clazzes.add(email.class);
-            clazzes.add(Search.class);
+//            clazzes.add(Product.class);
+//            clazzes.add(Forum.class);
+//            clazzes.add(Backup.class);
+//            clazzes.add(Poll.class);
+//            clazzes.add(sms.class);// ADDED BY RASHIDI
+//            clazzes.add(smsSetting.class);// ADDED BY RASHIDI
+//            clazzes.add(Enrolment.class);
+//            clazzes.add(Enrolment3.class);
+//            clazzes.add(Portal.class);
+//            clazzes.add(PortalUser.class);
+//            clazzes.add(Factor.class);
+//            clazzes.add(Payment.class);
+//            clazzes.add(PaymentSetting.class);
+//            clazzes.add(Customer.class);
+//            clazzes.add(tags.class);//SHAHSANAEI
+//            clazzes.add(Language.class);// ADDED BY RASHIDI
+//            clazzes.add(email.class);
+//            clazzes.add(Search.class);
+            clazzes.add(Part.class);
+            
         }
         return clazzes;
     }

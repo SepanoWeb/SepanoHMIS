@@ -1,0 +1,2303 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="../css/style1.css" type="text/css"/>
+    </head>
+    <body class="body" style="padding-top: 8px;width: 983px;">
+        <div class="sh-pagetitle">
+            <!--        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </span> input-group-btn 
+                    </div> input-group -->
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <!--<span>کا</span>-->
+                    <h2>گروه های کاربری</h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div class='row'>
+            <div class="col-lg-12">
+                <!--<div class="card bd-primary mg-t-20" id='AccessuserForm'>-->
+                <div class="card-header bg-primary tx-white">گروه ها</div></div></div>
+        <!--        <table style="width: 100%;padding: 1px">
+        
+                    <tr>-->
+        <div class='card-body pd-sm-30'>  
+            <div class="row">
+                <div class="col-lg-6">
+                    <input type="hidden" id="group_id" name="id" />
+                    نام  گروه:
+                    <input class="form-control" id="group_title" name="group_title"  placeholder="نام گروه" type="text">
+                </div>
+                <div class="col-lg-6">
+                    توضیحات:
+                    <input class="form-control" id="group_des" name="group_des" placeholder="توضیحات" type="text">
+                </div>
+                <!--                <td style="text-align: right;padding: 5px;vertical-align: top">
+                                    <div style="width: 100%;padding: 1px" cellspacing="10" >
+                                        <tr>
+                                            <td style="text-align: left;width: 5%"  >
+                                                <input type="hidden" id="group_id" name="id" />
+                                                نام گروه:   
+                                            </td>
+                                            <td style="text-align: right;width: 15%">
+                                                <input type="text" class="form-control" id="group_title" name="group_title"   style="width: 99%"/>
+                                            </td>
+                                            <td style="text-align: left;width: 5%">
+                                                توضیحات:   
+                                            </td>
+                                            <td style="text-align: right;width: 60%">
+                                                <input type="text" class="form-control" id="group_des" name="group_des"   style="width: 99%"/>
+                                            </td>
+                                        </tr>-->
+            </div>
+        </div>
+
+        <table style="width:99%">
+            <tr>
+                <td style="text-align: right;padding: 5px">
+                    <!-- ------------------------ -->
+                    <table width="100%" cellspacing="10" cellpadding="10">
+                        <tr>
+                            <td style="width: 25%;vertical-align: top;" id="messagesAcc">
+                                <br/>
+                                پیام ها
+                                <br/>
+                                <br/>
+                                <div id="showMessagesAccDiv">
+                                    <input type="checkbox" name="C01" id="C01" value="1" > 01.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertMessagesAccDiv">
+                                    <input type="checkbox" name="C02" id="C02" value="1"> 02.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="editMessagesAccDiv">
+                                    <input type="checkbox" name="C03" id="C03" value="1"> 03.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteMessagesAccDiv">
+                                    <input type="checkbox" name="C04" id="C04" value="1"> 04.
+                                    ارسال ایمیل به مدیر سیستم
+                                    <br/>
+                                </div>
+                                <div id="sendEmailMessagesAccDiv">
+                                    <input type="checkbox" name="C05" id="C05" value="1"> 05.
+                                    چاپ
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <div id="printMessagesAccDiv">
+                                        <input type="checkbox" name="C06" id="C06" value="1"> 06.
+                                        رزرو شده
+                                        <br/>
+                                    </div>
+                                    <input type="checkbox" name="C07" id="C07" value="1"> 07.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C08" id="C08" value="1"> 08.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C09" id="C09" value="1"> 09.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C10" id="C10" value="1"> 10.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C11" id="C11" value="1"> 11.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C12" id="C12" value="1"> 12.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C13" id="C13" value="1"> 13.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C14" id="C14" value="1"> 14.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C15" id="C15" value="1"> 15.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C16" id="C16" value="1"> 16.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C17" id="C17" value="1"> 17.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C18" id="C18" value="1"> 18.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C19" id="C19" value="1"> 19.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C20" id="C20" value="1"> 20.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="contentAcc">
+                                <br/>
+                                محتویات سایت
+                                <br/>
+                                <br/>
+                                <div id="showContentAccDiv">
+                                    <input type="checkbox" name="C21" id="C21" value="1" > 21.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertContentAccDiv">
+                                    <input type="checkbox" name="C22" id="C22" value="1"> 22.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editContentAccDiv">
+                                    <input type="checkbox" name="C23" id="C23" value="1"> 23.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteContentAccDiv">
+                                    <input type="checkbox" name="C24" id="C24" value="1"> 24.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="lan1ContentAccDiv">
+                                    <input type="checkbox" name="C25" id="C25" value="1"> 25.
+                                    افزودن زبان اول
+                                    <br/>
+                                </div>
+                                <div id="lan2ContentAccDiv">
+                                    <input type="checkbox" name="C26" id="C26" value="1"> 26.
+                                    افزودن زبان دوم
+                                    <br/>
+                                </div>
+                                <div id="lan3ContentAccDiv">
+                                    <input type="checkbox" name="C27" id="C27" value="1"> 27.
+                                    افزودن زبان سوم
+                                    <br/>
+                                </div>
+                                <div id="lan4ContentAccDiv">
+                                    <input type="checkbox" name="C28" id="C28" value="1"> 28.
+                                    افزودن زبان چهارم
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C29" id="C29" value="1"> 29.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C30" id="C30" value="1"> 30.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C31" id="C31" value="1"> 31.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C32" id="C32" value="1"> 32.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C33" id="C33" value="1"> 33.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C34" id="C34" value="1"> 34.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C35" id="C35" value="1"> 35.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C36" id="C36" value="1"> 36.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C37" id="C37" value="1"> 37.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C39" id="C38" value="1"> 38.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C39" id="C39" value="1"> 39.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C40" id="C40" value="1"> 40.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top;display:none" id="newsShowAcc">
+                                <div class="reservedAcc" style="display:none">
+                                    <br/>
+                                    قسمت اخبار
+                                    <br/>
+                                    <br/>
+                                    <div id="showNewsShowAccDiv">
+                                        <input type="checkbox" name="C41" id="C41" value="1"> 41.
+                                        رزرو شده
+                                        <br/>
+                                    </div>
+                                    <input type="checkbox" name="C42" id="C42" value="1"> 42.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C43" id="C43" value="1"> 43.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C04" id="C44" value="1"> 44.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C45" id="C45" value="1"> 45.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C46" id="C46" value="1"> 46.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C47" id="C47" value="1"> 47.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C48" id="C48" value="1"> 48.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C49" id="C49" value="1"> 49.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C50" id="C50" value="1"> 50.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C51" id="C51" value="1"> 51.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C52" id="C52" value="1"> 52.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C53" id="C53" value="1"> 53.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C54" id="C54" value="1"> 54.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C55" id="C55" value="1"> 55.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C56" id="C56" value="1"> 56.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C57" id="C57" value="1"> 57.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C58" id="C58" value="1"> 58.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C59" id="C59" value="1"> 59.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C60" id="C60" value="1"> 60.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="newsAcc">
+                                <br/>
+                                اخبار
+                                <br/>
+                                <br/>
+                                <div id="showNewsAccDiv">
+                                    <input type="checkbox" name="C61" id="C61" value="1" > 61.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertNewsAccDiv">
+                                    <input type="checkbox" name="C62" id="C62" value="1"> 62.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editNewsAccDiv">
+                                    <input type="checkbox" name="C63" id="C63" value="1"> 63.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteNewsAccDiv">
+                                    <input type="checkbox" name="C64" id="C64" value="1"> 64.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="lan1NewsAccDiv">
+                                    <input type="checkbox" name="C65" id="C65" value="1"> 65.
+                                    افزودن زبان اول
+                                    <br/>
+                                </div>
+                                <div id="lan2NewsAccDiv">
+                                    <input type="checkbox" name="C66" id="C66" value="1"> 66.
+                                    افزودن زبان دوم
+                                    <br/>
+                                </div>
+                                <div id="lan3NewsAccDiv">
+                                    <input type="checkbox" name="C67" id="C67" value="1"> 67.
+                                    افزودن زبان سوم
+                                    <br/>
+                                </div>
+                                <div id="lan4NewsAccDiv">
+                                    <input type="checkbox" name="C68" id="C68" value="1"> 68.
+                                    افزودن زبان چهارم
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C69" id="C69" value="1"> 69.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C70" id="C70" value="1"> 70.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C71" id="C71" value="1"> 71.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C72" id="C72" value="1"> 72.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C73" id="C73" value="1"> 73.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C74" id="C74" value="1"> 74.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C75" id="C75" value="1"> 75.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C76" id="C76" value="1"> 76.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C77" id="C77" value="1"> 77.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C78" id="C78" value="1"> 78.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C79" id="C79" value="1"> 79.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C80" id="C80" value="1"> 80.
+                                    رزرو شده
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;vertical-align: top" id="newsCatgAcc">
+                                <br/>
+                                طبقه بندی اخبار
+                                <br/>
+                                <br/>
+                                <div id="showNewsCatgAccDiv">
+                                    <input type="checkbox" name="C81" id="C81" value="1" > 81.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertNewsCatgAccDiv">
+                                    <input type="checkbox" name="C82" id="C82" value="1"> 82.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editNewsCatgAccDiv">
+                                    <input type="checkbox" name="C83" id="C83" value="1"> 83.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteNewsCatgAccDiv">
+                                    <input type="checkbox" name="C84" id="C84" value="1"> 84.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="lan1NewsCatgAccDiv">
+                                    <input type="checkbox" name="C85" id="C85" value="1"> 85.
+                                    افزودن زبان اول
+                                    <br/>
+                                </div>
+                                <div id="lan2NewsCatgAccDiv">
+                                    <input type="checkbox" name="C86" id="C86" value="1"> 86.
+                                    افزودن زبان دوم
+                                    <br/>
+                                </div>
+                                <div id="lan3NewsCatgAccDiv">
+                                    <input type="checkbox" name="C87" id="C87" value="1"> 87.
+                                    افزودن زبان سوم
+                                    <br/>
+                                </div>
+                                <div id="lan4NewsCatgAccDiv">
+                                    <input type="checkbox" name="C88" id="C88" value="1"> 88.
+                                    افزودن زبان چهارم
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C89" id="C89" value="1"> 89.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C90" id="C90" value="1"> 90.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C91" id="C91" value="1"> 91.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C92" id="C92" value="1"> 92.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C93" id="C93" value="1"> 93.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C94" id="C94" value="1"> 94.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C95" id="C95" value="1"> 95.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C96" id="C96" value="1"> 96.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C97" id="C97" value="1"> 97.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C98" id="C98" value="1"> 98.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C99" id="C99" value="1"> 99.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C100" id="C100" value="1"> 100.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top;display:none" id="galleryShowAcc">
+                                <div class="reservedAcc" style="display:none">
+                                    <br/>
+                                    قسمت تصاویر
+                                    <br/>
+                                    <br/>
+                                    <div id="showGalleryShowAccDiv">
+                                        <input type="checkbox" name="C101" id="C101" value="1"> 101.
+                                        رزرو شده
+                                        <br/>
+                                    </div>
+                                    <input type="checkbox" name="C102" id="C102" value="1"> 102.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C103" id="C103" value="1"> 103.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C104" id="C104" value="1"> 104.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C105" id="C105" value="1"> 105.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C106" id="C106" value="1"> 106.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C107" id="C107" value="1"> 107.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C108" id="C108" value="1"> 108.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C109" id="C109" value="1"> 109.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C110" id="C110" value="1"> 110.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C111" id="C111" value="1"> 111.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C112" id="C112" value="1"> 112.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C113" id="C113" value="1"> 113.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C114" id="C114" value="1"> 114.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C115" id="C115" value="1"> 115.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C116" id="C116" value="1"> 116.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C117" id="C117" value="1"> 117.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C118" id="C118" value="1"> 118.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C119" id="C119" value="1"> 119.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C120" id="C120" value="1"> 120.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="galleryAcc">
+                                <br/>
+                                تصاویر
+                                <br/>
+                                <br/>
+                                <div id="showGalleryAccDiv">
+                                    <input type="checkbox" name="C121" id="C121" value="1" > 121.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertGalleryAccDiv">
+                                    <input type="checkbox" name="C122" id="C122" value="1"> 122.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editGalleryAccDiv">
+                                    <input type="checkbox" name="C123" id="C123" value="1"> 123.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteGalleryAccDiv">
+                                    <input type="checkbox" name="C124" id="C124" value="1"> 124.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="lan1GalleryAccDiv">
+                                    <input type="checkbox" name="C125" id="C125" value="1"> 125.
+                                    افزودن زبان اول
+                                    <br/>
+                                </div>
+                                <div id="lan2GalleryAccDiv">
+                                    <input type="checkbox" name="C126" id="C126" value="1"> 126.
+                                    افزودن زبان دوم
+                                    <br/>
+                                </div>
+                                <div id="lan3GalleryAccDiv">
+                                    <input type="checkbox" name="C127" id="C127" value="1"> 127.
+                                    افزودن زبان سوم
+                                    <br/>
+                                </div>
+                                <div id="lan4GalleryAccDiv">
+                                    <input type="checkbox" name="C128" id="C128" value="1"> 128.
+                                    افزودن زبان چهارم
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C129" id="C129" value="1"> 129.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C130" id="C130" value="1"> 130.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C131" id="C131" value="1"> 131.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C132" id="C132" value="1"> 132.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C133" id="C133" value="1"> 133.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C134" id="C134" value="1"> 134.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C135" id="C135" value="1"> 135.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C136" id="C136" value="1"> 136.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C137" id="C137" value="1"> 137.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C138" id="C138" value="1"> 138.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C139" id="C139" value="1"> 139.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C140" id="C140" value="1"> 140.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="galleryCatgAcc">
+                                <br/>
+                                طبقه بندی تصاویر
+                                <br/>
+                                <br/>
+                                <div id="showGalleryCatgAccDiv">
+                                    <input type="checkbox" name="C141" id="C141" value="1" > 141.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertGalleryCatgAccDiv">
+                                    <input type="checkbox" name="C142" id="C142" value="1"> 142.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editGalleryCatgAccDiv">
+                                    <input type="checkbox" name="C143" id="C143" value="1"> 143.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteGalleryCatgAccDiv">
+                                    <input type="checkbox" name="C144" id="C144" value="1"> 144.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="lan1GalleryCatgAccDiv">
+                                    <input type="checkbox" name="C145" id="C145" value="1"> 145.
+                                    افزودن زبان اول
+                                    <br/>
+                                </div>
+                                <div id="lan2GalleryCatgAccDiv">
+                                    <input type="checkbox" name="C146" id="C146" value="1"> 146.
+                                    افزودن زبان دوم
+                                    <br/>
+                                </div>
+                                <div id="lan3showGalleryCatgAccDiv">
+                                    <input type="checkbox" name="C147" id="C147" value="1"> 147.
+                                    افزودن زبان سوم
+                                    <br/>
+                                </div>
+                                <div id="lan4GalleryCatgAccDiv">
+                                    <input type="checkbox" name="C148" id="C148" value="1"> 148.
+                                    افزودن زبان چهارم
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C149" id="C149" value="1"> 149.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C150" id="C150" value="1"> 150.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C151" id="C151" value="1"> 151.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C152" id="C152" value="1"> 152.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C153" id="C153" value="1"> 153.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C154" id="C154" value="1"> 154.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C155" id="C155" value="1"> 155.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C156" id="C156" value="1"> 156.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C157" id="C157" value="1"> 157.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C158" id="C158" value="1"> 158.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C159" id="C159" value="1"> 159.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C160" id="C160" value="1"> 160.
+                                    رزرو شده
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;vertical-align: top" id="registerFormAcc">
+                                <br/>
+                                فرم ها
+                                <br/>
+                                <br/>
+                                <div id="showRegisterFormAccDiv">
+                                    <input type="checkbox" name="C161" id="C161" value="1" > 161.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertRegisterFormAccDiv">
+                                    <input type="checkbox" name="C162" id="C162" value="1"> 162.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="editRegisterFormAccDiv">
+                                    <input type="checkbox" name="C163" id="C163" value="1"> 163.
+                                    ارسال ایمیل
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C164" id="C164" value="1"> 164.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C165" id="C165" value="1"> 165.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C166" id="C166" value="1"> 166.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C167" id="C167" value="1"> 167.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C168" id="C168" value="1"> 168.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C169" id="C169" value="1"> 169.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C170" id="C170" value="1"> 170.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C171" id="C171" value="1"> 171.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C172" id="C172" value="1"> 172.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C173" id="C173" value="1"> 173.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C174" id="C174" value="1"> 174.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C175" id="C175" value="1"> 175.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C176" id="C176" value="1"> 176.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C177" id="C177" value="1"> 177.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C178" id="C178" value="1"> 178.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C179" id="C179" value="1"> 179.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C180" id="C180" value="1"> 180.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="paymentAcc">
+                                <br/>
+                                تراکنش ها
+                                <br/>
+                                <br/>
+                                <div id="showPaymentAccDiv">
+                                    <input type="checkbox" name="C181" id="C181" value="1" > 181.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="deletePaymentAccDiv">
+                                    <input type="checkbox" name="C182" id="C182" value="1"> 182.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C183" id="C183" value="1"> 183.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C184" id="C184" value="1"> 184.
+                                    رزرو شده
+                                    <br/>
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="paymentSettingAcc">
+                                <br/>
+                                درگاه بانک
+                                <br/>
+                                <br/>
+                                <div id="showPaymentSettAccDiv">
+                                    <input type="checkbox" name="C185" id="C185" value="1" > 185.
+                                    نمایش
+                                    <br/>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;vertical-align: top;display:none" id="accountingAcc">
+                                <div class="reservedAcc" style="display:none">
+                                    <br/>
+                                    قسمت حسابداری
+                                    <br/>
+                                    <br/>
+                                    <div id="showAccountingAccDiv">
+                                        <input type="checkbox" name="C186" id="C186" value="1"> 186.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C187" id="C187" value="1"> 187.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C188" id="C188" value="1"> 188.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C189" id="C189" value="1"> 189.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C190" id="C190" value="1"> 190.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C191" id="C191" value="1"> 191.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C192" id="C192" value="1"> 192.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C193" id="C193" value="1"> 193.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C194" id="C194" value="1"> 194.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C195" id="C195" value="1"> 195.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C196" id="C196" value="1"> 196.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C197" id="C197" value="1"> 197.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C198" id="C198" value="1"> 198.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C199" id="C199" value="1"> 199.
+                                        رزرو شده
+                                        <br/>
+                                        <input type="checkbox" name="C200" id="C200" value="1"> 200.
+                                        رزرو شده
+                                    </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="factorAcc">
+                                <br/>
+                                فاکتور
+                                <br/>
+                                <br/>
+                                <div id="showFactorAccDiv">
+                                    <input type="checkbox" name="C201" id="C201" value="1" > 201.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertFactorAccDiv">
+                                    <input type="checkbox" name="C202" id="C202" value="1"> 202.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editFactorAccDiv">
+                                    <input type="checkbox" name="C203" id="C203" value="1"> 203.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteFactorAccDiv">
+                                    <input type="checkbox" name="C204" id="C204" value="1"> 204.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="printFactorAccDiv">
+                                    <input type="checkbox" name="C205" id="C205" value="1"> 205.
+                                    چاپ
+                                    <br/>
+                                </div>
+                                <input type="checkbox" name="C206" id="C206" value="1"> 206.
+                                افزودن زبان اول
+                                <br/>
+                                <input type="checkbox" name="C207" id="C207" value="1"> 207.
+                                افزودن زبان دوم
+                                <br/>
+                                <input type="checkbox" name="C208" id="C208" value="1"> 208.
+                                افزودن زبان سوم
+                                <br/>
+                                <input type="checkbox" name="C209" id="C209" value="1"> 209.
+                                افزودن زبان چهارم
+                                <br/>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C210" id="C210" value="1"> 210.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C211" id="C211" value="1"> 211.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C212" id="C212" value="1"> 212.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C213" id="C213" value="1"> 213.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C214" id="C214" value="1"> 214.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C215" id="C215" value="1"> 215.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C216" id="C216" value="1"> 216.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C217" id="C217" value="1"> 217.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C218" id="C218" value="1"> 218.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C219" id="C219" value="1"> 219.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C220" id="C220" value="1"> 220.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="productAcc">
+                                <br/>
+                                محصولات
+                                <br/>
+                                <br/>
+                                <div id="showProductAccDiv">
+                                    <input type="checkbox" name="C221" id="C221" value="1" > 221.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertProductAccDiv">
+                                    <input type="checkbox" name="C222" id="C222" value="1"> 222.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editProductAccDiv">
+                                    <input type="checkbox" name="C223" id="C223" value="1"> 223.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteProductAccDiv">
+                                    <input type="checkbox" name="C224" id="C224" value="1"> 224.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="lan1ProductAccDiv">
+                                    <input type="checkbox" name="C225" id="C225" value="1"> 225.
+                                    افزودن زبان اول
+                                    <br/>
+                                </div>
+                                <div id="lan2ProductAccDiv">
+                                    <input type="checkbox" name="C226" id="C226" value="1"> 226.
+                                    افزودن زبان دوم
+                                    <br/>
+                                </div>
+                                <div id="lan3ProductAccDiv">
+                                    <input type="checkbox" name="C227" id="C227" value="1"> 227.
+                                    افزودن زبان سوم
+                                    <br/>
+                                </div>
+                                <div id="lan4ProductAccDiv">
+                                    <input type="checkbox" name="C228" id="C228" value="1"> 228.
+                                    افزودن زبان چهارم
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C229" id="C229" value="1"> 229.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C230" id="C230" value="1"> 230.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C231" id="C231" value="1"> 231.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C232" id="C232" value="1"> 232.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C233" id="C233" value="1"> 233.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C234" id="C234" value="1"> 234.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C235" id="C235" value="1"> 235.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C236" id="C236" value="1"> 236.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C237" id="C237" value="1"> 237.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C238" id="C238" value="1"> 238.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C239" id="C239" value="1"> 239.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C240" id="C240" value="1"> 240.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="productCatgAcc">
+                                <br/>
+                                طبقه بندی محصولات
+                                <br/>
+                                <br/>
+                                <div id="showProductCatgAccDiv">
+                                    <input type="checkbox" name="C241" id="C241" value="1" > 241.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertProductCatgAccDiv">
+                                    <input type="checkbox" name="C242" id="C242" value="1"> 242.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editProductCatgAccDiv">
+                                    <input type="checkbox" name="C243" id="C243" value="1"> 243.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteProductCatgAccDiv">
+                                    <input type="checkbox" name="C244" id="C244" value="1"> 244.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="lan1ProductCatgAccDiv">
+                                    <input type="checkbox" name="C245" id="C245" value="1"> 245.
+                                    افزودن زبان اول
+                                    <br/>
+                                </div>
+                                <div id="lan2ProductCatgAccDiv">
+                                    <input type="checkbox" name="C246" id="C246" value="1"> 246.
+                                    افزودن زبان دوم
+                                    <br/>
+                                </div>
+                                <div id="lan3ProductCatgAccDiv">
+                                    <input type="checkbox" name="C247" id="C247" value="1"> 247.
+                                    افزودن زبان سوم
+                                    <br/>
+                                </div>
+                                <div id="lan4ProductCatgAccDiv">
+                                    <input type="checkbox" name="C248" id="C248" value="1"> 248.
+                                    افزودن زبان چهارم
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C249" id="C249" value="1"> 249.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C250" id="C250" value="1"> 250.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C251" id="C251" value="1"> 251.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C252" id="C252" value="1"> 252.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C253" id="C253" value="1"> 253.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C254" id="C254" value="1"> 254.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C255" id="C255" value="1"> 255.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C256" id="C256" value="1"> 256.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C257" id="C257" value="1"> 257.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C258" id="C258" value="1"> 258.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C259" id="C259" value="1"> 259.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C260" id="C260" value="1"> 260.
+                                    رزرو شده
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;vertical-align: top" id="hesabAcc"><!-- ????? -->
+                                <br/>
+                                حساب ها
+                                <br/>
+                                <br/>
+                                <div id="showHesabAccDiv">
+                                    <input type="checkbox" name="C261" id="C261" value="1" > 261.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertHesabAccDiv">
+                                    <input type="checkbox" name="C262" id="C262" value="1"> 262.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editHesabAccDiv">
+                                    <input type="checkbox" name="C263" id="C263" value="1"> 263.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteHesabAccDiv">
+                                    <input type="checkbox" name="C264" id="C264" value="1"> 264.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C265" id="C265" value="1"> 265.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C266" id="C266" value="1"> 266.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C267" id="C267" value="1"> 267.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C268" id="C268" value="1"> 268.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C269" id="C269" value="1"> 269.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C270" id="C270" value="1"> 270.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C271" id="C271" value="1"> 271.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C272" id="C272" value="1"> 272.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C273" id="C273" value="1"> 273.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C274" id="C274" value="1"> 274.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C275" id="C275" value="1"> 275.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C276" id="C276" value="1"> 276.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C277" id="C277" value="1"> 277.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C278" id="C278" value="1"> 278.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C279" id="C279" value="1"> 279.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C280" id="C280" value="1"> 280.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <!--                                        <td style="width: 25%;vertical-align: top" id="factorsShowAcc">
+                                                                        مشاهده لیست فاکتورها
+                                                                        <br/>
+                                                                        <br/>
+                                                                        <div id="showFactorsShowAccDiv">
+                                                                        <input type="checkbox" name="C281" id="C281" value="1" > 281.
+                                                                        نمایش
+                                                                        <br/>
+                                                                        </div>
+                                                                                                                    <input type="checkbox" name="C02" id="C02" value="1"> 02.
+                                                                                                                    درج
+                                                                                                                    <br/>
+                                                                        <div id="editFactorsShowAccDiv">
+                                                                        <input type="checkbox" name="C282" id="C282" value="1"> 282.
+                                                                        ویرایش
+                                                                        <br/>
+                                                                        </div>
+                                                                        <div id="printFactorsShowAccDiv">
+                                                                        <input type="checkbox" name="C283" id="C283" value="1"> 283.
+                                                                        چاپ
+                                                                        <br/>
+                                                                        </div>
+                                                                        <div id="deleteFactorsShowAccDiv">
+                                                                        <input type="checkbox" name="C284" id="C284" value="1"> 284.
+                                                                        حذف
+                                                                        <br/>
+                                                                        </div>
+                                                                        <input type="checkbox" name="C285" id="C285" value="1"> 285.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C286" id="C286" value="1"> 286.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C287" id="C287" value="1"> 287.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C288" id="C288" value="1"> 288.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C289" id="C289" value="1"> 289.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C290" id="C290" value="1"> 290.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C291" id="C291" value="1"> 291.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C292" id="C292" value="1"> 292.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C293" id="C293" value="1"> 293.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C294" id="C294" value="1"> 294.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C295" id="C295" value="1"> 295.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C296" id="C296" value="1"> 296.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C297" id="C297" value="1"> 297.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C298" id="C298" value="1"> 298.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C299" id="C299" value="1"> 299.
+                                                                        رزرو شده
+                                                                        <br/>
+                                                                        <input type="checkbox" name="C300" id="C300" value="1"> 300.
+                                                                        رزرو شده
+                                                                    </td>-->
+                            <td style="width: 25%;vertical-align: top;display:none" id="factorsAcc">
+                                <div class="reservedAcc" style="display:none">
+                                    <br/>
+                                    قسمت دسترسی
+                                    <br/>
+                                    <br/>
+                                    <div id="showFactorsAccDiv">
+                                        <input type="checkbox" name="C281" id="C281" value="1"> 281.
+                                        رزرو شده
+                                        <br/>
+                                    </div>
+                                    <input type="checkbox" name="C282" id="C282" value="1"> 282.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C283" id="C283" value="1"> 283.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C284" id="C284" value="1"> 284.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C285" id="C285" value="1"> 285.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C286" id="C286" value="1"> 286.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C287" id="C287" value="1"> 287.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C288" id="C288" value="1"> 288.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C289" id="C289" value="1"> 289.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C290" id="C290" value="1"> 290.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C291" id="C291" value="1"> 291.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C292" id="C292" value="1"> 292.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C293" id="C293" value="1"> 293.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C294" id="C294" value="1"> 294.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C295" id="C295" value="1"> 295.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C296" id="C296" value="1"> 296.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C297" id="C297" value="1"> 297.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C298" id="C298" value="1"> 298.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C299" id="C299" value="1"> 299.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C300" id="C300" value="1"> 300.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="manageUsersAcc">
+                                <br/>
+                                مدیریت کاربران
+                                <br/>
+                                <br/>
+                                <div id="showManageUsersAccDiv">
+                                    <input type="checkbox" name="C301" id="C301" value="1" > 301.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertManageUsersAccDiv">
+                                    <input type="checkbox" name="C302" id="C302" value="1"> 302.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editManageUsersAccDiv">
+                                    <input type="checkbox" name="C303" id="C303" value="1"> 303.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteManageUsersAccDiv">
+                                    <input type="checkbox" name="C304" id="C304" value="1"> 304.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C305" id="C305" value="1"> 305.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C306" id="C306" value="1"> 306.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C307" id="C307" value="1"> 307.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C308" id="C308" value="1"> 308.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C309" id="C309" value="1"> 309.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C310" id="C310" value="1"> 310.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C311" id="C311" value="1"> 311.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C312" id="C312" value="1"> 312.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C313" id="C313" value="1"> 313.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C314" id="C314" value="1"> 314.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C315" id="C315" value="1"> 315.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C316" id="C316" value="1"> 316.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C317" id="C317" value="1"> 317.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C318" id="C318" value="1"> 318.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C319" id="C319" value="1"> 319.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C320" id="C320" value="1"> 320.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="manageGroupsAcc">
+                                <br/>
+                                مدیریت گروه ها
+                                <br/>
+                                <br/>
+                                <div id="showManageGroupsAccDiv">
+                                    <input type="checkbox" name="C321" id="C321" value="1" > 321.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertManageGroupsAccDiv">
+                                    <input type="checkbox" name="C322" id="C322" value="1"> 322.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editManageGroupsAccDiv">
+                                    <input type="checkbox" name="C323" id="C323" value="1"> 323.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteManageGroupsAccDiv">
+                                    <input type="checkbox" name="C324" id="C324" value="1"> 324.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C325" id="C325" value="1"> 325.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C326" id="C326" value="1"> 326.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C327" id="C327" value="1"> 327.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C328" id="C328" value="1"> 328.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C329" id="C329" value="1"> 329.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C330" id="C330" value="1"> 330.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C331" id="C331" value="1"> 331.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C332" id="C332" value="1"> 332.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C333" id="C333" value="1"> 333.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C334" id="C334" value="1"> 334.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C335" id="C335" value="1"> 335.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C336" id="C336" value="1"> 336.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C337" id="C337" value="1"> 337.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C338" id="C338" value="1"> 338.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C339" id="C339" value="1"> 339.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C340" id="C340" value="1"> 340.
+                                    رزرو شده
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;vertical-align: top;display: none" id="backupAcc" >
+                                <br/>
+                                پشتیبان گیری
+                                <br/>
+                                <br/>
+                                <div id="DBBackupAccDiv">
+                                    <input type="checkbox" name="C341" id="C341" value="1" > 341.
+                                    دانلود دیتا بیس
+                                    <br/>
+                                </div>
+                                <div id="deleteBackupAccDiv">
+                                    <input type="checkbox" name="C342" id="C342" value="1"> 342.
+                                    حذف فایل های پشتیبان
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C343" id="C343" value="1"> 343.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C344" id="C344" value="1"> 344.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C345" id="C345" value="1"> 345.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C346" id="C346" value="1"> 346.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C347" id="C347" value="1"> 347.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C348" id="C348" value="1"> 348.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C349" id="C349" value="1"> 349.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C350" id="C350" value="1"> 350.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C351" id="C351" value="1"> 351.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C352" id="C352" value="1"> 352.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C353" id="C353" value="1"> 353.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C354" id="C354" value="1"> 354.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C355" id="C355" value="1"> 355.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C356" id="C356" value="1"> 356.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C357" id="C357" value="1"> 357.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C358" id="C358" value="1"> 358.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C359" id="C359" value="1"> 359.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C360" id="C360" value="1"> 360.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top;display:none" id="voteShowAcc">
+                                <div class="reservedAcc" style="display:none">
+                                    <br/>
+                                    قسمت نظر سنجی
+                                    <br/>
+                                    <br/>
+                                    <div id="showVoteShowAccDiv">
+                                        <input type="checkbox" name="C361" id="C361" value="1"> 361.
+                                        رزرو شده
+                                        <br/>
+                                    </div>
+                                    <input type="checkbox" name="C362" id="C362" value="1"> 362.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C363" id="C363" value="1"> 363.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C364" id="C364" value="1"> 364.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C365" id="C365" value="1"> 365.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C366" id="C366" value="1"> 366.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C367" id="C367" value="1"> 367.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C368" id="C368" value="1"> 368.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C369" id="C369" value="1"> 369.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C370" id="C370" value="1"> 370.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C371" id="C371" value="1"> 371.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C372" id="C372" value="1"> 372.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C373" id="C373" value="1"> 373.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C374" id="C374" value="1"> 374.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C375" id="C375" value="1"> 375.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C376" id="C376" value="1"> 376.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C377" id="C377" value="1"> 377.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C378" id="C378" value="1"> 378.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C379" id="C379" value="1"> 379.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C380" id="C380" value="1"> 380.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="voteAcc">
+                                <br/>
+                                سوالات نظرسنجی
+                                <br/>
+                                <br/>
+                                <div id="showVoteAccDiv">
+                                    <input type="checkbox" name="C381" id="C381" value="1" > 381.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="insertVoteAccDiv">
+                                    <input type="checkbox" name="C382" id="C382" value="1"> 382.
+                                    درج
+                                    <br/>
+                                </div>
+                                <div id="editVoteAccDiv">
+                                    <input type="checkbox" name="C383" id="C383" value="1"> 383.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div id="deleteVoteAccDiv">
+                                    <input type="checkbox" name="C384" id="C384" value="1"> 384.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div id="lan1VoteAccDiv">
+                                    <input type="checkbox" name="C385" id="C385" value="1"> 385.
+                                    افزودن زبان اول
+                                    <br/>
+                                </div>
+                                <div id="lan2VoteAccDiv">
+                                    <input type="checkbox" name="C386" id="C386" value="1"> 386.
+                                    افزودن زبان دوم
+                                    <br/>
+                                </div>
+                                <div id="lan3VoteAccDiv">
+                                    <input type="checkbox" name="C387" id="C387" value="1"> 387.
+                                    افزودن زبان سوم
+                                    <br/>
+                                </div>
+                                <div id="lan4VoteAccDiv">
+                                    <input type="checkbox" name="C388" id="C388" value="1"> 388.
+                                    افزودن زبان چهارم
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C389" id="C389" value="1"> 389.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C390" id="C390" value="1"> 390.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C391" id="C391" value="1"> 391.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C392" id="C392" value="1"> 392.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C393" id="C393" value="1"> 393.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C394" id="C394" value="1"> 394.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C395" id="C395" value="1"> 395.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C396" id="C396" value="1"> 396.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C397" id="C397" value="1"> 397.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C398" id="C398" value="1"> 398.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C399" id="C399" value="1"> 399.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C400" id="C400" value="1"> 400.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top;display:none" id="smsShowAcc">
+                                <div class="reservedAcc" style="display:none">
+                                    <br/>
+                                    قسمت پیامک
+                                    <br/>
+                                    <br/>
+                                    <div id="showSmsShowAccDiv">
+                                        <input type="checkbox" name="C401" id="C401" value="1"> 401.
+                                        رزرو شده
+
+                                        <br/>
+                                    </div>
+                                    <input type="checkbox" name="C402" id="C402" value="1"> 402.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C403" id="C403" value="1"> 403.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C404" id="C404" value="1"> 404.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C405" id="C405" value="1"> 405.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C406" id="C406" value="1"> 406.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C407" id="C407" value="1"> 407.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C408" id="C408" value="1"> 408.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C409" id="C409" value="1"> 409.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C410" id="C410" value="1"> 410.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C411" id="C411" value="1"> 411.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C412" id="C412" value="1"> 412.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C413" id="C413" value="1"> 413.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C414" id="C414" value="1"> 414.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C415" id="C415" value="1"> 415.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C416" id="C416" value="1"> 416.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C417" id="C417" value="1"> 417.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C418" id="C418" value="1"> 418.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C419" id="C419" value="1"> 419.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C420" id="C420" value="1"> 420.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="smsAcc">
+                                <br/>
+                                پیامک ها 
+                                <br/>
+                                <br/>
+                                <div id="showSmsAccDiv">
+                                    <input type="checkbox" name="C421" id="C421" value="1" > 421.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="sendSmsAccDiv">
+                                    <input type="checkbox" name="C422" id="C422" value="1"> 422.
+                                    ارسال پیامک 
+                                    <br/>
+                                </div>
+                                <div id="deleteSmsAccDiv">
+                                    <input type="checkbox" name="C423" id="C423" value="1"> 423.
+                                    حذف 
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C424" id="C424" value="1"> 424.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C425" id="C425" value="1"> 425.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C426" id="C426" value="1"> 426.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C427" id="C427" value="1"> 427.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C428" id="C428" value="1"> 428.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C429" id="C429" value="1"> 429.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C430" id="C430" value="1"> 430.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C431" id="C431" value="1"> 431.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C432" id="C432" value="1"> 432.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C433" id="C433" value="1"> 433.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C434" id="C434" value="1"> 434.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C435" id="C435" value="1"> 435.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C436" id="C436" value="1"> 436.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C437" id="C437" value="1"> 437.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C438" id="C438" value="1"> 438.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C439" id="C439" value="1"> 439.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C440" id="C440" value="1"> 440.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="smsSettingAcc">
+                                <br/>
+                                تنظیمات وب سرویس پیامک 
+                                <br/>
+                                <br/>
+                                <div id="showSmsSettingAccDiv">
+                                    <input type="checkbox" name="C441" id="C441" value="1" > 441.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="editSmsSettingAccDiv">
+                                    <input type="checkbox" name="C442" id="C442" value="1"> 442.
+                                    ویرایش
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C443" id="C443" value="1"> 443.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C444" id="C444" value="1"> 444.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C445" id="C445" value="1"> 445.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C446" id="C446" value="1"> 446.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C447" id="C447" value="1"> 447.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C448" id="C448" value="1"> 448.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C449" id="C449" value="1"> 449.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C450" id="C450" value="1"> 450.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C451" id="C451" value="1"> 451.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C452" id="C452" value="1"> 452.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C453" id="C453" value="1"> 453.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C454" id="C454" value="1"> 454.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C455" id="C455" value="1"> 455.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C456" id="C456" value="1"> 456.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C457" id="C457" value="1"> 457.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C458" id="C458" value="1"> 458.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C459" id="C459" value="1"> 459.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C460" id="C460" value="1"> 460.
+                                    رزرو شده
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%;vertical-align: top" id="emailAcc">
+                                <br/>
+                                ایمیل
+                                <br/>
+                                <br/>
+                                <div id="showEmailAccDiv">
+                                    <input type="checkbox" name="C461" id="C461" value="1" > 461.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="sendEmailAccDiv">
+                                    <input type="checkbox" name="C462" id="C462" value="1"> 462.
+                                    ارسال ایمیل
+                                    <br/>
+                                </div>
+                                <div id="deleteEmailAccDiv">
+                                    <input type="checkbox" name="C463" id="C463" value="1"> 463.
+                                    حذف
+                                    <br/>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C464" id="C464" value="1"> 464.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C465" id="C465" value="1"> 465.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C466" id="C466" value="1"> 466.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C467" id="C467" value="1" > 467.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C468" id="C468" value="1" > 468.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C469" id="C469" value="1"> 469.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C470" id="C470" value="1"> 470.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C471" id="C471" value="1"> 471.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C472" id="C472" value="1"> 472.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C473" id="C473" value="1"> 473.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C474" id="C474" value="1"> 474.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C475" id="C475" value="1"> 475.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C476" id="C476" value="1"> 476.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C477" id="C477" value="1"> 477.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C478" id="C478" value="1"> 478.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C479" id="C479" value="1"> 479.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C480" id="C480" value="1"> 480.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td style="width: 25%;vertical-align: top" id="langAcc">
+                                <br/>
+                                زبان
+                                <br/>
+                                <br/>
+                                <div id="showLangAccDiv">
+                                    <input type="checkbox" name="C481" id="C481" value="1" > 481.
+                                    نمایش
+                                    <br/>
+                                </div>
+                                <div id="editLangAccDiv">
+                                    <input type="checkbox" name="C482" id="C482" value="1"> 482.
+                                    ویرایش
+                                    <br>
+                                </div>
+                                <div class="reservedAcc" style="display:none">
+                                    <input type="checkbox" name="C483" id="C483" value="1"> 483.
+                                    رزرو شده
+                                    <input type="checkbox" name="C484" id="C484" value="1"> 484.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C485" id="C485" value="1"> 485.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C486" id="C486" value="1"> 486.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C487" id="C487" value="1" > 487.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C488" id="C488" value="1" > 488.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C489" id="C489" value="1"> 489.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C490" id="C490" value="1"> 490.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C491" id="C491" value="1"> 491.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C492" id="C492" value="1"> 492.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C493" id="C493" value="1"> 493.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C494" id="C494" value="1"> 494.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C495" id="C495" value="1"> 495.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C496" id="C496" value="1"> 496.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C497" id="C497" value="1"> 497.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C498" id="C498" value="1"> 498.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C499" id="C499" value="1"> 499.
+                                    رزرو شده
+                                    <br/>
+                                    <input type="checkbox" name="C500" id="C500" value="1"> 500.
+                                    رزرو شده
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <!--                                        <td style="width: 25%;vertical-align: top">
+                                                                پیامک ها
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C01" id="C01" value="1" > 01.
+                                                                    نمایش
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C02" id="C02" value="1"> 02.
+                                                                    ارسال پیامک
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C03" id="C03" value="1"> 03.
+                                                                    ویرایش
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C04" id="C04" value="1"> 04.
+                                                                    حذف
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C05" id="C05" value="1"> 05.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C05" id="C05" value="1"> 05.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C06" id="C06" value="1"> 06.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C07" id="C07" value="1"> 07.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C08" id="C08" value="1"> 08.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C09" id="C09" value="1"> 09.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C10" id="C10" value="1"> 10.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C11" id="C11" value="1"> 11.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C12" id="C12" value="1"> 12.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C13" id="C13" value="1"> 13.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C14" id="C14" value="1"> 14.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C15" id="C15" value="1"> 15.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C16" id="C16" value="1"> 16.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C17" id="C17" value="1"> 17.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C18" id="C18" value="1"> 18.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C19" id="C19" value="1"> 19.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C20" id="C20" value="1"> 20.
+                                                                    رزرو شده
+                                                                </td>
+                                                                <td style="width: 25%;vertical-align: top">
+                                                                تنظیمات وب سرویس پیامک
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C01" id="C01" value="1" > 01.
+                                                                    نمایش
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C02" id="C02" value="1"> 02.
+                                                                    ارسال ایمیل
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C04" id="C04" value="1"> 04.
+                                                                    حذف
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C05" id="C05" value="1"> 05.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C05" id="C05" value="1"> 05.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C06" id="C06" value="1"> 06.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C07" id="C07" value="1"> 07.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C08" id="C08" value="1"> 08.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C09" id="C09" value="1"> 09.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C10" id="C10" value="1"> 10.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C11" id="C11" value="1"> 11.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C12" id="C12" value="1"> 12.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C13" id="C13" value="1"> 13.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C14" id="C14" value="1"> 14.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C15" id="C15" value="1"> 15.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C16" id="C16" value="1"> 16.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C17" id="C17" value="1"> 17.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C18" id="C18" value="1"> 18.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C19" id="C19" value="1"> 19.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C20" id="C20" value="1"> 20.
+                                                                    رزرو شده
+                                                                </td>
+                                                                <td style="width: 25%;vertical-align: top">
+                                                                    ایمیل
+                                                                    <br/>
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C01" id="C01" value="1" > 01.
+                                                                    نمایش
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C02" id="C02" value="1"> 02.
+                                                                    ویرایش
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C03" id="C03" value="1"> 03.
+                                                                    ویرایش
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C04" id="C04" value="1"> 04.
+                                                                    حذف
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C05" id="C05" value="1"> 05.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C05" id="C05" value="1"> 05.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C05" id="C05" value="1"> 05.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C06" id="C06" value="1"> 06.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C07" id="C07" value="1"> 07.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C08" id="C08" value="1"> 08.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C09" id="C09" value="1"> 09.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C10" id="C10" value="1"> 10.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C11" id="C11" value="1"> 11.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C12" id="C12" value="1"> 12.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C13" id="C13" value="1"> 13.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C14" id="C14" value="1"> 14.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C15" id="C15" value="1"> 15.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C16" id="C16" value="1"> 16.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C17" id="C17" value="1"> 17.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C18" id="C18" value="1"> 18.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C19" id="C19" value="1"> 19.
+                                                                    رزرو شده
+                                                                    <br/>
+                                                                    <input type="checkbox" name="C20" id="C20" value="1"> 20.
+                                                                    رزرو شده
+                                                                </td>-->
+
+                    </table>
+                    <!-- ------------------------ -->
+                </td>
+            </tr>
+            <tr style="background-color: #eaeaf4;height: 40px">
+                <td style="text-align: right">
+                    <div style="float: right">
+                        <a id="cancel_Group" class="btn btn-secondary btn-block mg-b-10" style="  
+                           padding-top: 1%;
+                           padding-bottom: 1%;
+                           color: white;
+                             padding-top: 15%;
+                           padding-bottom: 16%;
+                           color: white;
+                            float: left; 
+                           margin-top: 10%;
+                           padding-right: 15%;
+                           padding-left: 16%;"  >
+                            بازگشت
+                        </a>
+                    </div>
+                    <div id="Group_button" style="position: relative;float: left;   width: 57%;
+                         padding-top: 1%;
+                         padding-bottom: 1%;
+                         color: white;
+                         ">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!--                </td>
+                    </tr>
+                </table>-->
+    </body>
+</html>

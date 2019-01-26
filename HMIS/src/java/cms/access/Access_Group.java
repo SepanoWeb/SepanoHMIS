@@ -34,10 +34,10 @@ public class Access_Group {
 //    public static int rul_edt = 35;
 //    public static int rul_dlt = 36;
 
-    public static int rul_rfs = 321;
-    public static int rul_ins = 322;
-    public static int rul_edt = 323;
-    public static int rul_dlt = 324;
+    public static int rul_rfs = 0;
+    public static int rul_ins = 0;
+    public static int rul_edt = 0;
+    public static int rul_dlt = 0;
 ////    public static int rul_reserved = 325 --- 340;// RESERVED : 325 -- 340
 
     /**
@@ -58,7 +58,13 @@ public class Access_Group {
             where = _creator + "=" + creator;
         }
         List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, where));
-        html.append("<table id='refreshAccessGroup' dir='rtl'><thead>");
+          html.append(" <div class='card bd-primary mg-t-20'>"
+                    + "    <div class='card-header bg-primary tx-white'>جدول گروه های کاربری</div>"
+                    + "    <div class='card-body pd-sm-30'>"
+                    + "        <p class='mg-b-20 mg-sm-b-30'>"
+                    + "            <a  class='btn btn-success pd-sm-x-20 mg-sm-r-5' style='color: white;' onclick='cmsGroup.m_add_new();' > گروه جدید</a>"
+                    + "        </p>");
+        html.append("<table class='table display responsive nowrap' id='refreshAccessGroup' dir='rtl'><thead>");
         html.append("<th width='5%'>کد</th>");
         html.append("<th width='90%'>عنوان</th>");
         html.append("<th width='5%'>عملیات</th>");
@@ -67,10 +73,11 @@ public class Access_Group {
             html.append("<tr  onclick='cmsGroup.m_select(" + row.get(i).get(_id) + ");' class='mousePointer' >");
             html.append("<td class='tahoma10' style='text-align: center;'>" + (row.get(i).get(_id).toString()) + "</td>");
             html.append("<td class='tahoma10' style='text-align: right;'>" + (row.get(i).get(_title).toString()) + "</td>");
-            html.append("<td style='text-align: center;'><img src='img/l.png' style='cursor: pointer;height:30px' onclick='cmsGroup.m_select(" + row.get(i).get(_id) + ");' /></td>");
+            html.append("<td style='text-align: center;color:red;font-size: 26px;'class='icon ion-ios-gear-outline'><a  style='cursor: pointer;height:30px' onclick='cmsGroup.m_select(" + row.get(i).get(_id) + ");' /></a></td>");
             html.append("</tr>");
         }
         html.append("</tbody></table>");
+        html.append("</div></div>");
         String height = jjTools.getParameter(request, "height");
         String panel = jjTools.getParameter(request, "panel");
         if (!jjNumber.isDigit(height)) {
@@ -268,11 +275,11 @@ public class Access_Group {
         boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
 
         if (accEdt) {
-            html2.append("<input type=\"button\" id=\"edit_Group\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");
+            html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_Group\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
             html.append(Js.buttonMouseClick("#edit_Group", Js.jjGroup.edit()));
         }
         if (accDel) {
-            html2.append("<input type=\"button\" id=\"delete_Group\" value=\"" + lbl_delete + "\" class=\"tahoma10\"  />");
+            html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_Group\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div>");
             html.append(Js.buttonMouseClick("#delete_Group", Js.jjGroup.delete(id)));
         }
         return (Js.setHtml("#Group_button", html2.toString())) + html.toString();
