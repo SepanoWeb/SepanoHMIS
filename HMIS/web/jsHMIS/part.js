@@ -30,6 +30,7 @@ var hmisPart = {
         param += "&panel=" + (containerId==null ? "swPartTbl" : containerId);
         param += "&sort=" + (sortField==null ? "0" : sortField);
         param += "&height=" + (tableHeight==null ? PanelHeight : tableHeight);
+        param += "&jj=1" ;
         jj(param).jjAjax2(false);
         hmisPart.tabSizeTbl();
     },
