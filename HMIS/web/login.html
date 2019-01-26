@@ -34,33 +34,103 @@
         <!-- Vendor css -->
         <link href="Manager/font-awesome.css" rel="stylesheet">
         <link href="Manager/ionicons.css" rel="stylesheet">
+        <script src="js/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
+        <!--<script src="js/jquery/jquery-1.8.3.js" type="text/javascript"></script>-->
+
+        <!--<link href="css/jquery/green/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css"/>-->
+        <!--<link href="css/jquery/violet/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css"/>-->
+        <link href="css/jquery/gray/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="css/jquery/sunny/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css"/>-->
+        <script src="js/jquery/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
+        <script src="js/calendar/calendar.js" type="text/javascript"></script>
+        <script src="js/calendar/calendar.all.js" type="text/javascript"></script>
+        <script src="js/jquery/ajaxfileupload.js" type="text/javascript"></script>
+        <script src="js/calendar/jquery.ui.datepicker-cc.js" type="text/javascript"></script>
+        <script src="js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>
+        <script src="js/jquery/jquery.cookie.min.js" type="text/javascript"></script>
+
 
         <!-- سامانه جامع مدیار CSS -->
         <link rel="stylesheet" href="Manager/shamcey.css">
+        <script src="js/jj2.js" type="text/javascript"></script>
+        <script src="js/index.js" type="text/javascript"></script>
     </head>
 
     <body class="bg-gray-900">
 
-        <div class="signpanel-wrapper">
-            <div class="signbox">
+        <div class="signpanel-wrapper" id="loginForm" >
+            <div class="signbox" >
                 <div class="signbox-header">
                     <h2>سامانه جامع مدیار</h2>
                     <p class="mg-b-0">سامانه جامع مدیریت اطلاعات سلامت</p>
                 </div><!-- signbox-header -->
-                <div class="signbox-body">
+                <div class="signbox-body" >
                     <div class="form-group">
                         <label class="form-control-label">آدرس ایمیل:</label>
-                        <input type="email" name="email" placeholder="ایمیل خود را وارد کنید" class="form-control">
+                        <input type="text" name="user_email" id="login_user_email" placeholder="ایمیل خود را وارد کنید" class="form-control">
                     </div><!-- form-group -->
                     <div class="form-group">
                         <label class="form-control-label">رمز عبور:</label>
-                        <input type="password" name="password" placeholder="گذر واژه را وارد کنید" class="form-control">
+                        <input type="password" name="user_pass" id="login_user_pass" placeholder="رمز عبور را وارد کنید" class="form-control">
                     </div><!-- form-group -->
                     <div class="form-group">
                         <a href="http://themetrace.com/template/shamcey/app/page-signin.html">پسوردم را فراموش کرده ام?</a>
                     </div><!-- form-group -->
-                    <button class="btn btn-success btn-block">ورود</button>
-                    <div class="tx-center bg-white bd pd-10 mg-t-40">هنوز عضونشده اید؟ <a href="http://themetrace.com/template/shamcey/app/page-signup.html">ساخت اکانت کاربری</a></div>
+                    <button  id="btn" class="btn btn-success btn-block" onclick='signIn();'>ورود</button>
+                    <div class="tx-center bg-white bd pd-10 mg-t-40">هنوز عضونشده اید؟ <a onclick="ShowRegistForm();" style="cursor: pointer">ساخت اکانت کاربری</a></div>
+                    <div id="errorRegistMessagePanel7"> </div>
+                </div><!-- signbox-body -->
+            </div><!-- signbox -->
+        </div><!-- signpanel-wrapper -->
+        <div class="signpanel-wrapper" id="registForm" style="display: none">
+            <div class="signbox" >
+                <div class="signbox-header">
+                    <h2>سامانه جامع مدیار</h2>
+                    <p class="mg-b-0">سامانه جامع مدیریت اطلاعات سلامت</p>
+                </div><!-- signbox-header -->
+                <div class="signbox-body"  >
+                    <div class="form-group">
+                        <label class="form-control-label">نام:</label>
+                        <input type="text" name="user_name" id="user_name" placeholder="نام" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">نام خانوادگی:</label>
+                        <input type="text" name="user_family" id="user_family" placeholder="نام ونام خانوادگی " class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label"> تاریخ تولد:</label>
+                        <input type="text" name="user_birthdate" id="user_birthdate2" placeholder="تاریخ تولد " class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label">ایمیل:</label>
+                        <input type="text" name="user_email" id="user_email2" placeholder="ایمیل" class="form-control">
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label class="form-control-label">رمز عبور:</label>
+                        <input type="password" name="user_pass" id="user_pass2" placeholder="رمز عبور" class="form-control">
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label class="form-control-label">تکرار رمز عبور:</label>
+                        <input type="password" name="user_pass_2" id="user_pass_2" placeholder="تکرار رمز عبور" class="form-control">
+                    </div><!-- form-group -->
+                    <div class="form-group">
+                        <label class="form-control-label">یادآور گذرواژه:</label>
+                        <input type="text" name="user_password_hint" id="user_password_hint" placeholder="یادآور گذرواژه" class="form-control">
+                    </div><!-- form-group -->
+<!--                    <div class="form-group">
+                        <a href="http://themetrace.com/template/shamcey/app/page-signin.html">پسوردم را فراموش کرده ام?</a>
+                    </div> form-group -->
+                    <button   class="btn btn-success btn-block" onclick='registInSite();'>ثبت نام</button>
+                    <button   class="btn btn-success btn-block" onclick='backToLogin();'> بازگشت</button>
+                    <div id="errorRegistMessagePanel1"> </div>
+                    <div id="errorRegistMessagePanel2"> </div>
+                    <div id="errorRegistMessagePanel3"> </div>
+                    <div id="errorRegistMessagePanel4"> </div>
+                    <div id="errorRegistMessagePanel5"> </div>
+                    <div id="errorRegistMessagePanel6"> </div>
+                    <div id="errorRegistMessagePanel8"> </div>
+
+                    <!--                    <div class="tx-center bg-white bd pd-10 mg-t-40">هنوز عضونشده اید؟ <a href="http://themetrace.com/template/shamcey/app/page-signup.html">ساخت اکانت کاربری</a></div>-->
                 </div><!-- signbox-body -->
             </div><!-- signbox -->
         </div><!-- signpanel-wrapper -->
@@ -70,6 +140,8 @@
         <script src="./سامانه جامع مدیار Responsive Bootstrap 4 Admin Template_files/bootstrap.js.download"></script>
 
         <script src="./سامانه جامع مدیار Responsive Bootstrap 4 Admin Template_files/shamcey.js.download"></script>
-
+        <script>
+           new jj('#user_birthdate2').jjCalendarWithYearSelector(1310, 1410);
+        </script>
 
     </body></html>
