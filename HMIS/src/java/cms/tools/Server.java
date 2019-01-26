@@ -2,8 +2,11 @@ package cms.tools;
 
 import cms.access.*;
 import cms.cms.*;
-import static cms.tools.Server.getClazzes;
-import static cms.tools.Server.run;
+import HMIS.Commettes;
+import HMIS.Plans;
+import HMIS.PlansForAssess;
+import HMIS.Reports;
+import HMIS.Steps;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
@@ -16,7 +19,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.*;
+import javax.servlet.*;   
 import javax.servlet.http.*;
 import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
@@ -34,7 +37,7 @@ public class Server extends HttpServlet {
     public static String defaultLang = "1"; // fa
     public static String smsKey = "0";
     public static String smsPanelNumber = "0";
-    public static String siteName = "hmis.com";// comment answer sender
+    public static String siteName = "";// comment answer sender
     public static String emailAccount = "ipp.info@gmail.com";
     public static String passEmail = "110110110";
     public static String smtpAcount = "smtp.gmail.com";
@@ -73,26 +76,30 @@ public class Server extends HttpServlet {
             clazzes.add(Access_Group.class);
             clazzes.add(Access_Group_User.class);
             clazzes.add(Access_User.class);
-//            clazzes.add(Product.class);
-//            clazzes.add(Forum.class);
-//            clazzes.add(Backup.class);
-//            clazzes.add(Poll.class);
-//            clazzes.add(sms.class);// ADDED BY RASHIDI
-//            clazzes.add(smsSetting.class);// ADDED BY RASHIDI
-//            clazzes.add(Enrolment.class);
-//            clazzes.add(Enrolment3.class);
-//            clazzes.add(Portal.class);
-//            clazzes.add(PortalUser.class);
-//            clazzes.add(Factor.class);
-//            clazzes.add(Payment.class);
-//            clazzes.add(PaymentSetting.class);
-//            clazzes.add(Customer.class);
-//            clazzes.add(tags.class);//SHAHSANAEI
-//            clazzes.add(Language.class);// ADDED BY RASHIDI
-//            clazzes.add(email.class);
-//            clazzes.add(Search.class);
-            clazzes.add(Part.class);
-            
+            clazzes.add(Product.class);
+            clazzes.add(Forum.class);
+            clazzes.add(Backup.class);
+            clazzes.add(Poll.class);
+            clazzes.add(sms.class);// ADDED BY RASHIDI
+            clazzes.add(smsSetting.class);// ADDED BY RASHIDI
+            clazzes.add(Enrolment.class);
+            clazzes.add(Enrolment3.class);
+            clazzes.add(Portal.class);
+            clazzes.add(PortalUser.class);
+            clazzes.add(Factor.class);
+            clazzes.add(Payment.class);
+            clazzes.add(PaymentSetting.class);
+            clazzes.add(Customer.class);
+            clazzes.add(tags.class);//SHAHSANAEI
+            clazzes.add(Language.class);// ADDED BY RASHIDI
+            clazzes.add(email.class);
+            clazzes.add(Search.class);
+            ///////////////////////////////////////////////////
+            clazzes.add(Plans.class);   //برنامه های عملیاتی
+            clazzes.add(PlansForAssess.class);//برنامه پایش
+            clazzes.add(Steps.class);//گام های اجرایی
+            clazzes.add(Reports.class);//گزارش های برنامه 
+            clazzes.add(Commettes.class);//کمیته ها
         }
         return clazzes;
     }
@@ -122,11 +129,11 @@ public class Server extends HttpServlet {
         
         StringBuilder script = new StringBuilder();
         script.append(run(getClazzes(), clazz, method, request, db, isFromClient));
-        if(script.length()==0){// یعنی اگر پاسخ در ران تهی بود یعنی ریکوئست پاس داده شده به یک فایل جی اس پی
+        if(script.length()==0){// ÛŒØ¹Ù†ÛŒ Ø§Ú¯Ø± Ù¾Ø§Ø³Ø® Ø¯Ø± Ø±Ø§Ù† ØªÙ‡ÛŒ Ø¨ÙˆØ¯ ÛŒØ¹Ù†ÛŒ Ø±ÛŒÚ©ÙˆØ¦Ø³Øª Ù¾Ø§Ø³ Ø¯Ø§Ø¯Ù‡ Ø´Ø¯Ù‡ Ø¨Ù‡ ÛŒÚ© Ù�Ø§ÛŒÙ„ Ø¬ÛŒ Ø§Ø³ Ù¾ÛŒ
             ServerLog.Print("***request has been passed to one jsp, Finish Server.java jobs... ***");//By MrSalesi
             return;
         }
-        response.addHeader("Access-Control-Allow-Origin", "*");// برای فعال کردن ایجکس در مرورگر ها لازم است
+        response.addHeader("Access-Control-Allow-Origin", "*");// Ø¨Ø±Ø§ÛŒ Ù�Ø¹Ø§Ù„ Ú©Ø±Ø¯Ù† Ø§ÛŒØ¬Ú©Ø³ Ø¯Ø± Ù…Ø±ÙˆØ±Ú¯Ø± Ù‡Ø§ Ù„Ø§Ø²Ù… Ø§Ø³Øª
         try (PrintWriter out = jjTools.getWriterUTF8(request, response)) {
             ServerLog.Print(script);//By Md
             //ServerLog.Print(script.toString());
@@ -207,11 +214,11 @@ public class Server extends HttpServlet {
             String method = "";
             int index1 = action.indexOf("do=");
             int index2 = action.indexOf(".");
-            if (index1 >= 0 && index2 > 0) {// do  وجود دارد؟
+            if (index1 >= 0 && index2 > 0) {// do  ÙˆØ¬ÙˆØ¯ Ø¯Ø§Ø±Ø¯ØŸ
                 index1 = action.indexOf("=", index1) + 1;
                 reqClazz = action.substring(index1, index2);
-                index1 = index2 + 1;// بعد از  نقطه برای پیدا کردن تابع
-                index2 = action.indexOf("&");// بعد از  نقطه برای پیدا کردن تابع
+                index1 = index2 + 1;// Ø¨Ø¹Ø¯ Ø§Ø²  Ù†Ù‚Ø·Ù‡ Ø¨Ø±Ø§ÛŒ Ù¾ÛŒØ¯Ø§ Ú©Ø±Ø¯Ù† ØªØ§Ø¨Ø¹
+                index2 = action.indexOf("&");// Ø¨Ø¹Ø¯ Ø§Ø²  Ù†Ù‚Ø·Ù‡ Ø¨Ø±Ø§ÛŒ Ù¾ÛŒØ¯Ø§ Ú©Ø±Ø¯Ù† ØªØ§Ø¨Ø¹
                 method = action.substring(index1, index2);
             }
             String attributes[] = parameters.split("&");
@@ -260,10 +267,10 @@ public class Server extends HttpServlet {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(Comment._date, new jjCalendar_IR().getDBFormat_8length());
             map.put(Comment._email, "mrsalesi@gmail.com");
-            map.put(Comment._name_Full, "سیستم");
+            map.put(Comment._name_Full, "Ø³ÛŒØ³ØªÙ…");
             map.put(Comment._tell, "03112683807");
             map.put(Comment._text, dbErrorWrite.toString());
-            map.put(Comment._title, "مشکلی در سیستم");
+            map.put(Comment._title, "Ù…Ø´Ú©Ù„ÛŒ Ø¯Ø± Ø³ÛŒØ³ØªÙ…");
             map.put(Comment._answer, "");
             db.insert(Comment.tableName, map);
             return Js.dialog(dbErrorWrite.toString());
@@ -333,6 +340,6 @@ public class Server extends HttpServlet {
     }
 
     public static void main(String[] args) {
-        Server.sendEmail("mail@hafteghlim-ins.com", "mrsalesi@gmail.com", "تست", "تست test ", true, null);
+        Server.sendEmail("mail@hafteghlim-ins.com", "mrsalesi@gmail.com", "ØªØ³Øª", "ØªØ³Øª test ", true, null);
     }
 }
