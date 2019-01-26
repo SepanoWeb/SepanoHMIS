@@ -6,7 +6,6 @@
 package cms.cms;
 
 import cms.access.Access_User;
-import static cms.cms.Content._id;
 import cms.tools.Js;
 import cms.tools.Server;
 import cms.tools.ServerLog;

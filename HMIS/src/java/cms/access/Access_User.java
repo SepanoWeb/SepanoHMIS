@@ -21,6 +21,14 @@ public class Access_User {
     public static String _passHint = "user_password_hint";//====== BY RASHIDI ======
     public static String _mobile = "user_mobile";
     public static String _phone = "user_phone";
+    public static String _AccountInformation = "user_AccountInformation";
+    public static String _jensiat = "user_jensiat";
+    public static String _codeMeli = "user_codeMeli";
+    public static String _shomareShenasname = "user_shomareShenasname";
+    public static String _passwordReminder = "user_passwordReminder";
+    public static String _grade = "user_grade";
+
+    public static String _address = "user_address";
     public static String _isActive = "user_is_active";
     public static String _registDate = "user_createDate";
     public static String _question = "user_question";
@@ -30,7 +38,6 @@ public class Access_User {
     public static String _no2 = "user_no2";
     public static String _parent = "user_parent";
     public static String _weblog = "user_weblog";
-    public static String _address = "user_address1";
     public static String _address2 = "user_address2";
     public static String _postalCode = "user_postalCode";
     public static String lbl_insert = "ذخیره";
@@ -53,10 +60,10 @@ public class Access_User {
 
 //   public static int rul_show_acc = 281;//نمایش تب دسترسی
 ////    public static int rul_show_acc _reserved= 282 --- 300;// RESERVED : 282 -- 300//نمایش تب دسترسی
-    public static int rul_rfs = 301;
-    public static int rul_ins = 302;
-    public static int rul_edt = 303;
-    public static int rul_dlt = 304;
+    public static int rul_rfs = 0;
+    public static int rul_ins = 0;
+    public static int rul_edt = 0;
+    public static int rul_dlt = 0;
 ////    public static int rul_reserved = 305 --- 320;// RESERVED : 305 -- 320
     public static String wikiLinkColor = "blue";
 
@@ -73,16 +80,24 @@ public class Access_User {
                 return hasAccess;
             }
             StringBuilder html = new StringBuilder();
+            StringBuilder html3 = new StringBuilder();
 
             DefaultTableModel dtm = db.Select(tableName, _id + "<>1");
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
-            html.append("<table id='refreshAccessUser' dir='rtl'><thead>");
-            html.append("<th width='5%'>کد</th>");
-            html.append("<th width='30%'>ایمیل</th>");
-            html.append("<th width='20%'>تاریخ تولد</th>");
-            html.append("<th width='10%'>نام کاربری</th>");
-            html.append("<th width='30%'>نام و نام خانوادگی</th>");
-            html.append("<th width='5%'>عملیات</th>");
+            html.append(" <div class='card bd-primary mg-t-20'>"
+                    + "    <div class='card-header bg-primary tx-white'>کاربران</div>"
+                    + "    <div class='card-body pd-sm-30'>"
+                    + "        <p class='mg-b-20 mg-sm-b-30'>"
+                    + "            <a  class='btn btn-success pd-sm-x-20 mg-sm-r-5' style='color: white;' onclick='cmsUser.m_add_new();' > کاربر جدید</a>"
+                    + "        </p>");
+
+            html.append("<table class='table display responsive nowrap' id='refreshAccessUser' dir='rtl'><thead>");
+            html.append("<th style='text-align: center;' width='5%'>کد</th>");
+            html.append("<th style='text-align: center;' width='30%'>ایمیل</th>");
+            html.append("<th style='text-align: center;' width='20%'>تاریخ تولد</th>");
+            html.append("<th style='text-align: center;' width='10%'>نام کاربری</th>");
+            html.append("<th style='text-align: center;' width='30%'>نام و نام خانوادگی</th>");
+            html.append("<th style='text-align: center;' width='5%'>عملیات</th>");
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
                 html.append("<tr  onclick='cmsUser.m_select(" + row.get(i).get(_id) + ");' class='mousePointer' >");
@@ -91,10 +106,12 @@ public class Access_User {
                 html.append("<td class='tahoma10' style='text-align: center;'>" + (jjCalendar_IR.getViewFormat(row.get(i).get(_birthdate))) + "</td>");
                 html.append("<td class='tahoma10' style='text-align: right;'>" + (row.get(i).get(_name).toString()) + "</td>");
                 html.append("<td class='tahoma10' style='text-align: right;'>" + (row.get(i).get(_family).toString()) + "</td>");
-                html.append("<td style='text-align: center;'><img src='img/l.png' style='cursor: pointer;height:30px' onclick='cmsUser.m_select(" + row.get(i).get(_id) + ");' /></td>");
+                html.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'><a src='img/l.png' style='cursor: pointer;height:30px' onclick='cmsUser.m_select(" + row.get(i).get(_id) + ");' ></a></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
+            html.append("</div></div>");
+
             String height = jjTools.getParameter(request, "height");
             String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(height)) {
@@ -116,7 +133,7 @@ public class Access_User {
         try {
             boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
             if (accIns) {
-                html.append(Js.setHtml("#User_button", "<input type=\"button\" id=\"insert_User_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
+                html.append(Js.setHtml("#User_button", "<div class='row'><div class='col-lg-6'><input type=\"button\" id=\"insert_User_new\" value=\"" + lbl_insert + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div></div>"));
                 html.append(Js.buttonMouseClick("#insert_User_new", Js.jjUser.insert()));
             }
             return html.toString();
@@ -272,10 +289,10 @@ public class Access_User {
             }
 
             String email = jjTools.getParameter(request, _email);
-            String message = isValidMessageForRegist(request, db, isPost);
-            if (!message.equals("")) {
-                return Js.dialog(message);
-            }
+//            String message = isValidMessageForRegist(request, db, isPost);
+//            if (!message.equals("")) {
+//                return Js.dialog(message);
+//            }
 
 //        int size = jjDatabase.separateRow(db.Select(tableName, _email + "'" + jjTools.getParameter(request, _email).toLowerCase() + "'")).size();
 //        if (size > 1) {
@@ -286,17 +303,21 @@ public class Access_User {
 //            return Js.dialog(errorMessage);
 //        }
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put(_answer, jjTools.getParameter(request, _answer));
+//            map.put(_answer, jjTools.getParameter(request, _answer));
             map.put(_email, email.toLowerCase());
             map.put(_family, jjTools.getParameter(request, _family));
             map.put(_isActive, jjTools.getParameter(request, _isActive).equals("1"));
             map.put(_name, jjTools.getParameter(request, _name));
-            map.put(_no1, jjTools.getParameter(request, _no1));
-            map.put(_no2, jjTools.getParameter(request, _no2));
-            String parent = jjTools.getParameter(request, _parent);
-            map.put(_parent, jjNumber.isDigit(parent) ? Integer.parseInt(parent) : 0);
+            map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
+            map.put(_grade, jjTools.getParameter(request, _grade));
+            map.put(_passwordReminder, jjTools.getParameter(request, _passwordReminder));
+            map.put(_jensiat, jjTools.getParameter(request, _jensiat));
+            map.put(_codeMeli, jjTools.getParameter(request, _codeMeli));
+            map.put(_shomareShenasname, jjTools.getParameter(request, _shomareShenasname));
+//            String parent = jjTools.getParameter(request, _parent);
+//            map.put(_parent, jjNumber.isDigit(parent) ? Integer.parseInt(parent) : 0);
             map.put(_pass, jjTools.getParameter(request, _pass).toLowerCase());
-            map.put(_question, jjTools.getParameter(request, _question));
+//            map.put(_question, jjTools.getParameter(request, _question));
             map.put(_birthdate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _birthdate), false));
 
             if (id.equals("1")) {
@@ -405,17 +426,20 @@ public class Access_User {
             StringBuilder html2 = new StringBuilder();
 
             html.append(Js.setVal("#user_" + _id, row.get(0).get(_id)));
-            html.append(Js.setVal("#" + _answer, row.get(0).get(_answer)));
+//            html.append(Js.setVal("#" + _answer, row.get(0).get(_answer)));
             html.append(Js.setVal("#" + _email, row.get(0).get(_email)));
             html.append(Js.setVal("#" + _family, row.get(0).get(_family)));
-            html.append(Js.setVal("#" + _isActive, row.get(0).get(_isActive)));
+//            html.append(Js.setVal("#" + _isActive, row.get(0).get(_isActive)));
             html.append(Js.setVal("#" + _name, row.get(0).get(_name)));
-            html.append(Js.setVal("#" + _no1, row.get(0).get(_no1)));
-            html.append(Js.setVal("#" + _no2, row.get(0).get(_no2)));
-            html.append(Js.setVal("#" + _parent, row.get(0).get(_parent)));
+            html.append(Js.setVal("#" + _AccountInformation, row.get(0).get(_AccountInformation)));
+            html.append(Js.setVal("#" + _birthdate, row.get(0).get(_birthdate)));
+            html.append(Js.setVal("#" + _grade, row.get(0).get(_grade)));
+            html.append(Js.setVal("#" + _jensiat, row.get(0).get(_jensiat)));
+            html.append(Js.setVal("#" + _codeMeli, row.get(0).get(_codeMeli)));
+            html.append(Js.setVal("#" + _shomareShenasname, row.get(0).get(_shomareShenasname)));
             html.append(Js.setVal("#" + _pass, row.get(0).get(_pass)));
-            html.append(Js.setVal("#" + _question, row.get(0).get(_question)));
-            html.append(Js.setValDate("#" + _registDate, row.get(0).get(_registDate)));
+            html.append(Js.setVal("#" + _passwordReminder, row.get(0).get(_passwordReminder)));
+            html.append(Js.setValDate("#" + _address, row.get(0).get(_address)));
             html.append(Js.setValDate("#" + _birthdate, row.get(0).get(_birthdate)));
 
             boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
@@ -423,13 +447,13 @@ public class Access_User {
 
             if (accEdt) {
                 if (!id.equals("1")) {
-                    html2.append("<input type=\"button\" id=\"edit_User\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");
+                    html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_User\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
                     html.append(Js.buttonMouseClick("#edit_User", Js.jjUser.edit()));
                 }
             }
             if (accDel) {
                 if (!id.equals("1")) {
-                    html2.append("<input type=\"button\" id=\"delete_User\" value=\"" + lbl_delete + "\" class=\"tahoma10\"  />");
+                    html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_User\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div></div>");
                     html.append(Js.buttonMouseClick("#delete_User", Js.jjUser.delete(id)));
                 }
             }
@@ -438,9 +462,10 @@ public class Access_User {
             return Server.ErrorHandler(e);
         }
     }
+
     public static String selectUserProfile(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
-             String id = String.valueOf(jjTools.getSeassionUserId(request));
+            String id = String.valueOf(jjTools.getSeassionUserId(request));
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
             if (!errorMessageId.equals("")) {
                 if (jjTools.isLangEn(request)) {
@@ -448,7 +473,7 @@ public class Access_User {
                 }
                 return Js.dialog(errorMessageId);
             }
-            
+
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
             if (row.isEmpty()) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
@@ -476,8 +501,7 @@ public class Access_User {
             html.append(Js.setValDate("#" + _registDate, row.get(0).get(_registDate)));
             html.append(Js.setValDate("#" + _birthdate, row.get(0).get(_birthdate)));
 
-            
-            return  html.toString();
+            return html.toString();
         } catch (Exception e) {
             return Server.ErrorHandler(e);
         }
@@ -847,7 +871,7 @@ public class Access_User {
             if (!email.equals("") && !passRequest.equals("")) {
                 List<Map<String, Object>> user = jjDatabase.separateRow(db.Select(
                         Access_User.tableName, Access_User._email + "='" + email
-                        + "' OR " + Access_User._mobile + " ='" + email //====== BY RASHIDI ======
+                        //                        + "' OR " + Access_User._mobile + " ='" + email //====== BY RASHIDI ======
                         + "' AND " + Access_User._pass + "='" + passRequest + "'"));
 //                List<Map<String, Object>> user = jjDatabase.separateRow(db.Select(
 //                        Access_User.tableName, Access_User._email + "='" + email
@@ -892,8 +916,11 @@ public class Access_User {
                 html.append(Js.setHtml("#" + panel, user.get(Access_User._name).toString() + "&nbsp;" + user.get(Access_User._family).toString() + "&nbsp;("
                         + (jjTools.isLangFa(request) ? "خروج" : "SignOut") + ")") + ";\n");
             }
-            html.append("sw('خوش آمدید');\n");
+
+            html.append("window.location ='index.html';");
+            html.append("$('#loginForm').hide();\n");
             html.append("new jj('#loginForm').jjFormClean();\n");
+
             html.append("new jj('#registForm').jjFormClean();\n");
             html.append("refreshLastSwParameter();\n");
 //            html.append("showShoppingCart();");//???????????? //======EDITED BY RASHIDI ======
@@ -917,11 +944,11 @@ public class Access_User {
     public static String registUser(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String email = jjTools.getParameter(request, _email);
-            String mobile = jjTools.getParameter(request, _email);
+//            String mobile = jjTools.getParameter(request, _email);
 
             //============ BY RASHIDI ========>
             // ------------- check email or mobile are not empty -------------------
-            if (email.equals("") && mobile.equals("")) {
+            if (email.equals("")) {
                 String errorMsg = "وارد کردن ایمیل و یا شماره موبایل الزامیست";
                 if (jjTools.isLangEn(request)) {
                     errorMsg = "Enter phone number or email address";
@@ -957,12 +984,12 @@ public class Access_User {
             // --------------------------- data is valid ------------------------------
             //============ BY RASHIDI ========>
             //ایمیل یا شماره موبایل تکراری نباشد
-            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(tableName, _email + "='" + email));
+            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(tableName, _email + "='" + email + "'"));
             if (userRow.isEmpty()) {
                 //<============ BY RASHIDI ========
                 Map<String, Object> map = new HashMap<String, Object>();
-                map.put(_email, email.toLowerCase().toLowerCase());
-                map.put(_mobile, mobile);
+                map.put(_email, email);
+//                map.put(_mobile, mobile);
                 map.put(_name, jjTools.getParameter(request, _name).toLowerCase());
                 map.put(_family, jjTools.getParameter(request, _family).toLowerCase());
                 map.put(_isActive, true);
@@ -1087,15 +1114,15 @@ public class Access_User {
     }
 
     /**
-     * برای ویرایش پروفایل کاربر 
-     * هنوز کمی کار دارد
-     * 
+     * برای ویرایش پروفایل کاربر هنوز کمی کار دارد
+     *
      * برای فلوریت درست شد که قسمت سفارش آپدیت بشه
+     *
      * @param request
      * @param db
      * @param isPost
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public static String updateUserProfile(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
@@ -1108,7 +1135,7 @@ public class Access_User {
                 }
                 return Js.dialog(errorMessageId);
             }
-     
+
             Map<String, Object> map = new HashMap<String, Object>();
             if (!jjTools.getParameter(request, _answer).isEmpty()) {
                 map.put(_answer, jjTools.getParameter(request, _answer));
@@ -1131,7 +1158,7 @@ public class Access_User {
             if (!jjTools.getParameter(request, _no2).isEmpty()) {
                 map.put(_address, jjTools.getParameter(request, _address));
             }
-                map.put(_address2, jjTools.getParameter(request, _address2));//اگر آدرس 2 خالی باشد پاک کنیم برای اینکه اشتباها از قبل وارد نشده باشد
+            map.put(_address2, jjTools.getParameter(request, _address2));//اگر آدرس 2 خالی باشد پاک کنیم برای اینکه اشتباها از قبل وارد نشده باشد
             if (!jjTools.getParameter(request, _address2).isEmpty()) {
                 map.put(_postalCode, jjTools.getParameter(request, _postalCode));
             }

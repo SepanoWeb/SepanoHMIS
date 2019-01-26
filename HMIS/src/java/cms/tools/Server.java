@@ -25,7 +25,6 @@ import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
 
 public class Server extends HttpServlet {
-    
     ////---------------------------------ipp-co.com
     public static sites mainSite = sites.iranSepano;
     public static String portalPage = "";
@@ -41,10 +40,10 @@ public class Server extends HttpServlet {
     public static String emailAccount = "ipp.info@gmail.com";
     public static String passEmail = "110110110";
     public static String smtpAcount = "smtp.gmail.com";
-    public static String mainPage = "images_ipp_co2/index.jsp";
-    public static String contentJSP = "images_ipp_co2/content.jsp";
+    public static String mainPage = "login.html";
+    public static String contentJSP = "content.jsp";
     public static String newsJSP = "index_news.jsp";
-    public static String productJSP = "index_product.jsp";
+    public static String productJSP = "index.jsp";
     //********************************************************************
 
 
@@ -64,15 +63,15 @@ public class Server extends HttpServlet {
 
     public static List<Class> getClazzes() {
         if (clazzes.isEmpty()) {
-            clazzes.add(Content.class);
-            clazzes.add(News.class);
-            clazzes.add(Pic.class);
-            clazzes.add(Category_Gallery.class);
-            clazzes.add(Category_News.class);
-            clazzes.add(Category_Forum.class);
-            clazzes.add(Category_Product.class);
-            clazzes.add(Category_Poll.class);
-            clazzes.add(Comment.class);
+//            clazzes.add(Content.class);
+//            clazzes.add(News.class);
+//            clazzes.add(Pic.class);
+//            clazzes.add(Category_Gallery.class);
+//            clazzes.add(Category_News.class);
+//            clazzes.add(Category_Forum.class);
+//            clazzes.add(Category_Product.class);
+//            clazzes.add(Category_Poll.class);
+//            clazzes.add(Comment.class);
             clazzes.add(Access_Group.class);
             clazzes.add(Access_Group_User.class);
             clazzes.add(Access_User.class);
