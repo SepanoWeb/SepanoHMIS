@@ -13,8 +13,6 @@ import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.table.DefaultTableModel;
-import jdk.nashorn.internal.ir.RuntimeNode;
-import jdk.nashorn.internal.runtime.regexp.RegExp;
 
 public class Content {
 
