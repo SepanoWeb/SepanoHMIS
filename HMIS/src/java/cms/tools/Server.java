@@ -4,9 +4,11 @@ import cms.access.*;
 import cms.cms.*;
 import HMIS.Commettes;
 
+
 //import javax.servlet.http.Part;
 import HMIS.PlansForAssess;
 import HMIS.Plans;
+
 import HMIS.Reports;
 import HMIS.Steps;
 import java.io.*;
@@ -97,12 +99,13 @@ public class Server extends HttpServlet {
             clazzes.add(email.class);
             clazzes.add(Search.class);
             ///////////////////////////////////////////////////
+
             clazzes.add(HMIS.Plans.class);   //برنامه های عملیاتی
             clazzes.add(PlansForAssess.class);//برنامه پایش
             clazzes.add(Steps.class);//گام های اجرایی
             clazzes.add(Reports.class);//گزارش های برنامه 
             clazzes.add(Commettes.class);//کمیته ها
-            ////////////shirn1
+
             clazzes.add(HMIS.Part.class);
         }
         return clazzes;

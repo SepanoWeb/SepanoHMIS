@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package HMIS;
-
 import cms.access.Access_User;
 import static cms.cms.Product.rul_ins;
 import cms.tools.Js;
@@ -117,5 +116,4 @@ public class Part {
             return Server.ErrorHandler(e);
         }
     }
-   
 }
