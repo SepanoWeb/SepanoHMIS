@@ -312,16 +312,16 @@
                     </a>
                     <ul class="nav-sub">
 
-                        <li class="nav-item"><a href="#swPart"  class="nav-link ShowOneDiv" onclick="if ($('#swPartForm').html() == '') {
+                        <li class="nav-item"><a href="#swPart"  class="nav-link ShowOneDiv" onclick="if ($('#swPartTbl').html() == '') {
 //                                   
-                                    hmisPart.loadForm();
-                                    hmisPart.m_show_form();
+                                    hmisPart.m_refresh();
+                                   
 //                                 
 
                                 }
                                 ;
                                 hmisPart.mainTabSetSize();
-//                                hmisPart.loadForm();
+                                hmisPart.loadForm();
 
                                                 ">بخش ها</a></li>
 
@@ -341,7 +341,7 @@
 
 
 
-                        <li class="nav-item"><a href="#" onclick="alert('در حال حاظر شما به این قسمت دسترسی ندارید');return false" class="nav-link">تعریف سطوح دسترسی</a></li>
+                        <li class="nav-item"><a href="#" onclick="" class="nav-link">جدول نقش ها</a></li>
                         <!--<li class="nav-item"><a href="#" onclick=" $('.sh-mainpanel').load('13userGroup.html', null, function () {});return false;" class="nav-link">جدول گروه های کاربری</a></li>-->
                         <li  class="nav-item"><a href="#swGroup"  class="nav-link ShowOneDiv" onclick="if ($('#swGroupTbl').html() == '') {
                                     cmsGroup.m_refresh();
@@ -350,7 +350,7 @@
                                 ;
                                 cmsGroup.mainTabSetSize();
                                 cmsGroup.loadForm();
-                                                 ">جدول گروه های کاربری</a></li>
+                                                 ">تعریف سطوح دسترسی</a></li>
                     </ul>
                 </li><!-- nav-item -->
                 <li class="nav-item">
@@ -552,7 +552,20 @@
                                     <div id="swCommettesTbl" style=""></div>
                                     <div id="swCommettesForm" style="display: none;"></div>
                                 </div><!--swSession-->
+                                <div class="Alldiv" id="swUser" style="">
+                                <div id="swUserTbl" ></div>
+                                <div id="swUserForm" style="display: none;"></div>
                             </div>
+                            <div class="Alldiv" id="swPart" style="">
+                                <div id="swPartTbl" style=""></div>
+                                <div id="swPartForm" style="display: none;"></div>
+                            </div>
+                            <div class="Alldiv" id="swGroup" >
+                                <div id="swGroupTbl" ></div>
+                                <div id="swGroupForm" style="display: none;"></div>
+                            </div>
+                            </div>
+                        
                         <!--</div>-->
                     <!--row-xs-->
                     </div> <!--col-lg-12-->
