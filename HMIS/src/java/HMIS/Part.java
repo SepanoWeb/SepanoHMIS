@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hmis.hmis;
+package HMIS;
 
 import cms.access.Access_User;
 import static cms.cms.Product.rul_ins;
