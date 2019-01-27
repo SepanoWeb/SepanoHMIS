@@ -32,6 +32,7 @@ public class Part {
     public static String _publicContent = "part_publicContent";
     public static String _praivateContent = "part_praivateContent";
     public static String _organizationalCode = "part_organizationalCode";
+    public static String _description = "part_description";
    
    
     public static String lbl_insert = "ذخیره";
