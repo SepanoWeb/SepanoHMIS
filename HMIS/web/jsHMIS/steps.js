@@ -75,17 +75,18 @@ var hmisSteps = {
         hmisSteps.tabSizeTbl();
     },
     m_insert: function () {
-        var valid = hmisSteps.m_validation();
-        if (valid == "") {
+//        var valid = hmisSteps.m_validation();
+//        if (valid == "") {
             var param = "";
             param += "do=" + hmisSteps.tableName + ".insert";
-            param += "&" + new jj('#swStepsForm').jjSerial();
+            param += "&" + new jj('#stepsForm').jjSerial();
+            param +="&hmis_plans_id="+new jj("#hmis_plans_id").jjVal();
             jj(param).jjAjax2(false);
             hmisSteps.m_show_tbl();
             hmisSteps.m_clean();
-        } else {
-            new jj(valid).jjDialog();
-        }
+//        } else {
+//            new jj(valid).jjDialog();
+//        }
     },
     m_edit: function () {
 //        var valid = hmisSteps.m_validation();

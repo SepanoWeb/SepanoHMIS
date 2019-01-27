@@ -137,18 +137,21 @@
                                 }
                                 ;
 //                                
+                                hmisPlans.m_refresh();
                                 hmisPlans.loadForm();
                                                 " class="nav-link ShowOneDiv">برنامه های عملیاتی و بهبود کیفیت</a></li>
                         <li class="nav-item"><a href="#swPlansForAssess" onclick="if ($('#swPlansForAssessTbl').html() == '') {
                                     hmisPlansForAssess.m_refresh();
                                 }
                                 ;
+                                hmisPlansForAssess.m_refresh();
                                 hmisPlansForAssess.loadForm();" class="nav-link ShowOneDiv">پایش برنامه ها</a></li>
                         <li class="nav-item">
                             <a href="#swSteps"  onclick="if ($('#swStepsTbl').html() == '') {
                                         hmisSteps.m_refresh();
                                     }
                                     ;
+                                    hmisSteps.m_refresh();
                                     hmisSteps.loadForm();"  class="nav-link ShowOneDiv">گام های اجرایی</a></li>
                         <li class="nav-item"><a href="#swReports"
                                                 onclick="
@@ -156,7 +159,7 @@
 ////                                    hmisReports.m_refresh();
 //                                }
 //                                ;
-                                hmisReports.loadForm();"  class="nav-link ShowOneDiv">گزارش های برنامه ها</a>
+                                                        hmisReports.loadForm();"  class="nav-link ShowOneDiv">گزارش های برنامه ها</a>
                         </li>
                     </ul>
 
@@ -460,41 +463,41 @@
             <div class="sh-pagebody">
                 <div class="row row-sm">
                     <div class="col-lg-12">
-                    <!--<div class="col-md-12">-->
+                        <!--<div class="col-md-12">-->
                         <!--<div class="row row-xs">-->
-                            <div  class="card bd-primary mg-t-20">
-                                <!--<div class="card-header bg-primary tx-white ">برنامه های عملیاتی/بهبود کیفیت تعریف شده</div>-->
+                        <div  class="card bd-primary mg-t-20">
+                            <!--<div class="card-header bg-primary tx-white ">برنامه های عملیاتی/بهبود کیفیت تعریف شده</div>-->
 
-                                <div class="Alldiv" id="swPlans">
-                                    <div id="swPlansTbl" style=""></div>
-                                    <div id="swPlansForm" style="display: none;"></div>
-                                </div><!--swPLANS-->
-                                <div class="Alldiv" id="swPlansForAssess">
-                                    <div id="swPlansForAssessTbl" style=""></div>
-                                    <div id="swPlansForAssessForm" style="display: none;"></div>
-                                </div><!--swPlansForAssess-->
-                                <div class="Alldiv" id="swSteps">
-                                    <div id="swStepsTbl" style=""></div>
-                                    <div id="swStepsForm" style="display: none;"></div>
-                                </div><!--swSteps-->
-                                <div class="Alldiv" id="swReports">
-                                    <div id="swReportsTbl" style=""></div>
-                                    <div id="swReportsForm" style="display: none;"></div>
-                                </div><!--swReports-->
-                                <div class="Alldiv" id="swCommettes">
-                                    <div id="swCommettesTbl" style=""></div>
-                                    <div id="swCommettesForm" style="display: none;"></div>
-                                </div><!--swCommettes-->
-                                <div class="Alldiv" id="swCommettes">
-                                    <div id="swCommettesTbl" style=""></div>
-                                    <div id="swCommettesForm" style="display: none;"></div>
-                                </div><!--swSession-->
-                            </div>
+                            <div class="Alldiv" id="swPlans">
+                                <div id="swPlansTbl" style=""></div>
+                                <div id="swPlansForm" style="display: none;"></div>
+                            </div><!--swPLANS-->
+                            <div class="Alldiv" id="swPlansForAssess">
+                                <div id="swPlansForAssessTbl" style=""></div>
+                                <div id="swPlansForAssessForm" style="display: none;"></div>
+                            </div><!--swPlansForAssess-->
+                            <div class="Alldiv" id="swSteps">
+                                <div id="swStepsTbl" style=""></div>
+                                <div id="swStepsForm" style="display: none;"></div>
+                            </div><!--swSteps-->
+                            <div class="Alldiv" id="swReports">
+                                <div id="swReportsTbl" style=""></div>
+                                <div id="swReportsForm" style="display: none;"></div>
+                            </div><!--swReports-->
+                            <div class="Alldiv" id="swCommettes">
+                                <div id="swCommettesTbl" style=""></div>
+                                <div id="swCommettesForm" style="display: none;"></div>
+                            </div><!--swCommettes-->
+                            <div class="Alldiv" id="swCommettes">
+                                <div id="swCommettesTbl" style=""></div>
+                                <div id="swCommettesForm" style="display: none;"></div>
+                            </div><!--swSession-->
+                        </div>
                         <!--</div>-->
-                    <!--row-xs-->
+                        <!--row-xs-->
                     </div> <!--col-lg-12-->
                     <!--</div>-->
-            <!--col-md-12-->
+                    <!--col-md-12-->
                 </div><!--row-->
             </div><!--sh-pagebody-->
 
@@ -1074,7 +1077,7 @@
         <script src="jsHMIS/steps.js" type="text/javascript"></script>
         <script src="jsHMIS/reports.js" type="text/javascript"></script>
         <script src="jsHMIS/commettes.js" type="text/javascript"></script>
-        
+
 
         <!--forms-->
         <script src="Manager/forms/select2.min.js"></script>
@@ -1085,7 +1088,8 @@
 
         <script src="Manager/shamcey.js"></script>
         <script src="Manager/dashboard.js"></script>
-
+        <!--upload-->
+        <script src="Manager/js/ajaxfileupload.js" type="text/javascript"></script>
 
         <script src="Manager/js/HMIS.js" type="text/javascript"></script>
 
@@ -1135,23 +1139,23 @@
 
             };
             //        </script>
-<!--                                <script>
-                            $(function () {
-        'use strict';
-        $('#datatable1').DataTable({
-            responsive: true,
-            language: {
-                searchPlaceholder: 'جستجو...',
-                sSearch: '',
-                lengthMenu: '_MENU_ items/page',
-            }
-        });
-
-
-        // Select2
-        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
-
-    });
-        </script>-->
+        <!--                                <script>
+                                    $(function () {
+                'use strict';
+                $('#datatable1').DataTable({
+                    responsive: true,
+                    language: {
+                        searchPlaceholder: 'جستجو...',
+                        sSearch: '',
+                        lengthMenu: '_MENU_ items/page',
+                    }
+                });
+        
+        
+                // Select2
+                $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+        
+            });
+                </script>-->
         <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
     </body></html>
