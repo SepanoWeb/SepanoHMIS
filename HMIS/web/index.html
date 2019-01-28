@@ -61,6 +61,7 @@
         <link href="css/jquery/gray/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css"/>
         <!--<link href="css/jquery/sunny/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css"/>-->
         <script src="js/jquery/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
+        <script src="js/ckeditor_4_7_1_full/ckeditor.js" type="text/javascript"></script>
         <script src="js/jquery/ajaxfileupload.js" type="text/javascript"></script>
         <script src="js/jquery/jquery.cookie.min.js" type="text/javascript"></script>
         <script src="js/jj2.js" type="text/javascript"></script>
@@ -70,6 +71,10 @@
         <script src="jsHMIS/HmisManager.js" type="text/javascript"></script>
         <script src="jsCms/group.js" type="text/javascript"></script>
         <script src="jsHMIS/part.js" type="text/javascript"></script>
+        <!--<script src="../js/editor/ckeditor.js" type="text/javascript"></script>-->
+        <!--<script src="js/ckeditor_4_1_1/ckeditor.js" type="text/javascript"></script>-->
+        
+    <!--<a href="../js/editor/myEditorConfig.js"></a>-->
         <!--<link href="css/jquery/blue/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css"/>-->
         <script src="js/table/jquery.dataTables.js" type="text/javascript"></script>
         <link href="js/table/css/jquery.dataTables_themeroller.css" rel="stylesheet" type="text/css"/>
@@ -1166,6 +1171,8 @@
         <script src="Manager/js/HMIS.js" type="text/javascript"></script>
 
         <script type="text/javascript">
+var part_content_editor = "";
+var part_praivate_editor = "";
                                     //        $(".nav-sub a.nav-link").css("color","#fff");
                                     $(".nav-sub a.nav-link").on('click', function () {
                                         $("a.nav-link.active").removeClass("active");

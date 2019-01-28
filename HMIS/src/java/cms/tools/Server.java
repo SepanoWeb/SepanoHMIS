@@ -7,6 +7,7 @@ import HMIS.Commettes;
 //import javax.servlet.http.Part;
 import HMIS.PlansForAssess;
 import HMIS.Plans;
+import HMIS.Part;
 import HMIS.Reports;
 import HMIS.Steps;
 import java.io.*;
@@ -103,7 +104,7 @@ public class Server extends HttpServlet {
             clazzes.add(Reports.class);//گزارش های برنامه 
             clazzes.add(Commettes.class);//کمیته ها
             ////////////shirn1
-            clazzes.add(HMIS.Part.class);
+            clazzes.add(Part.class);
         }
         return clazzes;
     }

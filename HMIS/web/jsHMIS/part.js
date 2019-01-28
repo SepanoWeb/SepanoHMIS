@@ -11,7 +11,9 @@ var hmisPart = {
     loadForm: function () {
         if ($("#swPartForm").html() == '') {
             $("#swPartForm").load("formHMIS/part.html", null, function () {
+                 
                 hmisPart.m_refresh();
+               
 //                   hmisPart.m_show_form();
                 $("#cancel_Part").button().click(function (e) {
                     hmisPart.m_clean();
@@ -38,6 +40,8 @@ var hmisPart = {
         jj("do=" + hmisPart.tableName + ".add_new").jjAjax2(false);
         hmisPart.m_show_form();
         hmisPart.m_clean();
+          part_content_editor = new jj('#part_publicContent').jjEditor();
+         part_praivate_editor = new jj('#part_praivateContent').jjEditor();
 //        cmsUser.m_getGroups();
     },
     m_show_form: function () {
@@ -86,7 +90,12 @@ var hmisPart = {
         var param = "";
         param += "do=" + hmisPart.tableName + ".select";
         param += "&" + hmisPart.f_id + "=" + (id == null ? "" : id);
+         part_content_editor = new jj('#part_publicContent').jjEditor();
+         part_praivate_editor = new jj('#part_praivateContent').jjEditor();
         jj(param).jjAjax2(false);
+       
+        
+        
         hmisPart.m_show_form();
 
     },
