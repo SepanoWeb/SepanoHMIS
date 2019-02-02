@@ -80,8 +80,8 @@ public class Plans {
             html.append("  <div align=\"right\">");
             html.append("<table id='refreshPlans' class='table display responsive' class='tahoma10'><thead>");
             html.append("<th width='5%'>کد</th>");
-            html.append("<th width='10%'>عنوان</th>");
-            html.append("<th width='20%'>نوع برنامه عملیاتی </th>");
+            html.append("<th width='20%'>عنوان</th>");
+            html.append("<th width='30%'>نوع برنامه عملیاتی </th>");
             html.append("<th width='20%'>تاریخ</th>");
 //            html.append("<th width='20%'>حیطه</th>");
             html.append("<th width='20%'>وضعیت</th>");
@@ -203,8 +203,10 @@ public class Plans {
                 html.append("$('#planBehboodDiv').hide();");
             }
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
-            html.append(Js.setVal("#" + _range, row.get(0).get(_range)));
             html.append(Js.setVal("#" + _department, row.get(0).get(_department)));
+            html.append(Js.setVal("#" + _range, row.get(0).get(_range)));
+
+
             html.append(Js.setVal("#" + _description, row.get(0).get(_description)));
             html.append(Js.setVal("#" + _causeProblem, row.get(0).get(_causeProblem)));
             html.append(Js.setVal("#" + _hugeGoal, row.get(0).get(_hugeGoal)));
@@ -217,20 +219,59 @@ public class Plans {
             html.append(Js.setVal("#" + _strategic, row.get(0).get(_strategic)));
             html.append(Js.setVal("#" + _thePeriodAssess, row.get(0).get(_thePeriodAssess)));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            html.append(Js.setHtml("#thePeriodAssess", row.get(0).get(_thePeriodAssess)));//دوره پایش
+            html.append(Js.setHtml("#strategic", row.get(0).get(_strategic)));
+            html.append(Js.setHtml("#hugeGoal", row.get(0).get(_hugeGoal)));//هدف کلان
+            html.append(Js.setHtml("#minorGoal", row.get(0).get(_minorGoal)));//هدف جزئی
+            html.append(Js.setHtml("#responsible", row.get(0).get(_responsible)));//مسول پایش
+            html.append(Js.setHtml("#range", row.get(0).get(_range)));//حیطه
 
-            if (accEdt) {
-                html2.append("<input type=\"button\" id=\"edit_Comment\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");
-                html.append(Js.buttonMouseClick("#edit_Comment", Js.jjPlans.edit()));
-            }
-            if (accDel) {
-                html2.append("<input type=\"button\" id=\"delete_Comment\" value=\"" + lbl_delete + "\" class=\"tahoma10\"  />");
-                html.append(Js.buttonMouseClick("#delete_Comment", Js.jjPlans.delete(id)));
-            }
+//            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
+//            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+//
+//            if (accEdt) {
+//                html2.append("<input type=\"button\" id=\"edit_Comment\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");
+//                html.append(Js.buttonMouseClick("#edit_Comment", Js.jjPlans.edit()));
+//            }
+//            if (accDel) {
+//                html2.append("<input type=\"button\" id=\"delete_Comment\" value=\"" + lbl_delete + "\" class=\"tahoma10\"  />");
+//                html.append(Js.buttonMouseClick("#delete_Comment", Js.jjPlans.delete(id)));
+//            }
             script += "$('#recordPlans').hide();";
-            return (Js.setHtml("#Comment_button", html2.toString())) + html.toString() + script;
+            ////////////////////////////نمایش جدول گامها//////////////////
+            List<Map<String, Object>> StepsRow = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._plansId + "=" + id));
+            html2.append(" <div class=\"col-lg-12\">");
 
+            html2.append("<table id='refreshTblSteps' class=\"table table-responsive table-wrapper \"  style='direction: rtl;width:982px'><thead>");
+            html2.append("<th width='5%'>کد</th>");
+            html2.append("<th width='20%'>گام اجرا</th>");
+            html2.append("<th width='10%'>مسئول اجرا</th>");
+            html2.append("<th width='10%'>مسئول پیگیری</th>");
+            html2.append("<th width='10%'>تاریخ شروع</th>");
+            html2.append("<th width='10%'>تاریخ پایان</th>");
+            html2.append("<th width='10%'>هزینه</th>");
+            html2.append("<th width='5%'>شاخص دستیابی</th>");
+            html2.append("</thead><tbody>");
+            for (int i = 0; i < StepsRow.size(); i++) {
+                html2.append("<tr  class='mousePointer'>");
+                html2.append("<td class='c'>" + StepsRow.get(i).get(Steps._id) + "</td>");
+                html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._title).toString()) + "</td>");
+                html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._responsibleForRunning).toString()) + "</td>");
+                html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._responsibleForTrack).toString()) + "</td>");
+                html2.append("<td class='r'>" + jjCalendar_IR.getViewFormat(StepsRow.get(i).get(Steps._startDate).toString()) + "</td>");
+                html2.append("<td class='r'>" + jjCalendar_IR.getViewFormat(StepsRow.get(i).get(Steps._endDate).toString()) + "</td>");
+                html2.append("<td class='r'>" + jjNumber.getFormattedNumber(StepsRow.get(i).get(Steps._cost).toString()) + "</td>");
+                html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._otherIndicators).toString()) + "</td>");
+                html2.append("</tr>");
+            }
+            html2.append("</tbody></table>");
+            html2.append("</div>");
+            script += html;
+            String script2 = Js.setHtml("#tblSteps", html2.toString());
+            script2 += Js.table("#refreshTblSteps", "300", 0, "", "گام های اجرایی");
+            return script + html + script2;
+
+          
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }

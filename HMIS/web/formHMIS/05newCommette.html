@@ -1,0 +1,149 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">برنامه عملیاتی هوشمند</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="sh-pagetitle">
+            <!--        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </span> input-group-btn 
+                    </div> input-group -->
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <span> جلسات و کمیته ها</span>
+                    <h2>تعریف کمیته ها</h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div id="formQuestions" class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-header bg-primary tx-white">مشخصات کمیته</div>
+                <div class="card bd-primary mg-t-20">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group has-success mg-b-0">
+                                عنوان:
+                                <input class="form-control is-valid" placeholder="عنوان:" type="text">
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-4">
+                            <div class="form-group has-warning mg-b-0">
+                                رئیس کمیته:
+                                <select class="form-control">
+                                    <!--در واقع از جدول اشخاص باید بیاورد-->
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="1">دکتر شفیعیون</option>
+                                    <option value="1">دکتر امیری</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-4">
+                            <div class="form-group has-warning mg-b-0">
+                                دبیر کمیته:
+                                <select class="form-control">
+                                    <!--این آپشن ها را از قسمت اشخاص باید بیاوریم-->
+                                    <option value="">انتخاب کنید</option>
+                                    <option value="1">مجید شریعتی</option>
+                                    <option value="2">مهدی صالحی</option>
+                                    <option value="3">محمد ثالثی</option>
+                                    <option value="4">عاطفه رشیدی</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->                          
+                        <div class="col-lg-4">
+                            <div class="form-group has-warning mg-b-0">
+                                برگزاری جلسات
+
+                                <select class="form-control">
+                                    <option value="ماهانه"> ماهانه</option>
+                                    <option value="سه ماهه اول">سه ماهه اول</option>
+                                    <option value="سه ماهه دوم">سه ماهه دوم</option>
+                                    <option value="سه ماهه سوم">سه ماهه سوم</option>
+                                    <option value="سه ماهه چهارم">سه ماهه چهارم</option>
+                                    <option value="شش ماهه اول">شش ماهه اول</option>
+                                    <option value="شش ماهه دوم">شش ماهه دوم</option>
+                                    <option value="سالانه">سالانه</option>
+                                    <option value="">سایر</option>
+                                </select>
+                            </div><!-- form-group -->
+                        </div><!-- col -->                          
+                        <div class="col-lg-8">
+                            توضیحات:
+                            <div class="form-group has-success mg-b-0">
+                                <input class="form-control is-valid" placeholder="توضیحات " type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->                                     
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            بارگذاری آیین نامه:
+                            <label class="custom-file">
+                                <input type="file" id="file2" class="custom-file-input">
+                                <span class="custom-file-control custom-file-control-primary"></span>
+                            </label>
+                        </div><!-- col -->   
+                        <div class="col-lg-4">
+                            بارگذاری مستندات:
+                            <label class="custom-file">
+                                <input type="file" id="file2" class="custom-file-input">
+                                <span class="custom-file-control custom-file-control-primary"></span>
+                            </label>
+                        </div><!-- col -->   
+                        <div class="col-lg-4">
+                            بارگذاری مستندات:
+                            <label class="custom-file">
+                                <input type="file" id="file2" class="custom-file-input">
+                                <span class="custom-file-control custom-file-control-primary"></span>
+                            </label>
+                        </div><!-- col -->   
+                        <div class="card-body pd-sm-30">                    
+                            <p class="mg-b-20 mg-sm-b-30">
+                                جدول اعضای کمیته
+                                <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('05newCommette.html', null, function () {
+                                        });
+                                        return false;" > افزودن عضو جدید</a>
+                            </p>
+                            <div align="right">
+                                <table class="table table-responsive table-wrapper">
+                                    <thead>
+                                        <tr>                    
+                                            <td>کد</td>                                    
+                                            <td>سمت</td>
+                                            <td>نام و نام خانوادگی</td>
+                                            <td>حذف اعضا</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>11</td><td>کارشناس بهداشت حرفه ای</td><td>مهسا کریمی</td><td><i class="icon ion-minus-circled" onclick="$(this).parent().parent().hide();"></i></td></tr>
+                                        <tr><td>12</td><td>کارشناس بهداشت</td><td>مجید شریعتی</td><td><i class="icon ion-minus-circled" onclick="$(this).parent().parent().hide();"></i></td></tr>
+                                        <tr><td>25</td><td>رئیس امور عمومی</td><td>محمد ثالثی</td><td><i class="icon ion-minus-circled" onclick="$(this).parent().parent().hide();"></i></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row l">
+                        <div class="col-lg-3">
+                            <div class="form-group has-success mg-b-0">
+                                <button class="btn btn-secondary btn-block mg-b-10" onclick="$('.sh-mainpanel').load('05commettes.html', null, function () {
+                                        });
+                                        return false;">لغو</button>
+                            </div><!-- form-group -->
+                        </div><!-- col -->
+                        <div class="col-lg-3">
+                            <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت انجام شد');$('.sh-mainpanel').load('05commettes.html', null, function () {
+                                    });
+                                    return false;">ذخیره</button>
+                        </div><!-- col -->
+                </div>
+            </div><!-- card -->
+        </div><!-- card-body -->
+    </div><!-- card -->
+</div><!-- card-body -->

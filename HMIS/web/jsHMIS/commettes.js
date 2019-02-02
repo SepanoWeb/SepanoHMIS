@@ -11,7 +11,7 @@ var hmisCommettes = {
 
     loadForm: function () {
         if ($("#swCommettesForm").html() == '') {
-            $("#swCommettesForm").load("formHmis/05newCommette.html", null, function () {
+            $("#swCommettesForm").load("formHMIS/05newCommette.html", null, function () {
              $("#cancel_Commettes").button().click(function (e) {
                      hmisCommettes.m_clean();
                      hmisCommettes.m_show_tbl();

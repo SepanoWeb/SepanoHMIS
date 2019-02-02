@@ -1,0 +1,137 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">برنامه عملیاتی هوشمند</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="sh-pagetitle">
+            <!--        <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </span> input-group-btn 
+                    </div> input-group -->
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <span>برنامه عملیاتی- بهبود کیفیت</span>
+                    <h2>گزارش های برنامه عملیاتی- بهبود کیفیت هر بخش/واحد </h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-header bg-primary tx-white">گزارش های خاص برنامه های عملیاتی و بهبود:</div>
+                <div class="card-body pd-sm-30">                    
+                    <div class="row">
+                        <div class="col-lg-4">
+                            بخش/واحد
+                            <!--آپسن ها را از جدول بخش ها بیاورد-->
+                            <select class="form-control" >
+                                <option value="">واحد را انتخاب کنید</option>
+                                <option value="مدیریت اجرایی">مدیریت اجرایی</option>
+                                <option value=" بهداشت حرفه ای"> بهداشت حرفه ای</option>
+                                <option value="  کنترل عفونت"> کنترل عفونت</option>
+                                <option value="کمیته ی ایمنی بیمار"> ایمنی بیمار</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12">f
+                            هدف کلان
+                            <select class="form-control">
+                                <option value="">انتخاب</option>
+                                <option value="1">ارتقا سطح کیفیت و ایمنی خدمات  بالینی و غیر بالینی</option>
+                                <option value="2">افزایش بهره وری ،  بهبود شرایط نگهداشت و توسعه زیر ساخت های ارائه خدمات</option>
+                                <option value="3">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                                <option value="4"> ارتقا کیفیت نظام آموزشی و ارزشیابی بر اساس استاندارد های اعتبار بخشی آموزشی </option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12">
+                            هدف جزئی 
+                            <select class="form-control">
+                                <option value="">انتخاب</option>
+                                <option value="1">ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% در سال نسبت به سال قبل</option>
+                                <option value="2">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                                <option value="3">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                                <option value="4">پیاده سازی استانداردهای بیمارستان دوستدار ایمنی و اعتباربخشی  وارتقا آگاهی و عملکرد کارکنان در راستای اجرای بهینه استاندارد های مربوطه به میزان 10% در سال 1396 نسبت به سال قبل    </option>
+                            </select>
+                        </div>
+                        <div class="col-lg-12">
+                            استراتژی
+                            <select class="form-control">
+                                <option value="">انتخاب</option>
+                                <option value="1">ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% در سال نسبت به سال قبل</option>
+                                <option value="2">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                                <option value="3">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                                <option value="4">پیاده سازی استانداردهای بیمارستان دوستدار ایمنی و اعتباربخشی  وارتقا آگاهی و عملکرد کارکنان در راستای اجرای بهینه استاندارد های مربوطه به میزان 10% در سال 1396 نسبت به سال قبل    </option>
+                            </select>
+                        </div>
+                        <br/>
+                        <div class="col-lg-2">
+                            <button class="btn btn-success btn-block mg-b-10" onclick="$('.sh-mainpanel').load('04reportsJSP.html', null, function () {
+                                    });
+                                    return false;">مشاهده</button>
+                        </div><!-- col -->
+                        <div class="col-lg-2">
+                            <button class="btn btn-success btn-block mg-b-10" onclick="alert('با این مشخصات اطلاعاتی وجود ندارد')">پرینت</button>
+                        </div><!-- col -->
+                    </div>
+                    <div class="card-header bg-primary tx-white">گزارش و ارسال گام های اجرایی به کمیته ها:</div>
+                    <div class="row mg-t-20">
+                        <div class="col-lg-2 l">
+                            ارسال گام های بخش
+                        </div>
+                        <div class="col-lg-2">
+                            <!--آپسن ها را از جدول بخش ها بیاورد-->
+                            <select class="form-control">
+                                <!--این آپشن ها را از قسمت مدیریت بخش ها بصورت اتوماتیک می آوریم-->
+                                <option value="">انتخاب بخش</option>
+                                <option value="1">جراحی</option>
+                                <option value="2">داخلی</option>
+                                <option value="3">زنان</option>
+                                <option value="4">مردان</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 l">
+                            ارسال گام های با وضعیت
+                        </div>
+                        <div class="col-lg-2">
+                            <!--آپسن ها را از جدول بخش ها بیاورد-->
+                            <select class="form-control" >
+                                <option value=""></option>
+                                <option value="غیر قابل انجام">غیر قابل انجام</option>
+                                <option value="در حال انجام">در حال انجام</option>
+                                <option value="انجام شده">انجام شده</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 l">
+                            به کمیته ی 
+                        </div>
+                        <div class="col-lg-2">
+                            <select id='commette0' class="form-control" >
+                                <option value="">کمیته ی مورد نظر را انتخاب کنید</option>
+                                <option value="1">بهداشت حرفه ای</option>
+                                <option value="1">بخش اطفال</option>
+                                <option value="2">جراحی</option>
+                                <option value="3">اتاق عمل</option>
+                                <option value="4">زنان</option>
+                                <option value="5">اورژانس</option>
+                            </select>
+                        </div>
+                        <br/>
+                        <div class="col-lg-2"  style="float: left">
+                            <button class="btn btn-success btn-block mg-b-10" onclick="$('.sh-mainpanel').load('04reportsJSP.html', null, function () {
+                                        });
+                                        return false;">پیش نمایش</button>
+                        </div>
+                        <div class="col-lg-2"  style="float: left">
+                            <button class="btn btn-danger  btn-block mg-b-10" onclick="alert('پنج پیشنهاد به کمیته ی ' + $('#commette0').val() + 'ارسال شد' );">ارسال<i class="fa fa-send mg-r-10"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- card -->
+        </div><!-- card-body -->
+    </div><!-- card -->
+</div><!-- card-body -->
