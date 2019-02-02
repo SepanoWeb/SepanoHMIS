@@ -16,38 +16,36 @@ var hmisPlans = {
                     hmisPlans.m_clean();
                     hmisPlans.m_show_tbl();
                 });
-//                $(function () {
-//                    'use strict';
-//                    $('#refreshPlans').DataTable({
-//                        responsive: true,
-//                        language: {
-//                            searchPlaceholder: 'جستجو...',
-//                            sSearch: '',
-//                            lengthMenu: '_MENU_ items/page',
-//                        }
-//                    });
-//
-//
-//                    // Select2
-//                    $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
-//
+                new jj('#steps_startDate').jjCalendarWithYearSelector(1340, 1380);
+                new jj('#steps_endDate').jjCalendarWithYearSelector(1340, 1380);
+
+                //////////////////////////////
+//                $("#sendFileTajhizat").button().click(function () {
 //                });
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
-//                $("#upload_Content_file").button().click(function () {
+//                $("#upload_tajhizat_file2").button().click(function () {
 //                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
+//                new jj('#sendFileTajhizat').jjAjaxFileUpload('#upload_tajhizat_file2', '#tajhizat_file', '#tajhizatFilePreview');
+//                $('#tajhizat_file').keyup(function () {
+//                    $('#tajhizatFilePreview').attr('src', 'upload/' + $('#tajhizat_file').val());
+//                    if ($('#tajhizat_file').val() == '') {
+//                        $('#tajhizatFilePreview').attr('src', 'img/preview.jpg');
+//                    }
 //                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
-                //<============ BY RASHIDI ========
+
+
+
+                /////////////////////////////
+                $("#sendFile1Steps").button().click(function () {
+                });
+                $("#upload_file1_steps").click(function () {
+                });
+                new jj('#sendFile1Steps').jjAjaxFileUpload('#upload_file1_steps', '#steps_file1', '#StepsPicPreview');
+                $('#steps_file1').keyup(function () {
+                    $('#StepsPicPreview').attr('src', 'upload/' + $('#steps_file1').val());
+                    if ($('#steps_file1').val() == '') {
+                        $('#StepsPicPreview').attr('src', 'img/preview.jpg');
+                    }
+                });
                 hmisPlans.m_refresh();
             });
         }
@@ -150,7 +148,7 @@ var hmisPlans = {
         $('#editPlansButton').show();//نمایش دکمه تغییرات
 
     },
-    
+
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".add_EN";

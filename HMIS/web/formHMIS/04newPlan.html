@@ -229,13 +229,13 @@
                 <div class="col-lg">
                     تاریخ شروع:
                     <div class="form-group has-success mg-b-0">
-                        <input id="steps_endDate" name="steps_endDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
+                        <input id="steps_startDate" name="steps_startDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
                     </div><!-- form-group -->
                 </div><!-- col -->
                 <div class="col-lg">
                     تاریخ پایان:
                     <div class="form-group has-success mg-b-0">
-                        <input id="steps_startDate" name="steps_startDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
+                        <input id="steps_endDate" name="steps_endDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
                     </div><!-- form-group -->
                 </div><!-- col -->
                 <div class="col-lg">
@@ -249,10 +249,28 @@
                 <div class="col-lg">
                     مستندات بارگذاری شده:
                     <label class="custom-file">
-                        <input type="file" id="file1" class="custom-file-input">
+                        <!--////////////////////////////-->
+
+                        <!--<div style='float: right;width: 40%;margin-right: 50px;margin-top: 5%'>-->
+                            <span style="color:#000"> تصویر</span>
+
+                            <img id="StepsPicPreview" name="StepsPicPreview" src="img/preview.jpg" style=" margin:0 auto; width: 210px; height: 210px;">
+                            <br/>
+                            <input type="file" id="upload_file1_steps" name="upload_file1_steps" style="width: 200px;"  class="custom-file-input"/>
+                        <span class="custom-file-control custom-file-control-primary"></span>
+                            <br/>
+                            <input type="text" id="steps_file1"  name="steps_file1" class="custom-file-input"/>
+                            <!--//در دیتابیس ذخیره می شود-->
+                            <input id="sendFile1Steps" type="submit" style="cursor:pointer" value="ارسال" class="btn btn-secondary btn-block mg-b-10" >
+                            <br/>
+                        <!--</div>-->
+                        <!--////////////////////////////-->
+<!--                        <img id="StepsPicPreview" name="StepsPicPreview" src="img/preview.jpg" style=" margin:0 auto; width: 210px; height: 210px;">
+
+                        <input type="file" id="upload_file1_steps" name="upload_file1_steps" class="custom-file-input">
                         <span class="custom-file-control custom-file-control-primary"></span>
                         <input type="text" id="steps_file1"  name="steps_file1" class="custom-file-input"/>
-                        <input id="sendFile1Steps" type="submit" style="cursor:pointer;opacity:100;" class="btn btn-secondary btn-block mg-b-10" value="ارسال">
+                        <input id="sendFile1Steps" type="submit" style="cursor:pointer;opacity:100;" class="btn btn-secondary btn-block mg-b-10" value="ارسال">-->
                     </label>
                     <a href="" style="font-size: 40px">
                         <i class="fa fa-download" ></i>
@@ -391,4 +409,7 @@
     </div><!-- col -->
 </div><!-- card -->
 
+<script>
 
+
+</script>
