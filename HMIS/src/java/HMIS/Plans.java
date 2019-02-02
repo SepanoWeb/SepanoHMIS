@@ -205,6 +205,8 @@ public class Plans {
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _department, row.get(0).get(_department)));
             html.append(Js.setVal("#" + _range, row.get(0).get(_range)));
+
+
             html.append(Js.setVal("#" + _description, row.get(0).get(_description)));
             html.append(Js.setVal("#" + _causeProblem, row.get(0).get(_causeProblem)));
             html.append(Js.setVal("#" + _hugeGoal, row.get(0).get(_hugeGoal)));
@@ -216,6 +218,7 @@ public class Plans {
             html.append(Js.setVal("#" + _responsible, row.get(0).get(_responsible)));
             html.append(Js.setVal("#" + _strategic, row.get(0).get(_strategic)));
             html.append(Js.setVal("#" + _thePeriodAssess, row.get(0).get(_thePeriodAssess)));
+
             html.append(Js.setHtml("#thePeriodAssess", row.get(0).get(_thePeriodAssess)));//دوره پایش
             html.append(Js.setHtml("#strategic", row.get(0).get(_strategic)));
             html.append(Js.setHtml("#hugeGoal", row.get(0).get(_hugeGoal)));//هدف کلان
@@ -268,6 +271,7 @@ public class Plans {
             script2 += Js.table("#refreshTblSteps", "300", 0, "", "گام های اجرایی");
             return script + html + script2;
 
+          
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }

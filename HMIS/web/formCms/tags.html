@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="../css/style1.css" type="text/css"/>
+        <link rel="stylesheet" href="../" type="text/css"/>
+
+    </head>
+    <body>
+        <div id="swTagsForm">
+            <!--<form action="Server" method="GET">-->
+            <div id="refreshTag" style="border: 2px solid;"> <a href="http://www.tabnak.ir">سایت تابناک</a> </div>
+            <input type="button" onclick="cmsTags.m_refresh();" value="refresh">
+            <img src="../img/1.png">
+            <input type="hidden" name="id" id="id">
+            <div id="addTag" style="border: 2px gray;">
+                <label>نام تگ</label>
+                <input type="text" id="tags_name" name="tags_name">
+                <input type="button" onclick="cmsTags.m_insert();" value="insert">
+            </div>
+            <input type="button" onclick="cmsTags.m_select(1);" value="select">
+            <!--</form>-->
+            <div id="tags_button" style="border: 2px solid;"><a href="http://khabaronline.ir">خبرآنلاین</a></div>
+        </div>
+
+        <link rel="stylesheet" href="../css/jquery/gray/jquery-ui-1.8.21.custom.css" type="text/css"/>
+        <script type="text/javascript" src="../js/jquery/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="../js/jquery/jquery-ui-1.8.21.custom.min.js"></script>
+        <script type="text/javascript" src="../js/jj2.js"></script>
+        <script type="text/javascript" src="../jsCms/tags.js"></script>
+        <script type="text/javascript" >
+
+                function myFunc() {
+                    alert("test");
+                }
+                ;
+                myFunc();
+        </script>
+    </body>
+</html>

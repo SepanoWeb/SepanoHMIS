@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.table.DefaultTableModel;
-import jj.jjCalendar_IR;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
@@ -78,6 +77,7 @@ public class Steps {
                 html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_endDate).toString()) + "</td>");
                 html.append("<td class='r'>" +  jjNumber.getFormattedNumber(row.get(i).get(_cost).toString()) + "</td>");
                 html.append("<td class='c'><i class='icon ion-ios-gear-outline'></i></td>");
+
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -105,12 +105,15 @@ public class Steps {
                 return hasAccess;
             }
             Map<String, Object> map = new HashMap<String, Object>();
+
             String plansId=jjTools.getParameter(request,"hmis_plans_id");
             System.out.println("idPlans="+jjTools.getParameter(request,"hmis_plans_id"));
             map.put(_plansId, jjTools.getParameter(request,"hmis_plans_id"));
             map.put(_endDate, jjTools.getParameter(request, _endDate));
             map.put(_startDate, jjTools.getParameter(request, _startDate));
             map.put(_cost,(jjTools.getParameter(request, _cost)));          
+
+         
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_otherIndicators, jjTools.getParameter(request, _otherIndicators));
             map.put(_responsibleForRunning, jjTools.getParameter(request, _responsibleForRunning));

@@ -16,6 +16,7 @@ var hmisPlans = {
                     hmisPlans.m_clean();
                     hmisPlans.m_show_tbl();
                 });
+
                 new jj('#steps_startDate').jjCalendarWithYearSelector(1340, 1380);
                 new jj('#steps_endDate').jjCalendarWithYearSelector(1340, 1380);
 
@@ -46,6 +47,38 @@ var hmisPlans = {
                         $('#StepsPicPreview').attr('src', 'img/preview.jpg');
                     }
                 });
+
+//                $(function () {
+//                    'use strict';
+//                    $('#refreshPlans').DataTable({
+//                        responsive: true,
+//                        language: {
+//                            searchPlaceholder: 'جستجو...',
+//                            sSearch: '',
+//                            lengthMenu: '_MENU_ items/page',
+//                        }
+//                    });
+//
+//
+//                    // Select2
+//                    $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+//
+//                });
+//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
+//                $("#upload_Content_file").button().click(function () {
+//                });
+                //============ BY RASHIDI ========>
+//                $("#content_insert_tags").button().click(function (e) {
+//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
+//                   cmsContent.m_insertTags();
+//
+//                });
+//               $('#tags_name').keyup(function () {
+//                    if ($("#tags_name").val() === "") {
+//                       $("#content_search_tags_result").hide();
+//                   }
+//                   cmsContent.m_searchTags();
+//               });
                 hmisPlans.m_refresh();
             });
         }

@@ -12,6 +12,7 @@ var hmisSteps = {
     loadForm: function () {
         if ($("#swStepsForm").html() == '') {
             $("#swStepsForm").load("formHMIS/04Steps.html", null, function () {
+
 //             $("#cancel_Content").button().click(function (e) {
 //                    hmisSteps.m_clean();
 //                    hmisSteps.m_show_tbl();
@@ -87,6 +88,7 @@ var hmisSteps = {
 //        } else {
 //            new jj(valid).jjDialog();
 //        }
+
     },
     m_edit: function () {
 //        var valid = hmisSteps.m_validation();
