@@ -29,7 +29,7 @@ var hmisPart = {
         param += "do="+hmisPart.tableName+".refresh";
         param += "&panel=" + (containerId==null ? "swPartTbl" : containerId);
         param += "&sort=" + (sortField==null ? "0" : sortField);
-        param += "&height=" + (tableHeight==null ? PanelHeight : tableHeight);
+        param += "&height=" + (tableHeight==null ? 400 : tableHeight);
         jj(param).jjAjax2(false);
         hmisPart.tabSizeTbl();
     },

@@ -48,6 +48,9 @@ public class Plans {
     public static String _date = "plans_date";//تاریخ
 
     public static int rul_rfs = 0;
+    public static int rul_confirmBysuperior = 0;
+    public static int rul_FinalApproval = 0;
+    public static int rul_RejectThePlans = 0;
     public static int rul_ins = 0;
     public static int rul_edt = 0;
     public static int rul_dlt = 0;
@@ -59,6 +62,9 @@ public class Plans {
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
     public static String lbl_edit = "ویرایش";
+    public static String lbl_confirmBySuperior = "تایید توسط مافوق";
+    public static String lbl_FinalApproval = "تایید نهایی و ارسال به کمیته";
+    public static String lbl_RejectThePlans = "رد برنامه";
 
     public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isFromClient) throws Exception {
         try {
@@ -70,15 +76,15 @@ public class Plans {
             DefaultTableModel dtm = db.Select(tableName);
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
 
-            html.append("        <div class=\"card-header bg-primary tx-white\">برنامه های عملیاتی/بهبود کیفیت تعریف شده</div>\n");
+            html.append("<div class=\"card-header bg-primary tx-white\">برنامه های عملیاتی/بهبود کیفیت تعریف شده</div>\n");
             html.append(" <div class=\"card-body pd-sm-30\">\n"
-                    + "                                        <p class=\"mg-b-20 mg-sm-b-30\">\n"
-                    + "                                            <a class=\"btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white\" onclick=\"hmisPlans.m_add_new();\" > برنامه عملیاتی/بهبود کیفیت جدید</a>\n"
-                    + "                                        </p>\n"
-                    + "                                    </div>");
-            html.append("        <div class=\"table-wrapper\">\n");
-            html.append("  <div align=\"right\">");
-            html.append("<table id='refreshPlans' class='table display responsive' class='tahoma10'><thead>");
+                    + " <p class=\"mg-b-20 mg-sm-b-30\">\n"
+                    + " <a class=\"btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white\" style='color:#fff' onclick=\"hmisPlans.m_add_new();\" > برنامه عملیاتی/بهبود کیفیت جدید</a>\n"
+                    + "  </p>\n"
+                    + "  </div>");
+            html.append("<div class=\"table-wrapper\">\n");
+            html.append("<div align=\"right\">");
+            html.append("<table id='refreshPlans' class='table display responsive' ><thead>");
             html.append("<th width='5%'>کد</th>");
             html.append("<th width='20%'>عنوان</th>");
             html.append("<th width='30%'>نوع برنامه عملیاتی </th>");
@@ -166,7 +172,10 @@ public class Plans {
                 }
                 return Js.dialog(errorMessage);
             }
-            return Js.jjPlans.refresh();
+            String script = "";
+//Js.jjPlans.refresh();
+            script += " $('#stepsForm').show();";
+            return script;
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }
@@ -192,6 +201,7 @@ public class Plans {
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
+            StringBuilder html3 = new StringBuilder();
             String script = "";
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setValDate("#" + _date, row.get(0).get(_date)));
@@ -205,7 +215,6 @@ public class Plans {
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _department, row.get(0).get(_department)));
             html.append(Js.setVal("#" + _range, row.get(0).get(_range)));
-
 
             html.append(Js.setVal("#" + _description, row.get(0).get(_description)));
             html.append(Js.setVal("#" + _causeProblem, row.get(0).get(_causeProblem)));
@@ -226,23 +235,67 @@ public class Plans {
             html.append(Js.setHtml("#responsible", row.get(0).get(_responsible)));//مسول پایش
             html.append(Js.setHtml("#range", row.get(0).get(_range)));//حیطه
 
-//            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-//            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
-//
-//            if (accEdt) {
-//                html2.append("<input type=\"button\" id=\"edit_Comment\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");
-//                html.append(Js.buttonMouseClick("#edit_Comment", Js.jjPlans.edit()));
-//            }
-//            if (accDel) {
-//                html2.append("<input type=\"button\" id=\"delete_Comment\" value=\"" + lbl_delete + "\" class=\"tahoma10\"  />");
-//                html.append(Js.buttonMouseClick("#delete_Comment", Js.jjPlans.delete(id)));
-//            }
+            boolean accConfirmBySuperior = Access_User.hasAccess2(request, db, rul_confirmBysuperior);//تایید توسط مافوق
+            boolean accFinalApproval = Access_User.hasAccess2(request, db, rul_FinalApproval);//تایید نهایی و ارسال به کمیته مدیریت اجرایی 
+            boolean accRejectThePlans = Access_User.hasAccess2(request, db, rul_RejectThePlans);//رد برنامه
+            html3.append(" <div class=\"col-lg-2\">\n");
+            html3.append("   <div class=\"form-group has-success mg-b-0 l\">\n");
+            html3.append("   ماوفق\n");
+            html3.append("            </div>\n");
+            html3.append("        </div>\n");
+            html3.append("        <div class=\"col-lg-2\">\n");
+            html3.append("            <select class=\"form-control\">\n");
+
+            html3.append("                <option value=\"1\">مترون</option>\n");
+            html3.append("                <option value=\"5\">رئیس امور عمومی</option>\n");
+            html3.append("                <option value=\"2\">مدیر مالی</option>\n");
+            html3.append("            </select>\n");
+            html3.append("        </div>");
+
+            if (accConfirmBySuperior) {
+                html3.append("<div class='col-lg-2'>");
+//                html3.append("<div class='form-group has-success mg-b-0'>");
+                html3.append("<button id=\"confirmBySuperior_Plans\" class=\"btn btn-success btn-block mg-b-10\">" + lbl_confirmBySuperior + "</button>");
+                html.append(Js.buttonMouseClick("#confirmBySuperior_Plans", "lmsPlans.confirmBySuperior(" + id + ");"));
+//                html3.append("</div>");
+                html3.append("</div>");
+            }
+
+            if (accFinalApproval) {
+                html3.append("<div class='col-lg-2'>");
+//                html3.append("<div class='form-group has-success mg-b-0'>");
+                html3.append("<button  id=\"FinalApproval_Plans\" class=\"btn btn-success btn-block mg-b-10\">" + lbl_FinalApproval + "</button>");
+                html.append(Js.buttonMouseClick("#FinalApproval_Plans", "lmsPlans.FinalApproval(" + id + ");"));
+//                html3.append("</div>");
+                html3.append("</div>");
+
+            }
+            if (accFinalApproval) {
+                html3.append("<div class='col-lg-2'>");
+//                html3.append("<div class='form-group has-success mg-b-0'>");
+                html3.append("<button  id=\"sendPlansToDepartement_Plans\" class=\"btn btn-success btn-block mg-b-10\">" + lbl_FinalApproval + "</button>");
+                html.append(Js.buttonMouseClick("#FinalApproval_Plans", "lmsPlans.FinalApproval(" + id + ");"));
+//                html3.append("</div>");
+                html3.append("</div>");
+
+            }
+            if (accRejectThePlans) {
+                html3.append("<div class='col-lg-12'>");
+//                html3.append("<div class='form-group has-success mg-b-0'>");
+                html3.append("<button  id=\"RejectThePlans_Plans\" class=\"btn btn-danger btn-block mg-b-10\">" + lbl_RejectThePlans + "</button>");
+                html.append(Js.buttonMouseClick("#RejectThePlans_Plans", "lmsPlans.RejectThePlans(" + id + ");"));
+//                html3.append("</div>");
+                html3.append("</div>");
+
+            }
+
             script += "$('#recordPlans').hide();";
             ////////////////////////////نمایش جدول گامها//////////////////
             List<Map<String, Object>> StepsRow = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._plansId + "=" + id));
-            html2.append(" <div class=\"col-lg-12\">");
-
-            html2.append("<table id='refreshTblSteps' class=\"table table-responsive table-wrapper \"  style='direction: rtl;width:982px'><thead>");
+//            html2.append(" <div class=\"col-lg-12\">");
+            html2.append("<div class=\"table-wrapper\">\n");
+            html2.append("<div align=\"right\">");
+            html2.append("<table id='refreshTblSteps' class=\"table table-responsive\"><thead>");
             html2.append("<th width='5%'>کد</th>");
             html2.append("<th width='20%'>گام اجرا</th>");
             html2.append("<th width='10%'>مسئول اجرا</th>");
@@ -266,12 +319,14 @@ public class Plans {
             }
             html2.append("</tbody></table>");
             html2.append("</div>");
-            script += html;
+            html2.append("</div>");
+//            html2.append("</div>");
             String script2 = Js.setHtml("#tblSteps", html2.toString());
+            script += Js.setHtml("#btns_plans", html3.toString());
             script2 += Js.table("#refreshTblSteps", "300", 0, "", "گام های اجرایی");
-            return script + html + script2;
+            script += html;
+            return script2 + script;
 
-          
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }

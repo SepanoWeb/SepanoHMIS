@@ -23,7 +23,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class UploadServlet extends HttpServlet {
 
-    private static long maxSize = 1000000;
+    private static long maxSize = 10000000;
     //====================>shiri
 //     private String fileUploadPath;
 //    public void init(ServletConfig config) {
@@ -53,11 +53,11 @@ public class UploadServlet extends HttpServlet {
 //        out.println();
         String pattern = Pattern.quote(System.getProperty("file.separator"));
         String[] contxtPath = request.getServletContext().getRealPath("/").split(pattern);
-                String safePath = "";
-            for(int i=0;i<contxtPath.length-2;i++){//return 2 folder up(parent of parent)
-                safePath+=contxtPath[i]+System.getProperty("file.separator");
-            }
-            String path = safePath + Save_Folder_Name;// upload\ in windows and upload/ in linux
+        String safePath="";
+        for(int i=0;i<contxtPath.length-2;i++){
+            safePath +=contxtPath[i]+System.getProperty("file.separator");
+        }
+        String path = safePath + Save_Folder_Name;
 //        fileItemFactory.setSizeThreshold(1024 * 1024); //1 MB
         try {
             DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
@@ -76,7 +76,7 @@ public class UploadServlet extends HttpServlet {
                     /*
                      * File
                      */
-                    
+                    System.out.println();
                     //==============>shiri
                     File folderAddress = new File(path);//"/" +
                     String extension = "";
@@ -120,7 +120,7 @@ public class UploadServlet extends HttpServlet {
                         String name2 = file.getName().substring(0, file.getName().lastIndexOf("."));
                         String extension2 = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length());
                         File file2 = new File(file.getParent() + "/" + name2 + "_small." + extension2);
-                        if (extension2.toLowerCase().equals("jpg") || extension2.toLowerCase().equals("png") || extension2.toLowerCase().equals("gif")) {
+                        if (extension2.toLowerCase().equals("jpg") || extension2.toLowerCase().equals("png") || extension2.toLowerCase().equals("gif")||extension2.toLowerCase().equals("svg")||extension2.toLowerCase().equals("docx")||extension2.toLowerCase().equals("doc")||extension2.toLowerCase().equals("pdf")||extension2.toLowerCase().equals("tiff")||extension2.toLowerCase().equals("xls")||extension2.toLowerCase().equals("xlsx")) {
                             jjPicture.doChangeSizeOfPic(file, file2, 250);
                         }
                     }

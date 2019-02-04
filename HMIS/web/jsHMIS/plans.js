@@ -112,6 +112,9 @@ var hmisPlans = {
         jj("do=" + hmisPlans.tableName + ".add_new&jj=1").jjAjax2(false);
         hmisPlans.m_show_form();
         $('#recordPlans').show();//مخفی کردن دکمه ثبت 
+        $('#newFormPlans').show();//مخفی کردن دکمه ثبت 
+        $('#stepsForm').hide();//
+        $('#editPlansButton').hide();//
         hmisPlans.m_clean();
         //        oEditor.execCommand( 'bold');
 
@@ -179,6 +182,8 @@ var hmisPlans = {
         $('#formQuestions').show();//نمایش گام ها 
         $('#newFormPlans').hide();//نمایش گام ها 
         $('#editPlansButton').show();//نمایش دکمه تغییرات
+        $('#stepsForm').show();//
+
 
     },
 

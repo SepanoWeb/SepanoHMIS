@@ -23,9 +23,12 @@
 </div><!-- sh-pagetitle -->
 
 <div class="card bd-primary">
-    <div onclick="if ($('#newFormPlans').css('display') == 'none') {
-                $('#newFormPlans').show();
-            }" class="card-header bg-primary tx-white">عنوان و توضیحات برنامه عملیاتی/بهبود کیفیت</div>
+    <div onclick=" if ($('#newFormPlans').css('display') == 'none') {
+                $('#newFormPlans').slideToggle();
+            }else{
+                 $('#newFormPlans').hide();
+            }"
+                     class="slideToggle card-header bg-primary tx-white">عنوان و توضیحات برنامه عملیاتی/بهبود کیفیت</div>
     <div  id="newFormPlans" >
         <div class="card-body pd-sm-30">
             <p class="mg-b-20 mg-sm-b-30">برنامه عملیاتی بصورت سالیانه بر اساس اهداف کلی و جزئی و استراتژی های سازمان برگرفته از برنامه استراتژیک تدوین می گردد</p>
@@ -121,7 +124,7 @@
                 <div id="planBehboodDiv" style="display: none">
                     <div class="col-lg">
                         عنوان مشکل
-                        <input class="form-control" id='plans_titleOfProblem' name='plans_titleOfProblem' placeholder="عنوان مشکل" type="text">
+                        <input class="form-control" id='plans_titleOfTheProblem' name='plans_titleOfTheProblem' placeholder="عنوان مشکل" type="text">
                     </div>
                     <div class="col-lg">
                         علت مشکل
@@ -129,7 +132,7 @@
                     </div>
                     <div class="col-lg">
                         شیوه شناسایی مشکل
-                        <input class="form-control" placeholder="شیوه شناسایی مشکل" type="text">
+                        <input class="form-control" id="plans_method" name="plans_method" placeholder="شیوه شناسایی مشکل" type="text">
                     </div>
                 </div>
                 <div class="col-lg">
@@ -249,34 +252,13 @@
                 <div class="col-lg">
                     مستندات بارگذاری شده:
                     <label class="custom-file">
-                        <!--////////////////////////////-->
-
-                        <!--<div style='float: right;width: 40%;margin-right: 50px;margin-top: 5%'>-->
-                            <span style="color:#000"> تصویر</span>
-
-                            <img id="StepsPicPreview" name="StepsPicPreview" src="img/preview.jpg" style=" margin:0 auto; width: 210px; height: 210px;">
-                            <br/>
-                            <input type="file" id="upload_file1_steps" name="upload_file1_steps" style="width: 200px;"  class="custom-file-input"/>
+                        <input type="file" id="file2" class="custom-file-input">
                         <span class="custom-file-control custom-file-control-primary"></span>
-                            <br/>
-                            <input type="text" id="steps_file1"  name="steps_file1" class="custom-file-input"/>
-                            <!--//در دیتابیس ذخیره می شود-->
-                            <input id="sendFile1Steps" type="submit" style="cursor:pointer" value="ارسال" class="btn btn-secondary btn-block mg-b-10" >
-                            <br/>
-                        <!--</div>-->
-                        <!--////////////////////////////-->
-<!--                        <img id="StepsPicPreview" name="StepsPicPreview" src="img/preview.jpg" style=" margin:0 auto; width: 210px; height: 210px;">
-
-                        <input type="file" id="upload_file1_steps" name="upload_file1_steps" class="custom-file-input">
-                        <span class="custom-file-control custom-file-control-primary"></span>
-                        <input type="text" id="steps_file1"  name="steps_file1" class="custom-file-input"/>
-                        <input id="sendFile1Steps" type="submit" style="cursor:pointer;opacity:100;" class="btn btn-secondary btn-block mg-b-10" value="ارسال">-->
                     </label>
                     <a href="" style="font-size: 40px">
                         <i class="fa fa-download" ></i>
                     </a>
-                    <br/>
-                    <br/>
+
                 </div><!-- col -->   
                 <div class="col-lg">
                     مستندات بارگذاری شده:
@@ -357,59 +339,57 @@
                     </div>
                 </div>
                 <!--</div>-->
-                <div class="row" id="tblSteps"></div>
-                <!--                <table class="table table-responsive table-wrapper">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                            <td>کد</td><td>گام اجرا</td><td>مسئول اجرا</td><td>مسئول پیگیری</td><td>تاریخ شروع</td><td>تاریخ پایان</td><td>هزینه</td><td>شاخص دستیابی</td><td><br></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr><td><br></td><td>تدوین برنامه زمان بندی بازدیدهای ماهیانه فنی ایمنی و ابلاغ به بخش ها و واحدها و اعضای تیم<br></td><td>کارشناس بهداشت حرفه ای<br></td><td>رییس امور عمومی</td><td>97/3/20</td><td>97/8/20</td><td>20000000</td><td>مشاهده</td><td><br></td></tr>
-                                        <tr><td><br></td><td>انجام بازدیدهای ماهانه فنی ایمنی ( از نظر نکات ایمنی ساختمانی و بهداشت حرفه ای)همراه با تیم، طبق برنامه زمان بندی&nbsp;<br></td><td>کارشناس بهداشت</td><td>رییس امور عمومی</td><td>ماهیانه</td><td>ماهیانه</td><td>30000000</td><td>مشاهده مستندات</td><td><br></td></tr>
-                                        <tr><td><br></td><td>ارائه نواقص موجود در بازدید، در کمیته حفاظت فنی و تدوین اقدامات اصلاحی<br></td><td>کارشنای بهداشت</td><td>رییس امورعمومی</td><td>فصلی</td><td>قصلی</td><td>2000000</td><td>مشاهده مستندات</td><td><br></td></tr>
-                                    </tbody>
-                                </table>-->
+                <!--<div class="row row-sm">-->
+                <div class="col-lg-12">
+
+                    <div  id="tblSteps" ></div>
+
+                </div>
+                <!--</div>-->
+            </div><!-- card -->
+        </div><!-- card-body -->
+    </div><!-- formquestion-->
+    <!--</div> sh-pagebody -->
+    <br/>
+    <div class="row">
+<!--        <div class="col-lg-2">
+            <div class="form-group has-success mg-b-0 l">
+                ماوفق
             </div>
-        </div><!-- card -->
-    </div><!-- card-body -->
-</div><!-- formquestion-->
-<!--</div> sh-pagebody -->
-<br/>
-<div class="row">
-    <div class="col-lg-2">
-        <div class="form-group has-success mg-b-0 l">
-            ماوفق
         </div>
-    </div>
-    <div class="col-lg-2">
-        <select class="form-control">
-            <option value="1">مترون</option>
-            <option value="5">رئیس امور عمومی</option>
-            <option value="2">مدیر مالی</option>
-        </select>
-    </div>
-    <div class="col-lg-2">
-        <div class="form-group has-success mg-b-0">
-            <button id="cancel_Plans" class="btn btn-secondary btn-block mg-b-10">لغو</button>
-        </div><!-- form-group -->
-    </div><!-- col -->
-    <div class="col-lg-2">
-        <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">تایید برنامه توسط ما فوق</button>
-    </div><!-- col -->
-    <div class="col-lg-2">
-        <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">ارسال برنامه به واحد بهبود کیفیت</button>
-    </div><!-- col -->
-    <div class="col-lg-2">
-        <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">تایید نهایی و ارسال به کمیته ی مدیریت اجرایی</button>
-    </div><!-- col -->
-    <div class="col-lg-4">
-        <button class="btn btn-danger btn-block mg-b-10" onclick="alert('ثبت شد');">رد برنامه</button>
-    </div><!-- col -->
-</div><!-- card -->
+        <div class="col-lg-2">
+            <select class="form-control">
+                <option value="1">مترون</option>
+                <option value="5">رئیس امور عمومی</option>
+                <option value="2">مدیر مالی</option>
+            </select>
+        </div>-->
 
-<script>
+        <!-- form-group -->
+
+        <!--    <div class="col-lg-2">
+                <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">تایید برنامه توسط ما فوق</button>
+            </div> col 
+            <div class="col-lg-2">
+                <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">ارسال برنامه به واحد بهبود کیفیت</button>
+            </div> col 
+            <div class="col-lg-2">
+                <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">تایید نهایی و ارسال به کمیته ی مدیریت اجرایی</button>
+            </div> col 
+            <div class="col-lg-4">
+                <button class="btn btn-danger btn-block mg-b-10" onclick="alert('ثبت شد');">رد برنامه</button>
+            </div> col -->
+        <div class="col-lg-2">
+            <div class="form-group has-success mg-b-0">
+                <button id="cancel_Plans" class="btn btn-secondary btn-block mg-b-10">لغو</button>
+            </div>
+        </div>
+
+        <div style="display:contents" id='btns_plans'></div>
+    </div><!-- card -->
 
 
-</script>
+    <script>
+
+
+    </script>
