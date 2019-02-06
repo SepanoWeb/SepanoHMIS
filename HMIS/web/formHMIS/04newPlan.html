@@ -11,7 +11,7 @@
                 <input type="search" class="form-control" placeholder="Search">
                 <span class="input-group-btn">
                     <button class="btn"><i class="fa fa-search"></i></button>
-                </span> input-group-btn 
+                </span> input-group-btn
             </div> input-group -->
     <div class="sh-pagetitle-left">
         <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
@@ -25,19 +25,28 @@
 <div class="card bd-primary">
     <div onclick=" if ($('#newFormPlans').css('display') == 'none') {
                 $('#newFormPlans').slideToggle();
-            }else{
-                 $('#newFormPlans').hide();
+            } else {
+                $('#newFormPlans').hide();
             }"
-                     class="slideToggle card-header bg-primary tx-white">عنوان و توضیحات برنامه عملیاتی/بهبود کیفیت</div>
+         class="slideToggle card-header bg-primary tx-white">عنوان و توضیحات برنامه عملیاتی/بهبود کیفیت</div>
     <div  id="newFormPlans" >
         <div class="card-body pd-sm-30">
             <p class="mg-b-20 mg-sm-b-30">برنامه عملیاتی بصورت سالیانه بر اساس اهداف کلی و جزئی و استراتژی های سازمان برگرفته از برنامه استراتژیک تدوین می گردد</p>
-            <p class="mg-b-20 mg-sm-b-30">برنامه بهبود کیفیت در راستای ارتقا کیفیت خدمات ، اصلاح  فرآیند ها و مدیریت بهینه منابع 
+            <p class="mg-b-20 mg-sm-b-30">برنامه بهبود کیفیت در راستای ارتقا کیفیت خدمات ، اصلاح  فرآیند ها و مدیریت بهینه منابع
                 تدوین
             </p>
             <br/>
             <div class="row">
                 <input type="hidden" id='hmis_plans_id' name='id'>
+                <div class="col-lg-4">
+                    مافوق
+                    <select class="form-control" id="plans_superwizarRol" name="plans_superwizarRol">
+                        <option value="" selected disabled hidden>مافوق را انتخاب کنید</option>
+                        <option value="مترون">مترون</option>
+                        <option value="رئیس امور عمومی">رئیس امور عمومی</option>
+                        <option value="مدیر مالی">مدیر مالی</option>
+                    </select>
+                </div>
                 <!--این قسمت از برنامه استراتژیک بارگذاری می گردد-->
                 <div class="col-lg-4" style="float: left">
                     نوع برنامه
@@ -97,7 +106,7 @@
             <div class="row">
                 <!--این قسمت از برنامه استراتژیک بارگذاری می گردد-->
                 <div class="col-lg">
-                    هدف جزئی 
+                    هدف جزئی
                     <select class="form-control" id='plans_minorGoal' name='plans_minorGoal'>
                         <option value="">انتخاب</option>
                         <option value="1">ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% در سال نسبت به سال قبل</option>
@@ -155,11 +164,11 @@
                     </select>
                 </div>
             </div><!-- row -->
-            <div class="row">                
+            <div class="row">
                 <div class="col-lg-4">
                     مسئول پایش
                     <input class="form-control" name='plans_responsible' id='plans_responsible' placeholder="مدیریتی یا بالینی یا پاراکلینیک یا پشتیبانی" type="text">
-                </div> 
+                </div>
                 <div class="col-lg-4">
                     دوره پایش
                     <select class="form-control" id='plans_thePeriodAssess' name='plans_thePeriodAssess'>
@@ -177,219 +186,215 @@
         <div class="row mg-t-20">
             <div class="col-lg">
                 <textarea rows="3" class="form-control" id='plans_description' name='plans_description' placeholder="توضیحات برنامه عملیاتی"></textarea>
-            </div><!-- col -->                    
+            </div><!-- col -->
         </div><!-- row -->
-        <!--</div> programAmaliatyDiv--> 
+        <!--</div> programAmaliatyDiv-->
         <div class="col-lg-3">
             <button id='recordPlans' style="display: none" class="btn btn-success btn-block mg-b-10" onclick="hmisPlans.m_insert();">ثبت  برنامه</button>
         </div>
-        <div class="col-lg-3">
-            <button id='editPlansButton' style="display: none" class="btn btn-success btn-block mg-b-10" onclick="hmisPlans.m_edit();">ثبت  تغییرات</button>
+        <div id="editPlansDiv" class="col-lg-3">
         </div>
     </div><!-- div newFormPlans  -->
 </div><!-- card -->
 <div id="formQuestions" style="display: none">
     <div class="card bd-primary mg-t-20" id="newFormQuestion">
         <div class="card-header bg-primary tx-white">مدیریت گام های اجرایی:</div>
-        <div   id="stepsForm" class="card-body pd-sm-30">
-            <!--<div>-->
-            <p class="mg-b-20 mg-sm-b-30">گام های اجرایی با توجه به مراحل پیش بینی شده اجرای برنامه تعیین می گردند</p>
-            <div class="row">
-                <div class="col-lg">
-                    <div class="form-group has-success mg-b-0">
-                        عنوان:
-                        <input id="steps_title" name="steps_title" class="form-control is-valid" placeholder="عنوان:" type="text">
-                    </div><!-- form-group -->
-                </div><!-- col -->
-                <div class="col-lg mg-t-20 mg-lg-t-0">
-                    <div class="form-group has-warning mg-b-0">
-                        مسئول اجرا:
-                        <select class="form-control" id="steps_responsibleForRunning" name="steps_responsibleForRunning">
-                            <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
-                            <option value="">انتخاب مسئول اجرا</option>
-                            <option value="1">مترون</option>
-                            <option value="2">سرپرستار چشم زنان</option>
-                            <option value="3">مسئول امور عمومی</option>
-                            <option value="4">مسئول تدارکات</option>
-                        </select>
-                    </div><!-- form-group -->
-                </div><!-- col -->
-                <div class="col-lg mg-t-20 mg-lg-t-0">
-                    <div class="form-group has-warning mg-b-0">
-                        مسئول پیگیری:
-                        <select class="form-control" id="steps_responsibleForTrack" name="steps_responsibleForTrack">
-                            <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
-                            <option value="">انتخاب مسئول پیگیری</option>
-                            <option value="1">مترون</option>
-                            <option value="2">سرپرستار چشم زنان</option>
-                            <option value="3">مسئول امور عمومی</option>
-                            <option value="4">مسئول تدارکات</option>
-                        </select>
-                    </div><!-- form-group -->
-                </div><!-- col -->                    
-            </div><!-- row -->
-            <div class="row">
-                <div class="col-lg">
-                    تاریخ شروع:
-                    <div class="form-group has-success mg-b-0">
-                        <input id="steps_startDate" name="steps_startDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
-                    </div><!-- form-group -->
-                </div><!-- col -->
-                <div class="col-lg">
-                    تاریخ پایان:
-                    <div class="form-group has-success mg-b-0">
-                        <input id="steps_endDate" name="steps_endDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
-                    </div><!-- form-group -->
-                </div><!-- col -->
-                <div class="col-lg">
-                    سایر شاخص ها:
-                    <div class="form-group has-success mg-b-0">
-                        <input id="steps_otherIndicators" name="steps_otherIndicators" class="form-control is-valid" placeholder="مصاحبه و مشاهده" type="text">
-                    </div><!-- form-group -->
-                </div><!-- col -->                    
+        <div id="stepsForm1" class="card-body pd-sm-30">
+            <div class='card-body pd-sm-30'>
+                <p class='mg-b-20 mg-sm-b-30'>
+                    <a  id='btn_addNewSteps' class="btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white" style='color:#fff;display: none' onclick="$('#stepsForm').show();new jj('#stepsForm').jjFormClean();$('#btn_insertSteps').show();$('#btnEditDiv').hide();" > گام جدید</a>
+                </p>
             </div>
+            <div id="stepsForm" class="card-body pd-sm-30">
+
+                <input id="hmis_steps_id" name="hmis_steps_id" type="hidden"/>
+
+                <!--<div>-->
+                <p class="mg-b-20 mg-sm-b-30">گام های اجرایی با توجه به مراحل پیش بینی شده اجرای برنامه تعیین می گردند</p>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-group has-success mg-b-0">
+                            عنوان:
+                            <input id="steps_title" name="steps_title" class="form-control is-valid" placeholder="عنوان:" type="text">
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg mg-t-20 mg-lg-t-0">
+                        <div class="form-group has-warning mg-b-0">
+                            مسئول اجرا:
+                            <select class="form-control" id="steps_responsibleForRunning" name="steps_responsibleForRunning">
+                                <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
+                                <option value="">انتخاب مسئول اجرا</option>
+                                <option value="1">مترون</option>
+                                <option value="2">سرپرستار چشم زنان</option>
+                                <option value="3">مسئول امور عمومی</option>
+                                <option value="4">مسئول تدارکات</option>
+                            </select>
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg mg-t-20 mg-lg-t-0">
+                        <div class="form-group has-warning mg-b-0">
+                            مسئول پیگیری:
+                            <select class="form-control" id="steps_responsibleForTrack" name="steps_responsibleForTrack">
+                                <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
+                                <option value="">انتخاب مسئول پیگیری</option>
+                                <option value="1">مترون</option>
+                                <option value="2">سرپرستار چشم زنان</option>
+                                <option value="3">مسئول امور عمومی</option>
+                                <option value="4">مسئول تدارکات</option>
+                            </select>
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                </div><!-- row -->
+                <div class="row">
+                    <div class="col-lg">
+                        تاریخ شروع:
+                        <div class="form-group has-success mg-b-0">
+                            <input id="steps_startDate" name="steps_startDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg">
+                        تاریخ پایان:
+                        <div class="form-group has-success mg-b-0">
+                            <input id="steps_endDate" name="steps_endDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg">
+                        سایر شاخص ها:
+                        <div class="form-group has-success mg-b-0">
+                            <input id="steps_otherIndicators" name="steps_otherIndicators" class="form-control is-valid" placeholder="مصاحبه و مشاهده" type="text">
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                </div>
+                <div class="row">
+                    <div class="col-lg">
+                        مستندات بارگذاری شده:
+                        <label class="custom-file">
+                            <input type="file" id="file2" class="custom-file-input">
+                            <span class="custom-file-control custom-file-control-primary"></span>
+                        </label>
+                        <a href="" style="font-size: 40px">
+                            <i class="fa fa-download" ></i>
+                        </a>
+
+                    </div><!-- col -->
+                    <div class="col-lg">
+                        مستندات بارگذاری شده:
+                        <label class="custom-file">
+                            <input type="file" id="file2" class="custom-file-input">
+                            <span class="custom-file-control custom-file-control-primary"></span>
+                        </label>
+                        <a href="" style="font-size: 40px">
+                            <i class="fa fa-download" ></i>
+                        </a>
+
+                    </div><!-- col -->
+                    <div class="col-lg">
+                        مستندات بارگذاری شده:
+                        <label class="custom-file">
+                            <input type="file" id="file3" class="custom-file-input">
+                            <span class="custom-file-control custom-file-control-primary"></span>
+                        </label>
+                        <a href="" style="font-size: 40px">
+                            <i class="fa fa-download" ></i>
+                        </a>
+
+                    </div><!-- col -->
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        هزینه:
+                        <div class="form-group has-success mg-b-0">
+                            <input class="form-control is-valid" id="steps_cost" name="steps_cost" placeholder="هزینه" type="text">
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+
+                </div>
+            </div><!-- stepsForm -->
             <div class="row">
-                <div class="col-lg">
-                    مستندات بارگذاری شده:
-                    <label class="custom-file">
-                        <input type="file" id="file2" class="custom-file-input">
-                        <span class="custom-file-control custom-file-control-primary"></span>
-                    </label>
-                    <a href="" style="font-size: 40px">
-                        <i class="fa fa-download" ></i>
-                    </a>
-
-                </div><!-- col -->   
-                <div class="col-lg">
-                    مستندات بارگذاری شده:
-                    <label class="custom-file">
-                        <input type="file" id="file2" class="custom-file-input">
-                        <span class="custom-file-control custom-file-control-primary"></span>
-                    </label>
-                    <a href="" style="font-size: 40px">
-                        <i class="fa fa-download" ></i>
-                    </a>
-
-                </div><!-- col -->   
-                <div class="col-lg">
-                    مستندات بارگذاری شده:
-                    <label class="custom-file">
-                        <input type="file" id="file3" class="custom-file-input">
-                        <span class="custom-file-control custom-file-control-primary"></span>
-                    </label>
-                    <a href="" style="font-size: 40px">
-                        <i class="fa fa-download" ></i>
-                    </a>
-
-                </div><!-- col -->   
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    هزینه:
+                <div class="col-lg-3">
                     <div class="form-group has-success mg-b-0">
-                        <input class="form-control is-valid" id="steps_cost" name="steps_cost" placeholder="هزینه" type="text">
+                        <button class="btn btn-secondary btn-block mg-b-10" onclick="$('#stepsForm').hide();">لغو</button>
                     </div><!-- form-group -->
-                </div><!-- col -->   
+                </div><!-- col -->
+                <div class="col-lg-3">
+                    <button id='btn_insertSteps' class="btn btn-success btn-block mg-b-10" onclick="hmisSteps.m_insert();">ثبت گام</button>
+                </div><!-- col -->
+                <div id='btnEditDiv' class="col-lg-3" style="display: none">
+                </div><!-- col -->
+            </div>
+        </div><!-- stepsForm1 -->
+        <br/>
 
+        <div class="row">
+
+
+            <div class="col-lg-12" style="margin-bottom: 1px">
+                <div class="card-header bg-primary tx-white">هدف کلان:
+                    <div class="card-header bg-primary tx-white"  id="hugeGoal"></div>
+                </div>
+            </div>
+            <div class="col-lg-12" style="margin-bottom: 1px">
+                <div class="card-header bg-primary tx-white">هدف جزئی:
+                    <div  id="minorGoal"></div>
+                </div>
+            </div>
+            <div class="col-lg-12" style="margin-bottom: 1px">
+                <div class="card-header bg-primary tx-white">استراتژی:
+                    <div  id="strategic"></div>
+                </div>
+            </div>
+            <div class="col-lg-4" >
+                <div class="card-header bg-primary tx-white">حیطه:
+                    <div  id="range"></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card-header bg-primary tx-white">دوره پایش:
+                    <div  id="thePeriodAssess"></div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card-header bg-primary tx-white">مسئول پایش:
+                    <div  id="responsible"></div>
+                </div>
             </div>
             <!--</div>-->
+            <!--<div class="row row-sm">-->
+            <div class="col-lg-12">
+
+                <div  id="tblSteps" ></div>
+
+            </div>
+            <div style="display:contents" id='btns_plans'></div>
             <br/>
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="form-group has-success mg-b-0">
-                        <button class="btn btn-secondary btn-block mg-b-10" onclick="$('.sh-mainpanel').load('03exam.html', null, function () {
-                                });
-                                return false;">لغو</button>
-                    </div><!-- form-group -->
-                </div><!-- col -->
-                <div class="col-lg-3">
-                    <button class="btn btn-success btn-block mg-b-10" onclick="hmisSteps.m_insert();">ثبت گام</button>
-                </div><!-- col -->
 
+        </div><!-- row -->
 
-                <!--<div class="row">-->
-                <div class="col-lg-12" style="margin-bottom: 1px">
-                    <div class="card-header bg-primary tx-white">هدف کلان:
-                        <div class="card-header bg-primary tx-white"  id="hugeGoal"></div>   
-                    </div>
-                </div>
-                <div class="col-lg-12" style="margin-bottom: 1px">
-                    <div class="card-header bg-primary tx-white">هدف جزئی:
-                        <div  id="minorGoal"></div>
-                    </div>
-                </div>
-                <div class="col-lg-12" style="margin-bottom: 1px">
-                    <div class="card-header bg-primary tx-white">استراتژی:
-                        <div  id="strategic"></div>
-                    </div> 
-                </div>
-                <div class="col-lg-4" >
-                    <div class="card-header bg-primary tx-white">حیطه:
-                        <div  id="range"></div>       
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card-header bg-primary tx-white">دوره پایش:
-                        <div  id="thePeriodAssess"></div>                 
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card-header bg-primary tx-white">مسئول پایش:
-                        <div  id="responsible"></div>
-                    </div>
-                </div>
-                <!--</div>-->
-                <!--<div class="row row-sm">-->
-                <div class="col-lg-12">
-
-                    <div  id="tblSteps" ></div>
-
-                </div>
-                <!--</div>-->
-            </div><!-- card -->
-        </div><!-- card-body -->
-    </div><!-- formquestion-->
-    <!--</div> sh-pagebody -->
-    <br/>
-    <div class="row">
-<!--        <div class="col-lg-2">
-            <div class="form-group has-success mg-b-0 l">
-                ماوفق
-            </div>
+    </div><!-- newFormQuestion-->
+</div> <!-- formquestion-->
+<div id="correctionForm" style="display: none;" class="row">
+    <div class="col-lg-12">
+        توضیحات اصلاحیه:<textarea class="form-control is-valid" id="plans_correction" name="plans_correction" ></textarea>
+    </div>
+    <div class="col-lg-2">
+        <div class="form-group has-success mg-b-0">
+            <button id="referrals_Plans" onclick="actionReferral();" class="btn btn-secondary btn-block mg-b-10">ارجاع</button>
+            <!--//دکمه ارجاع-->
         </div>
-        <div class="col-lg-2">
-            <select class="form-control">
-                <option value="1">مترون</option>
-                <option value="5">رئیس امور عمومی</option>
-                <option value="2">مدیر مالی</option>
-            </select>
-        </div>-->
-
-        <!-- form-group -->
-
-        <!--    <div class="col-lg-2">
-                <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">تایید برنامه توسط ما فوق</button>
-            </div> col 
-            <div class="col-lg-2">
-                <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">ارسال برنامه به واحد بهبود کیفیت</button>
-            </div> col 
-            <div class="col-lg-2">
-                <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت شد');">تایید نهایی و ارسال به کمیته ی مدیریت اجرایی</button>
-            </div> col 
-            <div class="col-lg-4">
-                <button class="btn btn-danger btn-block mg-b-10" onclick="alert('ثبت شد');">رد برنامه</button>
-            </div> col -->
-        <div class="col-lg-2">
-            <div class="form-group has-success mg-b-0">
-                <button id="cancel_Plans" class="btn btn-secondary btn-block mg-b-10">لغو</button>
-            </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-lg-2">
+        <div class="form-group has-success mg-b-0">
+            <button id="cancel_Plans" class="btn btn-secondary btn-block mg-b-10">لغو</button>
         </div>
+    </div>
 
-        <div style="display:contents" id='btns_plans'></div>
-    </div><!-- card -->
-
-
-    <script>
+</div><!-- card -->
 
 
-    </script>
+<script>
+
+
+</script>
