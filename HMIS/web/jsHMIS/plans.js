@@ -16,6 +16,38 @@ var hmisPlans = {
                     hmisPlans.m_clean();
                     hmisPlans.m_show_tbl();
                 });
+
+                new jj('#steps_startDate').jjCalendarWithYearSelector(1340, 1380);
+                new jj('#steps_endDate').jjCalendarWithYearSelector(1340, 1380);
+
+                //////////////////////////////
+//                $("#sendFileTajhizat").button().click(function () {
+//                });
+//                $("#upload_tajhizat_file2").button().click(function () {
+//                });
+//                new jj('#sendFileTajhizat').jjAjaxFileUpload('#upload_tajhizat_file2', '#tajhizat_file', '#tajhizatFilePreview');
+//                $('#tajhizat_file').keyup(function () {
+//                    $('#tajhizatFilePreview').attr('src', 'upload/' + $('#tajhizat_file').val());
+//                    if ($('#tajhizat_file').val() == '') {
+//                        $('#tajhizatFilePreview').attr('src', 'img/preview.jpg');
+//                    }
+//                });
+
+
+
+                /////////////////////////////
+                $("#sendFile1Steps").button().click(function () {
+                });
+                $("#upload_file1_steps").click(function () {
+                });
+                new jj('#sendFile1Steps').jjAjaxFileUpload('#upload_file1_steps', '#steps_file1', '#StepsPicPreview');
+                $('#steps_file1').keyup(function () {
+                    $('#StepsPicPreview').attr('src', 'upload/' + $('#steps_file1').val());
+                    if ($('#steps_file1').val() == '') {
+                        $('#StepsPicPreview').attr('src', 'img/preview.jpg');
+                    }
+                });
+
 //                $(function () {
 //                    'use strict';
 //                    $('#refreshPlans').DataTable({
@@ -47,7 +79,6 @@ var hmisPlans = {
 //                   }
 //                   cmsContent.m_searchTags();
 //               });
-                //<============ BY RASHIDI ========
                 hmisPlans.m_refresh();
             });
         }
@@ -150,7 +181,7 @@ var hmisPlans = {
         $('#editPlansButton').show();//نمایش دکمه تغییرات
 
     },
-    
+
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".add_EN";
