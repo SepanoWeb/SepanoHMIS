@@ -204,6 +204,7 @@ var hmisPlans = {
         $('#newFormPlans').hide(); //نمایش گام ها 
         $('#editPlansButton').show(); //نمایش دکمه تغییرات
         $('#stepsForm').show(); //نمایش فرم گامها
+        $('#correctionForm').hide(); // فرم اصلاحیه 
 
 
     },
@@ -237,7 +238,7 @@ var hmisPlans = {
         $('#correctionForm').show();
     },
     actionReferral: function () {
-        new jj("آیا از ارجاع اطمینان دارید؟").jjDialog_YesNo('afterActionReferral();\n', true, "");
+        new jj("آیا از ارجاع اطمینان دارید؟").jjDialog_YesNo('hmisPlans.afterActionReferral();\n', true, "");
 
     },
     /**

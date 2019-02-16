@@ -31,7 +31,7 @@ public class Plans {
     public static String _id = "id";
 //    public static String _plansOfAssessId = "plans_plansOfAssessId";//ای دی پایش
     public static String _typeOfProgram = "plans_typeOfProgram";//نوع برنامه عملیاتی
-    public static String _creatorId = "plans_creatorId";//عنوان برنامه عملیاتی
+    public static String _creatorId = "plans_creatorId";//ایجاد کننده برنامه عملیاتی
     public static String _superwizarRol = "plans_superwizarRol";//سمت مافوق
     public static String _title = "plans_title";//عنوان برنامه عملیاتی
     public static String _minorGoal = "plans_minorGoal";//هدف جزئی
@@ -230,6 +230,7 @@ public class Plans {
                 }
                 return Js.dialog(errorMessage);
             }
+            
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
@@ -584,11 +585,12 @@ public class Plans {
 //                return hasAccess;
 //            }
             String id = jjTools.getParameter(request, "hmis_plans_id");
+            System.out.println("id=" + id);
             Map<String, Object> map = new HashMap<>();
             map.put(_correction, jjTools.getParameter(request, _correction));
             db.update(tableName, map, _id + "=" + id);
             changeStatus(db, id, lbl_correctionPlans);
-            String script = "$('#correctionPlans_Plans').hide();";
+//            String script = "$('#correctionPlans_Plans').hide();";
             return "اصلاحیه انجام شد";
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
