@@ -1097,27 +1097,31 @@
                </div> sh-footer -->
         </div><!--sh-mainpanel-->
 
-        <script src="Manager/jquery.js"></script>
+
+        <script src="js/jquery/jquery-1.10.2_1.js" type="text/javascript"></script>
+        <!--<script src="Manager/jquery.js"></script>-->
         <script src="Manager/popper.js"></script>
         <script src="Manager/bootstrap.js"></script>
-        <script src="Manager/jquery-ui.js"></script>
+        <script src="js/jquery/ui/jquery-ui.js" type="text/javascript"></script>
+<!--        //عوض کردن 
+        //JQERY_UI ,JQUERY.1.10-->
+        <!--<script src="Manager/jquery-ui.js"></script>-->
         <script src="Manager/perfect-scrollbar.jquery.js"></script>
         <script src="Manager/moment.js"></script>
         <script src="Manager/jquery.flot.js"></script>
         <script src="Manager/jquery.flot.resize.js"></script>
         <script src="Manager/jquery.flot.spline.js"></script>
-
-        <!--calendar-->
-        <script src="Manager/js/calendar/jquery.ui.datepicker-cc.js" type="text/javascript"></script>
-        <script src="Manager/js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>
-        <script src="Manager/js/calendar/calendar.all.js" type="text/javascript"></script>
-        <script src="Manager/js/calendar/calendar.js" type="text/javascript"></script>
         <!--upload-->
         <script src="Manager/js/ajaxfileupload.js" type="text/javascript"></script>
         <!--DataTable-->
         <script src="Manager/dataTable/jquery.dataTables.js"></script>
         <script src="Manager/dataTable/dataTables.responsive.js"></script>
         <script src="Manager/dataTable/select2.min.js"></script>
+        <!--calendar-->
+        <script src="Manager/js/calendar/jquery.ui.datepicker-cc.js" type="text/javascript"></script>
+        <script src="Manager/js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>
+        <script src="Manager/js/calendar/calendar.all.js" type="text/javascript"></script>
+        <script src="Manager/js/calendar/calendar.js" type="text/javascript"></script>
 
         <!--textEditor-->
         <script src="Manager/textEditor/medium-editor.js"></script>
@@ -1207,5 +1211,16 @@
         
             });
                 </script>-->
+        <script>
+            jQuery.browser = {};
+            (function () {
+                jQuery.browser.msie = false;
+                jQuery.browser.version = 0;
+                if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
+                    jQuery.browser.msie = true;
+                    jQuery.browser.version = RegExp.$1;
+                }
+            })();
+        </script>
         <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
     </body></html>

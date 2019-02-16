@@ -15,8 +15,8 @@ var hmisPlans = {
                     hmisPlans.m_clean();
                     hmisPlans.m_show_tbl();
                 });
-                new jj('#steps_startDate').jjCalendarWithYearSelector(1340, 1380);
-                new jj('#steps_endDate').jjCalendarWithYearSelector(1340, 1380);
+                new jj("#steps_startDate").jjCalendarWithYearSelector(1340, 1380);
+                new jj("#steps_endDate").jjCalendarWithYearSelector(1340, 1380);
                 //////////////////////////////
 //                $("#sendFileTajhizat").button().click(function () {
 //                });
