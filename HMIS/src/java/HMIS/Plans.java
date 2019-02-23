@@ -134,6 +134,21 @@ public class Plans {
         }
     }
 
+    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+        try {
+            StringBuilder html = new StringBuilder();
+            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+//            if (accIns) {
+//                html.append(Js.setHtml("#", "<input type=\"button\" id=\"insert_Poll_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
+//                html.append(Js.buttonMouseClick("Poll_button#insert_Poll_new", Js.jjPoll.insert()));
+//            }
+            html.append(Js.setVal("#plans_vaziat", vaziat_sabteAvalie));
+            return html.toString();
+        } catch (Exception ex) {
+            return Server.ErrorHandler(ex);
+        }
+    }
+
     /**
      * تابع درج date 1397/11/2 tuesday
      *
@@ -230,7 +245,7 @@ public class Plans {
                 }
                 return Js.dialog(errorMessage);
             }
-            
+
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
@@ -343,8 +358,8 @@ public class Plans {
                 html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._title).toString()) + "</td>");
                 html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._responsibleForRunning).toString()) + "</td>");
                 html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._responsibleForTrack).toString()) + "</td>");
-                html2.append("<td class='r'>" + jjCalendar_IR.getViewFormat(StepsRow.get(i).get(Steps._startDate).toString()) + "</td>");
-                html2.append("<td class='r'>" + jjCalendar_IR.getViewFormat(StepsRow.get(i).get(Steps._endDate).toString()) + "</td>");
+                html2.append("<td class='r'>" + StepsRow.get(i).get(Steps._startDate).toString() + "</td>");
+                html2.append("<td class='r'>" + StepsRow.get(i).get(Steps._endDate).toString() + "</td>");
                 html2.append("<td class='r'>" + jjNumber.getFormattedNumber(StepsRow.get(i).get(Steps._cost).toString()) + "</td>");
                 html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._otherIndicators).toString()) + "</td>");
                 html2.append("<td class='c'><i class='icon ion-ios-gear-outline'></i></td>");
@@ -366,7 +381,7 @@ public class Plans {
     }
 
     /**
-     * تغییر وضعیت نمونه
+     * تغییر وضعیت برنامه عملیاتی
      *
      * @param db
      * @param id

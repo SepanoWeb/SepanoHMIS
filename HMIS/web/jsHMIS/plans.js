@@ -15,8 +15,8 @@ var hmisPlans = {
                     hmisPlans.m_clean();
                     hmisPlans.m_show_tbl();
                 });
-                new jj("#steps_startDate").jjCalendarWithYearSelector(1340, 1380);
-                new jj("#steps_endDate").jjCalendarWithYearSelector(1340, 1380);
+                new jj("#steps_startDate").jjCalendarWithYearSelector(1340, 1420);
+                new jj("#steps_endDate").jjCalendarWithYearSelector(1340, 1420);
                 //////////////////////////////
 //                $("#sendFileTajhizat").button().click(function () {
 //                });
@@ -99,6 +99,7 @@ var hmisPlans = {
         new jj('#hmis_plans_id').jjVal("");
         new jj('#hmis_steps_id').jjVal("");
         new jj('#stepsForm').jjFormClean();
+        new jj('#newFormPlans').jjFormClean();
         $('#refreshTblSteps').html("");
         $("#btn_editSteps").hide(); //پنهان کردن دکمه ثبت تغییرات گام
         $("#btn_insertSteps").show(); // نمایش دکمه ثبت گام
@@ -143,6 +144,7 @@ var hmisPlans = {
 //            new jj(valid).jjDialog();
 //        }
         $('#formQuestions').show(); //نمایش گام ها 
+        $('#stepsForm').show(); //نمایش گام ها 
         $('#recordPlans').hide(); //مخفی کردن دکمه ثبت 
     },
     m_edit: function () {

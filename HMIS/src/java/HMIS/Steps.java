@@ -39,6 +39,8 @@ public class Steps {
     public static String _file2 = "steps_file2";//مستندات
     public static String _file3 = "steps_file3";//مستندات
     public static String _cost = "steps_cost";//هزینه
+    public static String _vaziat = "steps_vaziat";//وضعیت
+    public static String _ravandeVaziat = "steps_ravandeVaziat";//روند وضعیت
     public static int rul_rfs = 0;
     public static int rul_ins = 0;
     public static int rul_edt = 0;
@@ -75,8 +77,8 @@ public class Steps {
                 html.append("<tr  onclick='hmisSteps.m_select(" + row.get(i).get(_id) + ");' class='mousePointer'>");
                 html.append("<td class='c'>" + row.get(i).get(_id) + "</td>");
                 html.append("<td class='r'>" + (row.get(i).get(_title).toString()) + "</td>");
-                html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_startDate).toString()) + "</td>");
-                html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_endDate).toString()) + "</td>");
+                html.append("<td class='r'>" + row.get(i).get(_startDate).toString() + "</td>");
+                html.append("<td class='r'>" + row.get(i).get(_endDate).toString() + "</td>");
                 html.append("<td class='r'>" + jjNumber.getFormattedNumber(row.get(i).get(_cost).toString()) + "</td>");
                 html.append("<td class='c'><i class='icon ion-ios-gear-outline'></i></td>");
 
@@ -160,8 +162,8 @@ public class Steps {
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _cost, row.get(0).get(_cost)));
-            html.append(Js.setVal("#" + _endDate, row.get(0).get(_endDate)));
-            html.append(Js.setVal("#" + _startDate, row.get(0).get(_startDate)));
+            html.append(Js.setVal("#" + _endDate, jjCalendar_IR.getViewFormat(row.get(0).get(_endDate))));
+            html.append(Js.setVal("#" + _startDate, jjCalendar_IR.getViewFormat(row.get(0).get(_startDate))));
             html.append(Js.setVal("#" + _otherIndicators, row.get(0).get(_otherIndicators)));
             html.append(Js.setVal("#" + _responsibleForTrack, row.get(0).get(_responsibleForTrack)));
             html.append(Js.setVal("#" + _responsibleForRunning, row.get(0).get(_responsibleForRunning)));
@@ -215,4 +217,40 @@ public class Steps {
             return Server.ErrorHandler(ex);
         }
     }
+
+    /**
+     * تغییر وضعیت برنامه عملیاتی
+     *
+     * @param db
+     * @param id
+     * @param newSatus
+     * @return
+     */
+    public static String changeStatus(jjDatabaseWeb db, String id, String newSatus) {
+        try {
+            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
+            if (!errorMessageId.equals("")) {
+                return Js.dialog(errorMessageId);
+            }
+            String oldStatus = jjDatabaseWeb.separateRow(db.Select(tableName, _vaziat, _id + "=" + id)).get(0).get(_vaziat).toString();
+
+            if (!oldStatus.equals(newSatus)) {
+                db.otherStatement("UPDATE " + tableName + " SET " + _ravandeVaziat
+                        + "=concat(ifnull(" + _ravandeVaziat + ",''),'"
+                        + newSatus
+                        + "-"
+                        + jjCalendar_IR.getViewFormat(new jjCalendar_IR().getDBFormat_8length())
+                        + " "
+                        + new jjCalendar_IR().getTimeFormat_8length()
+                        + "#A#"
+                        + "') ,"
+                        + _vaziat + "='" + newSatus + "'  WHERE id=" + id + ";");
+            }
+            return "";
+        } catch (Exception ex) {
+            Server.ErrorHandler(ex);
+            return "عملیات تغییر وضعیت بدرستی صورت نگرفت. Err166";
+        }
+    }
+
 }
