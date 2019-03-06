@@ -5,6 +5,7 @@ import cms.cms.*;
 import HMIS.Commettes;
 import HMIS.Plans;
 import HMIS.PlansForAssess;
+import HMIS.Sessions;
 import HMIS.Reports;
 import HMIS.Steps;
 import java.io.*;
@@ -99,10 +100,11 @@ public class Server extends HttpServlet {
             clazzes.add(Steps.class);//گام های اجرایی
             clazzes.add(Reports.class);//گزارش های برنامه 
             clazzes.add(Commettes.class);//کمیته ها
+            clazzes.add(Sessions.class);//صورت جلسه 13971212
+            
         }
         return clazzes;
     }
-
     protected void run(HttpServletRequest request, HttpServletResponse response, boolean isFromClient) throws ServletException, IOException, Exception {
         Publicresponse = response;
         Connect();

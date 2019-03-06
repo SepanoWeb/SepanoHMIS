@@ -15,6 +15,7 @@
     <div class="sh-pagetitle-left">
         <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
         <div class="sh-pagetitle-title">
+            <input id="hmis_sessions_id" type="text">
             <span>ماژول کمیته ها و جلسات</span>
             <h2>میز هوشمند جلسات</h2>
         </div><!-- sh-pagetitle-left-title -->
@@ -25,50 +26,47 @@
 
     <div class="card bd-primary mg-t-20">
         <div class="card-header bg-primary tx-white">
-            میز هوشمند جلسه ی کمیته ی مدیریت اجرایی - جلسه 1397/06/15 
+            میز هوشمند جلسه ی کمیته ی<p id="commettesTitle"></p> 
         </div>
         <div class="card-body pd-sm-30">
-            <p class="mg-b-20 mg-sm-b-30">تاریخ : 1397/06/22</p>
+            تاریخ:<p id='sessions_sessionsDate'></p>
             <div class="row">
                 <div class="col-lg">
                     عنوان  جلسه
-                    <input class="form-control" placeholder="عنوان جلسه را وارد کنید" type="text" value="جلسه ی خرداد ماه کمیته ی اجرایی">
+                    <input class="form-control" id="sessions_titleSessions" name="sessions_title" placeholder="عنوان جلسه را وارد کنید" type="text" value="جلسه ی خرداد ماه کمیته ی اجرایی">
                 </div>
             </div><!-- row -->
-            <p>1397/06/15 : تاریخ ارسال دعوت نامه</p>
+            <p><span id="sessions_DateInvitation" style="display: block;"></span>: تاریخ ارسال دعوت نامه</p>
             <div class="card-header btn-teal tx-white">
                 دستور جلسه:
             </div>
-            <textarea rows="7" class="form-control is-valid mg-t-20" placeholder="Textarea (success state)">
-                بررسی برنامه استراتژیک 
-                بررسی برنامه های عملیاتی و بهبود کیفیت
-                ،بررسی آمار کمیته ها
-                بررسی برآورد نیروی انسانی
+            <textarea rows="7" id="sessions_agendaSessions" class="form-control is-valid mg-t-20" placeholder="Textarea (success state)">
+              
             </textarea>                        
-            <div align="right">
-                <div class="card-header bg-primary tx-white">
-                    جدول مصوبات قبلی:
-                </div>
-                <table id="datatable1" class="table table-responsive table-wrapper">
-                    <thead>
-                        <tr>                    
-                            <td>کد</td>
-                            <td>عنوان مصوبه</td>
-                            <td>مسئول اجرا</td>
-                            <td>مسئول پیگیری</td>
-                            <td>تاریخ شروع</td><td>تاریخ پایان</td>
-                            <td>وضعیت</td><td>ویرایش</td>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="background-color: #fffabe"><td><br></td><td>درصد تحقق اهداف اختصصاصی تعیین گردد</td><td>مدیر مرکز</td><td><font color="#397b21">رئیس مرکز</font></td><td>97/3/20</td><td>97/5/20<br></td><td>در حال انجام</td><td><i onclick="$('#insertMosavabeh').slideDown()();" class="icon ion-eye" ></i></td></tr>
-                        <tr style="background-color: #ffbebe"><td><br></td><td>بخش سی سی یو راه اندازی شود</td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/2/20<br></td><td>97/3/20<br></td><td><span  style="background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);">انجام نشد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye"></i></td></tr>
-                        <tr style="background-color: #c7ffba"><td><br></td><td>برنامه بازدید های میدانی ایمنی بیمار سه ماهه اول ابلاغ گردد<br></td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/3/20<br></td><td>97/5/20<br></td><td><span  style="background-color: rgb(107, 165, 74); color: rgb(255, 255, 255);">انجام شد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye" ></i></td></tr>
-                        <tr><td><br></td><td></td><td></td><td></td><td></td><td></td><td></td><td><br></td></tr>
-                    </tbody></table>
-
-            </div>
+            <!--            <div align="right">
+                            <div class="card-header bg-primary tx-white">
+                                جدول مصوبات قبلی:
+                            </div>
+                            <table id="datatable1" class="table table-responsive table-wrapper">
+                                <thead>
+                                    <tr>                    
+                                        <td>کد</td>
+                                        <td>عنوان مصوبه</td>
+                                        <td>مسئول اجرا</td>
+                                        <td>مسئول پیگیری</td>
+                                        <td>تاریخ شروع</td><td>تاریخ پایان</td>
+                                        <td>وضعیت</td><td>ویرایش</td>
+            
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background-color: #fffabe"><td><br></td><td>درصد تحقق اهداف اختصصاصی تعیین گردد</td><td>مدیر مرکز</td><td><font color="#397b21">رئیس مرکز</font></td><td>97/3/20</td><td>97/5/20<br></td><td>در حال انجام</td><td><i onclick="$('#insertMosavabeh').slideDown()();" class="icon ion-eye" ></i></td></tr>
+                                    <tr style="background-color: #ffbebe"><td><br></td><td>بخش سی سی یو راه اندازی شود</td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/2/20<br></td><td>97/3/20<br></td><td><span  style="background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);">انجام نشد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye"></i></td></tr>
+                                    <tr style="background-color: #c7ffba"><td><br></td><td>برنامه بازدید های میدانی ایمنی بیمار سه ماهه اول ابلاغ گردد<br></td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/3/20<br></td><td>97/5/20<br></td><td><span  style="background-color: rgb(107, 165, 74); color: rgb(255, 255, 255);">انجام شد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye" ></i></td></tr>
+                                    <tr><td><br></td><td></td><td></td><td></td><td></td><td></td><td></td><td><br></td></tr>
+                                </tbody></table>
+            
+                        </div>-->
             <div id="insertMosavabeh" class="card-body pd-sm-30" style="display: none">
                 <div class="row">
                     <div class="col-lg-12">
@@ -184,13 +182,13 @@
                     <div class="col-lg-3">
                         دستور جلسه:
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="دستور جلسه را وارد کنید" type="text">
+                            <input   id="sessions_checkingAgenda" name="sessions_checkingAgenda" class="form-control is-valid" placeholder="دستور جلسه را وارد کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->   
                     <div class="col-lg-3">
                         عنوان مستند:
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="عنوان فایل را انتخاب کنید" type="text">
+                            <input id="sessions_titleFile" name="sessions_titleFile" class="form-control is-valid" placeholder="عنوان فایل را انتخاب کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->   
                     <div class="col-lg-3">          
@@ -216,7 +214,7 @@
                     <div class="col-lg-3">
                         عنوان مسئله
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="مسئله یا مشکل را وارد کنید" type="text">
+                            <input id="sessions_titleIssue" name="sessions_titleIssue" class="form-control is-valid" placeholder="مسئله یا مشکل را وارد کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->   
                     <div class="col-lg-6">

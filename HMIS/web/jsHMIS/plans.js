@@ -134,7 +134,7 @@ var hmisPlans = {
     m_insert: function () {
 //        var valid = hmisPlans.m_validation();
 //        if (valid == "") {
-        var param = "";
+        var param = "";  
         param += "do=" + hmisPlans.tableName + ".insert";
         param += "&" + new jj('#swPlansForm').jjSerial();
         jj(param).jjAjax2(false);

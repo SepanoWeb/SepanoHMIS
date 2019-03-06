@@ -249,13 +249,13 @@
                     <div class="col-lg">
                         تاریخ شروع:
                         <div class="form-group has-success mg-b-0">
-                            <input id="steps_startDate" name="steps_startDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
+                            <input id="steps_startDate" name="steps_startDate" class="form-control is-valid" placeholder="تاریخ شروع را وارد کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->
                     <div class="col-lg">
                         تاریخ پایان:
                         <div class="form-group has-success mg-b-0">
-                            <input id="steps_endDate" name="steps_endDate" class="form-control is-valid" placeholder="تاریخ را وارد کنید" type="text">
+                            <input id="steps_endDate" name="steps_endDate" class="form-control is-valid" placeholder="تاریخ پایان را وارد کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->
                     <div class="col-lg">
@@ -277,6 +277,10 @@
                         </a>
 
                     </div><!-- col -->
+                    
+                    
+                    
+                    
                     <div class="col-lg">
                         مستندات بارگذاری شده:
                         <label class="custom-file">
@@ -299,6 +303,18 @@
                         </a>
 
                     </div><!-- col -->
+                     <div class="col-lg">
+                                           مستندات بارگذاری شده:
+                                        <div class="input-group">
+                                            
+                                            <span class="input-group-btn">
+                                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+                                                <input id="uploaded_file" name="uploaded_file"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                            </span>
+                                            <span class="form-control"></span>
+                                        </div>
+                                            <a onclick="//hmisDepartment.downloadIcon();"><i  class="fa fa-download"  id="downloadIcon" ></i></a>
+                                        </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
@@ -395,6 +411,10 @@
 
 
 <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on('change', function () {
+                var fileName = document.getElementById("exampleInputFile").files[0].name;
+                $(this).next('.form-control-file').addClass("selected").html(fileName);
+            });
+        });</script>
 
-
-</script>
