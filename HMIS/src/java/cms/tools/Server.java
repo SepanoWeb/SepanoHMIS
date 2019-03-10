@@ -5,10 +5,19 @@ import cms.cms.*;
 import cms.tools.*;
 import HMIS.Commettes;
 
+//<<<<<<< HEAD
 //import javax.servlet.http.Department;
+//=======
+
+//import javax.servlet.http.Part;
+//>>>>>>> origin/master
 import HMIS.PlansForAssess;
 import HMIS.Plans;
+//<<<<<<< HEAD
 import HMIS.Department;
+//=======
+
+//>>>>>>> origin/master
 import HMIS.Reports;
 import HMIS.Role;
 import HMIS.Steps;
@@ -100,15 +109,21 @@ public class Server extends HttpServlet {
             clazzes.add(email.class);
             clazzes.add(Search.class);
             ///////////////////////////////////////////////////
+
             clazzes.add(HMIS.Plans.class);   //برنامه های عملیاتی
             clazzes.add(PlansForAssess.class);//برنامه پایش
             clazzes.add(Steps.class);//گام های اجرایی
             clazzes.add(Reports.class);//گزارش های برنامه 
             clazzes.add(Commettes.class);//کمیته ها
+//<<<<<<< HEAD
             ////////////shirn1 بخش ها
             clazzes.add(Department.class);
             ////////////shirn1 نقشها
             clazzes.add(Role.class);
+//=======
+
+//            clazzes.add(HMIS.Part.class);
+//>>>>>>> origin/master
         }
         return clazzes;
     }
