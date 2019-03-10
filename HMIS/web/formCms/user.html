@@ -7,6 +7,7 @@
         <div class="card bd-primary mg-t-20">
 
             <div class="card bd-primary">
+              
                 <div class="sh-breadcrumb">
                     <nav class="breadcrumb">
                         <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
@@ -30,468 +31,374 @@
                     </div><!-- sh-pagetitle-left -->
                 </div><!-- sh-pagetitle -->
                 <div class="col-lg-12">
+                      
                     <div class="card bd-primary mg-t-20" id='AccessuserForm'>
+                        <input type="hidden" id="access_user_id" name="id" />
                         <div class="card-header bg-primary tx-white">اطلاعات کاربر</div>
                         <div class="card-body pd-sm-30">                    
                             <div class="row">
-                                <input type="hidden" id="user_id" name="id" />
+                                <div class="col-lg-6" style="margin-bottom: 20px">
+                                    <input id="user_attachAxPersonal" name="user_attachAxPersonal" type="hidden" />
+                                    عکس پرسنلی:
+
+                                    <img id="PicPreviewPersonal"  class="img-thumbnail"  name="PicPreviewPersonal" src="#" style="width:41%;height: 63%;    margin-right: 16%;"/>
+
+
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <input  class="btn btn-primary" id="sendPic1" type="submit" style="cursor:pointer;    border-radius: 7px;
+                                                    line-height: 32px;" value="ارسال" >
+                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();" style=" border-radius: 6px;
+                                                  line-height: 32px;    cursor: pointer;">Browse</span>
+
+                                            <input id="user_file_personal" name="user_file_personal"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+
+                                            <br/>
+
+                                        </span>
+                                        <span id="user_pic1" style="    border-radius: 6px;
+                                              height: 50px;
+                                              line-height: 18px;" class="form-control"></span>
+
+                                    </div>
+                                    <!--                                    <a onclick="hmisDepartment.downloadIcon();"></a>-->
+                                </div>
+
+                                <div class="col-lg-6" style="margin-bottom: 20px">
+                                    <input id="user_attachAxPersonnelCard" name="user_attachAxPersonnelCard" type="hidden" />
+                                    عکس کارت پرسنلی:
+                                    <img id="PicPreview" class="img-thumbnail" name="PicPreview" src="#" style="width:41%;height: 63%;    margin-right: 16%;"/>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <input class="btn btn-primary" id="sendPicupload" type="submit" style="cursor:pointer;   border-radius: 7px;line-height: 32px;" value="ارسال" >
+                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();" style="    border-radius: 6px;
+                                                  line-height: 32px;">Browse</span>
+                                            <input id="uploaded_file"  name="upload_file"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+
+                                        </span>
+                                        <span class="form-control" id="user_pic3" style=" border-radius: 6px;height: 50px;line-height: 18px;"></span>
+
+                                    </div>
+
+                                </div>
+
+                                <br/>
+                                <br/>
+                                <br/>
+                                
 
                                 <div class="col-lg">
                                     نام 
-                                    <input class="form-control" id="user_name" name="user_name"  placeholder="نام" type="text">
+                                    <input class="form-control" id="user_nameUser" name="user_name"  placeholder="نام" type="text">
                                 </div>
                                 <div class="col-lg">
                                     نام  خانوادگی
-                                    <input class="form-control" id="user_family" name="user_family" placeholder="نام خانوادگی" type="text">
+                                    <input class="form-control" id="user_familyUser" name="user_family" placeholder="نام خانوادگی" type="text">
                                 </div>
                                 <div class="col-lg">
                                     ایمیل
-                                    <input class="form-control"  id="user_email" name="user_email"  placeholder="ایمیل" type="text">
+                                    <input class="form-control"  id="user_emailUser" name="user_email"  placeholder="ایمیل" type="text">
                                 </div>
                             </div>
-                            <!--                        <div class="col-lg-4">
-                                                        بخش/واحد
-                                                        آپسن ها را از جدول بخش ها بیاورد
-                                                        <select class="form-control" >
-                                                            <option value="0">همه</option>
-                                                            <option value="1">مدیریت اجرایی</option>
-                                                            <option value="2">کمیتیه ی بهداشت حرفه ای</option>
-                                                            <option value="3">کمیته ی کنترل عفونت</option>
-                                                            <option value="4">کمیته ی ایمنی بیمار</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-lg-12">f
-                                                        نام شاخص
-                                                        <select class="form-control">
-                                                            <option value="0">همه</option>
-                                                            <option value="2">تریاژ</option>
-                                                            <option value="3">درصد عفونت بیمارستانی</option>
-                                                            <option value="4">درصد سغوط از تخت</option>
-                                                            <option value="4">تفکیک پسماند</option>
-                                                            <option value="4">درصد تعین تکلیف بیمار</option>
-                                                        </select>
-                                                    </div>-->
+
                             <br/>
                             <div class="row">
                                 <div class="col-lg">
                                     اطلاعات حساب
-                                    <input class="form-control" id="user_AccountInformation" name="user_AccountInformation" placeholder="اطلاعات حساب" type="text">
+                                    <input class="form-control" id="user_AccountInformationUser" name="user_AccountInformation" placeholder="اطلاعات حساب" type="text">
                                 </div>
                                 <div class="col-lg">
                                     تاریخ تولد
-                                    <input class="form-control" id="user_birthdate" name="user_birthdate" placeholder="تاریخ تولد" type="text">
+                                    <input class="form-control" id="user_birthdateUser" name="user_birthdate" placeholder="تاریخ تولد" type="text">
                                 </div>
                                 <div class="col-lg">
                                     مدرک تحصیلی
-                                    <input class="form-control" id="user_grade" name="user_grade" placeholder="مدرک تحصیلی" type="text">
+                                    <input class="form-control" id="user_gradeUser" name="user_grade" placeholder="مدرک تحصیلی" type="text">
                                 </div>
                             </div>
                             <br/>
-                            <!--                        <div class="col-lg">
-                                                        تاریخ پایان
-                                                        <input class="form-control" placeholder="تاریخ پایان" type="text">
-                                                    </div>-->
+
                             <div class="row">
-                                <!--<div class="col-lg">-->
-                                <!--                           جنسیت
-                                                            <select class="form-control">
-                                                                <option value="">انتخاب</option>
-                                                                <option value="0">اقای</option>
-                                                                <option value="2">خانم</option>
-                                                                <option value="3">درصد عفونت بیمارستانی</option>
-                                                                <option value="4">درصد سغوط از تخت</option>
-                                                                <option value="4">تفکیک پسماند</option>
-                                                                <option value="4">درصد تعین تکلیف بیمار</option>
-                                                            </select>
-                                                           
-                                                        </div>-->
+
                                 <div class="col-lg">
                                     جنسیت
-                                    <select class="form-control" id="user_jensiat" name="user_jensiat">
+                                    <select class="form-control" id="user_jensiatUser" name="user_jensiat">
                                         <option value="">انتخاب</option>
                                         <option value="اقای">اقای</option>
                                         <option value="خانم">خانم</option>
-                                        <!--<option value="3">درصد عفونت بیمارستانی</option>-->
-                                        <!--                                <option value="4">درصد سغوط از تخت</option>
-                                                                        <option value="4">تفکیک پسماند</option>
-                                                                        <option value="4">درصد تعین تکلیف بیمار</option>-->
+
                                     </select>
                                 </div>
                                 <div class="col-lg">
                                     کدملی
-                                    <input class="form-control" id="user_codeMeli" name="user_codeMeli"  placeholder="کدملی" type="text">
+                                    <input class="form-control" id="user_codeMeliUser" name="user_codeMeli"  placeholder="کدملی" type="text">
                                 </div>
                                 <div class="col-lg">
                                     شماره شناسنامه
-                                    <input class="form-control" id="user_shomareShenasname" name="user_shomareShenasname"  placeholder="شماره شناسنامه" type="text">
+                                    <input class="form-control" id="user_shomareShenasnameUser" name="user_shomareShenasname"  placeholder="شماره شناسنامه" type="text">
                                 </div>
                             </div>
                             <div class='row'>
                                 <div class="col-lg">
                                     رمز عبور
-                                    <input class="form-control" id="user_pass"  name="user_pass"  placeholder="رمز عبور" type="text">
+                                    <input class="form-control" id="user_passUser"  name="user_pass"  placeholder="رمز عبور" type="text">
                                 </div>
                                 <div class="col-lg">
                                     یاد آور گذر واژه
-                                    <input class="form-control" id="user_passwordReminder"  name="user_passwordReminder"  placeholder=" یاد آور گذر واژه" type="text">
+                                    <input class="form-control" id="user_passwordReminderUser"  name="user_passwordReminder"  placeholder=" یاد آور گذر واژه" type="text">
                                 </div>
                                 <div class="col-lg">
                                     نشانی
-                                    <input class="form-control" id="user_address" name="user_address" placeholder="نشانی" type="text">
+                                    <input class="form-control" id="user_addressUser" name="user_address" placeholder="نشانی" type="text">
                                 </div>
                             </div>   
 
-                            <!--  <table style="width: 51%">
-                                                            <tr>
-                                    
-                                                                                            <td style="text-align: right;">
-                                                                                                فعال می باشد: 
-                                                                                            </td>
-                                                                                            <td style="text-align: right;">
-                                                                                                <input type="checkbox" id="user_is_active" name="user_is_active"  class="tahoma10" style="width: 15px"/>
-                                                                                            </td>
-                                                            </tr>
-                                    <
-                                                            <tr>
-                                                                <td style="text-align: right;padding: 5px;width:10% ">
-                                                                    گروه ها:
-                                                                </td>
-                                                                <td style="text-align: right;padding: 5px;width:50%">
-                                                                    <form id="group_checkbox_list">
-                                                                        <div style="overflow: scroll"> 
-                                                                        </div>
-                                                                    </form>
-                                    
-                                                                </td>
-                                    
-                                                            </tr>
-                                                        </table>-->
-
                             <br/>
-                            <!--<div class="row">-->
-                                <!--                            <a href="feiz/خلاصه شاخص.xlsx" target="_blank">
-                                                                <button class="btn btn-success btn-block mg-b-10" onclick="'">مشاهده</button>
-                                                            </a>
-                                                        </div> col -->
-                                
-                                    
-                            <!--</div>-->
-                                 <!--<div class="row">-->
-                                   
-<!--                                    <div id="User_button"  style="position: relative;   width: 57%;
-                                         padding-top: 1%;
-                                         padding-bottom: 1%;
-                                         color: white;
-                                         ">
-                                        
-                                    </div>
+                            <!--                            <div class="">
+                                                                        <span class="input-group-btn">
+                                                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
+                                                                            <input id="user_file_personal" name="user_file_personal"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                                                             <input id="sendPic1" type="submit" style="cursor:pointer" value="ارسال" onclick="editPicture(2);">
+                                                                             <input type="text" id="user_pic1"  name="user_pic1"/>
+                                                                        </span>
+                                                                        <span class="form-control"></span>
+                                                                        
+                                                                    </div>-->
+                            <!--                            <div class="row files input-group" id="files1">
+                                                            <span class="btn btn-default btn-file">
+                                                                Browse  <input type="file" name="uploadFile" id="uploadFile" multiple />
+                                                            </span>
+                                                            <br />
+                                                            <ul class="fileList"></ul>
+                            
+                                                        </div>-->
+
+                            <div class="col-lg-6" style="margin-bottom: 25px">
+                                <input id="user_attachAxSignature" name="user_attachAxSignature" type="hidden" />
+                                تصویر امضا:
+                                <img id="PicPreviewSignature" class="img-thumbnail"  name="PicPreviewSignature" src="#" style="width:41%;height: 63%;    margin-right: 16%;"/>
+
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <input class="btn btn-primary" id="sendPicSignature" type="submit" style="cursor:pointer;   border-radius: 7px;line-height: 32px;" value="ارسال" >
+                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();" style="line-height: 32px;    cursor: pointer;border-radius: 6px;">Browse</span>
+                                        <input id="user_file_Signature"  name="user_file_Signature"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                    </span>
+                                    <span id="user_pic2" style="  border-radius: 6px;height: 50px;line-height: 18px;" class="form-control"></span>
+
                                 </div>
 
-<div class="row">
-                                <div class="col-lg">
-                                    <a class="btn btn-secondary btn-block mg-b-10" style=" width: 28%; 
-                                       padding-top: 1%;
-                                       padding-bottom: 1%;
-                                       color: white;
-                                       float: left;" id="cancel_User" >لغو</a>
-                                </div>-->
-<!--</div>-->
-<table>
-<tr style="background-color: #eaeaf4;height: 40px">
-                <!--<td style="text-align: right">-->
+                            </div>
+                            <div class="col-lg-12">
+                                <!--<img id="PicPreviewAttach" class="img-thumbnail"  name="PicPreviewAttach" src="#" style="width:55%;height: 90%"/>-->
+                                <input id="user_attachFile" name="user_attachFile" type="hidden" />
+                                <div id="inputAfterSelect" ></div>
+                                <div  id="inputTextSelectorDiv" ></div>
+
+
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <input class="btn btn-primary" id="sendPicFiles" type="submit" style="cursor:pointer;   border-radius: 7px;line-height: 32px;" value="ارسال" >
+                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();" style="line-height: 32px;    cursor: pointer;border-radius: 6px;">Browse</span>
+                                        <input id="attachFile"  name="attachFile"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                    </span>
+                                    <span id="user_pic4" style="  border-radius: 6px;height: 50px;line-height: 18px;" class="form-control"></span>
+
+                                    <!--                                <div class="row files input-group" id="files1">
+                                                                        <span class="input-group-btn">
+                                                                            <span class="btn btn-default btn-file btn btn-primary" >Browse</span>
+                                                                            <img id="PicPreviewAttach" class="img-thumbnail"  name="PicPreviewAttach" src="#" style="width:55%;height: 90%"/>
+                                                                            <input type="file" class="btn btn-default btn-file btn btn-primary"  name="attachFile" id="attachFile"  multiple>
+                                                                            <input  class="btn btn-primary" id="sendPicFiles" type="submit" style="cursor:pointer;    border-radius: 7px;
+                                                                                    line-height: 32px;" value="ارسال" >
+                                                                        </span>
+                                    
+                                                                        <ul id="user_pic4" class="fileList"></ul>
+                                                                        <span class="form-control"></span>
+                                    
+                                                                    </div>-->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div><!-- card-body -->
+                </div><!-- card -->
+                
+
+                <table class="col-lg-12">
+                    <tr style="background-color: #eaeaf4;height: 40px">
+                        <!--<td style="text-align: right">-->
                     <div style="float: right">
                         <a id="cancel_User" class="btn btn-secondary btn-block mg-b-10" style="  
-                          
+
                            color: white;
-                             padding-top: 15%;
-                           padding-bottom: 16%;
-                           color: white;
-                            float: left; 
-                           margin-top: 10%;
-                           padding-right: 15%;
-                           padding-left: 19%;"  >
+                           width: 20%;
+                           position: relative;
+                           top: 45px;
+
+                           "  >
                             بازگشت
                         </a>
-                    </div>
-                    <div id="User_button" style="position: relative;float: left;   width: 57%;
-                         padding-top: 1%;
-                         padding-bottom: 1%;
-                         color: white;
-                         ">
-                    </div>
-                <!--</td>-->
-            </tr>
-        </table>
-                                <!--                                   <table>
-                                            <tr>
-                                                <td style="text-align: right">
-                                                    <div style="float: right">
-                                                        <a id="cancel_User"  >
-                                                            بازگشت
-                                                        </a>
-                                                    </div>
-                                                   
-                                                </td> 
-                                
-                                            </tr>
-                                        </table>-->
-                            </div>
 
+                        <div id="User_button" style="position: relative;float: left;   width: 57%;
+                             padding-top: 1%;
+                             padding-bottom: 1%;
+                             color: white;
+                             ">
                         </div>
-                    </div><!-- card -->
-                </div><!-- card-body -->
-            </div><!-- card -->
-        <!--</div> card-body -->
-        <!--        <table style="width: 100%" id='AccessuserForm'>
-                    <tr>
-                        <td style="text-align: right;padding: 5px">
-                            <table style="width: 100%;padding: 1px;">
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <img id="userPicPreview1" name="userPicPreview1" src="img/preview.jpg" style=" margin:0 auto; width: 210px; height: 210px;">
-                                        <br/>
-                                        <form action="UploadServlet" method="POST">
-                                        <input type="file" id="upload_user_file1" name="upload_user_file1" style="width: 200px;"/>
-                                        <br/>
-                                        <input type="text" id="user_pic1"  name="user_pic1"/>
-                                        <br/>
-                                        <input id="sendPic1" type="submit" style="cursor:pointer" value="ارسال" onclick="editPicture(2);">
-                                    </td>
-                                    <td></td>
-                                    <td>
-        
-                                        <img id="usersPicPreview1" name="usersPicPreview1" src="img/preview.jpg" style=" margin:0 auto; width: 210px; height: 210px;">
-                                        <br/>
-                                        <form action="UploadServlet" method="POST">
-                                        <input type="file" id="upload_users_file1" name="upload_users_file1" style="width: 200px;"/>
-                                        <br/>
-                                        <input type="text" id="user_pic2"  name="user_pic2"/>
-                                        <br/>
-                                        <input id="sendPic2" type="submit" style="cursor:pointer" value="ارسال" onclick="editPicture(1);">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;width: 10%">
-                                        <input type="hidden" id="user_id" name="id" />
-                                        نام:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_nam" name="user_nam"  class="tahoma10" style="width: 99%;"/>
-                                    </td>
-                                    <td style="text-align: right;width: 10%;padding-right: 10px">
-                                        Name:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_name" name="user_name"  class="tahoma10" style="width: 99%;"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;width: 10%">
-                                        <input type="hidden" id="user_id" name="id" />
-                                        نام خانوادگی:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_family" name="user_family"  class="tahoma10" style="width: 99%;"/>
-                                    </td>
-                                    <td style="text-align: right;width: 10%;padding-right: 10px">
-                                        last Name:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_lastname" name="user_lastname"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;width: 10%">
-                                        <input type="hidden" id="user_id" name="id" />
-                                        تخصص:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_takhasus" name="user_takhasus"  class="tahoma10" style="width: 99%;"/>
-                                    </td>
-                                    <td style="text-align: right;width: 10%;padding-right: 10px">
-        
-                                        Expertise:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_expertise" name="user_expertise"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;width: 10%">
-                                        <input type="hidden" id="user_id" name="id" />
-                                        سازمان/دانشگاه:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_sazman" name="user_sazman"  class="tahoma10" style="width: 99%;"/>
-                                    </td>
-                                    <td style="text-align: right;width: 10%;padding-right: 10px">
-        
-                                        Organization:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_organ" name="user_organ"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;width: 10%">
-                                        <input type="hidden" id="user_id" name="id" />
-                                        اطلاعات حساب بانکی:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_AccountInformation" name="user_AccountInformation"  class="tahoma10" style="width: 99%;"/>
-                                    </td>
-                                    <td style="text-align: right;width: 10%;padding-right: 10px">
-        
-                                        بانک:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_bank" name="user_bank"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;width: 10%">
-                                        <input type="hidden" id="user_id" name="id" />
-                                        شعبه کد:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_codeBranch" name="user_codeBranch"  class="tahoma10" style="width: 99%;"/>
-                                    </td>
-                                    <td style="text-align: right;width: 10%;padding-right: 10px">
-        
-                                        شماره حساب/شماره شبا:
-                                    </td>
-                                    <td style="text-align: right;width: 40%">
-                                        <input type="text" id="user_accountnumber" name="user_accountnumber"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-                                </tr>
-                                <tr id="TrIdInUserForm">
-                                    <td style="text-align: right;">
-                                        ایمیل:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_email" name="user_email"  class="tahoma10" style="width: 99%;text-align: left;"/>
-                                    </td>
-                                    <td style="text-align: right;padding-right: 10px">
-                                        رمز عبور:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_pass" name="user_pass"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-                                </tr>
-                                <tr id="TrIdInUserForm">
-                                    <td style="text-align: right;">
-                                        وبسایت:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_weblog" name="user_weblog"  class="tahoma10" style="width: 99%;text-align: left;"/>
-                                    </td>
-                                    <td style="text-align: right;padding-right: 10px">
-                                        تلفن همراه:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_mobile" name="user_mobile"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-                                </tr>
-        
-                                <tr>
-                                    <td style="text-align: right;">
-                                        تاریخ ثبت نام:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_createDate" name="user_createDate"  class="tahoma10" style="width: 99%;"  disabled="disabled"/>
-                                    </td>
-                                    <td style="text-align: right;">
-                                        یادآور رمز:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_passwordReminder" name="user_passwordReminder"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-                                </tr>
-                                                            <td style="text-align: right;padding-right: 10px">
-                                                                کد معرف: 
-                                                            </td>
-                                                            <td style="text-align: right;">
-                                                                <input type="text" id="user_parent" name="user_parent"  class="tahoma10" style="width: 99%" disabled="disabled"/>
-                                                            </td>
-        
-                                <tr>
-                                    <td style="text-align: right;">
-                                        تاریخ تولد:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_birthdate" name="user_birthdate"  class="tahoma10" style="width: 99%;"/>
-                                    </td>
-                                    <td style="text-align: right;padding-right: 10px">
-                                        کد ملی: 
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_codemeli" name="user_codemeli"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-        
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;">
-                                        رتبه ی علمی:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <select id="user_grade" name="user_grade"  class="tahoma10" style="width: 99%;">
-                                            <option value=""></option>
-                                            <option value="فوق لیسانس">فوق لیسانس</option>
-                                            <option value="دانشجوی دکترا">دانشجوی دکترا</option>
-                                            <option value="دکترا">دکترا</option>
-                                            <option value="عضو هیئت علمی ">عضو هیئت علمی </option>
-                                            <option value="دانشیار">دانشیار</option>
-                                            <option value="استاد تمام">استاد تمام</option>
-                                        </select>
-                                    </td>
-                                    <td style="text-align: right;">
-                                        شماره شناسنامه:
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_shomareShenasname" name="user_shomareShenasname"  class="tahoma10" style="width: 99%"/>
-                                    </td>
-        
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;">
-                                        نشانی :
-                                    </td>
-                                    <td style="text-align: right;">
-                                        <input type="text" id="user_address" name="user_address"  class="tahoma10" style="width: 98%;
-                                               height: 126px;
-                                               position: relative;
-                                               
-                                               "/>
-                                    </td>
-        
-                                </tr>
-                                <tr>
-                                    <td style="text-align: right;">
-                                        تمایل به داوری :
-        
-                                    </td>
-                            
-                                    <td><input type="checkbox" id="user_is_active" name="user_is_active"  class="tahoma10" style="width: 15px"/> خیر<br>
-                         
-                                   <input type="checkbox" id="user_is_active" name="user_is_active"  class="tahoma10" style="width: 15px"/>بله<br>
-                                        </td>
-                                </tr>
-        
-                            </table>
-        --><!--
-                                </td>
-                            </tr>-->
+                    </div>
+                    <!--</td>-->
+                    </tr>
+                </table>
 
-        <!--
+            </div>
+
+
+        </div><!-- card -->
+
+        <!--</div> card-body -->
+
+        <script>
+            function readURLPersonal(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#PicPreviewPersonal').attr('src', e.target.result);
+                    }
+
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#user_file_personal").change(function () {
+                readURLPersonal(this);
+            });
+            function readURLSignature(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#PicPreviewSignature').attr('src', e.target.result);
+                    }
+
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#user_file_Signature").change(function () {
+                readURLSignature(this);
+            });
+            function readURL(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#PicPreview').attr('src', e.target.result);
+                    }
+
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#uploaded_file").change(function () {
+                readURL(this);
+            });
+            function readURLfiles(input) {
+
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#PicPreviewAttach').attr('src', e.target.result);
+                    }
+
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#attachFile").change(function () {
+                readURLfiles(this);
+            });
+        </script>
+        <!--        <script>
+                    $.fn.fileUploader = function (filesToUpload, sectionIdentifier) {
+                        var fileIdCounter = 0;
         
-    </table>
-    <div style="    position: relative;
-top: -257px;
-float: left;    left: 127px;">
-    <div id="errorRegistMessagePanel1" style="color:red"> </div>
-    <div id="errorRegistMessagePanel2" style="color:red"> </div></div>
-ّ-->
+                        this.closest(".files").change(function (evt) {
+                            var output = [];
+        
+                            for (var i = 0; i < evt.target.files.length; i++) {
+                                fileIdCounter++;
+                                var file = evt.target.files[i];
+                                var fileId = sectionIdentifier + fileIdCounter;
+        
+                                filesToUpload.push({
+                                    id: fileId,
+                                    file: file
+                                });
+        
+                                var removeLink = "<a class=\"removeFile\" href=\"#\" data-fileid=\"" + fileId + "\">Remove</a>";
+        
+                                output.push("<li><strong>", escape(file.name), "</strong> - ", file.size, " bytes. &nbsp; &nbsp; ", removeLink, "</li> ");
+                            }
+                            ;
+        
+                            $(this).children(".fileList")
+                                    .append(output.join(""));
+        
+                            //reset the input to null - nice little chrome bug!
+                            //evt.target.value = null;
+                            evt.target.value = null;
+                        });
+        
+        
+        
+                        $(this).on("click", ".removeFile", function (e) {
+                            e.preventDefault();
+        //                    alert("آیا این فایل را میخواهید حذف ");
+        
+                            var fileId = $(this).parent().children("a").data("fileid");
+        
+                            // loop through the files array and check if the name of that file matches FileName
+                            // and get the index of the match
+                            for (var i = 0; i < filesToUpload.length; ++i) {
+                                if (filesToUpload[i].id === fileId)
+                                    filesToUpload.splice(i, 1);
+                            }
+                            $(this).parent().remove();
+                        });
+        
+                        this.clear = function () {
+                            for (var i = 0; i < filesToUpload.length; ++i) {
+                                if (filesToUpload[i].id.indexOf(sectionIdentifier) >= 0)
+                                    filesToUpload.splice(i, 1);
+                            }
+        
+                            $(this).children(".fileList").empty();
+                        }
+        
+                        return this;
+                    };
+        
+                    (function () {
+                        var filesToUpload = [];
+        
+                        var files1Uploader = $("#files1").fileUploader(filesToUpload, "files1");
+        
+                    })()
+                </script>-->
+        <script>
+            ///
+
+
+        </script>
     </body>
 </html>

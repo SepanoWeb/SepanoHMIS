@@ -95,10 +95,16 @@ public class Js {
     public static String setVal(String selector, Object value) {
         return setVal(selector, value.toString());
     }
+    public static String setValSummerNote(String selector, Object value) {
+        return "$('"+selector+"').summernote('code', '"+value.toString()+"');";
+    }
 
     public static String setVal(String selector, String value) {
         return "new jj('" + (selector.startsWith("#") ? selector : "#" + selector) + "').jjVal('" + replacor(value) + "');\n";
     }
+//    public static String setValSummerNote1(String selector,String code, String value) {
+//        return "('" + (selector.startsWith("#") ? selector : "#" + selector) + "').summernote('code','" + replacor(value) + "');\n";
+//    }
 
         /**
      * this function use to set radio Input Value
@@ -1121,16 +1127,48 @@ public class Js {
         }
     }
  //////////////////بخش ها
-    public static class jjPart {
+    public static class jjDepartment {
 
-        static String hmis = "hmisPart";
+        static String hmis = "hmisDepartment";
 
         public static String insert() {
-            return "hmisPart.m_insert();\n";
+            return "hmisDepartment.m_insert();\n";
         }
 
         public static String refresh() {
-            return "hmisPart.m_refresh();\n";
+            return "hmisDepartment.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+    ////جدول نقش ها
+    
+    public static class jjRole {
+
+        static String hmis = "hmisRole";
+
+        public static String insert() {
+            return "hmisRole.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisRole.m_refresh();\n";
         }
 
         public static String edit() {

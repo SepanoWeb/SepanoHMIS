@@ -2,13 +2,15 @@ package cms.tools;
 
 import cms.access.*;
 import cms.cms.*;
+import cms.tools.*;
 import HMIS.Commettes;
 
-//import javax.servlet.http.Part;
+//import javax.servlet.http.Department;
 import HMIS.PlansForAssess;
 import HMIS.Plans;
-import HMIS.Part;
+import HMIS.Department;
 import HMIS.Reports;
+import HMIS.Role;
 import HMIS.Steps;
 import java.io.*;
 import java.lang.reflect.*;
@@ -103,8 +105,10 @@ public class Server extends HttpServlet {
             clazzes.add(Steps.class);//گام های اجرایی
             clazzes.add(Reports.class);//گزارش های برنامه 
             clazzes.add(Commettes.class);//کمیته ها
-            ////////////shirn1
-            clazzes.add(Part.class);
+            ////////////shirn1 بخش ها
+            clazzes.add(Department.class);
+            ////////////shirn1 نقشها
+            clazzes.add(Role.class);
         }
         return clazzes;
     }

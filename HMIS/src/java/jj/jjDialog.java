@@ -201,8 +201,15 @@ public class jjDialog {
         JFileChooser chooser = new JFileChooser();
         if (openedLocation != null && openedLocation.exists()) {
             chooser = new JFileChooser(openedLocation);
+            
         }
         chooser.resetChoosableFileFilters();
+//        var files = document.getElementById("upload_department_file1").files;
+//
+//for (var i = 0; i < files.length; i++)
+//{
+// alert(files[i].name);
+//}
 
 
 //        FileDialog fileDialog = new FileDialog(f);
