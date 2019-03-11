@@ -326,8 +326,8 @@ public class Department {
                 }
                 return Js.dialog(errorMessage);
             }
-//            return Js.jjDepartment.refresh();
-            return "";
+            return Js.jjDepartment.refresh();
+//            return "";
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }

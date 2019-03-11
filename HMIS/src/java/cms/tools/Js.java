@@ -1189,6 +1189,37 @@ public class Js {
             return hmis + ".m_show_tbl();\n";
         }
     }
+    ///////////////////پیام ها
+    public static class jjMessenger {
+
+        static String hmis = "hmisMessenger";
+
+        public static String insert() {
+            return "hmisMessenger.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisMessenger.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
     public static class jjForum {
 
         static String cms = "cmsForum";

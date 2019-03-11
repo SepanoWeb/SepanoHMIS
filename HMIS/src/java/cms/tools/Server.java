@@ -15,6 +15,7 @@ import HMIS.PlansForAssess;
 import HMIS.Plans;
 //<<<<<<< HEAD
 import HMIS.Department;
+import HMIS.Messenger;
 //=======
 
 //>>>>>>> origin/master
@@ -120,6 +121,8 @@ public class Server extends HttpServlet {
             clazzes.add(Department.class);
             ////////////shirn1 نقشها
             clazzes.add(Role.class);
+            ////////////shirn1 پیام ها
+            clazzes.add(Messenger.class);
 //=======
 
 //            clazzes.add(HMIS.Part.class);
