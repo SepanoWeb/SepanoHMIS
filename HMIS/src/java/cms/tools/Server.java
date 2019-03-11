@@ -2,10 +2,25 @@ package cms.tools;
 
 import cms.access.*;
 import cms.cms.*;
+import cms.tools.*;
 import HMIS.Commettes;
-import HMIS.Plans;
+
+//<<<<<<< HEAD
+//import javax.servlet.http.Department;
+//=======
+
+//import javax.servlet.http.Part;
+//>>>>>>> origin/master
 import HMIS.PlansForAssess;
+import HMIS.Plans;
+//<<<<<<< HEAD
+import HMIS.Department;
+import HMIS.Messenger;
+//=======
+
+//>>>>>>> origin/master
 import HMIS.Reports;
+import HMIS.Role;
 import HMIS.Steps;
 import java.io.*;
 import java.lang.reflect.*;
@@ -73,6 +88,7 @@ public class Server extends HttpServlet {
 //            clazzes.add(Category_Poll.class);
 //            clazzes.add(Comment.class);
             clazzes.add(Access_Group.class);
+            
             clazzes.add(Access_Group_User.class);
             clazzes.add(Access_User.class);
             clazzes.add(Product.class);
@@ -94,11 +110,23 @@ public class Server extends HttpServlet {
             clazzes.add(email.class);
             clazzes.add(Search.class);
             ///////////////////////////////////////////////////
-            clazzes.add(Plans.class);   //برنامه های عملیاتی
+
+            clazzes.add(HMIS.Plans.class);   //برنامه های عملیاتی
             clazzes.add(PlansForAssess.class);//برنامه پایش
             clazzes.add(Steps.class);//گام های اجرایی
             clazzes.add(Reports.class);//گزارش های برنامه 
             clazzes.add(Commettes.class);//کمیته ها
+//<<<<<<< HEAD
+            ////////////shirn1 بخش ها
+            clazzes.add(Department.class);
+            ////////////shirn1 نقشها
+            clazzes.add(Role.class);
+            ////////////shirn1 پیام ها
+            clazzes.add(Messenger.class);
+//=======
+
+//            clazzes.add(HMIS.Part.class);
+//>>>>>>> origin/master
         }
         return clazzes;
     }

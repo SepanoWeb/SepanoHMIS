@@ -27,6 +27,15 @@ public class Access_User {
     public static String _shomareShenasname = "user_shomareShenasname";
     public static String _passwordReminder = "user_passwordReminder";
     public static String _grade = "user_grade";
+    ////برای عکس پرسنلی  
+    ///توسط شیران1
+    public static String _attachAxPersonal = "user_attachAxPersonal";
+      ////برای عکس کارت پرسنلی  
+    ///توسط شیران1
+    public static String _attachAxPersonnelCard = "user_attachAxPersonnelCard";
+      ////برای عکس امضا  
+    ///توسط شیران1
+    public static String _attachAxSignature = "user_attachAxSignature";
 
     public static String _address = "user_address";
     public static String _isActive = "user_is_active";
@@ -40,6 +49,10 @@ public class Access_User {
     public static String _weblog = "user_weblog";
     public static String _address2 = "user_address2";
     public static String _postalCode = "user_postalCode";
+    public static String _file_personal = "user_file_personal";
+    public static String _file_Signature = "user_file_Signature";
+    public static String _upload_file = "user_upload_file";
+    public static String _attachFile = "user_attachFile";
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
     public static String lbl_edit = "ویرایش";
@@ -150,31 +163,41 @@ public class Access_User {
                 return hasAccess;
             }
             String email = jjTools.getParameter(request, _email);
-            String message = isValidMessageForRegist(request, db, isPost);
-            if (!message.equals("")) {
-                return Js.dialog(message);
-            }
-            int size = jjDatabase.separateRow(db.Select(tableName, _email + "='" + jjTools.getParameter(request, _email).toLowerCase() + "'")).size();
-            if (size > 0) {
-                String errorMessage = "کاربری با این ایمیل در دیتابیس وجود دارد.";
-                if (jjTools.getParameter(request, "myLang").equals("2")) {
-                    errorMessage = "This email is being in database.";
-                }
-                return Js.dialog(errorMessage);
-            }
+//            String message = isValidMessageForRegist(request, db, isPost);
+//            if (!message.equals("")) {
+//                return Js.dialog(message);
+//            }
+//            int size = jjDatabase.separateRow(db.Select(tableName, _email + "='" + jjTools.getParameter(request, _email).toLowerCase() + "'")).size();
+//            if (size > 0) {
+//                String errorMessage = "کاربری با این ایمیل در دیتابیس وجود دارد.";
+//                if (jjTools.getParameter(request, "myLang").equals("2")) {
+//                    errorMessage = "This email is being in database.";
+//                }
+//                return Js.dialog(errorMessage);
+//            }
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put(_answer, jjTools.getParameter(request, _answer));
-            map.put(_email, email.toLowerCase().toLowerCase());
-            map.put(_family, jjTools.getParameter(request, _family).toLowerCase());
-            map.put(_isActive, jjTools.getParameter(request, _isActive).equals("1"));
-            map.put(_name, jjTools.getParameter(request, _name).toLowerCase());
-            map.put(_no1, jjTools.getParameter(request, _no1));
-            map.put(_no2, jjTools.getParameter(request, _no2));
-            String parent = jjTools.getParameter(request, _parent);
-            map.put(_parent, jjNumber.isDigit(parent) ? Integer.parseInt(parent) : 0);
-            map.put(_pass, jjTools.getParameter(request, _pass).toLowerCase());
-            map.put(_question, jjTools.getParameter(request, _question));
-            map.put(_registDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _registDate), true));
+
+
+            map.put(_attachFile, jjTools.getParameter(request, _attachFile));
+            map.put(_attachAxPersonal, jjTools.getParameter(request, _attachAxPersonal));
+            map.put(_attachAxPersonnelCard, jjTools.getParameter(request, _attachAxPersonnelCard));
+            map.put(_attachAxSignature, jjTools.getParameter(request, _attachAxSignature));
+            map.put(_email, email.toLowerCase());
+            map.put(_family, jjTools.getParameter(request, _family));
+            map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
+            
+            map.put(_passwordReminder, jjTools.getParameter(request, _passwordReminder));
+            map.put(_grade, jjTools.getParameter(request, _grade));
+            map.put(_jensiat, jjTools.getParameter(request, _jensiat));
+            map.put(_codeMeli, jjTools.getParameter(request, _codeMeli));
+            map.put(_shomareShenasname, jjTools.getParameter(request, _shomareShenasname));
+
+            map.put(_name, jjTools.getParameter(request, _name));
+
+            map.put(_pass, jjTools.getParameter(request, _pass));
+
+            map.put(_address, jjTools.getParameter(request, _address));
+//           
             map.put(_birthdate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _birthdate), false));
             List<Map<String, Object>> row = jjDatabase.separateRow(db.insert(tableName, map));
             if (row.isEmpty()) {
@@ -186,15 +209,15 @@ public class Access_User {
             }
 
             // =========================
-            Map<String, Object> map2 = new HashMap<>();
-            map2.put(Access_Group_User._user_id, Integer.parseInt(row.get(0).get(_id).toString()));
-            for (int i = 1; i < Access_Group.chkNumber; i++) {
-                String chk = jjTools.getParameter(request, "chk" + i);
-                if (chk.equals("1")) {
-                    map2.put(Access_Group_User._group_id, i);
-                    db.insert(Access_Group_User.tableName, map2);
-                }
-            }
+//            Map<String, Object> map2 = new HashMap<>();
+//            map2.put(Access_Group_User._user_id, Integer.parseInt(row.get(0).get(_id).toString()));
+//            for (int i = 1; i < Access_Group.chkNumber; i++) {
+//                String chk = jjTools.getParameter(request, "chk" + i);
+//                if (chk.equals("1")) {
+//                    map2.put(Access_Group_User._group_id, i);
+//                    db.insert(Access_Group_User.tableName, map2);
+//                }
+//            }
             // =========================
 
             return Js.jjUser.refresh();
@@ -289,31 +312,29 @@ public class Access_User {
             }
 
             String email = jjTools.getParameter(request, _email);
-//            String message = isValidMessageForRegist(request, db, isPost);
-//            if (!message.equals("")) {
-//                return Js.dialog(message);
-//            }
 
-//        int size = jjDatabase.separateRow(db.Select(tableName, _email + "'" + jjTools.getParameter(request, _email).toLowerCase() + "'")).size();
-//        if (size > 1) {
-//            String errorMessage = "کاربری با این ایمیل در دیتابیس وجود دارد.";
-//            if (jjTools.getParameter(request, "myLang").equals("2")) {
-//                errorMessage = "This email is being in database.";
-//            }
-//            return Js.dialog(errorMessage);
-//        }
             Map<String, Object> map = new HashMap<String, Object>();
-//            map.put(_answer, jjTools.getParameter(request, _answer));
+
             map.put(_email, email.toLowerCase());
             map.put(_family, jjTools.getParameter(request, _family));
             map.put(_isActive, jjTools.getParameter(request, _isActive).equals("1"));
             map.put(_name, jjTools.getParameter(request, _name));
+            map.put(_attachFile, jjTools.getParameter(request, _attachFile));
+            map.put(_attachAxPersonal, jjTools.getParameter(request, _attachAxPersonal));
+            map.put(_attachAxPersonnelCard, jjTools.getParameter(request, _attachAxPersonnelCard));
+            map.put(_attachAxSignature, jjTools.getParameter(request, _attachAxSignature));
             map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
             map.put(_grade, jjTools.getParameter(request, _grade));
             map.put(_passwordReminder, jjTools.getParameter(request, _passwordReminder));
             map.put(_jensiat, jjTools.getParameter(request, _jensiat));
             map.put(_codeMeli, jjTools.getParameter(request, _codeMeli));
             map.put(_shomareShenasname, jjTools.getParameter(request, _shomareShenasname));
+            map.put(_address, jjTools.getParameter(request, _address));
+//             map.put(_file_personal, jjTools.getParameter(request, _file_personal));
+//            map.put(_file_Signature, jjTools.getParameter(request, _file_Signature));
+//            map.put(_upload_file, jjTools.getParameter(request, _upload_file));
+           
+//            map.put(_file_personal, jjTools.getParameter(request, _));
 //            String parent = jjTools.getParameter(request, _parent);
 //            map.put(_parent, jjNumber.isDigit(parent) ? Integer.parseInt(parent) : 0);
             map.put(_pass, jjTools.getParameter(request, _pass).toLowerCase());
@@ -425,22 +446,70 @@ public class Access_User {
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
 
-            html.append(Js.setVal("#user_" + _id, row.get(0).get(_id)));
+            html.append(Js.setVal("#access_user_id" , row.get(0).get(_id)));
 //            html.append(Js.setVal("#" + _answer, row.get(0).get(_answer)));
-            html.append(Js.setVal("#" + _email, row.get(0).get(_email)));
-            html.append(Js.setVal("#" + _family, row.get(0).get(_family)));
+            html.append(Js.setVal("#user_emailUser" , row.get(0).get(_email)));
+            html.append(Js.setVal("#user_familyUser" , row.get(0).get(_family)));
 //            html.append(Js.setVal("#" + _isActive, row.get(0).get(_isActive)));
-            html.append(Js.setVal("#" + _name, row.get(0).get(_name)));
-            html.append(Js.setVal("#" + _AccountInformation, row.get(0).get(_AccountInformation)));
-            html.append(Js.setVal("#" + _birthdate, row.get(0).get(_birthdate)));
-            html.append(Js.setVal("#" + _grade, row.get(0).get(_grade)));
-            html.append(Js.setVal("#" + _jensiat, row.get(0).get(_jensiat)));
-            html.append(Js.setVal("#" + _codeMeli, row.get(0).get(_codeMeli)));
-            html.append(Js.setVal("#" + _shomareShenasname, row.get(0).get(_shomareShenasname)));
-            html.append(Js.setVal("#" + _pass, row.get(0).get(_pass)));
-            html.append(Js.setVal("#" + _passwordReminder, row.get(0).get(_passwordReminder)));
-            html.append(Js.setValDate("#" + _address, row.get(0).get(_address)));
-            html.append(Js.setValDate("#" + _birthdate, row.get(0).get(_birthdate)));
+            html.append(Js.setVal("#user_nameUser" , row.get(0).get(_name)));
+            html.append(Js.setVal("#user_AccountInformationUser" , row.get(0).get(_AccountInformation)));
+            
+            html.append(Js.setVal("#user_birthdateUser" , row.get(0).get(_birthdate)));
+            html.append(Js.setVal("#user_gradeUser" , row.get(0).get(_grade)));
+            html.append(Js.setVal("#user_jensiatUser" , row.get(0).get(_jensiat)));
+            html.append(Js.setVal("#user_codeMeliUser" , row.get(0).get(_codeMeli)));
+            html.append(Js.setVal("#user_shomareShenasnameUser" , row.get(0).get(_shomareShenasname)));
+            html.append(Js.setVal("#user_passUser", row.get(0).get(_pass)));
+            html.append(Js.setVal("#user_passwordReminderUser" , row.get(0).get(_passwordReminder)));
+            html.append(Js.setHtml("#user_pic1"  , row.get(0).get(_attachAxPersonal)));
+            html.append(Js.setHtml("#user_pic3" , row.get(0).get(_attachAxPersonnelCard)));
+            html.append(Js.setHtml("#user_pic2" , row.get(0).get(_attachAxSignature)));
+              String attachFiles = row.get(0).get(_attachFile).toString();
+
+            String[] attachFilesArray = attachFiles.split("#A#");
+            String script1="";
+            StringBuilder html3 = new StringBuilder() ;
+            StringBuilder script = new StringBuilder() ;
+
+      
+            for (int l = 0; l < attachFilesArray.length; l++) {
+
+//                List<Map<String, Object>> userRowFile = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName));                  
+//                for (int i = 0; i < userRowFile.size(); i++) {
+
+                    html3.append("<input class='col-xs-12' value='" +attachFilesArray[l]+ "'/> ");
+//                }
+                
+                script1 = Js.setHtml("#inputAfterSelect", html3);
+            }
+            
+if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
+                script.append(Js.setAttr("#PicPreviewPersonal", "src", "img/preview.jpg"));
+            } else {
+                script.append(Js.setAttr("#PicPreviewPersonal", "src", "upload/" + row.get(0).get(Access_User._attachAxPersonal).toString() + ""));
+            }
+            if (row.get(0).get(Access_User._attachAxPersonnelCard).equals("")) {
+                script.append(Js.setAttr("#PicPreview", "src", "img/preview.jpg"));
+            } else {
+                script.append(Js.setAttr("#PicPreview", "src", "upload/" + row.get(0).get(Access_User._attachAxPersonnelCard).toString() + ""));
+            }
+            if (row.get(0).get(Access_User._attachAxSignature).equals("")) {
+                script.append(Js.setAttr("#PicPreviewSignature", "src", "img/preview.jpg"));
+            } else {
+                script.append(Js.setAttr("#PicPreviewSignature", "src", "upload/" + row.get(0).get(Access_User._attachAxSignature).toString() + ""));
+            }
+            
+            
+            
+           
+           
+            html.append(Js.setVal("#user_addressUser" , row.get(0).get(_address)));
+            html.append(Js.setValDate("#user_birthdateUserUser" , row.get(0).get(_birthdate)));
+            /////این تابع برای نمایش فایل های اپلود شده توسط فردی که واردشده نوشته شده است
+            /////شیران1
+            
+//            List<Map<String, Object>> rowUpload = jjDatabase.separateRow(db.Select(UploadServlet.tableName,UploadServlet. _loader_id + "=" + id));
+//            html.append(Js.setVal("#uploaded_file", rowUpload.get(0).get(UploadServlet._file_name)));
 
             boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
             boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
@@ -457,7 +526,7 @@ public class Access_User {
                     html.append(Js.buttonMouseClick("#delete_User", Js.jjUser.delete(id)));
                 }
             }
-            return (Js.setHtml("#User_button", html2.toString())) + html.toString();
+            return (Js.setHtml("#User_button", html2.toString())) + html.toString()+script1.toString()+script.toString();
         } catch (Exception e) {
             return Server.ErrorHandler(e);
         }

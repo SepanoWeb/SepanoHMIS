@@ -17,7 +17,7 @@ var cmsUser = {
     loadForm: function () {
         if ($("#swUserForm").html() == '') {
             $("#swUserForm").load("formCms/user.html", null, function () {
-                new jj('#user_birthdate').jjCalendarWithYearSelector(1310, 1410);
+                new jj('#user_birthdateUser').jjCalendarWithYearSelector(1310, 1410);
                 $("#cancel_User").button().click(function (e) {
 //                     goBack();
                     cmsUser.m_clean();
@@ -25,26 +25,69 @@ var cmsUser = {
                 });
                 $("#sendPic1").button().click(function () {
                 });
-                $("#upload_user_file1").button().click(function () {
+                $("#user_file_personal").button().click(function () {
                 });
-                new jj('#sendPic1').jjAjaxFileUpload('#upload_user_file1', '#user_pic1', '#userPicPreview1');
+                new jj('#sendPic1').jjAjaxFileUploadPersonal('#user_file_personal', '#user_attachAxPersonal', '#PicPreviewPersonal');
                 $('#user_pic1').keyup(function () {
-                    $('#userPicPreview1').attr('src', 'upload/' + $('#user_pic1').val());
+                    $('#PicPreviewPersonal').attr('src', 'upload/' + $('#user_pic1').val());
                     if ($('#user_pic1').val() == '') {
-                        $('#userPicPreview1').attr('src', 'img/preview.jpg');
+                        $('#PicPreviewPersonal').attr('src', 'img/preview.jpg');
                     }
                 });
-                new jj('#sendPic2').jjAjaxFileUpload('#upload_users_file1', '#user_pic2', '#usersPicPreview1');
-                $("#sendPic2").button().click(function () {
+                //////برای عکس امضا 
+                $("#sendPicSignature").button().click(function () {
                 });
-                $("#upload_users_file1").button().click(function () {
+                $("#user_file_Signature").button().click(function () {
                 });
+                new jj('#sendPicSignature').jjAjaxFileUploadAxSignature('#user_file_Signature', '#user_attachAxSignature', '#PicPreviewSignature');
                 $('#user_pic2').keyup(function () {
-                    $('#usersPicPreview1').attr('src', 'upload/' + $('#user_pic2').val());
+                    $('#PicPreviewSignature').attr('src', 'upload/' + $('#user_pic2').val());
                     if ($('#user_pic2').val() == '') {
-                        $('#usersPicPreview1').attr('src', 'img/preview.jpg');
+                        $('#PicPreviewSignature').attr('src', 'img/preview.jpg');
                     }
                 });
+                /////برای تصویر
+
+
+                $("#sendPicupload").button().click(function () {
+                });
+                $("#uploaded_file").button().click(function () {
+                });
+                new jj('#sendPicupload').jjAjaxFileUploadPersonnelCard('#uploaded_file', '#user_attachAxPersonnelCard', '#PicPreview');
+                $('#user_pic3').keyup(function () {
+                    $('#PicPreview').attr('src', 'upload/' + $('#user_pic3').val());
+                    if ($('#user_pic3').val() == '') {
+                        $('#PicPreview').attr('src', 'img/preview.jpg');
+                    }
+                });
+                ///////فایل ها
+                $("#sendPicFiles").button().click(function () {
+//                        $('#AttachFileUpload').append($('#user_pic4').val());
+                });
+
+                $("#attachFile").button().click(function () {
+                });
+                new jj('#sendPicFiles').jjAjaxFileUpload3('#attachFile', '#user_attachFile');
+
+//                $('#user_pic4').keyup(function () {
+////                    $('#PicPreviewAttach').attr('src', 'upload/' + $('#user_pic4').val());
+//
+//                    if ($('#user_pic4').val() == '') {
+//                        $('#PicPreviewAttach').attr('src', 'img/preview.jpg');
+//
+////                       
+//                    }
+//                });
+//                $("#sendPicFiles").button().click(function () {
+////                    var param="";
+////                      param += "&AttachFileUpload=" + $("#user_pic4").val();
+////                      param += "&jj=1" ;
+//                    $('#AttachFileUpload').append($('#user_pic4').val());
+//                     $('#AttachFileUploadAx').append('src', 'upload/' + $('#user_pic4').val());
+////                     jj(param).jjAjax2(false);
+//                });
+
+
             });
         }
     },
@@ -64,13 +107,25 @@ var cmsUser = {
         cmsUser.tabSizeForm();
     },
     m_clean: function () {
-         $('#user_email').css("border-color", "unset");
-        $('#user_pass').css("border-color", "unset");;
+        $('#user_emailUser').css("border-color", "unset");
+        $('#user_passUser').css("border-color", "unset");
+        ;
         $("#errorRegistMessagePanel1").html('');
         $("#errorRegistMessagePanel2").html('');
-         new jj("#swUserForm").jjFormClean();
-         new jj("#user_grade").jjVal('');
-         
+        new jj("#swUserForm").jjFormClean();
+        new jj("#user_grade").jjVal('');
+        $('#PicPreview').attr('src', '');
+        $('#PicPreviewPersonal').attr('src', '');
+        $('#PicPreviewSignature').attr('src', '');
+        $("#inputTextSelectorDiv").html('');
+        $("#user_pic1").html('');
+        $("#user_pic2").html('');
+        $("#user_pic3").html('');
+        $("#user_pic4").html('');
+        $("#inputAfterSelect").html('');
+        
+
+
 //         $("#usersPicPreview1").removeAttr("src");
 //         $("#userPicPreview1").removeAttr("src");
         new jj("#" + cmsUser.f_user_id).jjVal('');
@@ -103,48 +158,59 @@ var cmsUser = {
         cmsUser.tabSizeTbl();
     },
     m_insert: function () {
-        
+
         var param = "";
         param += "do=" + cmsUser.tableName + ".insert";
-           var email = $("#user_email").val();
-    if (validateEmail(email) && new jj('#user_email').jjVal() !== "") {
-       $("#user_email").css("border-color", "blue");
-//        validateflag = true;
-        $("#errorRegistMessagePanel1").html('');
-    } else {
-        $("#user_email").css("border-color", "red");
-        $("#errorRegistMessagePanel1").html('');
-        $("#errorRegistMessagePanel1").append('لطفا ایمیل خود راوارد کنید');
-        flag = false;
-    }
-     var pass = $("#user_pass").val();
-    if (validatePass(pass) && new jj('#user_pass').jjVal() != "") {
-        $('#user_pass').css("border-color", "blue");
-        $("#errorRegistMessagePanel2").html('');
- 
-//        validateflag = true;
-    } else {
-        $("#user_pass").css("border-color", "red");
-        $("#errorRegistMessagePanel2").html('');
-        $("#errorRegistMessagePanel2").append('برای رمز عبور لطفاحداقل 8کاراکتر وارد نمایید.');
-        flag = false;
-    }   
-    if ((validatePass(pass) && new jj('#user_pass').jjVal() != "")&(validateEmail(email) && new jj('#user_email').jjVal() !== "")){
-    param += "&" + jj('#swUser').jjSerial();
-        jj(param).jjAjax2(false);
-     
-        cmsUser.m_show_tbl();
-        cmsUser.m_clean();
-    }
+//        var email = $("#user_emailUser").val();
+        
+//        if (validateEmail(email) && new jj('#user_emailUser').jjVal() !== "") {
+//            $("#user_emailUser").css("border-color", "blue");
+////        validateflag = true;
+//            $("#errorRegistMessagePanel1").html('');
+//        } else {
+//            $("#user_emailUser").css("border-color", "red");
+//            $("#errorRegistMessagePanel1").html('');
+//            $("#errorRegistMessagePanel1").append('لطفا ایمیل خود راوارد کنید');
+//            flag = false;
+//        }
+//        var pass = $("#user_passUser").val();
+//        if (validatePass(pass) && new jj('#user_pass').jjVal() != "") {
+//            $('#user_passUser').css("border-color", "blue");
+//            $("#errorRegistMessagePanel2").html('');
+//
+////        validateflag = true;
+//        } else {
+//            $("#user_passUser").css("border-color", "red");
+//            $("#errorRegistMessagePanel2").html('');
+//            $("#errorRegistMessagePanel2").append('برای رمز عبور لطفاحداقل 8کاراکتر وارد نمایید.');
+//            flag = false;
+//        }
+//        if ((validatePass(pass) && new jj('#user_passUser').jjVal() != "") & (validateEmail(email) && new jj('#user_emailUser').jjVal() !== "")) {
+            param += "&" + jj('#AccessuserForm').jjSerial();
+//            param += "&" + jj('#AccessuserForm').jjSerial();
+            jj(param).jjAjax2(false);
+
+            cmsUser.m_show_tbl();
+            cmsUser.m_clean();
+//        }
     },
-    
+
     m_edit: function () {
         var param = "";
         param += "do=" + cmsUser.tableName + ".edit";
-        param += "&" + jj('#swUser').jjSerial();
+//        param += "&pic=" + $('#user_file_personal').val();
+        param += "&pic=" + $('#swUser').val();
+        param += "&user_attachAxPersonal=" + $('#user_attachAxPersonal').val();
+        param += "&user_attachAxPersonnelCard=" + $('#user_attachAxPersonnelCard').val();
+        param += "&user_attachAxSignature=" + $('#user_attachAxSignature').val();
+        param += "&user_attachFile=" + $('#user_attachFile').val();
+        param += "&" + jj('#swUser').jjSerial(param);
+
+
         jj(param).jjAjax2(false);
         cmsUser.m_show_tbl();
-        cmsUser.m_clean();
+        $("#inputTextSelectorDiv").html('');
+
     },
     m_delete: function (id) {
         new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo('cmsUser.m_delete_after_question(' + id + ');\n', true, "");
@@ -189,5 +255,5 @@ var cmsUser = {
 }
 function loginToCMS() {
     new jj("do=Access_User.login&" + (new jj("#swLoginForm").jjSerial())).jjAjax2();
-   
+
 }

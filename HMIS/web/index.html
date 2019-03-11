@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <!-- Twitter -->
+
         <meta name="twitter:site" content="@themepixels" />
         <meta name="twitter:creator" content="@themepixels" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -45,12 +46,18 @@
         <link href="Manager/textEditor/default.css" rel="stylesheet">
         <link href="Manager/textEditor/summernote-bs4.css" rel="stylesheet">
 
+        <link href="Manager/textEditor/summernote.css" rel="stylesheet">
+
         <!--forms-->
         <link href="Manager/forms/select2.min.css" rel="stylesheet">
         <link href="Manager/forms/spectrum.css" rel="stylesheet">
 
         <!-- MedYar مدیار CSS -->
         <link rel="stylesheet" href="Manager/shamcey.css">
+
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+        <link href="css/bootstap.min.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="Manager/cssw.css" rel="stylesheet" type="text/css"/>-->
         <link href="Manager/css/HMIS.css" rel="stylesheet" type="text/css"/>
     </head>
 
@@ -136,22 +143,19 @@
                                     hmisPlans.m_refresh();
                                 }
                                 ;
-//                                
-                                hmisPlans.m_refresh();
+//            
                                 hmisPlans.loadForm();
                                                 " class="nav-link ShowOneDiv">برنامه های عملیاتی و بهبود کیفیت</a></li>
                         <li class="nav-item"><a href="#swPlansForAssess" onclick="if ($('#swPlansForAssessTbl').html() == '') {
                                     hmisPlansForAssess.m_refresh();
                                 }
                                 ;
-                                hmisPlansForAssess.m_refresh();
                                 hmisPlansForAssess.loadForm();" class="nav-link ShowOneDiv">پایش برنامه ها</a></li>
                         <li class="nav-item">
                             <a href="#swSteps"  onclick="if ($('#swStepsTbl').html() == '') {
                                         hmisSteps.m_refresh();
                                     }
                                     ;
-                                    hmisSteps.m_refresh();
                                     hmisSteps.loadForm();"  class="nav-link ShowOneDiv">گام های اجرایی</a></li>
                         <li class="nav-item"><a href="#swReports"
                                                 onclick="
@@ -293,8 +297,58 @@
                         <span>دسترسی</span>
                     </a>
                     <ul class="nav-sub">
-                        <li class="nav-item"><a href="#" onclick="alert('در حال حاظر شما به این قسمت دسترسی ندارید');return false" class="nav-link">تعریف سطوح دسترسی</a></li>
-                        <li class="nav-item"><a href="#" onclick="alert('در حال حاظر شما به این قسمت دسترسی ندارید');return false" class="nav-link">جدول گروه های کاربری</a></li>
+
+                        <li class="nav-item"><a href="#swDepartment"  class="nav-link ShowOneDiv" onclick="if ($('#swDepartmentTbl').html() == '') {
+//                                   
+                                    hmisDepartment.m_refresh();
+
+//                                 
+
+                                }
+                                ;
+                                hmisDepartment.mainTabSetSize();
+                                hmisDepartment.loadForm();
+
+                                                ">بخش ها</a></li>
+
+                        <!--                        <li> <a href="#" onclick=" $('.sh-mainpanel').load('13users.html', null, function () {});return false;" class="nav-link">کاربران</a>
+                                                </li>-->
+                        <!--                        <li> <a href="#" onclick=" $('.sh-mainpanel').load('13users.html', null, function () {});return false;" class="nav-link">کاربران</a>
+                                                </li>-->
+                        <li class="nav-item" >  <a href="#swUser" class="nav-link ShowOneDiv" onclick="if ($('#swUserTbl').html() == '') {
+                                    cmsUser.m_refresh();
+
+                                }
+                                ;
+                                cmsUser.mainTabSetSize();
+                                cmsUser.loadForm();
+                                                   ">کاربران</a>
+                        </li>
+
+
+
+                        <li class="nav-item"><a href="#swRole"  class="nav-link ShowOneDiv" onclick="if ($('#swRoleTbl').html() == '') {
+
+                           hmisRole.m_refresh();
+
+
+
+
+                                }
+                                ;
+                                 hmisRole.mainTabSetSize();
+                                hmisRole.loadForm();
+                                
+                                                ">جدول نقش ها</a></li>
+                        <!--<li class="nav-item"><a href="#" onclick=" $('.sh-mainpanel').load('13userGroup.html', null, function () {});return false;" class="nav-link">جدول گروه های کاربری</a></li>-->
+                        <li  class="nav-item"><a href="#swGroup"  class="nav-link ShowOneDiv" onclick="if ($('#swGroupTbl').html() == '') {
+                                    cmsGroup.m_refresh();
+
+                                }
+                                ;
+                                cmsGroup.mainTabSetSize();
+                                cmsGroup.loadForm();
+                                                 ">جدول گروه های کاربری</a></li>
                     </ul>
                 </li><!-- nav-item -->
                 <li class="nav-item">
@@ -315,17 +369,21 @@
             <div class="sh-headpanel-left">
 
                 <!-- START: HIDDEN IN MOBILE -->
+
                 <a href="#" onclick=" $('.sh-mainpanel').load('07myStandards.html', null, function () {});return false;" class="sh-icon-link">
                     <div>
                         <i class="icon ion-ios-folder-outline"></i>
                         <span>مستندات من</span>
                     </div>
                 </a>
+
                 <a href="#" class="sh-icon-link" onclick="sow00messages();return false;">
+
                     <div>
                         <i class="icon ion-ios-calendar-outline"></i>
                         <span>کارتابل پیام رسان</span>
                     </div>
+
                 </a>
                 <a href="#"  onclick=" $('.sh-mainpanel').load('12accreditation.html', null, function () {});return false;" class="sh-icon-link">
                     <div>
@@ -492,7 +550,9 @@
                                 <div id="swCommettesTbl" style=""></div>
                                 <div id="swCommettesForm" style="display: none;"></div>
                             </div><!--swSession-->
+
                         </div>
+
                         <!--</div>-->
                         <!--row-xs-->
                     </div> <!--col-lg-12-->
@@ -1055,17 +1115,20 @@
         <script src="Manager/popper.js"></script>
         <script src="Manager/bootstrap.js"></script>
         <script src="Manager/jquery-ui.js"></script>
+
         <script src="Manager/perfect-scrollbar.jquery.js"></script>
         <script src="Manager/moment.js"></script>
         <script src="Manager/jquery.flot.js"></script>
         <script src="Manager/jquery.flot.resize.js"></script>
         <script src="Manager/jquery.flot.spline.js"></script>
 
+
         <!--calendar-->
         <script src="Manager/js/calendar/jquery.ui.datepicker-cc.js" type="text/javascript"></script>
         <script src="Manager/js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>
         <script src="Manager/js/calendar/calendar.all.js" type="text/javascript"></script>
         <script src="Manager/js/calendar/calendar.js" type="text/javascript"></script>
+
         <!--upload-->
         <script src="Manager/js/ajaxfileupload.js" type="text/javascript"></script>
         <!--DataTable-->
@@ -1076,14 +1139,18 @@
         <!--textEditor-->
         <script src="Manager/textEditor/medium-editor.js"></script>
         <script src="Manager/textEditor/summernote-bs4.min.js"></script>
+
         <!--jj2-->
         <script src="Manager/js/jj2.js" type="text/javascript"></script>
         <!--jsHMIS-->
+
         <script src="jsHMIS/plansForAssess.js" type="text/javascript"></script>
         <script src="jsHMIS/plans.js" type="text/javascript"></script>
         <script src="jsHMIS/steps.js" type="text/javascript"></script>
         <script src="jsHMIS/reports.js" type="text/javascript"></script>
         <script src="jsHMIS/commettes.js" type="text/javascript"></script>
+
+
 
 
         <!--forms-->
@@ -1093,11 +1160,14 @@
         <script src="Manager/chart/Chart.js"></script>
 
 
+
         <script src="Manager/shamcey.js"></script>
         <script src="Manager/dashboard.js"></script>
 
         <script src="Manager/js/HMIS.js" type="text/javascript"></script>
+
         <script type="text/javascript">
+          
                                     //        $(".nav-sub a.nav-link").css("color","#fff");
                                     $(".nav-sub a.nav-link").on('click', function () {
                                         $("a.nav-link.active").removeClass("active");
@@ -1143,6 +1213,7 @@
 
             };
             //        </script>
+      
         <!--                                <script>
                                     $(function () {
                 'use strict';
@@ -1162,4 +1233,5 @@
             });
                 </script>-->
         <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div>
+
     </body></html>
