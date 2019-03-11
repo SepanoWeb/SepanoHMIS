@@ -8,7 +8,7 @@
 var hmisSteps = {
     tableName: "Steps",
     f_id: "id",
-   
+
     loadForm: function () {
         if ($("#swStepsForm").html() == '') {
             $("#swStepsForm").load("formHMIS/04Steps.html", null, function () {
@@ -78,13 +78,15 @@ var hmisSteps = {
     m_insert: function () {
 //        var valid = hmisSteps.m_validation();
 //        if (valid == "") {
-            var param = "";
-            param += "do=" + hmisSteps.tableName + ".insert";
-            param += "&" + new jj('#stepsForm').jjSerial();
-            param +="&hmis_plans_id="+new jj("#hmis_plans_id").jjVal();
-            jj(param).jjAjax2(false);
-            hmisSteps.m_show_tbl();
-            hmisSteps.m_clean();
+        var param = "";
+        param += "do=" + hmisSteps.tableName + ".insert";
+        param += "&" + new jj('#stepsForm').jjSerial();
+        param += "&hmis_plans_id=" + new jj("#hmis_plans_id").jjVal();
+        jj(param).jjAjax2(false);
+        hmisSteps.m_show_tbl();
+        hmisSteps.m_clean();
+        $("html, body").delay(1000).animate({scrollTop: $('#tblSteps').offset().top}, 800);
+
 //        } else {
 //            new jj(valid).jjDialog();
 //        }
@@ -93,12 +95,12 @@ var hmisSteps = {
     m_edit: function () {
 //        var valid = hmisSteps.m_validation();
 //        if (valid == "") {
-            var param = "";
-            param += "do=" + hmisSteps.tableName + ".edit";
-            param += "&" + new jj('#swStepsForm').jjSerial();
-            jj(param).jjAjax2(false);
-            hmisSteps.m_show_tbl();
-            hmisSteps.m_clean();
+        var param = "";
+        param += "do=" + hmisSteps.tableName + ".edit";
+        param += "&" + new jj('#swStepsForm').jjSerial();
+        jj(param).jjAjax2(false);
+        hmisSteps.m_show_tbl();
+        hmisSteps.m_clean();
 //        } else {
 //            new jj(valid).jjDialog();
 //        }

@@ -15,6 +15,7 @@
     <div class="sh-pagetitle-left">
         <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
         <div class="sh-pagetitle-title">
+            <input id="hmis_sessions_id" name="id" type="hidden">
             <span>ماژول کمیته ها و جلسات</span>
             <h2>میز هوشمند جلسات</h2>
         </div><!-- sh-pagetitle-left-title -->
@@ -25,50 +26,47 @@
 
     <div class="card bd-primary mg-t-20">
         <div class="card-header bg-primary tx-white">
-            میز هوشمند جلسه ی کمیته ی مدیریت اجرایی - جلسه 1397/06/15 
+            میز هوشمند جلسه ی کمیته ی<p id="commettesTitle"></p> 
         </div>
         <div class="card-body pd-sm-30">
-            <p class="mg-b-20 mg-sm-b-30">تاریخ : 1397/06/22</p>
+            تاریخ:<p id='sessions_sessionsDate'></p>
             <div class="row">
                 <div class="col-lg">
                     عنوان  جلسه
-                    <input class="form-control" placeholder="عنوان جلسه را وارد کنید" type="text" value="جلسه ی خرداد ماه کمیته ی اجرایی">
+                    <input class="form-control" id="sessions_titleSessions" name="sessions_title" placeholder="عنوان جلسه را وارد کنید" type="text" value="جلسه ی خرداد ماه کمیته ی اجرایی">
                 </div>
             </div><!-- row -->
-            <p>1397/06/15 : تاریخ ارسال دعوت نامه</p>
+            <p><span id="sessions_DateInvitation" style="display: block;"></span>: تاریخ ارسال دعوت نامه</p>
             <div class="card-header btn-teal tx-white">
                 دستور جلسه:
             </div>
-            <textarea rows="7" class="form-control is-valid mg-t-20" placeholder="Textarea (success state)">
-                بررسی برنامه استراتژیک 
-                بررسی برنامه های عملیاتی و بهبود کیفیت
-                ،بررسی آمار کمیته ها
-                بررسی برآورد نیروی انسانی
+            <textarea rows="7" id="sessions_agendaSessions" class="form-control is-valid mg-t-20" placeholder="Textarea (success state)">
+              
             </textarea>                        
-            <div align="right">
-                <div class="card-header bg-primary tx-white">
-                    جدول مصوبات قبلی:
-                </div>
-                <table id="datatable1" class="table table-responsive table-wrapper">
-                    <thead>
-                        <tr>                    
-                            <td>کد</td>
-                            <td>عنوان مصوبه</td>
-                            <td>مسئول اجرا</td>
-                            <td>مسئول پیگیری</td>
-                            <td>تاریخ شروع</td><td>تاریخ پایان</td>
-                            <td>وضعیت</td><td>ویرایش</td>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="background-color: #fffabe"><td><br></td><td>درصد تحقق اهداف اختصصاصی تعیین گردد</td><td>مدیر مرکز</td><td><font color="#397b21">رئیس مرکز</font></td><td>97/3/20</td><td>97/5/20<br></td><td>در حال انجام</td><td><i onclick="$('#insertMosavabeh').slideDown()();" class="icon ion-eye" ></i></td></tr>
-                        <tr style="background-color: #ffbebe"><td><br></td><td>بخش سی سی یو راه اندازی شود</td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/2/20<br></td><td>97/3/20<br></td><td><span  style="background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);">انجام نشد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye"></i></td></tr>
-                        <tr style="background-color: #c7ffba"><td><br></td><td>برنامه بازدید های میدانی ایمنی بیمار سه ماهه اول ابلاغ گردد<br></td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/3/20<br></td><td>97/5/20<br></td><td><span  style="background-color: rgb(107, 165, 74); color: rgb(255, 255, 255);">انجام شد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye" ></i></td></tr>
-                        <tr><td><br></td><td></td><td></td><td></td><td></td><td></td><td></td><td><br></td></tr>
-                    </tbody></table>
-
-            </div>
+            <!--            <div align="right">
+                            <div class="card-header bg-primary tx-white">
+                                جدول مصوبات قبلی:
+                            </div>
+                            <table id="datatable1" class="table table-responsive table-wrapper">
+                                <thead>
+                                    <tr>                    
+                                        <td>کد</td>
+                                        <td>عنوان مصوبه</td>
+                                        <td>مسئول اجرا</td>
+                                        <td>مسئول پیگیری</td>
+                                        <td>تاریخ شروع</td><td>تاریخ پایان</td>
+                                        <td>وضعیت</td><td>ویرایش</td>
+            
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background-color: #fffabe"><td><br></td><td>درصد تحقق اهداف اختصصاصی تعیین گردد</td><td>مدیر مرکز</td><td><font color="#397b21">رئیس مرکز</font></td><td>97/3/20</td><td>97/5/20<br></td><td>در حال انجام</td><td><i onclick="$('#insertMosavabeh').slideDown()();" class="icon ion-eye" ></i></td></tr>
+                                    <tr style="background-color: #ffbebe"><td><br></td><td>بخش سی سی یو راه اندازی شود</td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/2/20<br></td><td>97/3/20<br></td><td><span  style="background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);">انجام نشد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye"></i></td></tr>
+                                    <tr style="background-color: #c7ffba"><td><br></td><td>برنامه بازدید های میدانی ایمنی بیمار سه ماهه اول ابلاغ گردد<br></td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/3/20<br></td><td>97/5/20<br></td><td><span  style="background-color: rgb(107, 165, 74); color: rgb(255, 255, 255);">انجام شد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye" ></i></td></tr>
+                                    <tr><td><br></td><td></td><td></td><td></td><td></td><td></td><td></td><td><br></td></tr>
+                                </tbody></table>
+            
+                        </div>-->
             <div id="insertMosavabeh" class="card-body pd-sm-30" style="display: none">
                 <div class="row">
                     <div class="col-lg-12">
@@ -163,7 +161,7 @@
                             </button>
                         </div><!-- form-group -->
                     </div><!-- col -->
-                    <div class="col-lg-3">
+                    <div class="col-lg-3" id="buttonDiv">
                         <button class="btn btn-outline-success active btn-block mg-b-10" onclick="alert('ویرایش انجام شد')">ویرایش
                             <i class="fa fa-star"></i>
                         </button>
@@ -184,13 +182,13 @@
                     <div class="col-lg-3">
                         دستور جلسه:
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="دستور جلسه را وارد کنید" type="text">
+                            <input   id="sessions_checkingAgenda" name="sessions_checkingAgenda" class="form-control is-valid" placeholder="دستور جلسه را وارد کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->   
                     <div class="col-lg-3">
                         عنوان مستند:
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="عنوان فایل را انتخاب کنید" type="text">
+                            <input id="sessions_titleFile" name="sessions_titleFile" class="form-control is-valid" placeholder="عنوان فایل را انتخاب کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->   
                     <div class="col-lg-3">          
@@ -216,25 +214,25 @@
                     <div class="col-lg-3">
                         عنوان مسئله
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="مسئله یا مشکل را وارد کنید" type="text">
+                            <input id="sessions_titleIssue" name="sessions_titleIssue" class="form-control is-valid" placeholder="مسئله یا مشکل را وارد کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->   
                     <div class="col-lg-6">
                         راهکار پیشنهادی
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="مسئله یا مشکل را وارد کنید" type="text">
+                            <input id="sessions_proposedSolution"  name="sessions_proposedSolution" class="form-control is-valid" placeholder="مسئله یا مشکل را وارد کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->   
                     <div class="col-lg-12">
                         نقاط قوت
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="نقاط قوت" type="text">
+                            <input id="sessions_strengths" name="sessions_strengths" class="form-control is-valid" placeholder="نقاط قوت" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->   
                     <div class="col-lg-12">
                         نقاط ضعف
                         <div class="form-group has-success mg-b-0">
-                            <input class="form-control is-valid" placeholder="نقاط ضعف را وارد کنید" type="text">
+                            <input id="sessions_weakPoint" name="sessions_weakPoint" class="form-control is-valid" placeholder="نقاط ضعف را وارد کنید" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->
 
@@ -246,23 +244,25 @@
             <div class="card-body pd-sm-30">
                 <div class="row">
                     <div class="col-lg-3">
-                        <button class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#insertMosavabeh2').slideDown();">
+                        <button  id="addNewApproved" class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#insertMosavabeh2').slideDown();hmisApproved.m_add_new();">
                             افزودن مصوبه
                             <i class="fa fa-star"></i>
                         </button>
                     </div>
                     <div id="insertMosavabeh2" class="card-body pd-sm-30" style="display: none">
                         <div class="row">
+                            <input type="hidden" id="hmis_approved_id" name="hmis_approved_id"/>
+
                             <div class="col-lg-12">
                                 عنوان مصوبه:
                                 <div class="form-group has-success mg-b-0">
-                                    <input class="form-control is-valid" placeholder="عنوان مصوبه  را وارد کنید" type="text" >
+                                    <input id="approved_title" name="approved_title" class="form-control is-valid" placeholder="عنوان مصوبه  را وارد کنید" type="text" >
                                 </div><!-- form-group -->
                             </div><!-- col -->   
                             <div class="col-lg-3">
                                 <div class="form-group has-warning mg-b-0">
                                     مسئول اجرا
-                                    <select class="form-control">
+                                    <select id="approved_responsibleForExecutionId" name="approved_responsibleForExecutionId" class="form-control">
                                         <!--در واقع از جدول اشخاص باید بیاورد-->
                                         <option value="">انتخاب مسئول اجرا</option>
                                         <option value="1">مدیر مرکز</option>
@@ -273,7 +273,7 @@
                             <div class="col-lg-3">
                                 <div class="form-group has-warning mg-b-0">
                                     مسئول پیگیری
-                                    <select class="form-control">
+                                    <select id="approved_responsibleForTrackId" name="approved_responsibleForTrackId" class="form-control">
                                         <!--در واقع از جدول اشخاص باید بیاورد-->
                                         <option value="">انتخاب مسئول پیگیری</option>
                                         <option value="1">رئیس مرکز</option>
@@ -284,19 +284,19 @@
                             <div class="col-lg-3">
                                 تاریخ شروع:
                                 <div class="form-group has-success mg-b-0">
-                                    <input class="form-control is-valid" placeholder="تاریخ شروع" type="text">
+                                    <input id="approved_startDate" name="approved_startDate" class="form-control is-valid" placeholder="تاریخ شروع" type="text">
                                 </div><!-- form-group -->
                             </div><!-- col -->   
                             <div class="col-lg-3">
                                 تاریخ پایان:
                                 <div class="form-group has-success mg-b-0">
-                                    <input class="form-control is-valid" placeholder="تاریخ شروع" type="text">
+                                    <input id="approved_endDate" name="approved_endDate" class="form-control is-valid" placeholder="تاریخ پایان" type="text">
                                 </div><!-- form-group -->
                             </div><!-- col -->   
                             <br/>
                             <div class="col-lg-3">
                                 وضعیت:
-                                <select class="form-control" >
+                                <select id="approved_vaziat" name="approved_vaziat" class="form-control" >
                                     <option value="در حال انجام">در حال انجام</option>
                                     <option value="غیر قابل انجام">غیر قابل انجام</option>
                                     <option value="انجام شده">انجام شده</option>
@@ -305,7 +305,7 @@
                             <div class="col-lg-9">
                                 توضیحات:
                                 <div class="form-group has-success mg-b-0">
-                                    <input class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا واردمی کند" type="text" >
+                                    <input id="approved_description" name="approved_description" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا واردمی کند" type="text" >
                                 </div><!-- form-group -->
                             </div><!-- col -->   
 
@@ -313,7 +313,7 @@
                                 بارگذاری مستندات
                                 <br/>
                                 <label class="custom-file">
-                                    <input type="file" id="file2" class="custom-file-input">
+                                    <input id="approved_file" name="approved_file" type="file"  class="custom-file-input">
                                     <span class="custom-file-control custom-file-control-primary"></span>
                                 </label>
                                 <!--                                <a href="">
@@ -339,32 +339,14 @@
                                     </button>
                                 </div><!-- form-group -->
                             </div><!-- col -->
-                            <div class="col-lg-3">
-                                <button class="btn btn-outline-success active btn-block mg-b-10" onclick="alert('ثبت انجام شد')">ثبت
-                                    <i class="fa fa-star"></i>
-                                </button>
+                            <div class="col-lg-3" id="Approved_button">
+                                <!--                                <button class="btn btn-outline-success active btn-block mg-b-10" onclick="alert('ثبت انجام شد')">ثبت
+                                                                    <i class="fa fa-star"></i>
+                                                                </button>-->
                             </div><!-- col -->
                         </div>
                     </div><!-- card-body -->
-                    <table id="datatable1" class="table table-responsive table-wrapper">
-                        <thead>
-                            <tr>                    
-                                <td>کد</td>
-                                <td>عنوان مصوبه</td>
-                                <td>مسئول اجرا</td>
-                                <td>مسئول پیگیری</td>
-                                <td>تاریخ شروع</td><td>تاریخ پایان</td>
-                                <td>وضعیت</td><td>ویرایش</td>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background-color: gainsboro"><td><br></td><td>درصد تحقق اهداف اختصصاصی تعیین گردد</td><td>مدیر مرکز</td><td><font color="#397b21">رئیس مرکز</font></td><td>97/3/20</td><td>97/5/20<br></td><td>پیشنهادی</td><td><i class="fa fa-plus" onclick="$(this).parent().parent().css('background-color', 'rgb(170, 236, 170)');"></i><br/><i class="fa fa-minus" onclick="$(this).parent().parent().css('background-color', 'rgb(234, 175, 175)');"></i></td></tr>
-                            <tr><td><br></td><td><span style="color: rgb(57, 123, 33);">درصد تحقق اهداف اختصصاصی تعیین گردد</span></td><td>مدیر مرکز</td><td><font color="#397b21">رئیس مرکز</font></td><td><span style="color: rgb(57, 123, 33);">97/3/20</span></td><td>97/5/20<br></td><td><span style="color: rgb(57, 123, 33); background-color: rgb(255, 255, 0);">ایجاد شده</span></td><td><i class="icon ion-gear-a" onclick=""></i></td></tr>
-                            <tr><td><br></td><td>بخش سی سی یو راه اندازی شود</td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/2/20<br></td><td>97/3/20<br></td><td><span style="color: rgb(57, 123, 33); background-color: rgb(255, 255, 0);">ایجاد شده</span></td><td><i class="icon ion-gear-a" onclick=""></i></td></tr>
-                            <tr><td><br></td><td>برنامه بازدید های میدانی ایمنی بیمار سه ماهه اول ابلاغ گردد<br></td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/3/20<br></td><td>97/5/20<br></td><td><span style="color: rgb(57, 123, 33); background-color: rgb(255, 255, 0);">ایجاد شده</span></td><td><i class="icon ion-gear-a" onclick=""></i></td></tr>
-                            <tr><td><br></td><td></td><td></td><td></td><td></td><td></td><td></td><td><br></td></tr>
-                        </tbody></table>
+                    <div id="approvedTbl"></div>
 
                 </div>
             </div><!-- card-body -->
@@ -374,7 +356,7 @@
                     <p >
                         شرح جلسه:
                     </p>
-                    <textarea rows="7" class="form-control is-valid mg-t-20" placeholder="Textarea (success state)">
+                    <textarea  id="sessions_sessionDescription" name="sessions_sessionDescription" rows="7" class="form-control is-valid mg-t-20" placeholder="Textarea (success state)">
                 جلسه با یک ساعت تاخیر برگزار شد و میهامانان جلسه با استفاده از پاور پوینت مطالبی را مطرح کردند.
                     </textarea>
                 </div>
@@ -420,35 +402,32 @@
                 <div class="col-lg-3">
                     تاریخ جلسه بعد:
                     <div class="form-group has-success mg-b-0">
-                        <input class="form-control is-valid" placeholder="تاریخ جلسه بعد" type="text">
+                        <input id="sessions_nextSessionDate" name="sessions_nextSessionDate" class="form-control is-valid" placeholder="تاریخ جلسه بعد" type="text">
                     </div><!-- form-group -->
                 </div><!-- col -->   
             </div>
             <div class="row l">
+                <div id="Sessions_button" class="col-lg-3"></div>
                 <div class="col-lg-3">
-                    .
                     <a href="feiz/login.html">
                         <button class="btn btn-outline-primary active btn-block mg-b-10">
                             چاپ صورت جلسه
                         </button>   
                     </a>
                 </div><!-- col --> 
-                <div class="col-lg-3">
-                    .
+                   <div class="col-lg-3">
                     <button class="btn btn-outline-success active btn-block mg-b-10">
                         تایید نهایی و ارسال به مسئولین اجرا
                         <i class="fa fa-star"></i>
                     </button>   
                 </div><!-- col -->
-                <div class="col-lg-3">
-                    .
+<!--                <div class="col-lg-3">
                     <button class="btn btn-outline-warning active btn-block mg-b-10">
                         ثبت موقت 
                     </button>   
-                </div><!-- col -->
+                </div> col -->
                 <div class="col-lg-3">
-                    .
-                    <button onclick="show05sessions();" class="btn btn-outline-dark active btn-block mg-b-10">
+                    <button id="cancel_Sessions" class="btn btn-outline-dark active btn-block mg-b-10">
                         لغو
                     </button>   
                 </div><!-- col --> 

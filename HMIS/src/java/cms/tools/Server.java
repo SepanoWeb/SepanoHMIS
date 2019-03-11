@@ -1,5 +1,6 @@
 package cms.tools;
 
+import HMIS.Approved;
 import cms.access.*;
 import cms.cms.*;
 import cms.tools.*;
@@ -16,9 +17,7 @@ import HMIS.Plans;
 //<<<<<<< HEAD
 import HMIS.Department;
 import HMIS.Messenger;
-//=======
-
-//>>>>>>> origin/master
+import HMIS.Sessions;
 import HMIS.Reports;
 import HMIS.Role;
 import HMIS.Steps;
@@ -116,21 +115,18 @@ public class Server extends HttpServlet {
             clazzes.add(Steps.class);//گام های اجرایی
             clazzes.add(Reports.class);//گزارش های برنامه 
             clazzes.add(Commettes.class);//کمیته ها
-//<<<<<<< HEAD
             ////////////shirn1 بخش ها
             clazzes.add(Department.class);
             ////////////shirn1 نقشها
             clazzes.add(Role.class);
             ////////////shirn1 پیام ها
             clazzes.add(Messenger.class);
-//=======
-
 //            clazzes.add(HMIS.Part.class);
-//>>>>>>> origin/master
+            clazzes.add(Sessions.class);//صورت جلسه 13971212
+            clazzes.add(Approved.class);//صورت جلسه 13971212
         }
         return clazzes;
     }
-
     protected void run(HttpServletRequest request, HttpServletResponse response, boolean isFromClient) throws ServletException, IOException, Exception {
         Publicresponse = response;
         Connect();
