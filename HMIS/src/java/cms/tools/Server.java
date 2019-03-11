@@ -1,5 +1,6 @@
 package cms.tools;
 
+import HMIS.Approved;
 import cms.access.*;
 import cms.cms.*;
 import HMIS.Commettes;
@@ -101,6 +102,7 @@ public class Server extends HttpServlet {
             clazzes.add(Reports.class);//گزارش های برنامه 
             clazzes.add(Commettes.class);//کمیته ها
             clazzes.add(Sessions.class);//صورت جلسه 13971212
+            clazzes.add(Approved.class);//صورت جلسه 13971212
             
         }
         return clazzes;

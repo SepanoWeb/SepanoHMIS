@@ -11,7 +11,7 @@ var hmisSessions = {
     loadForm: function () {
         if ($("#swSessionsForm").html() == '') {
             $("#swSessionsForm").load("formHMIS/05OneSession.html", null, function () {
-
+                new jj("#sessions_nextSessionDate").jjCalendarWithYearSelector(1397, 1420);
                 $("#cancel_Sessions").button().click(function (e) {
                     hmisSessions.m_clean();
                     hmisSessions.m_show_tbl();
@@ -73,7 +73,7 @@ var hmisSessions = {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".edit";
         param += "&" + new jj('#swSessionsForm').jjSerial();
-//        param += "&id=" + new jj('#hmis_Sessions_id').jjVal();
+        param += "&id=" + new jj('#hmis_Sessions_id').jjVal();
         jj(param).jjAjax2(false);
         hmisSessions.m_show_tbl();
         hmisSessions.m_clean();
