@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.table.DefaultTableModel;
+import jj.jjCalendar_IR;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
@@ -63,16 +64,21 @@ public class Steps {
             html.append("        <div class=\"table-wrapper\">\n");
             html.append("<table id='refreshSteps' class='table display responsive' class='tahoma10' style='direction: rtl;width:982px'><thead>");
             html.append("<th width='5%'>کد</th>");
-//            html.append("<th width='90%'>عنوان</th>");
-//            html.append("<th width='5%'>عملیات</th>");
+            html.append("<th width='30%'>عنوان</th>");
+            html.append("<th width='20%'>تاریخ شروع</th>");
+            html.append("<th width='20%'>تاریخ پایان</th>");
+            html.append("<th width='20%'>هزینه</th>");
+            html.append("<th width='5%'>عملیات</th>");     
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
                 html.append("<tr  class='mousePointer'>");
-                html.append("<td class='c'>" + row.get(0).get(_id) + "</td>");
-//                html.append("<tr onclick='alert($(this).children(1).html());' class='mousePointer'>");
-//                html.append("<tr onclick='cmsContent.m_select(" + row.get(i).get(_id) + ");' class='mousePointer'>");
-//                html.append("<td class='r'>" + (row.get(i).get(_title).toString()) + "</td>");
-//                html.append("<td class='c'><img src='img/l.png' style='height:30px'/></td>");
+                html.append("<td class='c'>" + row.get(i).get(_id) + "</td>");
+                html.append("<td class='r'>" +(row.get(i).get(_title).toString()) + "</td>");
+                html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_startDate).toString()) + "</td>");
+                html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_endDate).toString()) + "</td>");
+                html.append("<td class='r'>" +  jjNumber.getFormattedNumber(row.get(i).get(_cost).toString()) + "</td>");
+                html.append("<td class='c'><i class='icon ion-ios-gear-outline'></i></td>");
+
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -100,10 +106,15 @@ public class Steps {
                 return hasAccess;
             }
             Map<String, Object> map = new HashMap<String, Object>();
+
+            String plansId=jjTools.getParameter(request,"hmis_plans_id");
+            System.out.println("idPlans="+jjTools.getParameter(request,"hmis_plans_id"));
             map.put(_plansId, jjTools.getParameter(request,"hmis_plans_id"));
             map.put(_endDate, jjTools.getParameter(request, _endDate));
             map.put(_startDate, jjTools.getParameter(request, _startDate));
-            map.put(_cost, jjTools.getParameter(request, _cost));
+            map.put(_cost,(jjTools.getParameter(request, _cost)));          
+
+         
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_otherIndicators, jjTools.getParameter(request, _otherIndicators));
             map.put(_responsibleForRunning, jjTools.getParameter(request, _responsibleForRunning));
@@ -118,7 +129,9 @@ public class Steps {
                 }
                 return Js.dialog(errorMessage);
             }
-            return Js.jjPlans.refresh();
+            String script="hmisPlans.m_select("+plansId+");";
+            script +=Js.jjPlans.refresh();
+            return script;
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }
