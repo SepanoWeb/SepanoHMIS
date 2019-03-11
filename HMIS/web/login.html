@@ -34,26 +34,36 @@
         <!-- Vendor css -->
         <link href="Manager/font-awesome.css" rel="stylesheet">
         <link href="Manager/ionicons.css" rel="stylesheet">
-        <script src="js/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
+        <!--<script src="js/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>-->
         <!--<script src="js/jquery/jquery-1.8.3.js" type="text/javascript"></script>-->
 
         <!--<link href="css/jquery/green/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css"/>-->
         <!--<link href="css/jquery/violet/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css"/>-->
-        <link href="css/jquery/gray/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="css/jquery/gray/jquery-ui-1.8.21.custom.css" rel="stylesheet" type="text/css"/>-->
         <!--<link href="css/jquery/sunny/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css"/>-->
-        <script src="js/jquery/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
-        <script src="js/calendar/calendar.js" type="text/javascript"></script>
-        <script src="js/calendar/calendar.all.js" type="text/javascript"></script>
-        <script src="js/jquery/ajaxfileupload.js" type="text/javascript"></script>
-        <script src="js/calendar/jquery.ui.datepicker-cc.js" type="text/javascript"></script>
-        <script src="js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>
-        <script src="js/jquery/jquery.cookie.min.js" type="text/javascript"></script>
-
+        <!--        <script src="js/jquery/jquery-ui-1.8.21.custom.min.js" type="text/javascript"></script>
+                <script src="js/calendar/calendar.js" type="text/javascript"></script>
+                <script src="js/calendar/calendar.all.js" type="text/javascript"></script>
+                <script src="js/jquery/ajaxfileupload.js" type="text/javascript"></script>
+                <script src="js/calendar/jquery.ui.datepicker-cc.js" type="text/javascript"></script>
+                <script src="js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>-->
+        <!--<script src="js/jquery/jquery.cookie.min.js" type="text/javascript"></script>-->
+        <script src="Manager/jquery.js"></script>
+        <script src="Manager/popper.js"></script>
+        <script src="Manager/bootstrap.js"></script>
+        <script src="Manager/jquery-ui.js"></script>
+        <script src="Manager/perfect-scrollbar.jquery.js"></script>
+        <script src="Manager/moment.js"></script>
+        <script src="Manager/jquery.flot.js"></script>
+        <script src="Manager/jquery.flot.resize.js"></script>
+        <script src="Manager/jquery.flot.spline.js"></script>
 
         <!-- سامانه جامع مدیار CSS -->
         <link rel="stylesheet" href="Manager/shamcey.css">
-        <script src="js/jj2.js" type="text/javascript"></script>
-        <script src="js/index.js" type="text/javascript"></script>
+
+        <script src="Manager/js/jj2.js" type="text/javascript"></script>
+        <script src="Manager/js/index.js" type="text/javascript"></script>
+
     </head>
 
     <body class="bg-gray-900">
@@ -117,9 +127,9 @@
                         <label class="form-control-label">یادآور گذرواژه:</label>
                         <input type="text" name="user_password_hint" id="user_password_hint" placeholder="یادآور گذرواژه" class="form-control">
                     </div><!-- form-group -->
-<!--                    <div class="form-group">
-                        <a href="http://themetrace.com/template/shamcey/app/page-signin.html">پسوردم را فراموش کرده ام?</a>
-                    </div> form-group -->
+                    <!--                    <div class="form-group">
+                                            <a href="http://themetrace.com/template/shamcey/app/page-signin.html">پسوردم را فراموش کرده ام?</a>
+                                        </div> form-group -->
                     <button   class="btn btn-success btn-block" onclick='registInSite();'>ثبت نام</button>
                     <button   class="btn btn-success btn-block" onclick='backToLogin();'> بازگشت</button>
                     <div id="errorRegistMessagePanel1"> </div>
@@ -141,7 +151,7 @@
 
         <script src="./سامانه جامع مدیار Responsive Bootstrap 4 Admin Template_files/shamcey.js.download"></script>
         <script>
-           new jj('#user_birthdate2').jjCalendarWithYearSelector(1310, 1410);
+                        new jj('#user_birthdate2').jjCalendarWithYearSelector(1310, 1410);
         </script>
 
     </body></html>

@@ -97,3 +97,4 @@ $(function() {
   var updateInterval = 1000;
 
 });
+ 

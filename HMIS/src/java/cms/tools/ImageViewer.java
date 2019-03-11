@@ -34,7 +34,7 @@ public class ImageViewer extends HttpServlet {
     private ServletFileUpload uploader = null;
     int width = 150;
     int height = 50;
-    private static final String Save_Folder_Name = "upload" + File.separator;//seperator is / in linux and is \ in windows
+    private static final String Save_Folder_Name = "upload"+File.separator;//seperator is / in linux and is \ in windows
 
 //    static final long serialVersionUID = 1L;
 //        private static final int BUFSIZE = 4096;
@@ -55,12 +55,11 @@ public class ImageViewer extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String pattern = Pattern.quote(System.getProperty("file.separator"));//seperator is / in linux and is \ in windows
-        String[] contxtPath = request.getServletContext().getRealPath("/").split(pattern);
-        String safaPat = "";
-        for (int i = 0; i < contxtPath.length - 2; i++) {//return 2 folder up(parent of parent)
-            safaPat += contxtPath[i] + System.getProperty("file.separator");
-        }
-        String path = safaPat + Save_Folder_Name;// upload\ in windows and upload/ in linux
+        String[] contxtPath= request.getServletContext().getRealPath("/").split(pattern);
+        String parentFolderName = contxtPath[contxtPath.length-2];//return 2 folder up(parent of parent)
+        int index = request.getServletContext().getRealPath("/").indexOf(parentFolderName);
+        String str = request.getServletContext().getRealPath("/").substring(0, index);
+        String path = str + Save_Folder_Name;// upload\ in windows and upload/ in linux
         File filesDir = new File(path);
         DiskFileItemFactory fileFactory = new DiskFileItemFactory();
         fileFactory.setRepository(filesDir);
@@ -71,16 +70,16 @@ public class ImageViewer extends HttpServlet {
         if (fileName.contains("%20")) {
             fileName = fileName.replace("%20", " ");
         }
-        ServerLog.Print("fileName is " + fileName);
+        System.out.println("fileName is " + fileName);
         if (fileName == null || fileName.equals("")) {
-//            throw new ServletException("File Name can't be null or empty");
+            throw new ServletException("File Name can't be null or empty");
         }
         File file = new File(filesDir + File.separator + fileName);
-//        ServerLog.Print("*********************!!!!>>>" + filesDir + File.separator + fileName);
+        System.out.println("*********************!!!!>>>" + filesDir + File.separator + fileName);
         if (!file.exists()) {
-//            throw new ServletException("File doesn't exists on server:"+filesDir + File.separator + fileName);
+            throw new ServletException("File doesn't exists on server:"+filesDir + File.separator + fileName);
         }
-        ServerLog.Print("File location on server:" + file.getAbsolutePath());
+        System.out.println("File location on server:" + file.getAbsolutePath());
         String mimetype = new MimetypesFileTypeMap().getContentType(file);
         String type = mimetype.split("/")[0];
 //        if (type.equals("image")) {
@@ -97,28 +96,23 @@ public class ImageViewer extends HttpServlet {
 //        }
 
         ServletContext ctx = request.getServletContext();
-        InputStream fis;
-        try {
-            fis = new FileInputStream(file);
-            String mimeType = ctx.getMimeType(file.getAbsolutePath());
-            response.setContentType(mimeType != null ? mimeType : "application/octet-stream");
-            response.setContentLength((int) file.length());
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        InputStream fis = new FileInputStream(file);
+        String mimeType = ctx.getMimeType(file.getAbsolutePath());
+        response.setContentType(mimeType != null ? mimeType : "application/octet-stream");
+        response.setContentLength((int) file.length());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 
-            ServletOutputStream os = response.getOutputStream();
-            byte[] bufferData = new byte[1024];
-            int read = 0;
-            while ((read = fis.read(bufferData)) != -1) {
-                os.write(bufferData, 0, read);
-            }
-            os.flush();
-            os.close();
-            fis.close();
-            ServerLog.Print("File downloaded at client successfully");
-
-        } catch (Exception ex) {
-            ServerLog.Print("File Exeption ...>>>");
+        ServletOutputStream os = response.getOutputStream();
+        byte[] bufferData = new byte[1024];
+        int read = 0;
+        while ((read = fis.read(bufferData)) != -1) {
+            os.write(bufferData, 0, read);
         }
+        os.flush();
+        os.close();
+        fis.close();
+        System.out.println("File downloaded at client successfully");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -133,9 +127,9 @@ public class ImageViewer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ServerLog.Print("********");
+        System.out.println("********");
         processRequest(request, response);
-//        ServerLog.Print("********");
+        System.out.println("********");
     }
 
     /**
@@ -149,9 +143,9 @@ public class ImageViewer extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ServerLog.Print("********");
+        System.out.println("********");
         processRequest(request, response);
-//        ServerLog.Print("********");
+        System.out.println("********");
     }
 
     /**
