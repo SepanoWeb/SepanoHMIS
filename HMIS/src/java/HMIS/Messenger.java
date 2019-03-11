@@ -368,7 +368,6 @@ public class Messenger {
                 map.put(_sender,sender );
                 map.put(_sendingMethod,sendingMethod );
                 map.put(_postageDate,postageDate );
-//  
 
                 map.put(_textMessage, textMessage);
 //        map.put(_postageDate, jjCalendar_IR.getDatabaseFormat_8length(null, true));
