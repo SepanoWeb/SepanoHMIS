@@ -136,15 +136,15 @@
                     <div class="row l">
                         <div class="col-lg-3">
                             <div class="form-group has-success mg-b-0">
-                                <button class="btn btn-secondary btn-block mg-b-10" onclick="$('.sh-mainpanel').load('05commettes.html', null, function () {
-                                        });
-                                        return false;">لغو</button>
+                                <button class="btn btn-secondary btn-block mg-b-10" id="cancel_inviteCommettes"  onclick="$('#cancel_inviteCommettes').button().click(function (e) {
+                                    hmisCommettes.m_clean();
+                                    hmisCommettes.m_show_tbl();">لغو</button>
                             </div><!-- form-group -->
                         </div><!-- col -->
                         <div class="col-lg-4">
                             <!--دسترسی برای کسی که امکان ان را داشته باشد-->
                             <button class="btn btn-danger btn-block mg-b-10" onclick="alert('دعوت نامه برای  مدعوین جلسه ارسال شد');
-                                    show05commettes();"><i class="fa fa-envelope mg-r-10"></i> ارسال دعوت نامه برای مدعوین جلسه </button>
+                                                show05commettes();"><i class="fa fa-envelope mg-r-10"></i> ارسال دعوت نامه برای مدعوین جلسه </button>
                         </div>                    
                     </div>
                 </div>

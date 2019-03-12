@@ -4,9 +4,7 @@ package cms.tools;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import cms.access.Access_User;
 import java.io.*;
-import java.sql.Connection;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -20,12 +18,8 @@ import jj.jjPicture;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
-import jj.jjTime;
 
 //==================>shiri
 //@WebServlet(name="uploadServlet3", urlPatterns = {"/uploadServlet3"},
@@ -111,7 +105,6 @@ public class UploadServlet extends HttpServlet {
                     /*
                      * File
                      */
-
                     //==============>shiri
                     File folderAddress = new File(path);//"/" +
                     String extension = "";
@@ -175,7 +168,16 @@ public class UploadServlet extends HttpServlet {
                         File file2 = new File(file.getParent() + "/" + name2 + "_small." + extension2);
                         map.put(_title, extension2);
                          db.insert(UploadServlet.tableName, map);
-                        if (extension2.toLowerCase().equals("jpg") || extension2.toLowerCase().equals("png") || extension2.toLowerCase().equals("gif")|| extension2.toLowerCase().equals("svg")|| extension2.toLowerCase().equals("doc")|| extension2.toLowerCase().equals("docx")|| extension2.toLowerCase().equals("pdf")|| extension2.toLowerCase().equals("tiff")|| extension2.toLowerCase().equals("xls")|| extension2.toLowerCase().equals("xlsx")){
+                        if (extension2.toLowerCase().equals("jpg") 
+                                || extension2.toLowerCase().equals("png") 
+                                || extension2.toLowerCase().equals("gif")
+                                || extension2.toLowerCase().equals("svg")
+                                || extension2.toLowerCase().equals("doc")
+                                || extension2.toLowerCase().equals("docx")
+                                || extension2.toLowerCase().equals("pdf")
+                                || extension2.toLowerCase().equals("tiff")
+                                || extension2.toLowerCase().equals("xls")
+                                || extension2.toLowerCase().equals("xlsx")){
                             jjPicture.doChangeSizeOfPic(file, file2, 250);
                         }
                     }
