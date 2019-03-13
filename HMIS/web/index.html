@@ -181,9 +181,11 @@
                                     hmisCommettes.loadForm();" class="nav-link ShowOneDiv">تعریف و تنظیمات کمیته ها</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" onclick="$('.sh-mainpanel').load('05sessions.html', null, function () {
-                                    });
-                                    return false;" class="nav-link ShowOneDiv">میز هوشمند جلسات</a>
+                            <a href="#swSessions" onclick="if ($('#swSessionsTbl').html() == '') {
+                                        hmisSessions.m_refresh();
+                                    }
+                                    ;
+                                    hmisSessions.loadForm();" class="nav-link ShowOneDiv">میز هوشمند جلسات</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" onclick="$('.sh-mainpanel').load('05sessionsForPrint.html', null, function () {
@@ -328,16 +330,16 @@
 
                         <li class="nav-item"><a href="#swRole"  class="nav-link ShowOneDiv" onclick="if ($('#swRoleTbl').html() == '') {
 
-                           hmisRole.m_refresh();
+                                    hmisRole.m_refresh();
 
 
 
 
                                 }
                                 ;
-                                 hmisRole.mainTabSetSize();
+                                hmisRole.mainTabSetSize();
                                 hmisRole.loadForm();
-                                
+
                                                 ">جدول نقش ها</a></li>
                         <!--<li class="nav-item"><a href="#" onclick=" $('.sh-mainpanel').load('13userGroup.html', null, function () {});return false;" class="nav-link">جدول گروه های کاربری</a></li>-->
                         <li  class="nav-item"><a href="#swGroup"  class="nav-link ShowOneDiv" onclick="if ($('#swGroupTbl').html() == '') {
@@ -376,18 +378,19 @@
                         <span>مستندات من</span>
                     </div>
                 </a>
-                    <a href="#swMessenger"  class="sh-icon-link nav-link ShowOneDiv" onclick="if ($('#swMessengerTbl').html() == '') {
-                                    hmisMessenger.m_refresh();
-                                }
-                                hmisMessenger.mainTabSetSize();
-                                hmisMessenger.loadForm();
-                                                 ">
+                <a href="#swMessenger"  class="sh-icon-link nav-link ShowOneDiv" onclick="if ($('#swMessengerTbl').html() == '') {
+                            hmisMessenger.m_refresh();
+                        }
+                        hmisMessenger.mainTabSetSize();
+                        hmisMessenger.loadForm();
+                   ">
                     <div>
                         <i class="icon ion-ios-calendar-outline"></i>
                         <span>کارتابل پیام رسان</span>
                     </div>
                 </a>
-                <a href="#"  onclick=" $('.sh-mainpanel').load('12accreditation.html', null, function () {});return false;" class="sh-icon-link">
+                <a href="#"  onclick=" $('.sh-mainpanel').load('12accreditation.html', null, function () {});
+                        return false;" class="sh-icon-link">
                     <div>
                         <img src="Manager/icon/medal-svgrepo-com.svg" style="width: 32px">
                         <span>محورهای اعتباربخشی</span>
@@ -548,14 +551,14 @@
                                 <div id="swCommettesTbl" style=""></div>
                                 <div id="swCommettesForm" style="display: none;"></div>
                             </div><!--swCommettes-->
-                            <div class="Alldiv" id="swCommettes">
-                                <div id="swCommettesTbl" style=""></div>
-                                <div id="swCommettesForm" style="display: none;"></div>
+                            <div class="Alldiv" id="swSessions">
+                                <div id="swSessionsTbl" style=""></div>
+                                <div id="swSessionsForm" style="display: none;"></div>
                             </div><!--swSession-->
                             <div class="Alldiv" id="swUser" style="">
                                 <div id="swUserTbl" ></div>
                                 <div id="swUserForm" style="display: none;"></div>
-                        </div>
+                            </div>
                             <div class="Alldiv" id="swDepartment" style="">
                                 <div id="swDepartmentTbl" style=""></div>
                                 <div id="swDepartmentForm" style="display: none;"></div>
@@ -582,569 +585,15 @@
                 </div><!--row-->
             </div><!--sh-pagebody-->
 
-            <!--   <div class="sh-breadcrumb">
-                   <nav class="breadcrumb">
-                       <a class="breadcrumb-item" href="index.html">MedYar مدیار</a>
-                       <span class="breadcrumb-item active">داشبورد هوشمند</span>
-                   </nav>
-               </div> sh-breadcrumb 
-               <div class="sh-pagetitle">
-                                   <div class="input-group">
-                                       <input type="search" class="form-control" placeholder="Search">
-                                       <span class="input-group-btn">
-                                           <button class="btn"><i class="fa fa-search"></i></button>
-                                       </span> input-group-btn 
-                                   </div> input-group 
-                   <div class="sh-pagetitle-left">
-                       <div class="sh-pagetitle-icon"><i class="icon ion-ios-home"></i></div>
-                       <div class="sh-pagetitle-title">
-                           <span>سامانه جام مدیریت سلامت</span>
-                           <h2>داشبورد هوشمند</h2>
-                       </div> sh-pagetitle-left-title 
-                   </div> sh-pagetitle-left 
-               </div> sh-pagetitle 
-               <div class="sh-pagebody">
-                   <div class="row row-sm">
-                       <div class="col-lg-8">
-                           <div class="row row-xs">
-                               <div class="col-6 col-sm-4 col-md">
-                                   <a href="index.html#" class="shortcut-icon">
-                                       <div>
-                                           <i class="icon ion-ios-albums-outline"></i>
-                                           <span>پرستاری</span>
-                                       </div>
-                                   </a>
-                               </div> col 
-                               <div class="col-6 col-sm-4 col-md">
-                                   <a href="index.html#" class="shortcut-icon"> 
-                                       <div>
-                                           <i class="icon ion-ios-analytics-outline"></i>
-                                           <span>مالی</span>
-                                       </div>
-                                   </a>
-                               </div> col 
-                               <div class="col-6 col-sm-4 col-md mg-t-10 mg-sm-t-0">
-                                   <a href="index.html#" class="shortcut-icon">
-                                       <div>
-                                           <i class="icon ion-ios-bookmarks-outline"></i>
-                                           <span>مدیریتی</span>
-                                       </div>
-                                   </a>
-                               </div> col 
-                               <div class="col-6 col-sm-4 col-md mg-t-10 mg-md-t-0">
-                                   <a href="index.html#" class="shortcut-icon">
-                                       <div>
-                                           <i class="icon ion-ios-chatboxes-outline"></i>
-                                           <span>|پشتیبانی</span>
-                                       </div>
-                                   </a>
-                               </div> col 
-                               <div class="col-6 col-sm-4 col-md mg-t-10 mg-md-t-0">
-                                   <a href="index.html#" class="shortcut-icon">
-                                       <div>
-                                           <i class="icon ion-ios-download-outline"></i>
-                                           <span>پارا کلینیک</span>
-                                       </div>
-                                   </a>
-                               </div> col 
-                           </div> row 
-                           <div class="card bd-primary mg-t-20">
-                               <div class="card-header bg-primary tx-white">نمودار شاخص مالی</div>
-                               <div class="card-body">
-                                   <div id="flotArea" class="ht-200 ht-sm-300" style="padding: 0px; position: relative;">
-                                       <canvas class="flot-base" width="664" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 664px; height: 300px;"></canvas>
-                                       <div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
-                                           <div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 21px; text-align: center;">0</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 84px; text-align: center;">1</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 147px; text-align: center;">2</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 211px; text-align: center;">3</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 274px; text-align: center;">4</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 337px; text-align: center;">5</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 400px; text-align: center;">6</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 463px; text-align: center;">7</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 527px; text-align: center;">8</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 590px; text-align: center;">9</div>
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 651px; text-align: center;">10</div>                                                
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 680px; text-align: center;">11</div>                                                
-                                               <div style="position: absolute; max-width: 60px; top: 288px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 690px; text-align: center;">12</div>                                                
-                                           </div>
-                                           <div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-                                               <div style="position: absolute; top: 277px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 5px; text-align: right;">0.0</div>
-                                               <div style="position: absolute; top: 231px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 5px; text-align: right;">2.5</div>
-                                               <div style="position: absolute; top: 185px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 5px; text-align: right;">5.0</div>
-                                               <div style="position: absolute; top: 140px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 5px; text-align: right;">7.5</div>
-                                               <div style="position: absolute; top: 94px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 0px; text-align: right;">10.0</div>
-                                               <div style="position: absolute; top: 48px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 0px; text-align: right;">12.5</div>
-                                               <div style="position: absolute; top: 2px; font: 400 10px/12px ; color: rgb(153, 153, 153); left: 0px; text-align: right;">15.0</div>
-                                           </div>
-                                       </div>
-                                       <canvas class="flot-overlay" width="664" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 664px; height: 300px;"></canvas>
-                                       <div class="legend"><div style="position: absolute; width: 116px; height: 36px; top: 13px; left: 29px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div>
-                                           <table style="position:absolute;top:13px;left:29px;;font-size:smaller;color:#545454">
-                                               <tbody>
-                                                   <tr>
-                                                       <td class="legendColorBox">
-                                                           <div style="border:1px solid #ccc;padding:1px">
-                                                               <div style="width:4px;height:0;border:5px solid #354763;overflow:hidden"></div></div>
-                                                       </td>
-                                                       <td class="legendLabel"> 97</td>
-                                                   </tr>
-                                                   <tr>
-                                                       <td class="legendColorBox">
-                                                           <div style="border:1px solid #ccc;padding:1px">
-                                                               <div style="width:4px;height:0;border:5px solid #7CBDDF;overflow:hidden"></div>                
-                                                           </div>
-                                                       </td>
-                                                       <td class="legendLabel">98</td>
-                                                   </tr>
-                                               </tbody>
-                                           </table>
-                                       </div>
-                                   </div>
-                               </div> card-body 
-                           </div> card 
-                           <div class="card bd-primary mg-t-20">
-                               <div class="card-header bg-primary tx-white c">گزارش شاخص مالی سه ماهه</div>
-                               <div class="table-responsive">
-                                   <table class="table table-striped mg-b-0">
-                                       <thead>
-                                           <tr>
-                                               <th>نام بخش</th>
-                                               <th>سه ماهه اول</th>
-                                               <th>سه ماهه دوم</th>
-                                               <th>سه ماهه سوم</th>
-                                               <th>سه ماهه چهارم</th>
-                                           </tr>
-                                       </thead>
-                                       <tbody>
-                                           <tr>
-                                               <td>قلب</td>
-                                               <td>1000000000</td>
-                                               <td>1500000000</td>
-                                               <td class="center">1800000000</td>
-                                               <td class="center">1000000000</td>
-                                           </tr>
-                                           <tr>
-                                               <td>ccu</td>
-                                               <td>1100000000</td>
-                                               <td>1400000000</td>
-                                               <td class="center">1600000000</td>
-                                               <td class="center">1200000000</td>
-                                           </tr>
-                                           <tr>
-                                               <td>اورژانس</td>
-                                               <td>1200000000</td>
-                                               <td>1300000000</td>
-                                               <td class="center">1900000000</td>
-                                               <td class="center">1000000000</td>
-                                           </tr>
-                                           <tr>
-                                               <td>داخلی</td>
-                                               <td>900000000</td>
-                                               <td>1000000000</td>
-                                               <td class="center">1300000000</td>
-                                               <td class="center">1000000000</td>
-                                           </tr>
-                                           <tr>
-                                               <td>اتاق عمل</td>
-                                               <td>5000000000</td>
-                                               <td>7000000000</td>
-                                               <td class="center">9000000000</td>
-                                               <td class="center">6000000000</td>
-                                           </tr>
-                                       </tbody>
-                                   </table>
-                               </div> table-responsive 
-                           </div> card 
-                           <div class="card bd-primary mg-t-20">
-                               <div class="card-header bg-primary tx-white c">مصوبات جدید  کمیته ها</div>
-                               <div class="card-body">
-                                   <div class="media-list">
-                                       <div class="media" id="commette0">
-                                           <i class="icon ion-ios-analytics-outline"></i> 
-                                           <div class="media-body mg-l-20">
-                                               <h6 class="tx-15 mg-b-5"><a href="index.html">مصوبات جلسه کمیته بیمه منایع آبان 97</a></h6>
-                                               <p class="mg-b-20">توسط: <a href="index.html">دکتر ذاکری</a></p>
-                                               <div align="right">
-                                                   <div class="table-responsive">
-                                                       <table class="commeteeTable table mg-b-0" >
-                                                           <thead>
-                                                               <tr>
-                                                                   <td>
-                                                                       <span>بیان مشکلات </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span>اقدامات اصلاحی </span>
-                                                                   </td>
-                                                                   <td >
-                                                                       <b><span>مسئول اجرا </span></b>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >تاریخ اجرا </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >پایش </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >علت عدم اجرا</span>
-                                                                   </td>
-                                                               </tr>
-                                                           </thead>
-                                                           <tbody>
-                                                               <tr style="background-color: #fffcba">
-                                                                   <td >
-                                                                       تامین بودجه برای راه اندازی بخش اطفال
-                                                                   </td>
-                                                                   <td>
-                                                                       درخواست از خیرین
-                                                                   </td>
-                                                                   <td>
-                                                                       آقای دکتر هاشمی
-                                                                   </td>
-                                                                   <td>
-                                                                       1397/08/11
-                                                                   </td>
-                                                                   <td>
-                                                                       در حال انجام
-                                                                   </td>
-                                                                   <td>
-                                                                       تعویق در جلسه خیرین
-                                                                   </td>
-                                                               </tr>
-                                                           </tbody></table>
-                                                   </div>
-                                               </div>
-                                               <p class="mg-b-0">
-                                                   <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('#commette0').slideUp('slow');
-                                                           return false">بستن</a>
-   
-                                               </p>
-                                           </div> media-body 
-                                       </div> media 
-   
-                                       <hr class="mg-y-20">
-   
-                                       <div class="media" id="commette1">
-                                           <i class="icon ion-ios-analytics-outline"></i> 
-                                           <div class="media-body mg-l-20">
-                                               <h6 class="tx-15 mg-b-5"><a href="index.html">جلسه کمیته بیمه منایع مهر</a></h6>
-                                               <p class="mg-b-20">توسط: <a href="index.html">دکتر ذاکری</a></p>
-                                               <div align="right">
-                                                   <div class="table-responsive">
-                                                       <table class="commeteeTable table mg-b-0" >
-                                                           <thead>
-                                                               <tr>
-                                                                   <td>
-                                                                       <span>بیان مشکلات </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span>اقدامات اصلاحی </span>
-                                                                   </td>
-                                                                   <td >
-                                                                       <b><span>مسئول اجرا </span></b>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >تاریخ اجرا </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >پایش </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >علت عدم اجرا</span>
-                                                                   </td>
-                                                               </tr>
-                                                           </thead>
-                                                           <tbody>
-                                                               <tr style="background-color: #c5ffba">
-                                                                   <td >
-                                                                       افزایش مطالبات وصول نشده
-                                                                   </td>
-                                                                   <td>
-                                                                       پیگیری مطالبات بیمه ها
-                                                                   </td>
-                                                                   <td>
-                                                                       آقای  شریعتی
-                                                                   </td>
-                                                                   <td>
-                                                                       1397/07/18
-                                                                   </td>
-                                                                   <td>
-                                                                       انجام شده
-                                                                   </td>
-                                                                   <td>
-   
-                                                                   </td>
-                                                               </tr>
-                                                           </tbody></table>
-                                                   </div>
-                                               </div>
-                                               <p class="mg-b-0">
-                                                   <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('#commette1').slideUp('slow');
-                                                           return false">بستن</a>
-   
-                                               </p>
-                                           </div> media-body 
-                                       </div> media 
-   
-                                       <hr class="mg-y-20">
-   
-                                       <div class="media" id="commette2">
-                                           <i class="icon ion-ios-analytics-outline"></i> 
-                                           <div class="media-body mg-l-20">
-                                               <h6 class="tx-15 mg-b-5"><a href="index.html">مقرر شد ویتینگ لیست هوشمند برای اعمال الکتیو در نرم افزار HIS ایجاد گردد</a></h6>
-                                               <p class="mg-b-20">توسط: <a href="index.html">دکتر ذاکری</a></p>
-                                               <div align="right">
-                                                   <div class="table-responsive">
-                                                       <table class="commeteeTable table mg-b-0" >
-                                                           <thead>
-                                                               <tr>
-                                                                   <td>
-                                                                       <span>بیان مشکلات </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span>اقدامات اصلاحی </span>
-                                                                   </td>
-                                                                   <td >
-                                                                       <b><span>مسئول اجرا </span></b>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >تاریخ اجرا </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >پایش </span>
-                                                                   </td>
-                                                                   <td>
-                                                                       <span  >علت عدم اجرا</span>
-                                                                   </td>
-                                                               </tr>
-                                                           </thead>
-                                                           <tbody>
-                                                               <tr style="background-color: #fdc9c9">
-                                                                   <td >
-                                                                       نقص داده های برای بخش مالی
-                                                                   </td>
-                                                                   <td>
-                                                                       بهبود  HIS
-                                                                   </td>
-                                                                   <td>
-                                                                       مسئول HIS
-                                                                   </td>
-                                                                   <td>
-                                                                       1397/06/11
-                                                                   </td>
-                                                                   <td>
-                                                                       انجام نشده
-                                                                   </td>
-                                                                   <td>
-                                                                       عدم موافقت تامین هزینه اجرا
-                                                                   </td>
-                                                               </tr>
-                                                           </tbody></table>
-                                                   </div>
-                                               </div>
-                                               <p class="mg-b-0">
-                                                   <a href="" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('#commette2').slideUp('slow');
-                                                           return false">بستن</a>                                                
-                                               </p>
-                                           </div> media-body 
-                                       </div> media 
-                                   </div> media-list 
-                               </div> card-body 
-                           </div> card 
-   
-                       </div> col-8 
-                       <div class="col-lg-4 mg-t-20 mg-lg-t-0">                        
-                           <div class="card bd-primary">
-                               <div class="card-header bg-primary tx-white">سه ماهه اول-شاخص درآمد</div>
-                               <div class="card-body">
-                                   باتوجه به جذب سه نفر جراح هیات علمی درآمد سه ماهه اول نسبت به مدت مشابه سال قبل به میزان 15% افزایش یافته است
-                               </div> card-body 
-                           </div> card 
-                           <div class="card bd-primary">
-                               <div class="card-header bg-primary tx-white">سه ماهه دوم-شاخص درآمد</div>
-                               <div class="card-body">
-                                   باتوجه به اعلامk های تعرفه ی جدید جراحی  به مدت مشابه سال قبل به میزان 15% افزایش یافته است
-                               </div> card-body 
-                           </div> card 
-                           <div class="card bd-primary">
-                               <div class="card-header bg-primary tx-white">سه ماهه سوم-شاخص درآمد</div>
-                               <div class="card-body">
-                                   باتوجه به راه اندازی واحد mri  به مدت مشابه سال قبل به میزان 15% افزایش یافته است
-                               </div> card-body 
-                           </div> card 
-                           <div class="card bd-primary">
-                               <div class="card-header bg-primary tx-white">سه ماهه چهارم-شاخص درآمد</div>
-                               <div class="card-body">
-                                   باتوجه به راه اندازی بخش جراحی پلاستیک در آمد سه ماهه چهارم نسبت به سه ماهه چهارمن سال قبل 10% افزایش داشته است
-                               </div> card-body 
-                           </div> card 
-   
-   
-   
-                           <div class="card bd-primary card-tab mg-t-20">
-                               <div class="card-header bg-primary">
-                                   <nav class="nav">
-                                       <a href="index.html#tabUsers" class="nav-link active" data-toggle="tab"><i class="icon ion-ios-contact-outline"></i></a>
-                                       <a href="index.html#tabFavorites" class="nav-link" data-toggle="tab"><i class="icon ion-ios-star"></i></a>
-                                       <a href="index.html#tabChat" class="nav-link" data-toggle="tab"><i class="icon ion-android-chat"></i></a>
-                                   </nav>
-                               </div> card-header 
-                               <div class="card-body tab-content">
-                                   <div id="tabUsers" class="tab-pane active">
-                                       <label class="card-tab-label">هشدار های جدید</label>
-                                       <div class="media-list">
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img8.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>دبیر کمیته بیمه منابع</h6>
-                                                   <p>میانگین درآمد سه ماهه چهارم از میانگین درآمد سه ماهه مالی متناظر سال قبل پایین تر میباشد</p>
-                                               </div> media-body 
-                                           </a> media 
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img8.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>دبیر کمیته بیمه منابع</h6>
-                                                   <p>با انجام اقدامات اصلاحی مانگین میزان مصرف آب سه ماهه چهارم نسبت به سه ماهه متناظر سال قبل 75 متر مکعب کاهش پیدا کرده است</p>
-                                               </div> media-body 
-                                           </a> media 
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img5.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>مسئول درآمد</h6>
-                                                   <p>روز حسابداری را تبریک عرض می کنم</p>
-                                               </div> media-body 
-                                           </a> media 
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img6.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>مدیر مالی</h6>
-                                                   <p>کارانه پرسنل پرداخت گردید</p>
-                                               </div> media-body 
-                                           </a> media 
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img7.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>مسئول HIS</h6>
-                                                   <p>شاخص درصد ارسال اسناد به سامانه سپاس 98% اعلام گردید</p>
-                                               </div> media-body 
-                                           </a> media 
-                                       </div> media-list 
-   
-                                   </div> tab-pane 
-                                   <div id="tabFavorites" class="tab-pane">
-                                       <label class="card-tab-label">Favorites</label>
-                                       <div class="media-list">
-                                           <div class="media">
-                                               <img src="./Manager/img7.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Allan Cadungog</h6>
-                                                   <p>
-                                                       <a href="index.html" class="mg-r-5">Message</a>
-                                                       <a href="index.html">Call</a>
-                                                   </p>
-                                               </div> media-body 
-                                           </div> media 
-                                           <div class="media">
-                                               <img src="./Manager/img8.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Mary Jove Guden</h6>
-                                                   <p>
-                                                       <a href="index.html" class="mg-r-5">Message</a>
-                                                       <a href="index.html">Call</a>
-                                                   </p>
-                                               </div> media-body 
-                                           </div> media 
-                                           <div class="media">
-                                               <img src="./Manager/img9.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Charmaine Montuya</h6>
-                                                   <p>
-                                                       <a href="index.html" class="mg-r-5">Message</a>
-                                                       <a href="index.html">Call</a>
-                                                   </p>
-                                               </div> media-body 
-                                           </div> media 
-                                           <div class="media">
-                                               <img src="./Manager/img10.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Maricel Villalon</h6>
-                                                   <p>
-                                                       <a href="index.html" class="mg-r-5">Message</a>
-                                                       <a href="index.html">Call</a>
-                                                   </p>
-                                               </div> media-body 
-                                           </div> media 
-                                           <div class="media">
-                                               <img src="./Manager/img8.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Carlyn Salomon</h6>
-                                                   <p>
-                                                       <a href="index.html" class="mg-r-5">Message</a>
-                                                       <a href="index.html">Call</a>
-                                                   </p>
-                                               </div> media-body 
-                                           </div> media 
-                                       </div> media-list 
-                                   </div> tab-pane 
-                                   <div id="tabChat" class="tab-pane">
-                                       <label class="card-tab-label">Recent Comments</label>
-                                       <div class="media-list comment-list">
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img9.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Rose Fay Orcullo</h6>
-                                                   <p>Everyone realizes why a new common language would be desirable. To achieve this, it would be necessary to have uniform grammar.</p>
-                                               </div> media-body 
-                                           </a> media 
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img8.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Rowella Sombrio</h6>
-                                                   <p>If several languages coalesce, the grammar of the resulting language is more simple and regular.</p>
-                                               </div> media-body 
-                                           </a> media 
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img7.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Justin Mellejor</h6>
-                                                   <p>It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified.</p>
-                                               </div> media-body 
-                                           </a> media 
-                                           <a href="index.html" class="media">
-                                               <img src="./Manager/img6.jpg" alt="">
-                                               <div class="media-body">
-                                                   <h6>Raffy Godinez</h6>
-                                                   <p>It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified.</p>
-                                               </div> media-body 
-                                           </a> media 
-                                       </div> media-list 
-                                   </div> tab-pane 
-   
-                               </div> card-body 
-                           </div> card 
-                       </div> col-4 
-                   </div> row 
-               </div> sh-pagebody 
-               <div class="sh-footer">
-                   <div>Copyright © 2017. All Rights Reserved. MedYar مدیار Dashboard Admin</div>
-                   <div class="mg-t-10 mg-md-t-0">Designed by: <a href="http://www.MedYarWeb.ir">www.MedYarWeb.ir</a></div>
-               </div> sh-footer -->
         </div><!--sh-mainpanel-->
 
         <script src="js/jquery/jquery-1.10.2_1.js" type="text/javascript"></script>
         <script src="js/jquery/jquery-migrate-1.2.0.js" type="text/javascript"></script>
-        
+
         <script src="Manager/popper.js"></script>
         <script src="Manager/bootstrap.js"></script>
         <script src="js/jquery/ui/jquery-ui.js" type="text/javascript"></script>
-        <!--        //عوض کردن 
-        <!--calendar-->
-        <script src="Manager/js/calendar/jquery.ui.datepicker-cc.js" type="text/javascript"></script>
-        <script src="Manager/js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>
-        <script src="Manager/js/calendar/calendar.all.js" type="text/javascript"></script>
-        <script src="Manager/js/calendar/calendar.js" type="text/javascript"></script>
-
+        
         <script src="Manager/perfect-scrollbar.jquery.js"></script>
         <script src="Manager/moment.js"></script>
         <script src="Manager/jquery.flot.js"></script>
@@ -1157,6 +606,8 @@
         <script src="Manager/js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>
         <script src="Manager/js/calendar/calendar.all.js" type="text/javascript"></script>
         <script src="Manager/js/calendar/calendar.js" type="text/javascript"></script>
+        <script src="Manager/js/calendar/jquery.ui.datepicker-cc.js" type="text/javascript"></script>
+        <script src="Manager/js/calendar/jquery.ui.datepicker-cc-fa.js" type="text/javascript"></script>
 
         <!--upload-->
         <script src="Manager/js/ajaxfileupload.js" type="text/javascript"></script>
@@ -1179,13 +630,15 @@
         <script src="jsHMIS/plansForAssess.js" type="text/javascript"></script>
         <script src="jsHMIS/plans.js" type="text/javascript"></script>
         <script src="jsHMIS/steps.js" type="text/javascript"></script>
+        <script src="jsHMIS/sessions.js" type="text/javascript"></script>
+        <script src="jsHMIS/approved.js" type="text/javascript"></script>
         <script src="jsHMIS/reports.js" type="text/javascript"></script>
         <script src="jsHMIS/commettes.js" type="text/javascript"></script>
         <!--<script src="jsHMIS/part.js" type="text/javascript"></script>-->
         <script src="jsCms/user.js" type="text/javascript"></script>
         <script src="jsCms/group.js" type="text/javascript"></script>
         <script src="jsHMIS/department.js" type="text/javascript"></script>
-<!--////پیام ها-->
+        <!--////پیام ها-->
         <script src="jsHMIS/messenger.js" type="text/javascript"></script>
         <!--///نقش  ها-->
         <script src="jsHMIS/role.js" type="text/javascript"></script>
@@ -1251,7 +704,7 @@
 
             };
             //        </script>
-      
+
         <!--                                <script>
                                     $(function () {
                 'use strict';

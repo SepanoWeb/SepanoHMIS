@@ -55,9 +55,7 @@ public class Sessions {
     public static String _checkingAgenda = "sessions_checkingAgenda";//بررسی دستور جلسه 
     public static String _titleFile = "sessions_titleFile";//عنوان فایل برای بررسی
     public static String _sessionDescription = "sessions_sessionDescription";//شرح جلسه
-    public static String _file1 = "sessions_file1";// 
-    public static String _file2 = "sessions_file2";// 
-    public static String _file3 = "sessions_file3";// 
+    public static String _file = "sessions_file";// 
 
     public static int rul_rfs = 0;
     public static int rul_ins = 0;
@@ -226,18 +224,17 @@ public class Sessions {
             html.append(Js.setHtml("#sessions_sessionsDate", row.get(0).get(_date)));
             html.append(Js.setVal("#sessions_agendaSessions", row.get(0).get(_agenda)));
             html.append(Js.setVal("#sessions_titleSessions", row.get(0).get(_title)));
-            html.append(Js.setVal("#"+ _checkingAgenda, row.get(0).get(_checkingAgenda)));
-            html.append(Js.setVal("#"+ _titleFile, row.get(0).get(_titleFile)));
-            html.append(Js.setVal("#"+ _titleIssue, row.get(0).get(_titleIssue)));
-            html.append(Js.setVal("#"+ _ProposedSolution, row.get(0).get(_ProposedSolution)));
-            html.append(Js.setVal("#"+_weakPoint, row.get(0).get(_weakPoint)));
-            html.append(Js.setVal("#"+_strengths, row.get(0).get(_strengths)));
-            html.append(Js.setVal("#"+_sessionDescription, row.get(0).get(_sessionDescription)));
-            html.append(Js.setVal("#"+_nextDate, row.get(0).get(_nextDate)));
-            html.append(Js.setVal("#"+_file1, row.get(0).get(_file1)));
-            html.append(Js.setVal("#"+_file2, row.get(0).get(_file2)));
-            html.append(Js.setVal("#"+_file3, row.get(0).get(_file3)));
-           String InvitedId=row.get(0).get(_Invitees).toString();
+            html.append(Js.setVal("#" + _checkingAgenda, row.get(0).get(_checkingAgenda)));
+            html.append(Js.setVal("#" + _titleFile, row.get(0).get(_titleFile)));
+            html.append(Js.setVal("#" + _titleIssue, row.get(0).get(_titleIssue)));
+            html.append(Js.setVal("#" + _ProposedSolution, row.get(0).get(_ProposedSolution)));
+            html.append(Js.setVal("#" + _weakPoint, row.get(0).get(_weakPoint)));
+            html.append(Js.setVal("#" + _strengths, row.get(0).get(_strengths)));
+            html.append(Js.setVal("#" + _sessionDescription, row.get(0).get(_sessionDescription)));
+            html.append(Js.setVal("#" + _nextDate, row.get(0).get(_nextDate)));
+            html.append(Js.setVal("#" + _file, row.get(0).get(_file)));
+
+            String InvitedId = row.get(0).get(_Invitees).toString();
 //           invi
 //            html.append(Js.setVal("#" + _dateOfHoldingMeeting, row.get(0).get(_dateOfHoldingMeeting)));
 //            html.append(Js.setVal("#" + _description, row.get(0).get(_description)));
@@ -320,7 +317,7 @@ public class Sessions {
     public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
-            System.out.println("proposedSulotion="+jjTools.getParameter(request, _ProposedSolution));
+            System.out.println("proposedSulotion=" + jjTools.getParameter(request, _ProposedSolution));
 //            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
 //            if (!errorMessageId.equals("")) {
 //                if (jjTools.isLangEn(request)) {
@@ -345,9 +342,7 @@ public class Sessions {
             map.put(_weakPoint, jjTools.getParameter(request, _weakPoint));
             map.put(_strengths, jjTools.getParameter(request, _strengths));
             map.put(_ProposedSolution, jjTools.getParameter(request, _ProposedSolution));
-            map.put(_file1, jjTools.getParameter(request, _file1));
-            map.put(_file2, jjTools.getParameter(request, _file2));
-            map.put(_file3, jjTools.getParameter(request, _file3));
+            map.put(_file, jjTools.getParameter(request, _file));
 
             if (!db.update(tableName, map, _id + "=" + id)) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
@@ -410,4 +405,60 @@ public class Sessions {
             return Server.ErrorHandler(ex);
         }
     }
+
+    /**
+     *
+     * @param request
+     * @param db
+     * @param isPost
+     * @return
+     * @throws Exception
+     */
+    public static String showInvitationForm(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+        try {
+            StringBuilder html = new StringBuilder();
+            StringBuilder html2 = new StringBuilder();
+            String commettesId = jjTools.getParameter(request, "hmis_commettes_id");
+            List<Map<String, Object>> commettesRow = jjDatabase.separateRow(db.Select(Commettes.tableName, Commettes._id + "=" + commettesId));
+            html.append("<label class='ckbox'>");
+            String memberId = commettesRow.get(0).get(Commettes._members).toString();
+            String[] membersId = memberId.split("%23A%23");
+            for (int i = 0; i < membersId.length; i++) {
+
+                List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + membersId[i]));
+                List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + roleRow.get(0).get(Role._user_id)));
+                html.append("<div class=\"form-group has-danger mg-b-0\">");
+                html.append("<label class=\"ckbox\">");
+                html.append("<input type = \"checkbox\" value ='" + roleRow.get(0).get(Role._user_id) + "' class=\"checkBoxInvitees\" name = \"sessions_Invitees\" id = \"sessions_Invitees" + roleRow.get(0).get(Role._user_id) + "\" > ");
+                html.append("<span>" + userRow.get(0).get(Access_User._name) + " " + userRow.get(0).get(Access_User._family) + "");
+                html.append("</span>");
+                html.append("</label>");
+                html.append("</div>");
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            List<Map<String, Object>> usersRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
+            html2.append("<table id='usersListTable' style=''>");
+//            html2.append("<thead>");
+//            html2.append("<th></th>");
+//            html2.append("</thead>");
+            html2.append("<tbody>");
+            for (int i = 0; i < usersRow.size(); i++) {
+                html2.append("<tr>");
+                html2.append("<td  ><input id='" + usersRow.get(i).get(Access_User._id) + "' name='" + usersRow.get(i).get(Access_User._id) + "' value='" + usersRow.get(i).get(Access_User._name) + "" + usersRow.get(i).get(Access_User._family) + "' onclick=' var selectVal = $(this).val();\n"
+                        + "                                $(\"#sessions_InviteesInSide\").val(selectVal);\n"
+                        + "                                //        $(\".login-wrap\").css(\"height\",\"1808px\");\n"
+                        + "                                $(\"#usersListTable\").hide();'></td>");
+                html2.append("</tr>");
+            }
+            html2.append("</tbody>");
+            html2.append("</table>");
+            String script = Js.setHtml("#usersListDiv", html2);
+            script += Js.setHtml("#invitessDiv", html);
+
+            return script;
+        } catch (Exception ex) {
+            return Server.ErrorHandler(ex);
+        }
+    }
+
 }

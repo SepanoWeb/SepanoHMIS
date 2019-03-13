@@ -477,7 +477,7 @@ public class Access_User {
 //                List<Map<String, Object>> userRowFile = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName));                  
 //                for (int i = 0; i < userRowFile.size(); i++) {
 
-                    html3.append("<input class='col-xs-12' value='" +attachFilesArray[l]+ "'/> ");
+                    html3.append("<input class='col-xs-12' value='" +attachFilesArray[l]+ "'/><> ");
 //                }
                 
                 script1 = Js.setHtml("#inputAfterSelect", html3);

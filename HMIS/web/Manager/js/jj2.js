@@ -2284,6 +2284,115 @@ var jj = function (selector) {
                                             });
                                         });
                                     };
+                                   
+                                    /**
+                                     * * آپلود چندین فایل در کمیته ها
+                                     * @param selector is button for send
+                                     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
+                                     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
+                                     */
+                                    this.jjAjaxFileUploadCommettes = function (inputFileId, inputTextSelector) {
+                                        $(this.selector).click(function () {
+                                            if ($("#" + inputFileId.replace("#", "")).val() == "") {
+                                                new jj("ابتدا  فایلی را انتخاب نمایید.").jjDialog();
+                                                return;
+                                            }
+                                            $.ajaxFileUpload({
+                                                url: 'UploadServlet',
+                                                secureuri: false,
+                                                fileElementId: inputFileId.replace("#", ""),
+                                                dataType: 'JSON',
+                                                cache: false,
+                                                success: function (data) {
+                                                    if (data != null) {
+                                                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
+                                                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
+                                                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
+                                                        data = data.replace("/", '').replace("/", '').replace("\\", '');
+                                                    } else {
+                                                        new jj('فایل به درستی ارسال نشد.').jjDialog();
+                                                    }
+                                                    $("#" + inputFileId.replace("#", "")).val('');
+                                                    if (data != "") {
+                                                        if (data != "big") {
+//                                                            $(inputTextSelector).val($(inputTextSelector).val()+"%23A%23"+data);
+                                                           
+                                                            var temp = $(inputTextSelector).val($(inputTextSelector).val() + data + "%23A%23");
+                                                            for (var i = 0; i < temp.size(); i++) {
+                                                                $("#inputTextSelectorCommettesDiv").append("<input class='col-xs-12' value='" + data + "'> ");
+
+
+
+
+
+                                                            }
+//                                                            if (viewImgSelector != null) {
+//                                                                $(viewImgSelector).attr('src', 'upload/' + data);
+//                                                            }
+                                                        } else {
+                                                            new jj('حجم فایل شما بیش اندازه بزرگ می باشد.').jjDialog();
+                                                        }
+                                                    } else {
+                                                        new jj('فایل به درستی ارسال نشد.').jjDialog();
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    };
+                                    /**
+                                     * * آپلود چندین فایل در دعوتنامه
+                                     * @param selector is button for send
+                                     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
+                                     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
+                                     */
+                                    this.jjAjaxFileUploadInvitees = function (inputFileId, inputTextSelector) {
+                                        $(this.selector).click(function () {
+                                            if ($("#" + inputFileId.replace("#", "")).val() == "") {
+                                                new jj("ابتدا  فایلی را انتخاب نمایید.").jjDialog();
+                                                return;
+                                            }
+                                            $.ajaxFileUpload({
+                                                url: 'UploadServlet',
+                                                secureuri: false,
+                                                fileElementId: inputFileId.replace("#", ""),
+                                                dataType: 'JSON',
+                                                cache: false,
+                                                success: function (data) {
+                                                    if (data != null) {
+                                                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
+                                                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
+                                                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
+                                                        data = data.replace("/", '').replace("/", '').replace("\\", '');
+                                                    } else {
+                                                        new jj('فایل به درستی ارسال نشد.').jjDialog();
+                                                    }
+                                                    $("#" + inputFileId.replace("#", "")).val('');
+                                                    if (data != "") {
+                                                        if (data != "big") {
+//                                                            $(inputTextSelector).val($(inputTextSelector).val()+"%23A%23"+data);
+                                                           
+                                                            var temp = $(inputTextSelector).val($(inputTextSelector).val() + data + "%23A%23");
+                                                            for (var i = 0; i < temp.size(); i++) {
+                                                                $("#inputTextSelectorInviteesDiv").append("<input class='col-xs-12' value='" + data + "'> ");
+
+
+
+
+
+                                                            }
+//                                                            if (viewImgSelector != null) {
+//                                                                $(viewImgSelector).attr('src', 'upload/' + data);
+//                                                            }
+                                                        } else {
+                                                            new jj('حجم فایل شما بیش اندازه بزرگ می باشد.').jjDialog();
+                                                        }
+                                                    } else {
+                                                        new jj('فایل به درستی ارسال نشد.').jjDialog();
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    };
                                     /**
                                      * @param selector is button for send
                                      * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');

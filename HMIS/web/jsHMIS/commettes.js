@@ -12,8 +12,6 @@ var hmisCommettes = {
     loadForm: function () {
         if ($("#swCommettesForm").html() == '') {
             $("#swCommettesForm").load("formHMIS/05newCommette.html", null, function () {
-                $('#sessions_time').wickedpicker();
-                $('#sessions_timeReminder').wickedpicker();
                 new jj("#sessions_date").jjCalendarWithYearSelector(1397, 1420);
                 new jj("#sessions_dateReminder").jjCalendarWithYearSelector(1397, 1420);
 
@@ -21,28 +19,28 @@ var hmisCommettes = {
                     hmisCommettes.m_clean();
                     hmisCommettes.m_show_tbl();
                 });
+                $("#sendPicFilesCommettes").button().click(function () {
+//                        $('#AttachFileUpload').append($('#user_pic4').val());
+                });
+
+                $("#attachFileCommettes").button().click(function () {
+                });
+                new jj('#sendPicFilesCommettes').jjAjaxFileUploadCommettes('#attachFileCommettes', '#commettes_regulationFile');
+                $("#sendPicFilesInvitees").button().click(function () {
+//                        $('#AttachFileUpload').append($('#user_pic4').val());
+                });
+
+                $("#attachFileInvitees").button().click(function () {
+                });
+                new jj('#sendPicFilesInvitees').jjAjaxFileUploadInvitees('#attachFileInvitees', '#sessions_file');
 
 
-//                new jj("#steps_startDate").jjCalendarWithYearSelector(1340, 1420);
-
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
                 hmisCommettes.m_refresh();
                 $('#newCommetteForm').show();
                 $('#formInvitation').hide();
+//                $('#sessions_time').wickedpicker();
+//                $('#sessions_timeReminder').wickedpicker();
+                $("#usersListTable").hide();
 
 
             });
@@ -72,8 +70,8 @@ var hmisCommettes = {
     m_add_new: function () {
         jj("do=" + hmisCommettes.tableName + ".add_new&jj=1").jjAjax2(false);
         hmisCommettes.m_show_form();
-                $('#newCommetteForm').show();
-                $('#formInvitation').hide();
+        $('#newCommetteForm').show();
+        $('#formInvitation').hide();
 
         hmisCommettes.m_clean();
         //        oEditor.execCommand( 'bold');
@@ -213,6 +211,24 @@ var hmisCommettes = {
         $('#hmis_commettes_id').val(commeteId);
         $('#newCommetteForm').hide();
         $('#formInvitation').show();
+        var param = "";
+        param += "&hmis_commettes_id=" + commeteId;
+        param += "&do=" + hmisSessions.tableName + ".showInvitationForm";
+        param += "&jj=1";
+        jj(param).jjAjax2(false);
+
+    },
+    showUsersList: function () {
+        var param = "";
+        $("#usersListTable").show();
+        var value = $(this).val().toLowerCase();
+        $("#usersListTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+//        param += "&do=" + hmisSessions.tableName + ".showUsersList";
+//        param += "&jj=1";
+//        jj(param).jjAjax2(false);
+
     },
     Invitees: function () {//مدعوین
 
@@ -243,7 +259,27 @@ var hmisCommettes = {
         param += "&do=Sessions.requestSendComment&jj=1";
         jj(param).jjAjax2(false);
     },
+    addMembers: function (i) {
+        var temp1 = "";
+        var param = "";
+        if ($("#td" + i + " i").attr('class') === "icon ion-checkmark-circled") {
 
+            $("#td" + i + " i").attr('class', 'icon ion-plus-circled').css("color", "red");
+        } else if ($("#td" + i + " i").attr('class') === "icon ion-plus-circled") {
+            var RoleId = $("#td" + i + " i").attr('id');
+            $("#td" + i + " i").attr('class', 'icon ion-checkmark-circled').css("color", "green");
+//            alert(RoleId);
+
+        }
+        var temp = $("#tableRolesDiv #refreshRoles .ion-checkmark-circled");
+        for (var i = 0; i < temp.size(); i++) {
+            temp1 += $(temp[i]).attr('id') + "%23A%23";
+        }
+        $('#commettes_members').val(temp1);
+//        alert(temp);
+
+
+    },
 //    mainTabSetSize: function () {
 ////        var aa = $("#swContent").children();
 ////        var bb = 0;
