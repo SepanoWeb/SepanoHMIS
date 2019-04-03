@@ -5,6 +5,7 @@
 package cms.tools;
 
 //import cms.ticeAccess.Tice_User;
+import HMIS.Role;
 import cms.access.Access_User;
 //import java.io.File;
 import java.io.OutputStream;
@@ -156,7 +157,10 @@ public class jjTools {
     }
 
     public static int getSeassionUserId(HttpServletRequest request) {
-        return jjNumber.isDigit(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) ? Integer.parseInt(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase()).toString()) : 0;
+        return jjNumber.isDigit(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) ? Integer.parseInt(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) : 0;
+    }
+    public static int getSeassionUserRole(HttpServletRequest request) {
+        return jjNumber.isDigit(jjTools.getSessionAttribute(request, "#ROLE_ID")) ? Integer.parseInt(jjTools.getSessionAttribute(request, "#ROLE_ID")) : 0;
     }
 
     public static String getParameter(HttpServletRequest request, String name) {

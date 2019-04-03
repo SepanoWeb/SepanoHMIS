@@ -510,7 +510,13 @@ function refreshLastSwParameter3() {
 
 
 /////////////////////////ورود به سیستم Hmis
-function signIn() {
+/**
+ * ورود کاربرانب که به قسمت های
+ * hmis
+ * دسترسی دارند
+ * @returns {Boolean}
+ */
+function login() {
 //    var param="";
     if (new jj('#login_user_email').jjVal() == '') {
         $("#login_user_email").css("border", "red dashed");
@@ -525,11 +531,10 @@ function signIn() {
     $("#login_user_email").css("border", "none");
     $("#login_user_pass").css("border", "none");
 //    param += "&jj=1";
-    jj("do=Access_User.loginUser&jj=1&" + new jj("#loginForm").jjSerial()).jjAjax2(false);
+    jj("do=Access_User.login&jj=1&" + new jj("#loginForm").jjSerial()).jjAjax2(false);
     USER_EMAIL = new jj('#login_user_email').jjVal();
 
-}
-;
+};
 
 function validateEmail(email) {
     var emailPathern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

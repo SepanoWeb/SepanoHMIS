@@ -38,7 +38,7 @@ var hmisRole = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? PanelHeight : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisRole.tabSizeTbl();
     },
     bazgasht:function(){
@@ -84,7 +84,7 @@ var hmisRole = {
         var param = "";
         param += "do=" + hmisRole.tableName + ".insert";
         param += "&" + new jj("#swRoleForm").jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisRole.m_show_tbl();
         hmisRole.m_clean();
     },
@@ -92,7 +92,7 @@ var hmisRole = {
         var param = "";
         param += "do=" + hmisRole.tableName + ".edit";
         param += "&" + new jj("#swRoleForm").jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisRole.m_show_tbl();
         hmisRole.m_clean();
     },
@@ -103,7 +103,7 @@ var hmisRole = {
         var param = "";
         param += "do=" + hmisRole.tableName + ".delete";
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisRole.m_show_tbl();
         hmisRole.m_clean();
     },
@@ -112,7 +112,7 @@ var hmisRole = {
         param += "do=" + hmisRole.tableName + ".select";
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
 //        $('.summernote').summernote();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         $("#ListKarbaran").hide();
 
 
@@ -127,14 +127,14 @@ var hmisRole = {
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
        hmisRole.m_show_form();
 //       $("#role_email").val('');
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     
     },
     
     m_getMenu: function () {
         var param = "";
         param += "do=" + hmisRole.tableName + ".getMenu";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {
         $('#swRole').css('height', 515);

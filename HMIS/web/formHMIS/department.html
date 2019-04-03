@@ -48,8 +48,12 @@
                                             <input class="form-control" id="department_organizationalCode" name="department_organizationalCode"  placeholder="کد سازمانی" type="text">
                                         </div>
                                         <div  class="col-lg">
-                                            بیمارستان
-                                            <div id="locationSelectOption" style=" margin-bottom: 20px;" onchange='$("#selectHospital").val();'></div></div>
+                                            موقعیت بخش
+                                            <div class="form-control select2" style=" margin-bottom: 20px;" onchange='$("#selectHospital").val();'>
+                                                <select  id="locationSelectOption" style='height: 34%;  '></select>
+                                            </div>
+                                                
+                                        </div>
                                         <div class="col-lg" style="">
                                               <input id="department_icon" name="department_icon" type="hidden" />
                                                <img id="PicPreviewIcon"  class="img-thumbnail"  name="PicPreviewIcon" src="#" style="    width: 33%;"/>

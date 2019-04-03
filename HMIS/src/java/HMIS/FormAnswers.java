@@ -22,7 +22,7 @@ import jj.jjNumber;
  *
  * @author Mohammad
  */
-public class Forms {
+public class FormAnswers {
 
     public static final String tableName = "hmis_forms";
     public static final String _id = "id";
@@ -281,8 +281,6 @@ public class Forms {
         }
     }
 
-
-
     public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
@@ -348,27 +346,6 @@ public class Forms {
                 }
             }
 
-        } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
-        }
-    }
-    
-    
-        public static String showMyForms(HttpServletRequest request, jjDatabaseWeb db, boolean isAjax) throws Exception {
-        try {
-            String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
-            if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
-            }
-            if (isAjax) {
-                request.getRequestDispatcher("feiz/MyForms.jsp").forward(request, Server.Publicresponse);
-                System.out.println("(((((((((((((((((((((((((((((((((((((((((((((");
-                return "";
-            } else {// اگر یک کلاس جاوایی ایا یک فایل جی اس پی ین نتایج را میخواهد لازم نیست به صفحه ی دیگری بوریم
-                System.out.println("(((((((((((((((((((((((((((((((((((((((((((((");
-                return "alert(54545454);";
-
-            }
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }

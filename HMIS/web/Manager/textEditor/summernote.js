@@ -6063,7 +6063,7 @@
           var deactivateOffsetBottom = editorOffsetBottom - otherBarHeight - toolbarHeight;
           if ((currentOffset > activateOffset) && (currentOffset < deactivateOffsetBottom)) {
               this.$toolbar.css({
-                  position: 'fixed',
+                  position: 'relative',
                   top: otherBarHeight,
                   width: editorWidth
               });

@@ -45,7 +45,7 @@ import org.jsoup.nodes.Document;
  */
 public class Role {
 
-    public static String tableName = "Role";
+    public static String tableName = "hmis_role";// قبل از اسم جداول دیتا بیس hmis_ بگذارید
     public static String _id = "id";
    
     public static String _title = "role_title";
@@ -136,39 +136,23 @@ public class Role {
        
             html1.append("<table class='table display responsive nowrap' id='RefreshlistKarbaran'><thead>");
             html1.append("<th width='10%'>کد </th>");
-
             html1.append("<th width='10%'>نام</th>");
-
             html1.append("<th width='15%'>نام خانوادگی</th>");  
             html1.append("<th width='10%'>ایمیل </th>");
             html1.append("<th width='10%'>مشاهده اطلاعات اثر</th>");
             html1.append("</thead><tbody>");
             for (int i = 0; i < userRow.size(); i++) {
-//         
                 html1.append("<tr>");
-                
                 html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRow.get(i).get(Access_User._id)) + "</td>");
-
                 html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRow.get(i).get(Access_User._family)) + "</td>");
                 html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRow.get(i).get(Access_User._name)) + "</td>");
                 html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRow.get(i).get(Access_User._email)) + "</td>");
-
-
                 html1.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'  onclick='hmisRole.m_selectKarbar(" + userRow.get(i).get(Access_User._id) + ");' ></td>");
-//             
                 html1.append("</tr>");
             }
             html1.append("</tbody></table>");
-
             String script2 = "$('#ListKarbaran').html(\"" + html1.toString() + "\");\n";
             script2 += Js.table("#RefreshlistKarbaran", "400", 0, "", "لیست کاربران");
-            
-            
-            
-            
-            
-            
-            
             boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Role_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
@@ -203,7 +187,7 @@ public class Role {
 
             map.put(_user_id, jjTools.getParameter(request, _user_id));
             map.put(_comment, jjTools.getParameter(request, _comment));
-            map.put(_date, jjTools.getParameter(request, _date));
+            map.put(_date, jjCalendar_IR.getDatabaseFormat_8length( jjTools.getParameter(request, _date),true));
 
             if (db.insert(tableName, map).getRowCount() == 0) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
@@ -245,7 +229,7 @@ public class Role {
 //                return Js.dialog(errorMessage) + Js.jjUser.showTbl();
 //            }
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, _id + "=" + id));
+            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, _id + "=" + row.get(0).get(Role._user_id)));
             if (row.isEmpty()) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
                 if (jjTools.isLangEn(request)) {

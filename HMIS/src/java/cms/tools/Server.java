@@ -3,17 +3,14 @@ package cms.tools;
 import HMIS.Approved;
 import cms.access.*;
 import cms.cms.*;
-import cms.tools.*;
 import HMIS.Commettes;
 
 //<<<<<<< HEAD
 //import javax.servlet.http.Department;
 //=======
-
 //import javax.servlet.http.Part;
 //>>>>>>> origin/master
 import HMIS.PlansForAssess;
-import HMIS.Plans;
 //<<<<<<< HEAD
 import HMIS.Department;
 import HMIS.Messenger;
@@ -33,13 +30,15 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.*;   
+import javax.servlet.*;
 import javax.servlet.http.*;
 import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
 
 public class Server extends HttpServlet {
+
     ////---------------------------------ipp-co.com
+
     public static sites mainSite = sites.iranSepano;
     public static String portalPage = "";
     public static String databaseName = "db_hmis";
@@ -59,7 +58,6 @@ public class Server extends HttpServlet {
     public static String newsJSP = "index_news.jsp";
     public static String productJSP = "index.jsp";
     //********************************************************************
-
 
     public static jjDatabaseWeb db;
     public static final String port = "3306";
@@ -87,7 +85,7 @@ public class Server extends HttpServlet {
 //            clazzes.add(Category_Poll.class);
 //            clazzes.add(Comment.class);
             clazzes.add(Access_Group.class);
-            
+
             clazzes.add(Access_Group_User.class);
             clazzes.add(Access_User.class);
             clazzes.add(Product.class);
@@ -110,6 +108,9 @@ public class Server extends HttpServlet {
             clazzes.add(Search.class);
             ///////////////////////////////////////////////////
 
+            clazzes.add(HMIS.Forms.class);   //فرم ساز
+            clazzes.add(HMIS.FormQuestions.class);   //فرم ساز
+            clazzes.add(HMIS.FormQuestionOptions.class);   //فرم ساز
             clazzes.add(HMIS.Plans.class);   //برنامه های عملیاتی
             clazzes.add(PlansForAssess.class);//برنامه پایش
             clazzes.add(Steps.class);//گام های اجرایی
@@ -127,6 +128,7 @@ public class Server extends HttpServlet {
         }
         return clazzes;
     }
+
     protected void run(HttpServletRequest request, HttpServletResponse response, boolean isFromClient) throws ServletException, IOException, Exception {
         Publicresponse = response;
         Connect();
@@ -149,10 +151,10 @@ public class Server extends HttpServlet {
             method = Action.substring(dot + 1, Action.length());
         }
         // -----------------------------------------------------------------
-        
+
         StringBuilder script = new StringBuilder();
         script.append(run(getClazzes(), clazz, method, request, db, isFromClient));
-        if(script.length()==0){// ÛŒØ¹Ù†ÛŒ Ø§Ú¯Ø± Ù¾Ø§Ø³Ø® Ø¯Ø± Ø±Ø§Ù† ØªÙ‡ÛŒ Ø¨ÙˆØ¯ ÛŒØ¹Ù†ÛŒ Ø±ÛŒÚ©ÙˆØ¦Ø³Øª Ù¾Ø§Ø³ Ø¯Ø§Ø¯Ù‡ Ø´Ø¯Ù‡ Ø¨Ù‡ ÛŒÚ© Ù�Ø§ÛŒÙ„ Ø¬ÛŒ Ø§Ø³ Ù¾ÛŒ
+        if (script.length() == 0) {// ÛŒØ¹Ù†ÛŒ Ø§Ú¯Ø± Ù¾Ø§Ø³Ø® Ø¯Ø± Ø±Ø§Ù† ØªÙ‡ÛŒ Ø¨ÙˆØ¯ ÛŒØ¹Ù†ÛŒ Ø±ÛŒÚ©ÙˆØ¦Ø³Øª Ù¾Ø§Ø³ Ø¯Ø§Ø¯Ù‡ Ø´Ø¯Ù‡ Ø¨Ù‡ ÛŒÚ© Ù�Ø§ÛŒÙ„ Ø¬ÛŒ Ø§Ø³ Ù¾ÛŒ
             ServerLog.Print("***request has been passed to one jsp, Finish Server.java jobs... ***");//By MrSalesi
             return;
         }
@@ -296,9 +298,9 @@ public class Server extends HttpServlet {
             map.put(Comment._title, "Ù…Ø´Ú©Ù„ÛŒ Ø¯Ø± Ø³ÛŒØ³ØªÙ…");
             map.put(Comment._answer, "");
             db.insert(Comment.tableName, map);
-            return Js.dialog(dbErrorWrite.toString());
+            return Js.modal(dbErrorWrite.toString(), "systemException");
         } catch (Exception ex2) {
-            return Js.dialog("Error in Server ErrorHandler");
+            return Js.modal("Error in Server ErrorHandler", "systemException");
         }
     }
 //    public static void setSettingProject(String siteName, String userName, String password, String databaseName, String defaultLang) {

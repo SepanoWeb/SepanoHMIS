@@ -54,7 +54,7 @@ var hmisApproved = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? 800 : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_show_form: function () {
         $('#swApprovedTbl').hide();
@@ -99,7 +99,7 @@ var hmisApproved = {
         param += "do=" + hmisApproved.tableName + ".insert";
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
         param += "&" + new jj('#insertMosavabeh2').jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
 //        } else {
@@ -114,7 +114,7 @@ var hmisApproved = {
         param += "&" + new jj('#insertMosavabeh2').jjSerial();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
 
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
 //        } else {
@@ -134,7 +134,7 @@ var hmisApproved = {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".delete";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
     },
@@ -146,14 +146,14 @@ var hmisApproved = {
         param += "do=" + hmisApproved.tableName + ".select";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
         param += "&hmis_sessions_id=" +new jj('#hmis_sessions_id').jjVal();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisApproved.m_show_form();
     },
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".add_EN";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisApproved.f_parent).jjVal(id);
         new jj("#" + hmisApproved.f_lang).jjVal("2");
         hmisApproved.m_show_form();
@@ -162,7 +162,7 @@ var hmisApproved = {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".add_Ar";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisApproved.f_parent).jjVal(id);
         new jj("#" + hmisApproved.f_lang).jjVal("3");
         hmisApproved.m_show_form();
@@ -173,7 +173,7 @@ var hmisApproved = {
         param += "do=" + hmisApproved.tableName + ".add_lang";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
         param += "&myLang=" + (langId == null ? "1" : langId);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisApproved.f_parent).jjVal(id);
         new jj("#" + hmisApproved.f_lang).jjVal(langId);
 //        alert(id+"&&&&&"+langId);
@@ -184,13 +184,13 @@ var hmisApproved = {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".searchTextInTitle";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_searchTextInAll: function (text) {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".searchTextInAll";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //============ BY RASHIDI ========>    
     m_searchTags: function () {
@@ -198,14 +198,14 @@ var hmisApproved = {
         param += "do=" + hmisApproved.tableName + ".searchTags";
         param += "&" + new jj('#swApprovedForm').jjSerial();
 //        param += "&panel=content_search_tags_result";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".insertTags";
         param += "&" + new jj('#swApprovedForm').jjSerial();
 //        param += "&panel=content_tags_div";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
     tabSizeTbl: function () {
@@ -249,7 +249,7 @@ var hmisApproved = {
 //        param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal();//ای دی کمیته
 //        param += "&" + new jj('#formInvitation').jjSerial();
 //        param += "&do=Sessions.requestSendComment&jj=1";
-//        jj(param).jjAjax2(false);
+//        new jj(param).jjAjax2(false);
 //    },
 
 //    mainTabSetSize: function () {

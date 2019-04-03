@@ -5,13 +5,6 @@
  */
 package HMIS;
 
-import static HMIS.Approved._endDate;
-import static HMIS.Approved._id;
-import static HMIS.Approved._responsibleForExecutionId;
-import static HMIS.Approved._responsibleForTrackId;
-import static HMIS.Approved._startDate;
-import static HMIS.Approved._title;
-import static HMIS.Approved._vaziat;
 import cms.access.Access_User;
 import cms.tools.Js;
 import cms.tools.Server;

@@ -5,110 +5,69 @@
  */
 
 
-var hmisCommettes = {
-    tableName: "Commettes",
+var hmisFormQuestionOptions = {
+    tableName: "FormQuestionOptions",
     f_id: "id",
-
-    loadForm: function () {
-        if ($("#swCommettesForm").html() == '') {
-            $("#swCommettesForm").load("formHMIS/05newCommette.html", null, function () {
-                $('#sessions_time').wickedpicker();
-                $('#sessions_timeReminder').wickedpicker();
-                new jj("#sessions_date").jjCalendarWithYearSelector(1397, 1420);
-                new jj("#sessions_dateReminder").jjCalendarWithYearSelector(1397, 1420);
-                $("#cancel_Commettes").button().click(function (e) {
-                    hmisCommettes.m_clean();
-                    hmisCommettes.m_show_tbl();
-                });
-
-
-//                new jj("#steps_startDate").jjCalendarWithYearSelector(1340, 1420);
-
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
-                hmisCommettes.m_refresh();
-                $('#newCommetteForm').show();
-                $('#formInvitation').hide();
-
-
-            });
-        }
-    },
-    m_refresh: function (containerId, sortField, tableHeight) {
+    /**
+     * 
+     * @param {type} formId آی دی فرم حتما باید باشد
+     * @param {type} containerId
+     * @returns {undefined}
+     */
+    m_refresh: function (questionId, containerId) {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".refresh";
-        param += "&panel=" + (containerId == null ? "swCommettesTbl" : containerId);
-        param += "&sort=" + (sortField == null ? "0" : sortField);
-        param += "&height=" + (tableHeight == null ? 800 : tableHeight);
+        param += "do=" + hmisFormQuestionOptions.tableName + ".refresh";
+        param += "&panel=" + (containerId == null ? "swFormQuestionOptionsTbl" : containerId);
+        param += "&formQuestionOptions_question_id=" + questionId;
         param += "&jj=1";
         new jj(param).jjAjax2(false);
+        hmisFormQuestionOptions.m_show_tbl();
     },
     m_show_form: function () {
-        $('#swCommettesTbl').hide();
-        $('#swCommettesForm').show();
-        hmisCommettes.tabSizeForm();
+        $('#swFormQuestionOptionsTbl').slideUp('slow');
+        $('#swFormQuestionOptionsForm').slideDown('slow');
+        hmisFormQuestionOptions.tabSizeForm();
+        hmisFormQuestionOptions.m_clean();
     },
     m_clean: function () {
-        new jj("#" + hmisCommettes.f_content_id).jjVal("");
-        new jj("#" + hmisCommettes.f_title).jjVal("");
-        new jj("#" + hmisCommettes.f_lang).jjVal("1");
-        new jj("#" + hmisCommettes.f_parent).jjVal("0");
-
+        new jj("#swFormQuestionOptionsForm").jjFormClean();
     },
     m_add_new: function () {
-        jj("do=" + hmisCommettes.tableName + ".add_new&jj=1").jjAjax2(false);
-        hmisCommettes.m_show_form();
-                $('#newCommetteForm').show();
-                $('#formInvitation').hide();
-
-        hmisCommettes.m_clean();
+//        $('#fromDetail').slideUp('slow');
+        new jj("do=" + hmisFormQuestionOptions.tableName + ".add_new&jj=1").jjAjax2(false);
+        hmisFormQuestionOptions.m_show_form();
+        hmisFormQuestionOptions.m_clean();
         //        oEditor.execCommand( 'bold');
 
     },
     m_show_tbl: function () {
-        $('#swCommettesTbl').show();
-        $('#swCommettesForm').hide();
-        if ($('#swCommettesTbl').html() == "") {
-            hmisCommettes.m_refresh();
-        }
-        hmisCommettes.tabSizeTbl();
+        $('#swFormQuestionOptionsTbl').slideDown('slow');
+        $('#swFormQuestionOptionsForm').slideUp('slow');
     },
     m_insert: function () {
-//        var valid =  hmisCommettes.m_validation();
-//        if (valid == "") {
+//        var valid =  hmisFormQuestionOptions.m_validation();
+//        if (valid == "") {        
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".insert";
-        param += "&" + new jj('#newCommetteForm').jjSerial();
+        param += "do=" + hmisFormQuestionOptions.tableName + ".insert";
+        param += "&" + new jj('#swFormQuestionOptionsForm').jjSerial();
+        param += "&formQuestionOptions_question_id=" + $("#hmis_formquestions_id").val();
         new jj(param).jjAjax2(false);
-        hmisCommettes.m_show_tbl();
-        hmisCommettes.m_clean();
+//        this.m_show_tbl();
+//        this.m_clean();
 //        } else {
 //            new jj(valid).jjDialog();
 //        }
     },
-    m_edit: function () {
+    m_edit: function (id) {
 //        var valid = hmisPlan.m_validation();
 //        if (valid == "") {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".edit";
-        param += "&" + new jj('#newCommetteForm').jjSerial();
-        param += "&id=" + new jj('#hmis_commettes_id').jjVal();
+        param += "do=" + hmisFormQuestionOptions.tableName + ".edit";
+        param += "&" + new jj('#swFormQuestionOptionsForm').jjSerial();
+//        param += "&id=" + new jj('#hmis_commettes_id').jjVal();
         new jj(param).jjAjax2(false);
-        hmisCommettes.m_show_tbl();
-        hmisCommettes.m_clean();
+//        hmisFormQuestionOptions.m_show_tbl();
+//        hmisFormQuestionOptions.m_clean();
 //        } else {
 //            new jj(valid).jjDialog();
 //        }
@@ -120,95 +79,91 @@ var hmisCommettes = {
 //        return "";
 //    },
     m_delete: function (id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisCommettes.m_delete_after_question(' + id + ');\n', true, "");
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo('hmisFormQuestionOptions.m_delete_after_question(' + id + ');\n', true, "");
     },
     m_delete_after_question: function (id) {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".delete";
-        param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
+        param += "do=" + hmisFormQuestionOptions.tableName + ".delete";
+        param += "&" + hmisFormQuestionOptions.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
-        hmisCommettes.m_show_tbl();
-        hmisCommettes.m_clean();
+        hmisFormQuestionOptions.m_show_tbl();
+        hmisFormQuestionOptions.m_clean();
     },
     m_select: function (id) {
-        $('#newCommetteForm').show();
-        $('#formInvitation').hide();
-
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".select";
-        param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
+        param += "do=" + hmisFormQuestionOptions.tableName + ".select";
+        param += "&" + hmisForms.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
-        hmisCommettes.m_show_form();
+        hmisFormQuestionOptions.m_show_form();
     },
     m_add_EN: function (id) {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".add_EN";
-        param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
+        param += "do=" + hmisFormQuestionOptions.tableName + ".add_EN";
+        param += "&" + hmisFormQuestionOptions.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
-        new jj("#" + hmisCommettes.f_parent).jjVal(id);
-        new jj("#" + hmisCommettes.f_lang).jjVal("2");
-        hmisCommettes.m_show_form();
+        new jj("#" + hmisFormQuestionOptions.f_parent).jjVal(id);
+        new jj("#" + hmisFormQuestionOptions.f_lang).jjVal("2");
+        hmisFormQuestionOptions.m_show_form();
     },
     m_add_Ar: function (id) {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".add_Ar";
-        param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
+        param += "do=" + hmisFormQuestionOptions.tableName + ".add_Ar";
+        param += "&" + hmisFormQuestionOptions.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
-        new jj("#" + hmisCommettes.f_parent).jjVal(id);
-        new jj("#" + hmisCommettes.f_lang).jjVal("3");
-        hmisCommettes.m_show_form();
+        new jj("#" + hmisFormQuestionOptions.f_parent).jjVal(id);
+        new jj("#" + hmisFormQuestionOptions.f_lang).jjVal("3");
+        hmisFormQuestionOptions.m_show_form();
     },
     //============ BY RASHIDI ========>
     m_add_Ln: function (id, langId) {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".add_lang";
-        param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
+        param += "do=" + hmisFormQuestionOptions.tableName + ".add_lang";
+        param += "&" + hmisFormQuestionOptions.f_id + "=" + (id == null ? "" : id);
         param += "&myLang=" + (langId == null ? "1" : langId);
         new jj(param).jjAjax2(false);
-        new jj("#" + hmisCommettes.f_parent).jjVal(id);
-        new jj("#" + hmisCommettes.f_lang).jjVal(langId);
+        new jj("#" + hmisFormQuestionOptions.f_parent).jjVal(id);
+        new jj("#" + hmisFormQuestionOptions.f_lang).jjVal(langId);
 //        alert(id+"&&&&&"+langId);
-        hmisCommettes.m_show_form();
+        hmisFormQuestionOptions.m_show_form();
     },
     //<============ BY RASHIDI ========
     m_searchTextInTitle: function (text) {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".searchTextInTitle";
+        param += "do=" + hmisFormQuestionOptions.tableName + ".searchTextInTitle";
         param += "&text=" + (text == null ? "" : text);
         new jj(param).jjAjax2(false);
     },
     m_searchTextInAll: function (text) {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".searchTextInAll";
+        param += "do=" + hmisFormQuestionOptions.tableName + ".searchTextInAll";
         param += "&text=" + (text == null ? "" : text);
         new jj(param).jjAjax2(false);
     },
     //============ BY RASHIDI ========>    
     m_searchTags: function () {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".searchTags";
+        param += "do=" + hmisFormQuestionOptions.tableName + ".searchTags";
         param += "&" + new jj('#swCommettesForm').jjSerial();
 //        param += "&panel=content_search_tags_result";
         new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".insertTags";
+        param += "do=" + hmisFormQuestionOptions.tableName + ".insertTags";
         param += "&" + new jj('#swCommettesForm').jjSerial();
 //        param += "&panel=content_tags_div";
         new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
     tabSizeTbl: function () {
-        $('#swCommettes').css('height', 520);
+        $('#swForms').css('height', "auto");
     },
     tabSizeForm: function () {
         $('#swCommettes').css('height', 378);
     },
-
     /////////////////////shiran////////////
     showInvitationForm: function (commeteId) {
-        hmisCommettes.m_show_form();
+        hmisFormQuestionOptions.m_show_form();
         $('#hmis_commettes_id').val(commeteId);
         $('#newCommetteForm').hide();
         $('#formInvitation').show();
@@ -242,7 +197,6 @@ var hmisCommettes = {
         param += "&do=Sessions.requestSendComment&jj=1";
         new jj(param).jjAjax2(false);
     },
-
 //    mainTabSetSize: function () {
 ////        var aa = $("#swContent").children();
 ////        var bb = 0;

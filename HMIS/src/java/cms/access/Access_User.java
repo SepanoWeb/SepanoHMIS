@@ -1,5 +1,6 @@
 package cms.access;
 
+import HMIS.Role;
 import cms.cms.*;
 import cms.tools.*;
 import jj.*;
@@ -30,10 +31,10 @@ public class Access_User {
     ////برای عکس پرسنلی  
     ///توسط شیران1
     public static String _attachAxPersonal = "user_attachAxPersonal";
-      ////برای عکس کارت پرسنلی  
+    ////برای عکس کارت پرسنلی  
     ///توسط شیران1
     public static String _attachAxPersonnelCard = "user_attachAxPersonnelCard";
-      ////برای عکس امضا  
+    ////برای عکس امضا  
     ///توسط شیران1
     public static String _attachAxSignature = "user_attachAxSignature";
 
@@ -177,7 +178,6 @@ public class Access_User {
 //            }
             Map<String, Object> map = new HashMap<String, Object>();
 
-
             map.put(_attachFile, jjTools.getParameter(request, _attachFile));
             map.put(_attachAxPersonal, jjTools.getParameter(request, _attachAxPersonal));
             map.put(_attachAxPersonnelCard, jjTools.getParameter(request, _attachAxPersonnelCard));
@@ -185,7 +185,7 @@ public class Access_User {
             map.put(_email, email.toLowerCase());
             map.put(_family, jjTools.getParameter(request, _family));
             map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
-            
+
             map.put(_passwordReminder, jjTools.getParameter(request, _passwordReminder));
             map.put(_grade, jjTools.getParameter(request, _grade));
             map.put(_jensiat, jjTools.getParameter(request, _jensiat));
@@ -219,7 +219,6 @@ public class Access_User {
 //                }
 //            }
             // =========================
-
             return Js.jjUser.refresh();
         } catch (Exception e) {
             return Server.ErrorHandler(e);
@@ -333,7 +332,7 @@ public class Access_User {
 //             map.put(_file_personal, jjTools.getParameter(request, _file_personal));
 //            map.put(_file_Signature, jjTools.getParameter(request, _file_Signature));
 //            map.put(_upload_file, jjTools.getParameter(request, _upload_file));
-           
+
 //            map.put(_file_personal, jjTools.getParameter(request, _));
 //            String parent = jjTools.getParameter(request, _parent);
 //            map.put(_parent, jjNumber.isDigit(parent) ? Integer.parseInt(parent) : 0);
@@ -446,44 +445,42 @@ public class Access_User {
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
 
-            html.append(Js.setVal("#access_user_id" , row.get(0).get(_id)));
+            html.append(Js.setVal("#access_user_id", row.get(0).get(_id)));
 //            html.append(Js.setVal("#" + _answer, row.get(0).get(_answer)));
-            html.append(Js.setVal("#user_emailUser" , row.get(0).get(_email)));
-            html.append(Js.setVal("#user_familyUser" , row.get(0).get(_family)));
+            html.append(Js.setVal("#user_emailUser", row.get(0).get(_email)));
+            html.append(Js.setVal("#user_familyUser", row.get(0).get(_family)));
 //            html.append(Js.setVal("#" + _isActive, row.get(0).get(_isActive)));
-            html.append(Js.setVal("#user_nameUser" , row.get(0).get(_name)));
-            html.append(Js.setVal("#user_AccountInformationUser" , row.get(0).get(_AccountInformation)));
-            
-            html.append(Js.setVal("#user_birthdateUser" , row.get(0).get(_birthdate)));
-            html.append(Js.setVal("#user_gradeUser" , row.get(0).get(_grade)));
-            html.append(Js.setVal("#user_jensiatUser" , row.get(0).get(_jensiat)));
-            html.append(Js.setVal("#user_codeMeliUser" , row.get(0).get(_codeMeli)));
-            html.append(Js.setVal("#user_shomareShenasnameUser" , row.get(0).get(_shomareShenasname)));
+            html.append(Js.setVal("#user_nameUser", row.get(0).get(_name)));
+            html.append(Js.setVal("#user_AccountInformationUser", row.get(0).get(_AccountInformation)));
+
+            html.append(Js.setVal("#user_birthdateUser", row.get(0).get(_birthdate)));
+            html.append(Js.setVal("#user_gradeUser", row.get(0).get(_grade)));
+            html.append(Js.setVal("#user_jensiatUser", row.get(0).get(_jensiat)));
+            html.append(Js.setVal("#user_codeMeliUser", row.get(0).get(_codeMeli)));
+            html.append(Js.setVal("#user_shomareShenasnameUser", row.get(0).get(_shomareShenasname)));
             html.append(Js.setVal("#user_passUser", row.get(0).get(_pass)));
-            html.append(Js.setVal("#user_passwordReminderUser" , row.get(0).get(_passwordReminder)));
-            html.append(Js.setHtml("#user_pic1"  , row.get(0).get(_attachAxPersonal)));
-            html.append(Js.setHtml("#user_pic3" , row.get(0).get(_attachAxPersonnelCard)));
-            html.append(Js.setHtml("#user_pic2" , row.get(0).get(_attachAxSignature)));
-              String attachFiles = row.get(0).get(_attachFile).toString();
+            html.append(Js.setVal("#user_passwordReminderUser", row.get(0).get(_passwordReminder)));
+            html.append(Js.setHtml("#user_pic1", row.get(0).get(_attachAxPersonal)));
+            html.append(Js.setHtml("#user_pic3", row.get(0).get(_attachAxPersonnelCard)));
+            html.append(Js.setHtml("#user_pic2", row.get(0).get(_attachAxSignature)));
+            html.append(Js.setVal("#user_attachFile", row.get(0).get(_attachFile)));
+            String attachFiles = row.get(0).get(_attachFile).toString();
 
             String[] attachFilesArray = attachFiles.split("#A#");
-            String script1="";
-            StringBuilder html3 = new StringBuilder() ;
-            StringBuilder script = new StringBuilder() ;
+            String script1 = "";
+            StringBuilder html3 = new StringBuilder();
+            StringBuilder script = new StringBuilder();
 
-      
             for (int l = 0; l < attachFilesArray.length; l++) {
 
 //                List<Map<String, Object>> userRowFile = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName));                  
 //                for (int i = 0; i < userRowFile.size(); i++) {
-
-                    html3.append("<input class='col-xs-12' value='" +attachFilesArray[l]+ "'/> ");
-//                }
-                
-                script1 = Js.setHtml("#inputAfterSelect", html3);
+                html3.append("<input class='col-xs-12' value='" + attachFilesArray[l] + "'/> ");
+//                }                
             }
-            
-if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
+            script1 = Js.setHtml("#inputAfterSelect", html3);
+
+            if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
                 script.append(Js.setAttr("#PicPreviewPersonal", "src", "img/preview.jpg"));
             } else {
                 script.append(Js.setAttr("#PicPreviewPersonal", "src", "upload/" + row.get(0).get(Access_User._attachAxPersonal).toString() + ""));
@@ -498,19 +495,14 @@ if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
             } else {
                 script.append(Js.setAttr("#PicPreviewSignature", "src", "upload/" + row.get(0).get(Access_User._attachAxSignature).toString() + ""));
             }
-            
-            
-            
-           
-           
-            html.append(Js.setVal("#user_addressUser" , row.get(0).get(_address)));
-            html.append(Js.setValDate("#user_birthdateUserUser" , row.get(0).get(_birthdate)));
+
+            html.append(Js.setVal("#user_addressUser", row.get(0).get(_address)));
+            html.append(Js.setValDate("#user_birthdateUserUser", row.get(0).get(_birthdate)));
             /////این تابع برای نمایش فایل های اپلود شده توسط فردی که واردشده نوشته شده است
             /////شیران1
-            
+
 //            List<Map<String, Object>> rowUpload = jjDatabase.separateRow(db.Select(UploadServlet.tableName,UploadServlet. _loader_id + "=" + id));
 //            html.append(Js.setVal("#uploaded_file", rowUpload.get(0).get(UploadServlet._file_name)));
-
             boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
             boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
 
@@ -526,7 +518,7 @@ if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
                     html.append(Js.buttonMouseClick("#delete_User", Js.jjUser.delete(id)));
                 }
             }
-            return (Js.setHtml("#User_button", html2.toString())) + html.toString()+script1.toString()+script.toString();
+            return (Js.setHtml("#User_button", html2.toString())) + html.toString() + script1.toString() + script.toString();
         } catch (Exception e) {
             return Server.ErrorHandler(e);
         }
@@ -630,7 +622,10 @@ if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
             jjTools.setSessionAttribute(request, "#" + Access_User._name.toUpperCase(), user.get(0).get(Access_User._name).toString());
             jjTools.setSessionAttribute(request, "#" + Access_User._family.toUpperCase(), user.get(0).get(Access_User._family).toString());
             jjTools.setSessionAttribute(request, "#" + Access_User._pass.toUpperCase(), user.get(0).get(Access_User._pass).toString());
-
+            List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._user_id+"=" + user.get(0).get(Access_User._id)));
+            if (roleRow.size() > 0) {
+                jjTools.setSessionAttribute(request, "#ROLE_ID", roleRow.get(0).get(Role._id).toString());// آی دی نقش میرود درسشن
+            }
             if (user.get(0).get(Access_User._id).toString().equals("1") || user.get(0).get(Access_User._id).toString().equals("2")) {
                 html.append("$('#TrIdInUserForm').show();\n");
             } else {

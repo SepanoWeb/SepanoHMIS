@@ -27,7 +27,7 @@ var hmisSessions = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? 800 : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_show_form: function () {
         $('#swSessionsTbl').hide();
@@ -60,7 +60,7 @@ var hmisSessions = {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".insert";
         param += "&" + new jj('#swSessionsForm').jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisSessions.m_show_tbl();
         hmisSessions.m_clean();
 //        } else {
@@ -74,7 +74,7 @@ var hmisSessions = {
         param += "do=" + hmisSessions.tableName + ".edit";
         param += "&" + new jj('#swSessionsForm').jjSerial();
         param += "&id=" + new jj('#hmis_Sessions_id').jjVal();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisSessions.m_show_tbl();
         hmisSessions.m_clean();
 //        } else {
@@ -94,7 +94,7 @@ var hmisSessions = {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".delete";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisSessions.m_show_tbl();
         hmisSessions.m_clean();
     },
@@ -105,14 +105,14 @@ var hmisSessions = {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".select";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisSessions.m_show_form();
     },
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".add_EN";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisSessions.f_parent).jjVal(id);
         new jj("#" + hmisSessions.f_lang).jjVal("2");
         hmisSessions.m_show_form();
@@ -121,7 +121,7 @@ var hmisSessions = {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".add_Ar";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisSessions.f_parent).jjVal(id);
         new jj("#" + hmisSessions.f_lang).jjVal("3");
         hmisSessions.m_show_form();
@@ -132,7 +132,7 @@ var hmisSessions = {
         param += "do=" + hmisSessions.tableName + ".add_lang";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
         param += "&myLang=" + (langId == null ? "1" : langId);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisSessions.f_parent).jjVal(id);
         new jj("#" + hmisSessions.f_lang).jjVal(langId);
 //        alert(id+"&&&&&"+langId);
@@ -143,13 +143,13 @@ var hmisSessions = {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".searchTextInTitle";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_searchTextInAll: function (text) {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".searchTextInAll";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //============ BY RASHIDI ========>    
     m_searchTags: function () {
@@ -157,14 +157,14 @@ var hmisSessions = {
         param += "do=" + hmisSessions.tableName + ".searchTags";
         param += "&" + new jj('#swSessionsForm').jjSerial();
 //        param += "&panel=content_search_tags_result";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".insertTags";
         param += "&" + new jj('#swSessionsForm').jjSerial();
 //        param += "&panel=content_tags_div";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
     tabSizeTbl: function () {

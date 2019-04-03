@@ -42,7 +42,7 @@ var hmisMessenger = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? PanelHeight : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisMessenger.tabSizeTbl();
     },
     bazgasht: function () {
@@ -90,7 +90,7 @@ var hmisMessenger = {
 
         param += "&jj=1";
 
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisMessenger.m_show_tbl();
         hmisMessenger.m_clean();
     },
@@ -101,7 +101,7 @@ var hmisMessenger = {
         param += "&" + new jj("#swMessengerForm").jjSerial();
         param += "&jj=1";
 
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisMessenger.m_show_tbl();
         hmisMessenger.m_clean();
     },
@@ -112,7 +112,7 @@ var hmisMessenger = {
         var param = "";
         param += "do=" + hmisMessenger.tableName + ".delete";
         param += "&" + hmisMessenger.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisMessenger.m_show_tbl();
         hmisMessenger.m_clean();
     },
@@ -123,7 +123,7 @@ var hmisMessenger = {
 
 
 
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
 
 
 
@@ -135,7 +135,7 @@ var hmisMessenger = {
     m_getMenu: function () {
         var param = "";
         param += "do=" + hmisMessenger.tableName + ".getMenu";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {
         $('#swMessenger').css('height', 515);
