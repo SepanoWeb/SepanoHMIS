@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
@@ -70,21 +71,23 @@ public class FormQuestionOptions {
      * @return
      * @throws Exception
      */
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString)  throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response,hasAccess);
+                    return "";
             }
             StringBuilder html = new StringBuilder();
 
             String question_id = jjTools.getParameter(request, _question_id);
             if (question_id.isEmpty()) {
-                return "اطلاعات فرم صحیح نیست"; //ToDo بعدا به صورت آلرت مناسب در بیاید 
+                Server.outPrinter(request, response,"اطلاعات فرم صحیح نیست");
+                    return ""; //ToDo بعدا به صورت آلرت مناسب در بیاید 
             }
             DefaultTableModel dtm = db.Select(tableName, _question_id + "=" + question_id);//@ToDo فقط ستون هایی که لازم هست را بگیریم که در مصرف حاقظه رم سرفه جویی بشود
             List<Map<String, Object>> row = jjDatabaseWeb.separateRow(dtm);
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append("<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' onclick='hmisFormQuestionOptions.m_add_new();' >افزودن گزینه ی جدید</a>");
             }
@@ -124,39 +127,45 @@ public class FormQuestionOptions {
             }
             String script = Js.setHtml("#" + panel, html.toString());
 //            script += Js.table("#refreshFormQuestionOptions", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "2" : "", "لیست اخبار");
-            return script;
+            Server.outPrinter(request, response,script);
+                    return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+                    return "";
         }
     }
 
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString)  throws Exception {
         try {
             StringBuilder script = new StringBuilder();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 script.append(Js.setHtml("#formQuestionOption_buttons", "<button class='btn btn-outline-success btn-block mg-b-10' onclick='" + Js.jjFormQuestionOptions.insert() + "'   title='" + lbl_insert + "' '>ذخیره</button>"));
             } else {
                 script.append(Js.setHtml("#form_Question_buttons", ""));
             }
-            return script.toString();
+            Server.outPrinter(request, response,script.toString());
+                    return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+                    return "";
         }
     }
 
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString)  throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal(hasAccess, "پیام سامانه"));
+                    return "";
             }
 
             String id = jjTools.getParameter(request, _id);
             List<Map<String, Object>> formRow = jjDatabaseWeb.separateRow(db.Select(tableName, _id + "=" + id));
             if (formRow.isEmpty()) {
                 String errorMessage = "فرم مورد نظر یافت نشد";
-                return Js.modal(errorMessage, "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal(errorMessage, "پیام سامانه"));
+                    return "";
             }
             StringBuilder script = new StringBuilder();
             Map<String, Object> map = new HashMap<String, Object>();
@@ -170,19 +179,21 @@ public class FormQuestionOptions {
                 script.append(Js.setAttr("#formQuestionOptions_Preview", "src", "img/preview.jpg"));
             }
             String buttonsHtml = "";
-            boolean accEdit = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
             if (accEdit) {
                 buttonsHtml += "<button class='btn btn-outline-warning btn-block mg-b-10 text-center' onclick='" + Js.jjFormQuestionOptions.edit(id) + "'   title='" + lbl_edit + "' '>" + lbl_edit + "</button>";
             }
-            boolean accDelete = Access_User.hasAccess2(request, db, rul_dlt);
+            boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
             if (accDelete) {
                 buttonsHtml += "<button class='btn btn-outline-danger btn-block mg-b-10 text-center' onclick='" + Js.jjFormQuestionOptions.delete(id) + "'   title='" + lbl_delete + "' '>" + lbl_delete + "</button>";
             }
             script.append(Js.setHtml("#formQuestionOption_buttons", buttonsHtml));
             //کاربر بعد از ثبت مشخصات فرم یاد سوالات فرم را یکی یکی یا دسته ای اضافه کند
-            return script.toString();
+            Server.outPrinter(request, response,script.toString());
+                    return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+                    return "";
         }
     }
 
@@ -195,11 +206,12 @@ public class FormQuestionOptions {
      * @return
      * @throws Exception
      */
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString)  throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal(hasAccess, "پیام سامانه"));
+                    return "";
             }
             Map<String, Object> map = new HashMap<>();
             map.put(_lable, jjTools.getParameter(request, _lable));
@@ -210,25 +222,30 @@ public class FormQuestionOptions {
             StringBuilder script = new StringBuilder();
             if (insertedFormRow.isEmpty()) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
-                return Js.modal(errorMessage, "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal(errorMessage, "پیام سامانه"));
+                    return "";
             }
             script.append(Js.jjFormQuestionOptions.refresh(jjTools.getParameter(request, _question_id)));
             script.append(Js.jjFormQuestionOptions.showTbl());
-            return script.toString();
+            Server.outPrinter(request, response,script.toString());
+                    return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+                    return "";
         }
     }
 
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString)  throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal(hasAccess, "پیام سامانه"));
+                    return "";
             }
             String id = jjTools.getParameter(request, _id);
             if (id.isEmpty() || !jjNumber.isDigit(id)) {
-                return Js.modal("کد صحیح نیست", "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal("کد صحیح نیست", "پیام سامانه"));
+                    return "";
             }
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(_lable, jjTools.getParameter(request, _lable));
@@ -238,37 +255,46 @@ public class FormQuestionOptions {
 
             if (db.update(tableName, map, _id + "=" + id)) {
                 List<Map<String, Object>> row = jjDatabaseWeb.separateRow(db.Select(tableName, _id + "=" + id));
-                return Js.jjFormQuestionOptions.refresh(row.get(0).get(_question_id).toString()) + Js.jjFormQuestionOptions.showTbl();
+                Server.outPrinter(request, response,Js.jjFormQuestionOptions.refresh(row.get(0).get(_question_id).toString()) + Js.jjFormQuestionOptions.showTbl());
+                    return "";
             } else {
-                return Js.modal("ویرایش انجام نشد", "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal("ویرایش انجام نشد", "پیام سامانه"));
+                    return "";
             }
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+                    return "";
         }
     }
 
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String delete(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString)  throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal(hasAccess, "پیام سامانه"));
+                    return "";
             }
             String id = jjTools.getParameter(request, _id);
             if (id.isEmpty() || !jjNumber.isDigit(id)) {
-                return Js.modal("کد صحیح نیست", "پیام سامانه");
+                Server.outPrinter(request, response,Js.modal("کد صحیح نیست", "پیام سامانه"));
+                    return "";
             }
             List<Map<String, Object>> row = jjDatabaseWeb.separateRow(db.Select(tableName, _id + "=" + id));
             if (!row.isEmpty()) {
                 if (db.delete(tableName, _id + "=" + id)) {
-                    return Js.jjFormQuestionOptions.refresh(row.get(0).get(_question_id).toString()) + Js.jjFormQuestionOptions.showTbl();
+                    Server.outPrinter(request, response,Js.jjFormQuestionOptions.refresh(row.get(0).get(_question_id).toString()) + Js.jjFormQuestionOptions.showTbl());
+                    return "";
                 } else {
-                    return Js.modal("ویرایش انجام نشد", "پیام سامانه");
+                    Server.outPrinter(request, response,Js.modal("ویرایش انجام نشد", "پیام سامانه"));
+                    return "";
                 }
             } else {
-                    return Js.modal("کد صحیح نیست", "پیام سامانه");
+                    Server.outPrinter(request, response,Js.modal("کد صحیح نیست", "پیام سامانه"));
+                    return "";
                 }
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+                    return "";
         }
     }
 }

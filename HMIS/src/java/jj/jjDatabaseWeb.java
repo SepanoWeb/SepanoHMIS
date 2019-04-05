@@ -110,6 +110,10 @@ public class jjDatabaseWeb {
         String SQL = jjDatabaseQuery.joinLeft(firtTableName, secondTableName, whichField, onFirstColumn, onSecondcolumn);
         return otherSelect(SQL);
     }
+    public DefaultTableModel JoinLeft(String firtTableName, String secondTableName, String whichField, String onFirstColumn, String onSecondcolumn , String where) {
+        String SQL = jjDatabaseQuery.joinLeft(firtTableName, secondTableName, whichField, onFirstColumn, onSecondcolumn,where);
+        return otherSelect(SQL);
+    }
 
     //<============ BY RASHIDI ========
 //==============================================================================

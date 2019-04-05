@@ -166,7 +166,7 @@ public class Approved {
         try {
             StringBuffer html = new StringBuffer();
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Approved_button", "<input type=\"button\" class=\"btn btn-outline-success active btn-block mg-b-10\" id=\"insert_Approved_new\" value=\"" + lbl_insert + "\" >"));
                 html.append(Js.buttonMouseClick("#insert_Approved_new", Js.jjApproved.insert()));
@@ -212,8 +212,8 @@ public class Approved {
             html.append(Js.setVal("#" + _responsibleForExecutionId, row.get(0).get(_responsibleForExecutionId)));
             html.append(Js.setVal("#" + _endDate, jjCalendar_IR.getViewFormat(row.get(0).get(_endDate))));
             html.append(Js.setVal("#" + _startDate, jjCalendar_IR.getViewFormat(row.get(0).get(_startDate))));
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);//
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);//
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
             html2.append("<div class='row'>");
             if (accEdt) {
                 html2.append("<div class=\"col-lg-6\">");

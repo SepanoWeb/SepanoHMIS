@@ -18,11 +18,8 @@ package HMIS;
  */
 
 import cms.access.Access_User;
-import cms.cms.Content;
-import static cms.cms.Product.rul_ins;
 import cms.tools.Js;
 import cms.tools.Server;
-import cms.tools.email;
 import cms.tools.jjTools;
 import cms.tools.jjValidation;
 import java.util.HashMap;
@@ -35,8 +32,6 @@ import jj.jjCalendar_IR;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 /**
  *
@@ -153,7 +148,7 @@ public class Role {
             html1.append("</tbody></table>");
             String script2 = "$('#ListKarbaran').html(\"" + html1.toString() + "\");\n";
             script2 += Js.table("#RefreshlistKarbaran", "400", 0, "", "لیست کاربران");
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Role_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
                 html.append(Js.buttonMouseClick("#insert_Role_new", Js.jjRole.insert()));
@@ -255,8 +250,8 @@ public class Role {
          
 
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (accEdt) {
 //                if (!id.equals("1")) {

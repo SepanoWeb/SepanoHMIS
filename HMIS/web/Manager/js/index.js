@@ -531,7 +531,7 @@ function login() {
     $("#login_user_email").css("border", "none");
     $("#login_user_pass").css("border", "none");
 //    param += "&jj=1";
-    jj("do=Access_User.login&jj=1&" + new jj("#loginForm").jjSerial()).jjAjax2(false);
+    new jj("do=Access_User.login&jj=1&" + new jj("#loginForm").jjSerial()).jjAjax2(false);
     USER_EMAIL = new jj('#login_user_email').jjVal();
 
 };
@@ -688,7 +688,7 @@ function registInSite() {
         return;
     }
 
-    jj("do=Access_User.registUser&jj=1&panel=" + setting_login_exit_panel.replace("#", "") + "&" + new jj("#registForm").jjSerial()).jjAjax2(false);
+    new jj("do=Access_User.registUser&jj=1&panel=" + setting_login_exit_panel.replace("#", "") + "&" + new jj("#registForm").jjSerial()).jjAjax2(false);
 //    $("#registerBtn").hide();
 
 //    jj("do=Access_User.registUser&" + new jj("#registForm").jjSerial()).jjAjax2(false);
@@ -790,7 +790,7 @@ function registInSitePardakht() {
     }
 // param += "&EmailPardakhtha=" + jj("#user_email_pardakht2").jjVal();
 //    email = new jj('#user_email_pardakht2').jjVal();
-    jj("do=Access_User.registUserPardakht&panel=" + new jj("#registFormPardakht").jjSerial() + "&EmailPardakhtha=" + jj("#user_email_pardakht2").jjVal()).jjAjax2(false);
+   new  jj("do=Access_User.registUserPardakht&panel=" + new jj("#registFormPardakht").jjSerial() + "&EmailPardakhtha=" + jj("#user_email_pardakht2").jjVal()).jjAjax2(false);
 //    $("#registerBtn").hide();
 
 //    jj("do=Access_User.registUser&" + new jj("#registForm").jjSerial()).jjAjax2(false);
@@ -895,7 +895,7 @@ function newsDisLike(newsId) {
     temp = temp.replace("onclick=\"newsDisLike(" + newsId + ");\"", "");
     $("#swTopNewsDiv").html(temp);
     new jj("do=News.newsDisLike&id=" + newsId).jjAjax2(true);
-    jj("سپاس از همکاری شما.نظر شما بزودی در سیستم اعمال می شود...").jjDialog();
+    new jj("سپاس از همکاری شما.نظر شما بزودی در سیستم اعمال می شود...").jjDialog();
 }
 ;
 function newsLike(newsId) {
@@ -904,13 +904,13 @@ function newsLike(newsId) {
     temp = temp.replace("onclick=\"newsDisLike(" + newsId + ");\"", "");
     $("#swTopNewsDiv").html(temp);
     new jj("do=News.newsLike&id=" + newsId).jjAjax2(true);
-    jj("سپاس از همکاری شما.نظر شما بزودی در سیستم اعمال می شود...").jjDialog();
+    new jj("سپاس از همکاری شما.نظر شما بزودی در سیستم اعمال می شود...").jjDialog();
 }
 ;
 
 //By Md
 function productDisLike(productId) {
-    jj("سپاس از همکاری شما.نظر شما بزودی در سیستم اعمال می شود...").jjDialog();
+   new  jj("سپاس از همکاری شما.نظر شما بزودی در سیستم اعمال می شود...").jjDialog();
     var temp = $("#swTopproductDiv").html();
     temp = temp.replace("onclick=\"productDisLike(" + productId + ");\"", "");
     temp = temp.replace("onclick=\"productLike(" + productId + ");\"", "");

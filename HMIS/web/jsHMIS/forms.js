@@ -117,6 +117,7 @@ var hmisForms = {
         $('#swCommettes').css('height', 378);
     },
     showMyForms: function (isAjax) {//مدعوین
+        $("swMyFormsTbl").show();
         var param = ""; 
         param += "&do="+hmisForms.tableName+".showMyForms&jj="+isAjax;
         new jj(param).jjAjax2(false);

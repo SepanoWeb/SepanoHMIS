@@ -303,7 +303,7 @@ public class Poll {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuffer html = new StringBuffer();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Poll_button", "<input type=\"button\" id=\"insert_Poll_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_Poll_new", Js.jjPoll.insert()));
@@ -456,9 +456,9 @@ public class Poll {
             html.append(Js.setVal("#" + _an5, row.get(0).get(_an5)));
             html.append(Js.setVal("#" + _an6, row.get(0).get(_an6)));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
-            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
+            boolean acclng = Access_User.hasAccess(request, db, rul_lng);
 
             if (accEdt) {
                 html2.append("<input type='button' id='edit_Poll' value='" + lbl_edit + "' class='tahoma10'>");
@@ -546,7 +546,7 @@ public class Poll {
             html.append(Js.setVal("#" + _an5, row.get(0).get(_an5)));
             html.append(Js.setVal("#" + _an6, row.get(0).get(_an6)));
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html2.append(Js.setHtml("#Poll_button", "<input type=\"button\" id=\"insert_Poll_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html2.append(Js.buttonMouseClick("#insert_Poll_new", Js.jjPoll.insert()));
@@ -587,7 +587,7 @@ public class Poll {
             html.append(Js.setVal("#" + _an5, row.get(0).get(_an5)));
             html.append(Js.setVal("#" + _an6, row.get(0).get(_an6)));
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html2.append(Js.setHtml("#Poll_button", "<input type='button' id='insert_Poll_new_ar' value='" + lbl_insert + "' class='tahoma10'>"));
                 html2.append(Js.buttonMouseClick("#insert_Poll_new_ar", Js.jjPoll.insert()));

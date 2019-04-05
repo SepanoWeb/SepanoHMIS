@@ -159,8 +159,13 @@ public class jjTools {
     public static int getSeassionUserId(HttpServletRequest request) {
         return jjNumber.isDigit(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) ? Integer.parseInt(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) : 0;
     }
-    public static int getSeassionUserRole(HttpServletRequest request) {
-        return jjNumber.isDigit(jjTools.getSessionAttribute(request, "#ROLE_ID")) ? Integer.parseInt(jjTools.getSessionAttribute(request, "#ROLE_ID")) : 0;
+    /**
+     * رشته ای را برمیگرداند که در آن نقش های کاربر با کاراکتر های خاص از هم جدا میشوند
+     * @param request
+     * @return 5%A%21%A%55%A%
+     */
+    public static String getSeassionUserRole(HttpServletRequest request) {
+        return jjTools.getSessionAttribute(request, "#ROLE_ID")==null ? "" : jjTools.getSessionAttribute(request, "#ROLE_ID");
     }
 
     public static String getParameter(HttpServletRequest request, String name) {

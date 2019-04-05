@@ -162,7 +162,7 @@ public class Commettes {
         try {
             StringBuffer html = new StringBuffer();
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Commette_button", "<input type=\"button\" id=\"insert_Commette_new\" value=\"" + lbl_insert + "\" class=\"btn btn-success btn-block mg-b-10 tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_Commette_new", Js.jjCommettes.insert()));
@@ -207,8 +207,8 @@ public class Commettes {
             html.append(Js.setVal("#" + _regulationFile1, row.get(0).get(_regulationFile1)));
             html.append(Js.setVal("#" + _regulationFile2, row.get(0).get(_regulationFile2)));
             html.append(Js.setVal("#" + _regulationFile3, row.get(0).get(_regulationFile3)));
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);//
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);//
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
                 html2.append("<div class='row'>");
             if (accEdt) {
                 html2.append("<div class=\"col-lg-6\">");

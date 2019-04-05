@@ -125,7 +125,7 @@ public class News {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuilder html = new StringBuilder();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#News_button", "<input type=\"button\" id=\"insert_news_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
 //                html.append(Js.setHtml("#News_button", ""));
@@ -362,9 +362,9 @@ public class News {
                 html.append(Js.removeAttr("#" + _disLikes, "disabled"));
             }
             html.append(Js.setVal("#" + _hasLink, row.get(0).get(_hasLink))); //============ BY RASHIDI ========            
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
-//            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
+//            boolean acclng = Access_User.hasAccess(request, db, rul_lng);
 
             if (accEdt) {
                 html2.append("<input type='button' id='edit_news' value='" + lbl_edit + "' class='tahoma10'>");
@@ -376,11 +376,11 @@ public class News {
             }
             //============ BY RASHIDI ========>
             ///**************LANGUAAGE ADDED*******>
-//            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);//====== COMMENTED BY RASHIDI ======
-            boolean acclng2 = Access_User.hasAccess2(request, db, rul_lng2);//====== BY RASHIDI ======
-            boolean acclng3 = Access_User.hasAccess2(request, db, rul_lng3);//====== BY RASHIDI ======
-            boolean acclng4 = Access_User.hasAccess2(request, db, rul_lng4);//====== BY RASHIDI ======
-            boolean acclng5 = Access_User.hasAccess2(request, db, rul_lng5);//====== BY RASHIDI ======
+//            boolean acclng = Access_User.hasAccess(request, db, rul_lng);//====== COMMENTED BY RASHIDI ======
+            boolean acclng2 = Access_User.hasAccess(request, db, rul_lng2);//====== BY RASHIDI ======
+            boolean acclng3 = Access_User.hasAccess(request, db, rul_lng3);//====== BY RASHIDI ======
+            boolean acclng4 = Access_User.hasAccess(request, db, rul_lng4);//====== BY RASHIDI ======
+            boolean acclng5 = Access_User.hasAccess(request, db, rul_lng5);//====== BY RASHIDI ======
             if (acclng2) {
                 List<Map<String, Object>> row2 = jjDatabase.separateRow(db.Select(tableName, _parent + "=" + id + " AND " + _lang + "=2"));
                 if (row2.size() > 0) {
@@ -488,7 +488,7 @@ public class News {
             if (content != null) {
                 html.append(Js.setValEditor(_content, content));
             }
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#News_button", "<input type='button' id='insert_news_new_lang' value='" + lbl_insert + "' class='tahoma10'>"));
                 html.append(Js.buttonMouseClick("#insert_news_new_lang", Js.jjNews.insert()));
@@ -543,7 +543,7 @@ public class News {
             if (content != null) {
                 html.append(Js.setValEditor(_content, content));
             }
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#News_button", "<input type=\"button\" id=\"insert_News_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_News_new", Js.jjNews.insert()));
@@ -595,7 +595,7 @@ public class News {
             if (content != null) {
                 html.append(Js.setValEditor(_content, content));
             }
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#News_button", "<input type='button' id='insert_News_new_ar' value='" + lbl_insert + "' class='tahoma10'>"));
                 html.append(Js.buttonMouseClick("#insert_News_new_ar", Js.jjNews.insert()));

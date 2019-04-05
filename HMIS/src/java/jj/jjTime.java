@@ -31,10 +31,12 @@ public class jjTime {
         return time4lenth.substring(0, 2) + ":" + time4lenth.substring(2, 4);
     }
     public static String getTime4lenth(String time5lenth) {
+        time5lenth=time5lenth.replaceAll(" ", "");
         if(time5lenth.length()!=5){
+            System.out.println("PPPPPPPPPPPPPPPPPP"+time5lenth);
             return "";
         }
-        return time5lenth.replace(":", "").replaceAll(" ", "");
+        return time5lenth.replace(":", "");
     }
 
     public static String getDateTimeDifferentSecond(int hour, int min, int second, long Second) {

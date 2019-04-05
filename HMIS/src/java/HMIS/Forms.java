@@ -8,12 +8,16 @@ package HMIS;
 import cms.access.Access_User;
 import cms.tools.Js;
 import cms.tools.Server;
+import cms.tools.ServerLog;
 import cms.tools.jjTools;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
+import jdk.nashorn.internal.runtime.ScriptObject;
 import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
@@ -83,18 +87,19 @@ public class Forms {
     public static final String lbl_add_ln5 = "افزودن زبان چینی";
     public static final String lbl_edit_ln5 = "ویرایش بخش چینی";
 
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
-            StringBuilder html = new StringBuilder();
             DefaultTableModel dtm = db.Select(tableName);//@ToDo فقط ستون هایی که لازم هست را بگیریم که در مصرف حاقظه رم سرفه جویی بشود
             List<Map<String, Object>> row = jjDatabaseWeb.separateRow(dtm);
+            StringBuilder html = new StringBuilder();
             html.append("<div class='card-header bg-primary tx-white'>لیست فرم ها و چک لیست های تعریف شده</div>\n");
             html.append("<div class='card-body pd-sm-30'>");
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append("<p class='mg-b-20 mg-sm-b-30'>");
                 html.append("<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' onclick='hmisForms.m_add_new();' >فرم یا چک لیست جدید</a>");
@@ -117,8 +122,8 @@ public class Forms {
             }
             html.append("</tbody></table>");
             html.append("</div>");
-            String height = jjTools.getParameter(request, "height");
             html.append("</div>");
+            String height = jjTools.getParameter(request, "height");
             String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(height)) {
                 height = "";
@@ -127,17 +132,19 @@ public class Forms {
                 panel = "swNewsTbl";
             }
             String script = Js.setHtml("#" + panel, html.toString());
-            script += Js.table("#refreshForms", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "2" : "", "لیست اخبار");
-            return script;
+            script += Js.table("#refreshForms", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "2" : "", "لیست فرم ها");
+            Server.outPrinter(request, response, script);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             StringBuilder script = new StringBuilder();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
 
             }
@@ -155,9 +162,11 @@ public class Forms {
             } else {
                 script.append(Js.setHtml("#forms_buttons", ""));
             }
-            return script.toString();
+            Server.outPrinter(request, response, script.toString());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
@@ -170,11 +179,12 @@ public class Forms {
      * @return
      * @throws Exception
      */
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
             }
             jjCalendar_IR ir = new jjCalendar_IR();
             Map<String, Object> map = new HashMap<String, Object>();
@@ -208,29 +218,34 @@ public class Forms {
             StringBuilder script = new StringBuilder();
             if (insertedFormRow.isEmpty()) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
-                return Js.modal(errorMessage, "پیام سامانه");
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             script.append(Js.jjForms.refresh());
             //کاربر بعد از ثبت مشخصات فرم یاد سوالات فرم را یکی یکی یا دسته ای اضافه کند
             script.append(Js.jjForms.select(insertedFormRow.get(0).get(_id).toString()));// برای اینکه در واقع مثل موقعی بشود که یک فرم قبلا ثبت شده را انتخاب کرده سلکت جاوا اسکریپتی را بعد از اینسرت صدا میزنیم
-            return script.toString();
+            Server.outPrinter(request, response, script.toString());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
             }
 
             String id = jjTools.getParameter(request, _id);
             List<Map<String, Object>> formRow = jjDatabaseWeb.separateRow(db.Select(tableName, _id + "=" + id));
             if (formRow.isEmpty()) {
                 String errorMessage = "فرم مورد نظر یافت نشد";
-                return Js.modal(errorMessage, "پیام سامانه");
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             StringBuilder script = new StringBuilder();
             Map<String, Object> map = new HashMap<String, Object>();
@@ -265,29 +280,30 @@ public class Forms {
             script.append(Js.setVal("#" + _description, formRow.get(0).get(_description).toString()));
             script.append(Js.setVal("#" + _description, formRow.get(0).get(_description).toString()));
             String htmlBottons = "";
-            boolean accEdit = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
             if (accEdit) {
                 htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjForms.edit(id) + "' id='edit_Forms_new'>" + lbl_edit + "</button></div>";
             }
-            boolean accDelete = Access_User.hasAccess2(request, db, rul_dlt);
+            boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
             if (accDelete) {
                 htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjForms.delete(id) + "' id='edit_Forms_new'>" + lbl_delete + "</button></div>";
             }
             script.append(Js.setHtml("#forms_buttons", htmlBottons));
             //کاربر بعد از ثبت مشخصات فرم یاد سوالات فرم را یکی یکی یا دسته ای اضافه کند
-            return script.toString();
+            Server.outPrinter(request, response, script.toString());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-
-
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
             }
 
             String id = jjTools.getParameter(request, _id);
@@ -299,8 +315,20 @@ public class Forms {
             map.put(_isActive, jjTools.getParameter(request, _isActive));
             map.put(_icon, jjTools.getParameter(request, _icon));
             map.put(_ownerId, jjTools.getSeassionUserId(request));
-            map.put(_ownerRole, jjTools.getParameter(request, _ownerRole));
-            map.put(_accessessUsers, jjTools.getParameter(request, _accessessUsers));
+            //تعیین نقش ایجاد کننده یا مالک فرم            
+            // ممکن است ادمین بخواهد برای سایرین فرم ها را ایجاد کند و باید این امکان را داشته باشد
+            if (!jjNumber.isDigit(jjTools.getParameter(request, _accessessUsers))) {//اگر در ریکوئست مشخص نکرده بود
+                String userRolesInSession = jjTools.getSeassionUserRole(request);
+                String userRols[] = userRolesInSession.split("%23A%23");
+                if (userRols.length == 0) {// اگر نقشی در سیستم نداشت تهی می گذاریم
+                    map.put(_ownerRole, "");
+                } else {
+                    // اگرچند نقش داشت و  مشخص نکرده بود نقش اولی اش را می گذاریم یا تهی می گذاریم
+                    map.put(_ownerRole, userRols[0]);
+                }
+            } else {
+                map.put(_ownerRole, jjTools.getSeassionUserRole(request));
+            }
             map.put(_accessessRoles, jjTools.getParameter(request, _accessessRoles));
             if ("".equals(jjTools.getParameter(request, _creationDate))) {// اگر تاریخ شروع اعتبار وارد نکرده بود
                 map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(null, true));
@@ -308,7 +336,7 @@ public class Forms {
                 map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _accessessRoles), true));
             }
             jjCalendar_IR date = new jjCalendar_IR();
-            map.put(_creationTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _creationTime)));
+            map.put(_creationTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _creationTime)));//ToDo تبدیل به عدد برای قرار گرفتن در دیتا بیس
             map.put(_expireDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _expireDate), false));
             map.put(_expireTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _expireTime)));
             map.put(_nextFormId, jjNumber.isDigit(jjTools.getParameter(request, _nextFormId)));
@@ -320,58 +348,47 @@ public class Forms {
             map.put(_description, jjTools.getParameter(request, _description));
 
             if (db.update(tableName, map, _id + "=" + id)) {
-                return Js.modal("ویرایش بدرستی انجام شد", "پیام سامانه");
+                Server.outPrinter(request, response, Js.modal("ویرایش بدرستی انجام شد", "پیام سامانه"));
+                return "";
             } else {
-                return Js.modal("ویرایش انجام نشد", "پیام سامانه");
+                Server.outPrinter(request, response, Js.modal("ویرایش انجام نشد", "پیام سامانه"));
+                return "";
             }
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String delete(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
             } else {
                 String id = jjTools.getParameter(request, _id);
                 if (!jjNumber.isDigit(id)) {
-                    return Js.modal("کد صحیح نیست", "پیام سامانه");
+                    Server.outPrinter(request, response, Js.modal("کد صحیح نیست", "پیام سامانه"));
+                    return "";
                 }
 
 //                db.Select(tableName)//در پاسخ ها اگر کسی پاسخ نداده است قابل حذف است@ToDo
                 if (db.otherStatement("DELETE t0,t1,t2 FROM hmis_forms as t0 LEFT JOIN hmis_formquestions as t1 on t0.id=t1.formQuestions_formID LEFT JOIN hmis_formquestionoptions as t2 ON formQuestionOptions_question_id = t1.id WHERE t0.id=" + id)) {
-                    return Js.jjForms.refresh() + Js.modal("همه سوال ها و گزینه ها حذف شدند", "پیام سامانه");
+                    Server.outPrinter(request, response, Js.jjForms.refresh() + Js.modal("همه سوال ها و گزینه ها حذف شدند", "پیام سامانه"));
+                    return "";
                 } else {
-                    return Js.modal("عدم موفقیت عملیات حذف!!!", "پیام سامانه");
+                    Server.outPrinter(request, response, Js.modal("عدم موفقیت عملیات حذف!!!", "پیام سامانه"));
+                    return "";
                 }
             }
 
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
-    
-    
-        public static String showMyForms(HttpServletRequest request, jjDatabaseWeb db, boolean isAjax) throws Exception {
-        try {
-            String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
-            if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
-            }
-            if (isAjax) {
-                request.getRequestDispatcher("feiz/MyForms.jsp").forward(request, Server.Publicresponse);
-                System.out.println("(((((((((((((((((((((((((((((((((((((((((((((");
-                return "";
-            } else {// اگر یک کلاس جاوایی ایا یک فایل جی اس پی ین نتایج را میخواهد لازم نیست به صفحه ی دیگری بوریم
-                System.out.println("(((((((((((((((((((((((((((((((((((((((((((((");
-                return "alert(54545454);";
 
-            }
-        } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
-        }
-    }
+   
 
 }

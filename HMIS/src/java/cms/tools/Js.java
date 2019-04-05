@@ -36,13 +36,13 @@ public class Js {
                 + "close: function() {$(this).dialog('destroy');}});\n";
     }
     public static String modal(String comment,String title) {
-        return "new jj('"+comment+"').jjModal('"+title+"');";
+        return "new jj('"+comment+"').jjModal('"+title+"');\n";
     }
 
     public static String bootStarpWarning(String comment) {
         return "$('<div></div>').dialog({"
                 + "title : \" پیام سامانه\","
-                + "open: function() {$(this).html(\"" + comment + "\");"
+                + "open: function() {$(this).html(\"" + comment + "\");\n"
                 //============ BY RASHIDI ========>
                 + " $(this).css('direction','rtl');},"
                 //<============ BY RASHIDI ========
@@ -115,7 +115,7 @@ public class Js {
         return setVal(selector, value.toString());
     }
     public static String setValSummerNote(String selector, Object value) {
-        return "$('"+selector+"').summernote('code', '"+value.toString()+"');";
+        return "$('"+selector+"').summernote('code', '"+value.toString()+"');\n";
     }
 
     public static String setVal(String selector, String value) {
@@ -1418,7 +1418,50 @@ public class Js {
         }
 
         public static String edit(String id) {
-            return hmis + ".m_edit("+id+ ");";
+            return hmis + ".m_edit("+id+ ");\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+    public static class jjFormAnswers {
+
+        static String hmis = "hmisFormAnswers";
+
+        /**
+         * برای ایجاد یک رکورد پاسخ از فرم با آی دی داده شده
+         * @para FotmId آی دی فرم از جدول 
+         * <br/>
+         * Forms
+         * @return 
+         */
+        public static String add_new(String FotmId) {
+            return hmis+".m_add_new("+FotmId+ ");\n";
+        }
+        public static String insert() {
+            return hmis+".m_insert();\n";
+        }
+
+        public static String refreshMyAnswers(String FormId) {
+            return hmis+".refreshMyAnswers("+FormId+");\n";
+        }
+        public static String refresh(String id) {
+            return hmis+".m_refresh("+id+");\n";
+        }
+
+        public static String edit(String id) {
+            return hmis + ".m_edit("+id+ ");\n";
         }
 
         public static String delete(String id) {
@@ -1452,7 +1495,7 @@ public class Js {
         }
 
         public static String edit(String id) {
-            return hmis + ".m_edit("+id+ ");";
+            return hmis + ".m_edit("+id+ ");\n";
         }
 
         public static String delete(String id) {
@@ -1484,7 +1527,7 @@ public class Js {
         }
 
         public static String edit(String id) {
-            return hmis + ".m_edit("+id+ ");";
+            return hmis + ".m_edit("+id+ ");\n";
         }
 
         public static String delete(String id) {

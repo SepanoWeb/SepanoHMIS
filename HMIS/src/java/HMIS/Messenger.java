@@ -5,28 +5,9 @@
  */
 package HMIS;
 
-import static HMIS.Department.lbl_insert;
-import static HMIS.Department.rul_ins;
 import cms.access.Access_User;
 import cms.tools.Js;
 import cms.tools.Server;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.table.DefaultTableModel;
-import jj.jjDatabase;
-import jj.jjDatabaseWeb;
-import jj.jjNumber;
-import static HMIS.DepartmentPosition._id;
-import static HMIS.DepartmentPosition._level;
-import static HMIS.DepartmentPosition.rul_ins;
-import static HMIS.Forms._icon;
-import cms.access.Access_User;
-import cms.cms.Content;
-import static cms.cms.Product.rul_ins;
-import cms.tools.Js;
-import cms.tools.Server;
-import cms.tools.email;
 import cms.tools.jjTools;
 import cms.tools.jjValidation;
 import java.util.HashMap;
@@ -34,13 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.table.DefaultTableModel;
-import jj.jjCalendar_IR;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 /**
  *
@@ -113,7 +90,7 @@ public class Messenger {
 //            html.append("<th width='10%'>فرستنده</th>");
             html.append("<th width='5%'>عملیات</th>");
 //       
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
             if (accDel) {
                 html.append("<th width='5%'>حذف</th>");
             }
@@ -164,7 +141,7 @@ public class Messenger {
         StringBuilder script = new StringBuilder();
         try {
 //           script.append("hmisDepartment.selectOptionDepartment();");
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Messenger_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Messenger_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
                 html.append(Js.buttonMouseClick("#insert_Messenger_new", Js.jjMessenger.insert()));
@@ -251,8 +228,8 @@ public class Messenger {
             script.append(Js.setVal("#" + _dateOfCreation, row.get(0).get(_dateOfCreation)));
             script.append(Js.setVal("#" + _postageDate, row.get(0).get(_postageDate)));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (accEdt) {
 //                if (!id.equals("1")) {

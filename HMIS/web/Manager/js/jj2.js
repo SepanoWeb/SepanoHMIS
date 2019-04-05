@@ -74,114 +74,114 @@ var jj = function (selector) {
             }
         });
     },
-    this.jjAjaxTelegram = function ()
-    {
-        alert("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-        $.ajax({
-            //url https://my.telegram.org/apps
-            url: "http://www.api.notificatio.me/v1/user/message",
-            type: "POST",
-            dataType: "json",
-            crossDomaint: true,
-            data: {
-                phoneNumber: "+989137965420",
-                apiHash: "46669629546559f6159144b3a850758f",
-                message: "salam"
+            this.jjAjaxTelegram = function ()
+            {
+                alert("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+                $.ajax({
+                    //url https://my.telegram.org/apps
+                    url: "http://www.api.notificatio.me/v1/user/message",
+                    type: "POST",
+                    dataType: "json",
+                    crossDomaint: true,
+                    data: {
+                        phoneNumber: "+989137965420",
+                        apiHash: "46669629546559f6159144b3a850758f",
+                        message: "salam"
+                    },
+                    cache: false,
+                    success: function () {
+                        alert("success");
+                        // Your code to handle success message sent
+                    },
+                    error: function (error) {
+                        alert("unsuccess");
+                        // Your code to handle error
+                    }
+                });
             },
-            cache: false,
-            success: function () {
-                alert("success");
-                // Your code to handle success message sent
-            },
-            error: function (error) {
-                alert("unsuccess");
-                // Your code to handle error
-            }
-        });
-    },
-    /**
-     * return value from servlet must be a javascript code,
-     * selector is String of parameter for send to servlet,
-     * @param isCacheable is boolean (defualt: true)
-     * @param SERVLET_NAME is servlet name (defualt: 'Server')
-     * @example jj("username=milad&password=123").jjAjax2(); 
-     * jj("username=milad&password=123").jjAjax2(false); 
-     * jj("username=milad&password=123").jjAjax2(false,'../Server'); 
-     */
-    this.jjAjax2 = function (isCacheable, servletName) {
-        if (sessionStorage.getItem("is_reloaded"))
-            alert('Reloaded!');
-        var newURL = "Server2?" + this.selector;
-        $.ajax({
-            url: (servletName == null) ? SERVLET_NAME : servletName,
-            type: "POST",
-            cache: isCacheable == null ? true : isCacheable,
-            data: this.selector,
-            beforeSend: function () {
-                $(".ajaxLoaderDiv").show(); // Load ajax loader in div by ajaxLoaderDiv class name //============ BY RASHIDI ========
-                if (newURL.indexOf("&panel=sw") > 0) { //can add=> ||newURL.indexOf("&panel=swRight&")
-                    stack[window.location] = $('#maincontent').html();
-                    var newTitle = newURL.replace(/Server2.*&text=/, '');
-                    newTitle = newTitle.replace(/&panel=.*jj=1/, "");
-                    document.title = newTitle;
-                }
-            },
-            complete: function () {
-                $('html, body').css("cursor", "auto");
-            },
-            success: function (data) {
-                new jj(data).jjRun();
-                $('html, body').css("cursor", "auto");
-                if (newURL.indexOf("&panel=sw") > 0) {//( if "&panel=sw" is not in url it not worked)
-                    if (!($("html.ie-ie9").length > 0 || $("html.lt-ie8").length > 0)) {// not work in IE 9,8,7,...
-                        window.history.pushState(stateObj, newURL, newURL); //for back botton in browser 
-                        stack[window.location] = $('#maincontent').html();
+            /**
+             * return value from servlet must be a javascript code,
+             * selector is String of parameter for send to servlet,
+             * @param isCacheable is boolean (defualt: true)
+             * @param SERVLET_NAME is servlet name (defualt: 'Server')
+             * @example jj("username=milad&password=123").jjAjax2(); 
+             * jj("username=milad&password=123").jjAjax2(false); 
+             * jj("username=milad&password=123").jjAjax2(false,'../Server'); 
+             */
+            this.jjAjax2 = function (isCacheable, servletName) {
+                if (sessionStorage.getItem("is_reloaded"))
+                    alert('Reloaded!');
+                var newURL = "Server2?" + this.selector;
+                $.ajax({
+                    url: (servletName == null) ? SERVLET_NAME : servletName,
+                    type: "POST",
+                    cache: isCacheable == null ? true : isCacheable,
+                    data: this.selector,
+                    beforeSend: function () {
+                        $(".ajaxLoaderDiv").show(); // Load ajax loader in div by ajaxLoaderDiv class name //============ BY RASHIDI ========
+                        if (newURL.indexOf("&panel=sw") > 0) { //can add=> ||newURL.indexOf("&panel=swRight&")
+                            stack[window.location] = $('#maincontent').html();
+                            var newTitle = newURL.replace(/Server2.*&text=/, '');
+                            newTitle = newTitle.replace(/&panel=.*jj=1/, "");
+                            document.title = newTitle;
+                        }
+                    },
+                    complete: function () {
+                        $('html, body').css("cursor", "auto");
+                    },
+                    success: function (data) {
+                        new jj(data).jjRun();
+                        $('html, body').css("cursor", "auto");
+                        if (newURL.indexOf("&panel=sw") > 0) {//( if "&panel=sw" is not in url it not worked)
+                            if (!($("html.ie-ie9").length > 0 || $("html.lt-ie8").length > 0)) {// not work in IE 9,8,7,...
+                                window.history.pushState(stateObj, newURL, newURL); //for back botton in browser 
+                                stack[window.location] = $('#maincontent').html();
+                                $(".ajaxLoaderDiv").hide(); // hide ajax loader in div by ajaxLoaderDiv class name //============ BY RASHIDI ========
+                            }
+                        }
+                        $(".ajaxLoaderDiv").hide(); // hide ajax loader in div by ajaxLoaderDiv class name //============ BY RASHIDI ========
+                    },
+                    error: function () {
+                        $('html, body').css("cursor", "auto");
+                        if (LANGUAGE == "1") {
+                            alert("در انجام عملیات مشکلی پیش آمده است.");
+                        } else {
+                            alert("accur a problem in opration");
+                        }
                         $(".ajaxLoaderDiv").hide(); // hide ajax loader in div by ajaxLoaderDiv class name //============ BY RASHIDI ========
                     }
-                }
-                $(".ajaxLoaderDiv").hide(); // hide ajax loader in div by ajaxLoaderDiv class name //============ BY RASHIDI ========
-            },
-            error: function () {
-                $('html, body').css("cursor", "auto");
-                if (LANGUAGE == "1") {
-                    alert("در انجام عملیات مشکلی پیش آمده است.");
-                } else {
-                    alert("accur a problem in opration");
-                }
-                $(".ajaxLoaderDiv").hide(); // hide ajax loader in div by ajaxLoaderDiv class name //============ BY RASHIDI ========
-            }
 
-        });
-    },
-    /**
-     * return key=value from selector
-     * selector is form component selector
-     * @param key is String
-     * @example jj("#userName").jjVal(); return =>  "Milad"
-     * jj("#userName").jjVal("milad"); set "Milad" to "userName" field
-     */
-    this.jjVal = function (value) {
-        if (value == null) {
-            if ($(this.selector).attr('type') == 'checkbox') {
-                return (($(this.selector).is(':checked') ? 1 : 0));
-            } else if ($(this.selector).attr('type') == 'radio') {
-                return (($(this.selector).is(':checked') ? 1 : 0));
-            } else {
-                var val = encodeURIComponent($(this.selector).val());
-                //                var val = $(this.selector).val();
-                return (new jj(new jj(val).jjTrim()).jjGetUtf8());
-            }
-        } else {
-            if ($(this.selector).attr("type") == "checkbox") {
-                $(this.selector).attr("checked", (value == "1" || value == "true"));
-            } else {
-                //                while(value.indexOf('^star^')>-1){
-                //                    value = value.replace('^star^', '/**');
-                //                }
-                $(this.selector).val(value);
-            }
-        }
-    };
+                });
+            },
+            /**
+             * return key=value from selector
+             * selector is form component selector
+             * @param key is String
+             * @example jj("#userName").jjVal(); return =>  "Milad"
+             * jj("#userName").jjVal("milad"); set "Milad" to "userName" field
+             */
+            this.jjVal = function (value) {
+                if (value == null) {
+                    if ($(this.selector).attr('type') == 'checkbox') {
+                        return (($(this.selector).is(':checked') ? 1 : 0));
+                    } else if ($(this.selector).attr('type') == 'radio') {
+                        return (($(this.selector).is(':checked') ? 1 : 0));
+                    } else {
+                        var val = encodeURIComponent($(this.selector).val());
+                        //                var val = $(this.selector).val();
+                        return (new jj(new jj(val).jjTrim()).jjGetUtf8());
+                    }
+                } else {
+                    if ($(this.selector).attr("type") == "checkbox") {
+                        $(this.selector).attr("checked", (value == "1" || value == "true"));
+                    } else {
+                        //                while(value.indexOf('^star^')>-1){
+                        //                    value = value.replace('^star^', '/**');
+                        //                }
+                        $(this.selector).val(value);
+                    }
+                }
+            };
     /**
      * برای اینکه در یک تکست فیلد کاربر فقط بتواند عدد وارد کند
      * @returns {undefined}
@@ -190,7 +190,7 @@ var jj = function (selector) {
         var selector = this.selector;
         $(this.selector).on("focusout", function () {
             var val = $(this).val();
-            if (! (new jj(val).jjIsDigit())) {//اگر مقدار عدد نبود
+            if (!(new jj(val).jjIsDigit())) {//اگر مقدار عدد نبود
                 $(this).val(0);
             }
         });
@@ -219,6 +219,25 @@ var jj = function (selector) {
     //        }
     //    }
 
+    /**
+     * selector is editor component
+     * @param value is object
+     * @example jj("#name").jjSetEditorValue("Milad");
+     */
+    this.jjSummenoteVal = function (value) {
+        if (value == null) {
+            //            var val = this.selector.getData();
+            //            var val = this.selector.getData();
+            var val = encodeURIComponent(this.selector.getData());
+            val = (new jj(new jj(val).jjTrim()).jjGetUtf8());
+            return val;
+        } else {
+            this.selector.setData(value);
+            if (value == "") {
+                this.selector.setData("<p style='font-family:Tahoma;font-size:10pt'></p>");
+            }
+        }
+    };
     /**
      * selector is editor component
      * @param value is object
@@ -356,22 +375,22 @@ var jj = function (selector) {
         var com_textarea = $(this.selector + " textarea");
         for (var i = 0; i < com_hidden.length; i++) {
             if (com_hidden[i].name != "") {
-                param += (param == "" ? "" : "&") + com_hidden[i].name + "=" +new jj("#" + com_hidden[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_hidden[i].name + "=" + new jj("#" + com_hidden[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_text.length; i++) {
             if (com_text[i].name != "") {
-                param += (param == "" ? "" : "&") + com_text[i].name + "=" +new jj("#" + com_text[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_text[i].name + "=" + new jj("#" + com_text[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_checkbox.length; i++) {
             if (com_checkbox[i].name != "") {
-                param += (param == "" ? "" : "&") + com_checkbox[i].name + "=" +new jj("#" + com_checkbox[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_checkbox[i].name + "=" + new jj("#" + com_checkbox[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_number.length; i++) {
             if (com_number[i].name != "") {
-                param += (param == "" ? "" : "&") + com_number[i].name + "=" +new jj("#" + com_number[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_number[i].name + "=" + new jj("#" + com_number[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_radio.length; i++) {
@@ -388,17 +407,18 @@ var jj = function (selector) {
         }
         for (var i = 0; i < com_password.length; i++) {
             if (com_password[i].name != "") {
-                param += (param == "" ? "" : "&") + com_password[i].name + "=" +new jj("#" + com_password[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_password[i].name + "=" + new jj("#" + com_password[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_textarea.length; i++) {
             if (com_textarea[i].name != "") {
                 //                alert(com_textarea[i].style.visibility);
-                if ($(com_textarea[i]).hasClass("summernote") ) {
-                    param += (param == "" ? "" : "&") + com_textarea[i].name + "=";
-                    param += $(("#" + com_textarea[i].id)).summernote('code');
+                if ($(com_textarea[i]).hasClass("summernote")) {
+                    var val = encodeURIComponent($(("#" + com_textarea[i].id)).summernote('code'));
+                    val = (new jj(new jj(val).jjTrim()).jjGetUtf8());
+                    param += (param == "" ? "" : "&") + com_textarea[i].name + "=" + val;
                 } else {// اگر تکست اریا معمولی باشد
-                    param += (param == "" ? "" : "&") + com_textarea[i].name + "=" +new jj("#" + com_textarea[i].id).jjVal();
+                    param += (param == "" ? "" : "&") + com_textarea[i].name + "=" + new jj("#" + com_textarea[i].id).jjVal();
                 }
             }
         }

@@ -109,7 +109,7 @@
                                     hmisForms.loadForm();
                                 return false;" class="nav-link ShowOneDiv">فرم ها </a></li>
                         <li class="nav-item"><a href="#swForms" onclick="hmisForms.showMyForms(0);return false;" class="nav-link ShowOneDiv">آرشیو فرم های تکمیل شده</a></li>
-                        <li class="nav-item"><a href="#swForms" onclick="hmisForms.showMyForms(0);return false;" class="nav-link ShowOneDiv">تکمیل فرم های من</a></li>
+                        <li class="nav-item"><a href="#swMyForms" target="_blank" onclick="hmisFormAnswers.showMyForms();return false;" class="nav-link ShowOneDiv">تکمیل فرم های من</a></li>
                     </ul>
                 </li><!-- nav-item -->
                 <li class="nav-item">
@@ -552,6 +552,10 @@
                                 <div id="swFormsTbl" style=""></div>
                                 <div id="swFormsForm" style="display: none;"></div>
                             </div><!--swSession-->
+                            <div class="Alldiv" id="swMyForms">
+                                <div id="swMyFormsTbl" style=""></div>
+                                <div id="swMyFormsForm" style="display: none;"></div>
+                            </div><!--swSession-->
                             <div class="Alldiv" id="swPlans">
                                 <div id="swPlansTbl" style=""></div>
                                 <div id="swPlansForm" style="display: none;"></div>
@@ -653,6 +657,7 @@
             <script src="jsHMIS/forms.js" type="text/javascript"></script>
             <script src="jsHMIS/formQuestions.js" type="text/javascript"></script>
             <script src="jsHMIS/formQuestionOptions.js" type="text/javascript"></script>
+            <script src="jsHMIS/formAnswers.js" type="text/javascript"></script>
             <script src="jsHMIS/plansForAssess.js" type="text/javascript"></script>
             <script src="jsHMIS/plans.js" type="text/javascript"></script>
             <script src="jsHMIS/steps.js" type="text/javascript"></script>

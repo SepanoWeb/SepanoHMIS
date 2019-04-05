@@ -5,21 +5,10 @@
  */
 package HMIS;
 
-//import static HMIS.Location._haspitalname;
-//import static HMIS.Location._id;
-//import static HMIS.Location._level;
-//import static HMIS.Location._parent;
-//import static HMIS.Location.tableName;
-import static HMIS.DepartmentPosition._id;
 import static HMIS.DepartmentPosition._level;
-import static HMIS.DepartmentPosition.rul_ins;
-import static HMIS.Forms._icon;
 import cms.access.Access_User;
-import cms.cms.Content;
-import static cms.cms.Product.rul_ins;
 import cms.tools.Js;
 import cms.tools.Server;
-import cms.tools.email;
 import cms.tools.jjTools;
 import cms.tools.jjValidation;
 import java.util.HashMap;
@@ -27,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
@@ -70,11 +60,11 @@ public class Department {
      * @param sort is number of default sort column number
      * @param panel is container id
      */
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString) throws Exception {
         try {
 //            String hasAccess = Department.getAccessDialog(request, db, rul_rfs);
 //            if (!hasAccess.equals("")) {
-//                return hasAccess;
+//                Server.outPrinter(request, response,hasAccess;
 //            }
             StringBuilder html = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
@@ -119,9 +109,11 @@ public class Department {
             }
             String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
             html2 += Js.table("#refreshParts", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست بخش ها");
-            return html2;
+            Server.outPrinter(request, response,html2);
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response,Server.ErrorHandler(e));
+            return "";
         }
     }
 
@@ -129,12 +121,13 @@ public class Department {
      * این متد بخش ها و زیر بخش ها را نشان میدهد
      * توجه داشته باشید سلکت باید در قسمت اچ تی ام ال سمت کلاینت موجود باشد و اینجا فقط آپشن ها بصورت سلسله مراتبی ایجاد می شوند
      * @param request panel درون ریکوئست
+     * @param response
      * @param db
-     * @param isPost
-     * @return بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در پنل معرفی شده
+     * @param needString
+     * @Server.outPrinter(request, response,بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در پنل معرفی شده
      * @throws Exception 
      */
-    public static String selectOptionDepartment(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String selectOptionDepartment(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString) throws Exception {
         StringBuilder html = new StringBuilder();
         try {
             StringBuilder html3 = new StringBuilder();
@@ -166,25 +159,29 @@ public class Department {
             }
             script += Js.setHtml("#"+panel, doc.getElementsByTag("body").toString());
 
-            return script;
+            Server.outPrinter(request, response,script);
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response,Server.ErrorHandler(e));
+            return "";
         }
     }
 
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString) throws Exception {
         StringBuilder html = new StringBuilder();
         StringBuilder script = new StringBuilder();
         try {
 //           script.append("hmisDepartment.selectOptionDepartment();");
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Department_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Department_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
                 html.append(Js.buttonMouseClick("#insert_Department_new", Js.jjDepartment.insert()));
             }
-            return html.toString() + script;
+            Server.outPrinter(request, response,html.toString() + script);
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response,Server.ErrorHandler(e));
+            return "";
         }
     }
 
@@ -197,11 +194,12 @@ public class Department {
      * @return
      * @throws Exception
      */
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response,hasAccess);
+            return "";
             }
 //            jjCalendar_IR ir = new jjCalendar_IR();
             Map<String, Object> map = new HashMap<String, Object>();
@@ -222,11 +220,14 @@ public class Department {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response,Js.dialog(errorMessage));
+            return "";
             }
-            return Js.jjPlans.refresh();
+            Server.outPrinter(request, response,Js.jjPlans.refresh());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+            return "";
         }
     }
 
@@ -234,7 +235,7 @@ public class Department {
      *
      * @param id
      */
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -242,7 +243,8 @@ public class Department {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response,Js.dialog(errorMessageId));
+            return "";
             }
             StringBuilder script = new StringBuilder();
 
@@ -252,7 +254,7 @@ public class Department {
 //                if (jjTools.isLangEn(request)) {
 //                    errorMessage = "Select Fail;";
 //                }
-//                return Js.dialog(errorMessage);
+//                Server.outPrinter(request, response,Js.dialog(errorMessage);
 //            }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
@@ -275,8 +277,8 @@ public class Department {
             script.append(Js.setValSummerNote("#department_publicContent", row.get(0).get(_publicContent)));
             script.append(Js.setValSummerNote("#department_praivateContent", row.get(0).get(_praivateContent)));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (accEdt) {
 //                if (!id.equals("1")) {
@@ -290,17 +292,20 @@ public class Department {
                 html.append(Js.buttonMouseClick("#delete_Department", Js.jjDepartment.delete(id)));
 //                }
             }
-            return (Js.setHtml("#Department_button", html2.toString())) + html.toString()+script ;
+            Server.outPrinter(request, response,(Js.setHtml("#Department_button", html2.toString())) + html.toString()+script );
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response,Server.ErrorHandler(e));
+            return "";
         }
     }
 
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response,hasAccess);
+            return "";
             }
             String id = jjTools.getParameter(request, _id);
 //           
@@ -318,28 +323,32 @@ public class Department {
 //                if (jjTools.isLangEn(request)) {
 //                    errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
 //                }
-//                return Js.dialog(errorMessageId);
+//                Server.outPrinter(request, response,Js.dialog(errorMessageId);
 //            }
             if (!db.update(tableName, map, _id + "=" + id)) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response,Js.dialog(errorMessage));
+            return "";
             }
-            return Js.jjDepartment.refresh();
-//            return "";
+            Server.outPrinter(request, response,Js.jjDepartment.refresh());
+            return "";
+//            Server.outPrinter(request, response,"";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String delete(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString) throws Exception {
         try {
 //            Content.catchProductTitle = null;
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response,hasAccess);
+            return "";
             }
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -347,7 +356,8 @@ public class Department {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response,Js.dialog(errorMessageId));
+            return "";
             }
 
             if (!db.delete(tableName, _id + "=" + id)) {
@@ -355,12 +365,15 @@ public class Department {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Delete Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response,Js.dialog(errorMessage));
+            return "";
             }
 
-            return Js.jjDepartment.refresh();
+            Server.outPrinter(request, response,Js.jjDepartment.refresh());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+            return "";
         }
     }
 }

@@ -111,7 +111,7 @@ public class Customer {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuffer html = new StringBuffer();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Customer_button", "<input type=\"button\" id=\"insert_customer_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_customer_new", Js.jjCustomer.insert()));
@@ -321,8 +321,8 @@ public class Customer {
             html.append(Js.setVal(_val19, row.get(0).get(_val19)));
             html.append(Js.setVal(_val20, row.get(0).get(_val20)));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (accEdt) {
                 html2.append("<input type=\"button\" id=\"edit_customer\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");

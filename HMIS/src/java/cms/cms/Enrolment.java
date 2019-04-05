@@ -504,7 +504,7 @@ public class Enrolment {
                     : "<a href='upload/" + row.get(0).get(_file2).toString() + "'>"
                     + row.get(0).get(_file2).toString() + "</a>")));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
 
             if (accDel) {
                 html2.append("<input type=\"button\" id=\"delete_Enrolment\" value=\"" + lbl_delete + "\" class=\"tahoma10\"  />");

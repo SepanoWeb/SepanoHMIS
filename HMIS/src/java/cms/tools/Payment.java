@@ -168,7 +168,7 @@ public class Payment {
             html.append(Js.setVal(_amount, row.get(0).get(_amount)));
             html.append(Js.setVal(_status, row.get(0).get(_status)));
             html.append(Js.setVal(_date, row.get(0).get(_date)));
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
             if (accDel) {
                 html2.append("<input type=\"button\" id=\"delete_payment\" value=\"" + lbl_delete + "\" class=\"tahoma10\"  />");
                 html.append(Js.buttonMouseClick("#delete_payment", Js.jjPayment.delete(id)));

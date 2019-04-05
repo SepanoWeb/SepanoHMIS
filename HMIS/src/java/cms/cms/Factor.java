@@ -444,7 +444,7 @@ public class Factor {
         try {
             StringBuffer html = new StringBuffer();
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Factor_button", "<input type=\"button\" id=\"insert_Factor_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_Factor_new", Js.jjFactor.insert()));
@@ -962,8 +962,8 @@ public class Factor {
             html.append(Js.show("#trProduct14"));
             html.append(Js.show("#trProduct15"));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (accEdt) {
                 html2.append("<input type='button' id='edit_Factor' value='" + lbl_edit + "' class='tahoma10'>");
