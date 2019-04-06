@@ -465,7 +465,7 @@ public class sms {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuilder html = new StringBuilder();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(smsSetting.selectWebService(request, db, isPost));
                 html.append(Js.setHtml("#SMS_button", "<input type=\"button\" id=\"insert_SMS_new\" value=\"" + lbl_send + "\" class=\"tahoma10\">"));

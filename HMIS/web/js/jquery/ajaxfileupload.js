@@ -80,12 +80,12 @@ jQuery.extend({
             {
                 if (io.contentWindow)
                 {
-                    xml.responseText = io.contentWindow.document.body ? io.contentWindow.document.body.innerHTML : null;
+                    xml.responseText = io.contentWindow.document.body ? $(io.contentWindow.document.body.innerHTML).html() : null;
                     xml.responseXML = io.contentWindow.document.XMLDocument ? io.contentWindow.document.XMLDocument : io.contentWindow.document;
 
                 } else if (io.contentDocument)
                 {
-                    xml.responseText = io.contentDocument.document.body ? io.contentDocument.document.body.innerHTML : null;
+                    xml.responseText = io.contentDocument.document.body ? $(io.contentWindow.document.body.innerHTML).html() : null;
                     xml.responseXML = io.contentDocument.document.XMLDocument ? io.contentDocument.document.XMLDocument : io.contentDocument.document;
                 }
             } catch (e)

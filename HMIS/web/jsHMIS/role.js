@@ -21,12 +21,12 @@ var hmisRole = {
                 new jj('#role_date').jjCalendarWithYearSelector(1310, 1410);
 //                hmisRole.m_refresh();
 
-               $("#cancel_Role").button().click(function (e) {
+                $("#cancel_Role").button().click(function (e) {
 //                   alert(1);
                     hmisRole.m_clean();
                     hmisRole.m_show_tbl();
                 });
-               
+
 
             });
         }
@@ -38,12 +38,12 @@ var hmisRole = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? PanelHeight : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisRole.tabSizeTbl();
     },
-    bazgasht:function(){
-       hmisRole.m_clean();
-                    hmisRole.m_show_tbl();  
+    bazgasht: function () {
+        hmisRole.m_clean();
+        hmisRole.m_show_tbl();
     },
     m_add_new: function () {
         jj("do=" + hmisRole.tableName + ".add_new").jjAjax2(false);
@@ -54,9 +54,9 @@ var hmisRole = {
         $("#role_name").val('');
         $("#role_family").val('');
         $("#role_email").val('');
-        $("#role_condition").val('');
-        hmisRole.m_clean();
-      
+//        $("#role_condition").val('');
+//        hmisRole.m_clean();
+
 //        part_content_editor = new jj('#department_publicContent').jjEditor();
 //        part_praivate_editor = new jj('#department_praivateContent').jjEditor();
 //        cmsUser.m_getGroups();
@@ -64,11 +64,11 @@ var hmisRole = {
     m_show_form: function () {
         $('#swRoleTbl').hide();
         $('#swRoleForm').show();
-         new jj("#swRoleForm").jjFormClean();
+        new jj("#swRoleForm").jjFormClean();
         hmisRole.tabSizeForm();
     },
     m_clean: function () {
-        new jj("#swRoleForm").jjFormClean();
+//        new jj("#swRoleForm").jjFormClean();
 
     },
     m_show_tbl: function () {
@@ -84,7 +84,7 @@ var hmisRole = {
         var param = "";
         param += "do=" + hmisRole.tableName + ".insert";
         param += "&" + new jj("#swRoleForm").jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisRole.m_show_tbl();
         hmisRole.m_clean();
     },
@@ -92,7 +92,7 @@ var hmisRole = {
         var param = "";
         param += "do=" + hmisRole.tableName + ".edit";
         param += "&" + new jj("#swRoleForm").jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisRole.m_show_tbl();
         hmisRole.m_clean();
     },
@@ -103,7 +103,7 @@ var hmisRole = {
         var param = "";
         param += "do=" + hmisRole.tableName + ".delete";
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisRole.m_show_tbl();
         hmisRole.m_clean();
     },
@@ -112,7 +112,7 @@ var hmisRole = {
         param += "do=" + hmisRole.tableName + ".select";
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
 //        $('.summernote').summernote();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         $("#ListKarbaran").hide();
 
 
@@ -120,21 +120,20 @@ var hmisRole = {
 
 
     },
-    m_selectKarbar: function (id){
-        
-      var param = "";
+    m_selectKarbar: function (id) {
+
+        var param = "";
         param += "do=" + hmisRole.tableName + ".selectKarbar";
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
-       hmisRole.m_show_form();
+        hmisRole.m_show_form();
 //       $("#role_email").val('');
-        jj(param).jjAjax2(false);
-    
+        new jj(param).jjAjax2(false);
     },
-    
+
     m_getMenu: function () {
         var param = "";
         param += "do=" + hmisRole.tableName + ".getMenu";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {
         $('#swRole').css('height', 515);
@@ -148,8 +147,7 @@ var hmisRole = {
     mainTabSetSize: function () {
         $('#swRole').css('height', hmisRole.heightTab);
     },
-    
-   
+
 }
 
 

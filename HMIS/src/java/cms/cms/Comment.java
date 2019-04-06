@@ -60,7 +60,7 @@ public class Comment {
             html.append("<th width='45%'>عنوان</th>");
             html.append("<th width='5%'>عملیات</th>");
             html.append("<th width='5%'>چاپ</th>");
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
             if (accDel) {
                 html.append("<th width='5%'>حذف</th>");
             }
@@ -300,8 +300,8 @@ public class Comment {
             html.append(Js.setVal("#" + _answer, row.get(0).get(_answer)));
             html.append(Js.setVal("#" + _publish, row.get(0).get(_publish)));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (accEdt) {
                 html2.append("<input type=\"button\" id=\"edit_Comment\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");

@@ -35,7 +35,20 @@ public class Js {
                 //<============ BY RASHIDI ========
                 + "close: function() {$(this).dialog('destroy');}});\n";
     }
+    public static String modal(String comment,String title) {
+        return "new jj('"+comment+"').jjModal('"+title+"');\n";
+    }
 
+    public static String bootStarpWarning(String comment) {
+        return "$('<div></div>').dialog({"
+                + "title : \" پیام سامانه\","
+                + "open: function() {$(this).html(\"" + comment + "\");\n"
+                //============ BY RASHIDI ========>
+                + " $(this).css('direction','rtl');},"
+                //<============ BY RASHIDI ========
+                + "close: function() {$(this).dialog('destroy');}});\n";
+    }
+    
     public static String dialog(String comment, String title) {
         return "jj('" + replacor(comment) + "','" + replacor(title) + "').jjDialog();\n";
     }
@@ -67,6 +80,12 @@ public class Js {
     public static String setCss(String selector, String key, String value) {
         return "$('" + selector + "').css('" + replacor(key) + "','" + replacor(value) + "');\n";
     }
+    public static String addClass(String selector, String className) {
+        return "$('" + selector + "').addClass('" + replacor(className) + "');\n";
+    }
+    public static String removeClass(String selector, String className) {
+        return "$('" + selector + "').removeClass('" + replacor(className) + "');\n";
+    }
 
     /**
      * this function uses to set html tag attributes like checked='checked' for
@@ -96,7 +115,7 @@ public class Js {
         return setVal(selector, value.toString());
     }
     public static String setValSummerNote(String selector, Object value) {
-        return "$('"+selector+"').summernote('code', '"+value.toString()+"');";
+        return "$('"+selector+"').summernote('code', '"+value.toString()+"');\n";
     }
 
     public static String setVal(String selector, String value) {
@@ -137,6 +156,15 @@ public class Js {
         return "$('" + panel + "').prepend('" + replacor(value) + "');\n";
     }
 
+    /**
+     * اگر ارتفاع را عدد نگذاریمخودکار تنظیم میشود
+     * @param tableSelector
+     * @param height عدد باید باشه یا رشته ی تهی
+     * @param sort
+     * @param tblCode
+     * @param tableTitle
+     * @return 
+     */
     public static String table(String tableSelector, String height, int sort, String tblCode, String tableTitle) {
         tblCode = tblCode == null ? "null" : tblCode;
         tblCode = tblCode.equals("") ? "null" : tblCode;
@@ -152,7 +180,7 @@ public class Js {
 //        return "$('" + tableSelector + "').dataTable({'tblCode':" + tblCode + ",'iDisplayLength':100,'sScrollY': " + height + ",'bJQueryUI': true,'sPaginationType': 'full_numbers' ,'oColVis':{},'sDom': 'T<\"clear\">lfrtip', 'aaSorting': [[ " + sort + ", 'asc' ]] });\n";
 //        return "$('" + tableSelector + "').dataTable({'tblCode':" + tblCode + ",'iDisplayLength':100,'sScrollY': " + height + ",'bJQueryUI': true,'sPaginationType': 'full_numbers','sDom': 'C<\"clear\">Rlfrtip','oColVis':{}, 'aaSorting': [[ " + sort + ", 'asc' ]] });\n";
         return "$('#" + tableSelector + "').dataTable({'tblCode':" + tblCode + ",'tblTitle':'" + tableTitle
-                + "','iDisplayLength':300,'sScrollY': " + height + ",'bJQueryUI': true,'sPaginationType': 'full_numbers', 'aaSorting': [[ " + sort + ", 'desc' ]] });\n";//C<\"clear\">lfrtip<\"H\"Cfr>t<\"F\"ip><\"H\"fr>lfrtipt<\"F\"ip>
+                + "','iDisplayLength':300,"+ (jjNumber.isDigit(height)? "'sScrollY': " +height +",":"")+ "'bJQueryUI': true,'sPaginationType': 'full_numbers', 'aaSorting': [[ " + sort + ", 'desc' ]] });\n";//C<\"clear\">lfrtip<\"H\"Cfr>t<\"F\"ip><\"H\"fr>lfrtipt<\"F\"ip>
 //        return "$('" + tableSelector + "').dataTable({'tblCode':" + tblCode + ",'iDisplayLength':100,'sScrollY': " + height + ",'bJQueryUI': true,'sPaginationType': 'full_numbers', 'aaSorting': [[ " + sort + ", 'asc' ]] });\n";
     }
 
@@ -226,6 +254,15 @@ public class Js {
 
     public static String buttonMouseClick(String buttonSelector, String methods) {
         return "$('" + buttonSelector + "').button().click(function(e) {\n" + methods + "});\n";
+    }
+    /**
+     * در بوت استرپ  بیشتر سعی شود از این استفاده شود بجای جی کوئری یو آی
+     * @param buttonSelector
+     * @param methods
+     * @return 
+     */
+    public static String click(String buttonSelector, String methods) {
+        return "$('" + buttonSelector + "').on('click',function(e) {" + methods + "});\n";
     }
 
     public static String importJs(String jsLocation) {
@@ -1351,6 +1388,146 @@ public class Js {
 
         public static String edit() {
             return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+    //فرم ها
+    public static class jjForms {
+
+        static String hmis = "hmisForms";
+
+        public static String insert() {
+            return hmis+".m_insert();\n";
+        }
+
+        public static String refresh() {
+            return hmis+".m_refresh();\n";
+        }
+
+        public static String edit(String id) {
+            return hmis + ".m_edit("+id+ ");\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+    public static class jjFormAnswers {
+
+        static String hmis = "hmisFormAnswers";
+
+        /**
+         * برای ایجاد یک رکورد پاسخ از فرم با آی دی داده شده
+         * @para FotmId آی دی فرم از جدول 
+         * <br/>
+         * Forms
+         * @return 
+         */
+        public static String add_new(String FotmId) {
+            return hmis+".m_add_new("+FotmId+ ");\n";
+        }
+        public static String insert() {
+            return hmis+".m_insert();\n";
+        }
+
+        public static String refreshMyAnswers(String FormId) {
+            return hmis+".refreshMyAnswers("+FormId+");\n";
+        }
+        public static String refresh(String id) {
+            return hmis+".m_refresh("+id+");\n";
+        }
+
+        public static String edit(String id) {
+            return hmis + ".m_edit("+id+ ");\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+    public static class jjFormQuestions{
+
+        static String hmis = "hmisFormQuestions";
+
+        public static String insert() {
+            return hmis+".m_insert();\n";
+        }
+        /**
+         * چون باید بدانیم که سوالات کدام فرم باید بروز شوند
+         * @param formId
+         * @return 
+         */
+        public static String refresh(String formId) {
+            return hmis+".m_refresh("+formId+");\n";
+        }
+
+        public static String edit(String id) {
+            return hmis + ".m_edit("+id+ ");\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+    public static class jjFormQuestionOptions{
+        static String hmis = "hmisFormQuestionOptions";
+        public static String insert() {
+            return hmis+".m_insert();\n";
+        }
+        /**
+         * چون باید بدانیم که سوالات کدام فرم بادی بروز شوند
+         * @param formId
+         * @return 
+         */
+        public static String refresh(String formId) {
+            return hmis+".m_refresh("+formId+");\n";
+        }
+
+        public static String edit(String id) {
+            return hmis + ".m_edit("+id+ ");\n";
         }
 
         public static String delete(String id) {

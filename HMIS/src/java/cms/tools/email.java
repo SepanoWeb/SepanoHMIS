@@ -384,7 +384,7 @@ public class email {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuilder html = new StringBuilder();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
 
                 html.append(Js.setHtml("#email_button", "<input type=\"button\" id=\"insert_email_new\" value=\"" + lbl_send + "\" class=\"tahoma10\">"));

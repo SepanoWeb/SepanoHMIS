@@ -1,0 +1,39 @@
+همه ی جی جی ها نیو میخواهند
+بنابر این تبدیل زیر انجام شود :
+ jj("do=Factor.insertFactor&").jjAjax2(true);
+new jj("do=Factor.insertFactor&").jjAjax2(true);
+<!---------------------------------------------------------->
+
+برای درک صحیح عملکرد سیستم جدید 
+Forms.showMyForms()
+را نگاه کنید
+<!---------------------------------------------------------->
+برای فایل آپلود کد زیر را استفاده کنید
+
+<div class="col-xs-3 col-sm-3 col-lg-3">
+    <input id="formQuestionOptions_icon" name="formQuestionOptions_icon" type="hidden">
+    تصویر برای نمایش این گزینه
+    <div>
+        <img id="formQuestionOptions_Preview" class="img-thumbnail" src="img/preview.jpg" style="max-width:80;height: 36px ;">
+        <input class="btn btn-primary" id="send_formQuestionOptions_icon" type="submit" value="ارسال">
+        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+        <input id="formQuestionOptions_icon_file" name="formQuestionOptions_icon_file" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+        <!--<span class="form-control"></span>-->
+    </div>
+</div>
+
+<!--script-->
+ new jj('#send_formQuestionOptions_icon').jjAjaxFileUpload2('formQuestionOptions_icon_file', '#formQuestionOptions_icon', '#formQuestionOptions_Preview');
+<!---------------------------------------------------------->
+ممکن است یک کاربر چند نقش داشته باشد بنابر ایننقش هایی که دارد در سشن با 
+%A%
+از هم جدا میشوند
+<!---------------------------------------------------------->
+برای قسمت هایی که یک کاربر میخواهد چیزی ایجاد کند میتوانیم نقش هایی که او دارد را نشانش بدهیم تا با هر کدام خواست آنرا ایجاد کند
+گاهی میتواند هیچ کدام را انتخاب نکند یعنی نقش را تهی بگذارد در این صورت هیچ نقشی به آن دسترسی ندارند و فقط افرادی که ایجاد کرده اند یا مشخص شده اند دسترسی دارند
+
+اگر بخواهد همه  نقش ها به آن مورد دسترسی داشته باشند میتواند بجایش عبارت 
+all
+بگذارد
+<!---------------------------------------------------------->
+در اچ تی ام ال همه ی سامرنوت هایی که میخواهیم سریال شوند کلاس سامرنوت  را باید داشته باشند

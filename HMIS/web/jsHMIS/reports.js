@@ -44,7 +44,7 @@ var hmisReports = {
 //        param += "&sort=" + (sortField == null ? "0" : sortField);
 //        param += "&height=" + (tableHeight == null ? 435 : tableHeight);
 //        param += "&jj=1";
-//        jj(param).jjAjax2(false);
+//        new jj(param).jjAjax2(false);
 ////        himsPlansForAssess.tabSizeTbl();
 //    },
     m_show_form: function () {
@@ -82,7 +82,7 @@ var hmisReports = {
             var param = "";
             param += "do=" + hmisReports.tableName + ".insert";
             param += "&" + new jj('#swReportsForm').jjSerial();
-            jj(param).jjAjax2(false);
+            new jj(param).jjAjax2(false);
             hmisReports.m_show_tbl();
             hmisReports.m_clean();
         } else {
@@ -95,7 +95,7 @@ var hmisReports = {
             var param = "";
             param += "do=" + hmisReports.tableName + ".edit";
             param += "&" + new jj('#swReportsForm').jjSerial();
-            jj(param).jjAjax2(false);
+            new jj(param).jjAjax2(false);
             hmisReports.m_show_tbl();
             hmisReports.m_clean();
 //        } else {
@@ -115,7 +115,7 @@ var hmisReports = {
         var param = "";
         param += "do=" + hmisReports.tableName + ".delete";
         param += "&" + hmisReports.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisReports.m_show_tbl();
         hmisReports.m_clean();
     },
@@ -123,14 +123,14 @@ var hmisReports = {
         var param = "";
         param += "do=" + hmisReports.tableName + ".select";
         param += "&" + hmisReports.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisReports.m_show_form();
     },
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisReports.tableName + ".add_EN";
         param += "&" + hmisReports.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisReports.f_parent).jjVal(id);
         new jj("#" + hmisReports.f_lang).jjVal("2");
         hmisReports.m_show_form();
@@ -139,7 +139,7 @@ var hmisReports = {
         var param = "";
         param += "do=" + hmisReports.tableName + ".add_Ar";
         param += "&" + hmisReports.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisReports.f_parent).jjVal(id);
         new jj("#" + hmisReports.f_lang).jjVal("3");
         hmisReports.m_show_form();
@@ -150,7 +150,7 @@ var hmisReports = {
         param += "do=" + hmisReports.tableName + ".add_lang";
         param += "&" + hmisReports.f_id + "=" + (id == null ? "" : id);
         param += "&myLang=" + (langId == null ? "1" : langId);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisReports.f_parent).jjVal(id);
         new jj("#" + hmisReports.f_lang).jjVal(langId);
 //        alert(id+"&&&&&"+langId);
@@ -161,13 +161,13 @@ var hmisReports = {
         var param = "";
         param += "do=" + hmisReports.tableName + ".searchTextInTitle";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_searchTextInAll: function (text) {
         var param = "";
         param += "do=" + hmisReports.tableName + ".searchTextInAll";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //============ BY RASHIDI ========>    
     m_searchTags: function () {
@@ -175,14 +175,14 @@ var hmisReports = {
         param += "do=" + hmisReports.tableName + ".searchTags";
         param += "&" + new jj('#swReportsForm').jjSerial();
         param += "&panel=content_search_tags_result";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
         param += "do=" + hmisReports.tableName + ".insertTags";
         param += "&" + new jj('#swReportsForm').jjSerial();
 //        param += "&panel=content_tags_div";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
     tabSizeTbl: function () {

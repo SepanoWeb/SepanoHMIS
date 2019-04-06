@@ -161,8 +161,8 @@ public class tags {
             html.append(Js.setVal(_id, row.get(0).get(_id)));
             html.append(Js.setVal(_name, row.get(0).get(_name)));
 
-//            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-//            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+//            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+//            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 //            if (accEdt) {
 //                html2.append("<input type=\"button\" id=\"edit_Tag\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");
 //                html.append(Js.buttonMouseClick("#edit_Product", Js.jjProduct.edit()));

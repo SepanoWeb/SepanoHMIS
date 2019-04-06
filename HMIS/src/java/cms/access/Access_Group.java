@@ -93,7 +93,7 @@ public class Access_Group {
 
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         StringBuffer html = new StringBuffer();
-        boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+        boolean accIns = Access_User.hasAccess(request, db, rul_ins);
         if (accIns) {
             html.append(Js.setHtml("#Group_button", "<input type=\"button\" id=\"insert_Group_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
             html.append(Js.buttonMouseClick("#insert_Group_new", Js.jjGroup.insert()));
@@ -271,8 +271,8 @@ public class Access_Group {
             html.append(Js.setVal("#C" + (i < 10 ? "0" + i : i), row.get(0).get(thisRow)));
         }
 
-        boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-        boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+        boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+        boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
         if (accEdt) {
             html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_Group\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");

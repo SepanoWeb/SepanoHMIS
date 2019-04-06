@@ -141,7 +141,7 @@ public class Portal {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuilder html = new StringBuilder();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#portalPost_button", "<input type=\"button\" id=\"insert_portalPost_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\" />"));
                 html.append(Js.buttonMouseClick("#insert_portalPost_new", Js.jjPortal.insert()));
@@ -524,8 +524,8 @@ public class Portal {
                 html.append(Js.removeAttr("#" + _dislike, "disabled"));
             }
             html.append(Js.setVal("#" + _isActive, row.get(0).get(_isActive)));
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (accEdt) {
                 html2.append("<input type='button' id='edit_PortalPost' value='" + lbl_edit + "' class='tahoma10' />");
@@ -536,7 +536,7 @@ public class Portal {
                 html2.append("<input type='button' id='delete_PortalPost' value='" + lbl_delete + "' class='tahoma10'  />");
                 html.append(Js.buttonMouseClick("#delete_PortalPost", Js.jjPortal.delete(id)));
             }
-//            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);
+//            boolean acclng = Access_User.hasAccess(request, db, rul_lng);
 //            if (acclng) {
 //                List<Map<String, Object>> rowEn = jjDatabase.separateRow(db.Select(tableName, _parent + "=" + id + " AND " + _lang + "=2"));
 //                if (rowEn.size() > 0) {
@@ -788,7 +788,7 @@ public class Portal {
 //            html.append(Js.setVal("#" + _url_ex, row.get(0).get(_url_ex)));
 //            html.append(Js.setVal("#" + _lang, "2"));
 //
-//            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+//            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
 //            if (accIns) {
 //                html2.append(Js.setHtml("#Pic_button", "<input type=\"button\" id=\"insert_Pic_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
 //                html2.append(Js.buttonMouseClick("#insert_Pic_new", Js.jjPic.insert()));
@@ -829,7 +829,7 @@ public class Portal {
 //            html.append(Js.setVal("#" + _url_ex, row.get(0).get(_url_ex)));
 //            html.append(Js.setVal("#" + _lang, "3"));
 //
-//            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+//            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
 //            if (accIns) {
 //                html2.append(Js.setHtml("#Pic_button", "<input type='button' id='insert_Pic_new_ar' value='" + lbl_insert + "' class='tahoma10'>"));
 //                html2.append(Js.buttonMouseClick("#insert_Pic_new_ar", Js.jjPic.insert()));
@@ -1766,8 +1766,8 @@ public class Portal {
 //                html.append(Js.removeAttr("#" + _dislike, "disabled"));
 //            }
 //            html.append(Js.setVal("#" + _isActive, row.get(0).get(_isActive)));
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (!accEdt) {
                 html2.append("<input type='button' id='edit_PortalPost' value='" + lbl_edit + "' class='tahoma10' />");
@@ -1778,7 +1778,7 @@ public class Portal {
                 html2.append("<input type='button' id='delete_PortalPost' value='" + lbl_delete + "' class='tahoma10'  />");
                 html.append(Js.buttonMouseClick("#delete_PortalPost", Js.jjPortal.delete(id)));
             }
-//            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);
+//            boolean acclng = Access_User.hasAccess(request, db, rul_lng);
 //            if (acclng) {
 //                List<Map<String, Object>> rowEn = jjDatabase.separateRow(db.Select(tableName, _parent + "=" + id + " AND " + _lang + "=2"));
 //                if (rowEn.size() > 0) {
@@ -1889,7 +1889,7 @@ public class Portal {
                 html2.append("<input type='button' id='delete_PortalPost' value='" + lbl_delete + "' class='tahoma10'  />");
                 html.append(Js.buttonMouseClick("#delete_PortalPost", "deleteByPortalUser(" + id + ");"));
             }
-//            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);
+//            boolean acclng = Access_User.hasAccess(request, db, rul_lng);
 //            if (acclng) {
 //                List<Map<String, Object>> rowEn = jjDatabase.separateRow(db.Select(tableName, _parent + "=" + id + " AND " + _lang + "=2"));
 //                if (rowEn.size() > 0) {

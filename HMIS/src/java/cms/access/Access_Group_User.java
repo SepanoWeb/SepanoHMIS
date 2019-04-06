@@ -34,8 +34,8 @@ public class Access_Group_User {
         if (!hasAccess.equals("")) {
             return hasAccess;
         }
-        boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
-        boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
+        boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
+        boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
         StringBuffer html = new StringBuffer();
         DefaultTableModel dtm = db.Select(tableName);
         List<Map<String, Object>> row = jjDatabase.separateRow(dtm);

@@ -16,7 +16,6 @@ var hmisCommettes = {
                 $('#sessions_timeReminder').wickedpicker();
                 new jj("#sessions_date").jjCalendarWithYearSelector(1397, 1420);
                 new jj("#sessions_dateReminder").jjCalendarWithYearSelector(1397, 1420);
-
                 $("#cancel_Commettes").button().click(function (e) {
                     hmisCommettes.m_clean();
                     hmisCommettes.m_show_tbl();
@@ -55,7 +54,7 @@ var hmisCommettes = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? 800 : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_show_form: function () {
         $('#swCommettesTbl').hide();
@@ -93,7 +92,7 @@ var hmisCommettes = {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".insert";
         param += "&" + new jj('#newCommetteForm').jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisCommettes.m_show_tbl();
         hmisCommettes.m_clean();
 //        } else {
@@ -107,7 +106,7 @@ var hmisCommettes = {
         param += "do=" + hmisCommettes.tableName + ".edit";
         param += "&" + new jj('#newCommetteForm').jjSerial();
         param += "&id=" + new jj('#hmis_commettes_id').jjVal();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisCommettes.m_show_tbl();
         hmisCommettes.m_clean();
 //        } else {
@@ -127,7 +126,7 @@ var hmisCommettes = {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".delete";
         param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisCommettes.m_show_tbl();
         hmisCommettes.m_clean();
     },
@@ -138,14 +137,14 @@ var hmisCommettes = {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".select";
         param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisCommettes.m_show_form();
     },
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".add_EN";
         param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisCommettes.f_parent).jjVal(id);
         new jj("#" + hmisCommettes.f_lang).jjVal("2");
         hmisCommettes.m_show_form();
@@ -154,7 +153,7 @@ var hmisCommettes = {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".add_Ar";
         param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisCommettes.f_parent).jjVal(id);
         new jj("#" + hmisCommettes.f_lang).jjVal("3");
         hmisCommettes.m_show_form();
@@ -165,7 +164,7 @@ var hmisCommettes = {
         param += "do=" + hmisCommettes.tableName + ".add_lang";
         param += "&" + hmisCommettes.f_id + "=" + (id == null ? "" : id);
         param += "&myLang=" + (langId == null ? "1" : langId);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisCommettes.f_parent).jjVal(id);
         new jj("#" + hmisCommettes.f_lang).jjVal(langId);
 //        alert(id+"&&&&&"+langId);
@@ -176,13 +175,13 @@ var hmisCommettes = {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".searchTextInTitle";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_searchTextInAll: function (text) {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".searchTextInAll";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //============ BY RASHIDI ========>    
     m_searchTags: function () {
@@ -190,14 +189,14 @@ var hmisCommettes = {
         param += "do=" + hmisCommettes.tableName + ".searchTags";
         param += "&" + new jj('#swCommettesForm').jjSerial();
 //        param += "&panel=content_search_tags_result";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".insertTags";
         param += "&" + new jj('#swCommettesForm').jjSerial();
 //        param += "&panel=content_tags_div";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
     tabSizeTbl: function () {
@@ -241,7 +240,7 @@ var hmisCommettes = {
         param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal();//ای دی کمیته
         param += "&" + new jj('#formInvitation').jjSerial();
         param += "&do=Sessions.requestSendComment&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
 
 //    mainTabSetSize: function () {
