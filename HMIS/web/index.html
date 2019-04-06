@@ -180,9 +180,11 @@
                                     hmisCommettes.loadForm();" class="nav-link ShowOneDiv">تعریف و تنظیمات کمیته ها</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" onclick="$('.sh-mainpanel').load('05sessions.html', null, function () {
-                                    });
-                                    return false;" class="nav-link ShowOneDiv">میز هوشمند جلسات</a>
+                            <a href="#swSessions" onclick="if ($('#swSessionsTbl').html() == '') {
+                                        hmisSessions.m_refresh();
+                                    }
+                                    ;
+                                    hmisSessions.loadForm();" class="nav-link ShowOneDiv">میز هوشمند جلسات</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" onclick="$('.sh-mainpanel').load('05sessionsForPrint.html', null, function () {
@@ -609,7 +611,6 @@
                     <!--col-md-12-->
                 </div><!--row-->
             </div><!--sh-pagebody-->
-
             <script src="js/jquery/jquery-1.10.2_1.js" type="text/javascript"></script>
             <script src="js/jquery/jquery-migrate-1.2.0.js" type="text/javascript"></script>
 

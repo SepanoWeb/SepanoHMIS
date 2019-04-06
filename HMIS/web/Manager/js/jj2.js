@@ -1333,7 +1333,6 @@ var jj = function (selector) {
         } else {
             return new RegExp('^\\s*$').test(ComponentTagId.nodeType == 1 ? ComponentTagId.value : ComponentTagId);
         }
-
     }
 
     /**

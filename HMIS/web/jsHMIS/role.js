@@ -21,12 +21,12 @@ var hmisRole = {
                 new jj('#role_date').jjCalendarWithYearSelector(1310, 1410);
 //                hmisRole.m_refresh();
 
-               $("#cancel_Role").button().click(function (e) {
+                $("#cancel_Role").button().click(function (e) {
 //                   alert(1);
                     hmisRole.m_clean();
                     hmisRole.m_show_tbl();
                 });
-               
+
 
             });
         }
@@ -41,9 +41,9 @@ var hmisRole = {
         new jj(param).jjAjax2(false);
         hmisRole.tabSizeTbl();
     },
-    bazgasht:function(){
-       hmisRole.m_clean();
-                    hmisRole.m_show_tbl();  
+    bazgasht: function () {
+        hmisRole.m_clean();
+        hmisRole.m_show_tbl();
     },
     m_add_new: function () {
         jj("do=" + hmisRole.tableName + ".add_new").jjAjax2(false);
@@ -54,9 +54,9 @@ var hmisRole = {
         $("#role_name").val('');
         $("#role_family").val('');
         $("#role_email").val('');
-        $("#role_condition").val('');
-        hmisRole.m_clean();
-      
+//        $("#role_condition").val('');
+//        hmisRole.m_clean();
+
 //        part_content_editor = new jj('#department_publicContent').jjEditor();
 //        part_praivate_editor = new jj('#department_praivateContent').jjEditor();
 //        cmsUser.m_getGroups();
@@ -64,11 +64,11 @@ var hmisRole = {
     m_show_form: function () {
         $('#swRoleTbl').hide();
         $('#swRoleForm').show();
-         new jj("#swRoleForm").jjFormClean();
+        new jj("#swRoleForm").jjFormClean();
         hmisRole.tabSizeForm();
     },
     m_clean: function () {
-        new jj("#swRoleForm").jjFormClean();
+//        new jj("#swRoleForm").jjFormClean();
 
     },
     m_show_tbl: function () {
@@ -120,17 +120,16 @@ var hmisRole = {
 
 
     },
-    m_selectKarbar: function (id){
-        
-      var param = "";
+    m_selectKarbar: function (id) {
+
+        var param = "";
         param += "do=" + hmisRole.tableName + ".selectKarbar";
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
-       hmisRole.m_show_form();
+        hmisRole.m_show_form();
 //       $("#role_email").val('');
         new jj(param).jjAjax2(false);
-    
     },
-    
+
     m_getMenu: function () {
         var param = "";
         param += "do=" + hmisRole.tableName + ".getMenu";
@@ -148,8 +147,7 @@ var hmisRole = {
     mainTabSetSize: function () {
         $('#swRole').css('height', hmisRole.heightTab);
     },
-    
-   
+
 }
 
 
