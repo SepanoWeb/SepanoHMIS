@@ -87,7 +87,7 @@ var hmisPlans = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? 800 : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
 //        himsPlan.tabSizeTbl();
     },
     m_show_form: function () {
@@ -137,7 +137,7 @@ var hmisPlans = {
         var param = "";  
         param += "do=" + hmisPlans.tableName + ".insert";
         param += "&" + new jj('#swPlansForm').jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
 //        hmisPlans.m_show_tbl();
 //        hmisPlans.m_clean();
 //        } else {
@@ -154,7 +154,7 @@ var hmisPlans = {
         param += "do=" + hmisPlans.tableName + ".edit";
         param += "&" + new jj('#swPlansForm').jjSerial();
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisPlans.m_show_tbl();
         hmisPlans.m_clean();
 //        } else {
@@ -172,7 +172,7 @@ var hmisPlans = {
         param += "do=" + hmisPlans.tableName + ".editStepsInPlans";
         param += "&" + new jj('#stepsForm').jjSerial();
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
 //    m_validation: function () {// mohamdad
 //        if (new jj("#content_title").jjVal().length < 1) {
@@ -187,7 +187,7 @@ var hmisPlans = {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".delete";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisPlans.m_show_tbl();
         hmisPlans.m_clean();
     },
@@ -200,7 +200,7 @@ var hmisPlans = {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".select";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisPlans.m_show_form();
         $('#formQuestions').show(); //نمایش گام ها 
         $('#newFormPlans').hide(); //نمایش گام ها 
@@ -219,7 +219,7 @@ var hmisPlans = {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".selectStepsInPlans";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisPlans.m_show_form();
         $('#formQuestions').show(); //نمایش گام ها 
         $('#newFormPlans').hide(); //نمایش گام ها 
@@ -253,14 +253,14 @@ var hmisPlans = {
         param += "&hmis_plans_id=" + new jj('#hmis_plans_id').jjVal();
         param += "&" + new jj('#correctionForm').jjSerial();
         param += "&do=" + hmisPlans.tableName + ".referral";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
 
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".add_EN";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisPlans.f_parent).jjVal(id);
         new jj("#" + hmisPlans.f_lang).jjVal("2");
         hmisPlans.m_show_form();
@@ -274,13 +274,13 @@ var hmisPlans = {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".confirmBySuperwizar";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_add_Ar: function (id) {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".add_Ar";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisPlans.f_parent).jjVal(id);
         new jj("#" + hmisPlans.f_lang).jjVal("3");
         hmisPlans.m_show_form();
@@ -291,7 +291,7 @@ var hmisPlans = {
         param += "do=" + hmisPlans.tableName + ".add_lang";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
         param += "&myLang=" + (langId == null ? "1" : langId);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisPlans.f_parent).jjVal(id);
         new jj("#" + hmisPlans.f_lang).jjVal(langId);
 //        alert(id+"&&&&&"+langId);
@@ -302,13 +302,13 @@ var hmisPlans = {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".searchTextInTitle";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_searchTextInAll: function (text) {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".searchTextInAll";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //============ BY RASHIDI ========>    
     m_searchTags: function () {
@@ -316,14 +316,14 @@ var hmisPlans = {
         param += "do=" + hmisPlans.tableName + ".searchTags";
         param += "&" + new jj('#swPlansForm').jjSerial();
 //        param += "&panel=content_search_tags_result";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".insertTags";
         param += "&" + new jj('#swPlansForm').jjSerial();
 //        param += "&panel=content_tags_div";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
     tabSizeTbl: function () {

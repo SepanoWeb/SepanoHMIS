@@ -45,7 +45,7 @@ var hmisPlansForAssess = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? 435 : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
 //        himsPlansForAssess.tabSizeTbl();
     },
     m_show_form: function () {
@@ -83,7 +83,7 @@ var hmisPlansForAssess = {
             var param = "";
             param += "do=" + hmisPlansForAssess.tableName + ".insert";
             param += "&" + new jj('#swPlansForAssessForm').jjSerial();
-            jj(param).jjAjax2(false);
+            new jj(param).jjAjax2(false);
             hmisPlansForAssess.m_show_tbl();
             hmisPlansForAssess.m_clean();
         } else {
@@ -96,7 +96,7 @@ var hmisPlansForAssess = {
         var param = "";
         param += "do=" + hmisPlansForAssess.tableName + ".edit";
         param += "&" + new jj('#swPlansForAssessForm').jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisPlansForAssess.m_show_tbl();
         hmisPlansForAssess.m_clean();
 //        } else {
@@ -116,7 +116,7 @@ var hmisPlansForAssess = {
         var param = "";
         param += "do=" + hmisPlansForAssess.tableName + ".delete";
         param += "&" + hmisPlansForAssess.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisPlansForAssess.m_show_tbl();
         hmisPlansForAssess.m_clean();
     },
@@ -124,14 +124,14 @@ var hmisPlansForAssess = {
         var param = "";
         param += "do=" + hmisPlansForAssess.tableName + ".select";
         param += "&" + hmisPlansForAssess.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisPlansForAssess.m_show_form();
     },
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisPlansForAssess.tableName + ".add_EN";
         param += "&" + hmisPlansForAssess.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisPlansForAssess.f_parent).jjVal(id);
         new jj("#" + hmisPlansForAssess.f_lang).jjVal("2");
         hmisPlansForAssess.m_show_form();
@@ -140,7 +140,7 @@ var hmisPlansForAssess = {
         var param = "";
         param += "do=" + hmisPlansForAssess.tableName + ".add_Ar";
         param += "&" + hmisPlansForAssess.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisPlansForAssess.f_parent).jjVal(id);
         new jj("#" + hmisPlansForAssess.f_lang).jjVal("3");
         hmisPlansForAssess.m_show_form();
@@ -151,7 +151,7 @@ var hmisPlansForAssess = {
         param += "do=" + hmisPlansForAssess.tableName + ".add_lang";
         param += "&" + hmisPlansForAssess.f_id + "=" + (id == null ? "" : id);
         param += "&myLang=" + (langId == null ? "1" : langId);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisPlansForAssess.f_parent).jjVal(id);
         new jj("#" + hmisPlansForAssess.f_lang).jjVal(langId);
 //        alert(id+"&&&&&"+langId);
@@ -162,13 +162,13 @@ var hmisPlansForAssess = {
         var param = "";
         param += "do=" + hmisPlansForAssess.tableName + ".searchTextInTitle";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_searchTextInAll: function (text) {
         var param = "";
         param += "do=" + hmisPlansForAssess.tableName + ".searchTextInAll";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //============ BY RASHIDI ========>    
     m_searchTags: function () {
@@ -176,14 +176,14 @@ var hmisPlansForAssess = {
         param += "do=" + hmisPlansForAssess.tableName + ".searchTags";
         param += "&" + new jj('#swPlansForAssessForm').jjSerial();
 //        param += "&panel=content_search_tags_result";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
         param += "do=" + hmisPlansForAssess.tableName + ".insertTags";
         param += "&" + new jj('#swPlansForAssessForm').jjSerial();
         param += "&panel=content_tags_div";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
     tabSizeTbl: function () {

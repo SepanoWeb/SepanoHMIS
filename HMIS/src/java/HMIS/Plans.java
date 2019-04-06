@@ -82,8 +82,8 @@ public class Plans {
             if (!hasAccess.equals("")) {
                 return hasAccess;
             }
-            boolean accRulRef = Access_User.hasAccess2(request, db, rul_rfs);//تایید توسط مافوق
-            boolean accRulRefAll = Access_User.hasAccess2(request, db, rul_rfsAll);//تایید توسط مافوق
+            boolean accRulRef = Access_User.hasAccess(request, db, rul_rfs);//تایید توسط مافوق
+            boolean accRulRefAll = Access_User.hasAccess(request, db, rul_rfsAll);//تایید توسط مافوق
 
             StringBuilder html = new StringBuilder();
             DefaultTableModel dtm = db.Select(tableName);
@@ -137,7 +137,7 @@ public class Plans {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuilder html = new StringBuilder();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
 //            if (accIns) {
 //                html.append(Js.setHtml("#", "<input type=\"button\" id=\"insert_Poll_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
 //                html.append(Js.buttonMouseClick("Poll_button#insert_Poll_new", Js.jjPoll.insert()));
@@ -289,10 +289,10 @@ public class Plans {
                 html4.append("<button id='editPlansButton' style=\"display: none\" class=\"btn btn-success btn-block mg-b-10\" onclick=\"hmisPlans.m_edit();\">ثبت  تغییرات</button>\n");
 
             }
-            boolean accConfirmBySuperwizar = Access_User.hasAccess2(request, db, rul_confirmBysuperior);//تایید توسط مافوق
-//            boolean accFinalApproval = Access_User.hasAccess2(request, db, rul_FinalApproval);//تایید نهایی و ارسال به کمیته مدیریت اجرایی 
-//            boolean accRejectThePlans = Access_User.hasAccess2(request, db, rul_RejectThePlans);//رد برنامه
-            boolean accCorrectionPlans = Access_User.hasAccess2(request, db, rul_correctionPlans);//رد برنامه
+            boolean accConfirmBySuperwizar = Access_User.hasAccess(request, db, rul_confirmBysuperior);//تایید توسط مافوق
+//            boolean accFinalApproval = Access_User.hasAccess(request, db, rul_FinalApproval);//تایید نهایی و ارسال به کمیته مدیریت اجرایی 
+//            boolean accRejectThePlans = Access_User.hasAccess(request, db, rul_RejectThePlans);//رد برنامه
+            boolean accCorrectionPlans = Access_User.hasAccess(request, db, rul_correctionPlans);//رد برنامه
 
             if (accConfirmBySuperwizar) {
 

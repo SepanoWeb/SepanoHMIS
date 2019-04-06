@@ -3,17 +3,14 @@ package cms.tools;
 import HMIS.Approved;
 import cms.access.*;
 import cms.cms.*;
-import cms.tools.*;
 import HMIS.Commettes;
 
 //<<<<<<< HEAD
 //import javax.servlet.http.Department;
 //=======
-
 //import javax.servlet.http.Part;
 //>>>>>>> origin/master
 import HMIS.PlansForAssess;
-import HMIS.Plans;
 //<<<<<<< HEAD
 import HMIS.Department;
 import HMIS.Messenger;
@@ -33,12 +30,15 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.*;   
+import javax.servlet.*;
 import javax.servlet.http.*;
 import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
 
 public class Server extends HttpServlet {
+
     ////---------------------------------ipp-co.com
     public static sites mainSite = sites.iranSepano;
     public static String portalPage = "";
@@ -59,7 +59,6 @@ public class Server extends HttpServlet {
     public static String newsJSP = "index_news.jsp";
     public static String productJSP = "index.jsp";
     //********************************************************************
-
 
     public static jjDatabaseWeb db;
     public static final String port = "3306";
@@ -87,7 +86,7 @@ public class Server extends HttpServlet {
 //            clazzes.add(Category_Poll.class);
 //            clazzes.add(Comment.class);
             clazzes.add(Access_Group.class);
-            
+
             clazzes.add(Access_Group_User.class);
             clazzes.add(Access_User.class);
             clazzes.add(Product.class);
@@ -110,6 +109,10 @@ public class Server extends HttpServlet {
             clazzes.add(Search.class);
             ///////////////////////////////////////////////////
 
+            clazzes.add(HMIS.Forms.class);   //فرم ساز
+            clazzes.add(HMIS.FormQuestions.class);   //فرم ساز
+            clazzes.add(HMIS.FormQuestionOptions.class);   //فرم ساز
+            clazzes.add(HMIS.FormAnswers.class);   //فرم ساز
             clazzes.add(HMIS.Plans.class);   //برنامه های عملیاتی
             clazzes.add(PlansForAssess.class);//برنامه پایش
             clazzes.add(Steps.class);//گام های اجرایی
@@ -127,6 +130,7 @@ public class Server extends HttpServlet {
         }
         return clazzes;
     }
+
     protected void run(HttpServletRequest request, HttpServletResponse response, boolean isFromClient) throws ServletException, IOException, Exception {
         Publicresponse = response;
         Connect();
@@ -149,23 +153,64 @@ public class Server extends HttpServlet {
             method = Action.substring(dot + 1, Action.length());
         }
         // -----------------------------------------------------------------
-        
-        StringBuilder script = new StringBuilder();
-        script.append(run(getClazzes(), clazz, method, request, db, isFromClient));
-        if(script.length()==0){// ÛŒØ¹Ù†ÛŒ Ø§Ú¯Ø± Ù¾Ø§Ø³Ø® Ø¯Ø± Ø±Ø§Ù† ØªÙ‡ÛŒ Ø¨ÙˆØ¯ ÛŒØ¹Ù†ÛŒ Ø±ÛŒÚ©ÙˆØ¦Ø³Øª Ù¾Ø§Ø³ Ø¯Ø§Ø¯Ù‡ Ø´Ø¯Ù‡ Ø¨Ù‡ ÛŒÚ© Ù�Ø§ÛŒÙ„ Ø¬ÛŒ Ø§Ø³ Ù¾ÛŒ
-            ServerLog.Print("***request has been passed to one jsp, Finish Server.java jobs... ***");//By MrSalesi
-            return;
-        }
+
         response.addHeader("Access-Control-Allow-Origin", "*");// Ø¨Ø±Ø§ÛŒ Ù�Ø¹Ø§Ù„ Ú©Ø±Ø¯Ù† Ø§ÛŒØ¬Ú©Ø³ Ø¯Ø± Ù…Ø±ÙˆØ±Ú¯Ø± Ù‡Ø§ Ù„Ø§Ø²Ù… Ø§Ø³Øª
-        try (PrintWriter out = jjTools.getWriterUTF8(request, response)) {
-            ServerLog.Print(script);//By Md
-            //ServerLog.Print(script.toString());
-            out.print(script);
-        } //By Md
-        script.append(Language.setLang(request));
+        run(getClazzes(), clazz, method, request, response, db);
+
+//        StringBuilder script = new StringBuilder();
+//        script.append(run(getClazzes(), clazz, method, request, db, isFromClient));
+//        if (script.length() == 0) {// ÛŒØ¹Ù†ÛŒ Ø§Ú¯Ø± Ù¾Ø§Ø³Ø® Ø¯Ø± Ø±Ø§Ù† ØªÙ‡ÛŒ Ø¨ÙˆØ¯ ÛŒØ¹Ù†ÛŒ Ø±ÛŒÚ©ÙˆØ¦Ø³Øª Ù¾Ø§Ø³ Ø¯Ø§Ø¯Ù‡ Ø´Ø¯Ù‡ Ø¨Ù‡ ÛŒÚ© Ù�Ø§ÛŒÙ„ Ø¬ÛŒ Ø§Ø³ Ù¾ÛŒ
+//            ServerLog.Print("***request has been passed to one jsp, Finish Server.java jobs... ***");//By MrSalesi
+//            return;
+//        }
+//        try (PrintWriter out = jjTools.getWriterUTF8(request, response)) {
+//            ServerLog.Print(script);//By Md
+//            //ServerLog.Print(script.toString());
+//            out.print(script);
+//        } //By Md
+//        script.append(Language.setLang(request));
         // Runtime.getRuntime().gc();
         System.gc();
 
+    }
+
+    /**
+     * مثل یک تابع عمل می کند و خروجی را میغرستد به کلاینت خروجی معمولا اسکریپت
+     * است چون کد های اچ تی ام ال معمولا از طریق جی اس پی ها تولید می شوند
+     *
+     * @param request
+     * @param response
+     * @param script معمولا اسکریپت است
+     */
+    public static void outPrinter(HttpServletRequest request, HttpServletResponse response, StringBuilder script) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-Type", "text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(script);
+        out.close();
+        out.flush();
+        ServerLog.Print(script);
+    }
+
+    /**
+     * برای اسکریپت های کوچک این تابع کلاس استرینگ معمولی می گیرد مثل یک تابع
+     * عمل می کند و خروجی را میغرستد به کلاینت خروجی معمولا اسکریپت است چون کد
+     * های اچ تی ام ال معمولا از طریق جی اس پی ها تولید می شوند
+     *
+     * @param request
+     * @param response
+     * @param script معمولا اسکریپت است از کلاس استرینگ معمولی
+     */
+    public static void outPrinter(HttpServletRequest request, HttpServletResponse response, String script) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-Type", "text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(script);
+        out.close();
+        out.flush();
+        ServerLog.Print(script);
     }
 
     public static void Connect() {
@@ -175,14 +220,14 @@ public class Server extends HttpServlet {
         db.ConnectCustom();
     }
 
-    public static String run(List<Class> clazz, String className, String methodName, HttpServletRequest request, jjDatabaseWeb db, boolean isFromCient) throws Exception {
+    public static void run(List<Class> clazz, String className, String methodName, HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db) throws Exception {
         try {
             jjTools.ShowAllParameter(request);
             Language.setLang(request);//============ BY RASHIDI ========
 //            jjTools.ShowAllAttribute(request);
             String Action = jjTools.getParameter(request, "do");
-            String reqClazz = jjTools.getParameter(request, "tbl");
-            String method = jjTools.getParameter(request, "act");
+//            String reqClazz = "";
+//            String method = "";
 //            String dbName = jjTools.getParameter(request, "db");
 //            if (!dbName.equals("")) {
 //                databaseName = dbName;
@@ -191,8 +236,8 @@ public class Server extends HttpServlet {
 //            databaseName = jjTools.getSessionAttribute(request, "databaseName").equals("") ? databaseName : jjTools.getSessionAttribute(request, "databaseName");
             int dot = Action.indexOf(".");
             if (dot > -1) {
-                reqClazz = Action.substring(0, dot);
-                method = Action.substring(dot + 1, Action.length());
+//                reqClazz = Action.substring(0, dot);
+//                method = Action.substring(dot + 1, Action.length());
             }
             for (int j = 0; j < clazz.size(); j++) {
                 if (clazz.get(j).getSimpleName().equals(className)) {
@@ -200,14 +245,15 @@ public class Server extends HttpServlet {
                     for (int i = 0; i < methods.length; i++) {
                         if (methods[i].getName().equals(methodName)) {
                             ServerLog.Print("Run: " + className + "." + methods[i].getName() + "()");
-                            return (String) methods[i].invoke(null, request, db, isFromCient);
+                            methods[i].invoke(null, request, response, db, false);//پارامتر آخر را فقط جی اس پی ها و توابع جاوایی داخل هم فراخوانی می کنند
+                            return;
                         }
                     }
                 }
             }
-            return "";
+//            return "";
         } catch (Exception ex) {
-            return ErrorHandler(ex);
+            ErrorHandler(ex);
         }
     }
 
@@ -226,45 +272,6 @@ public class Server extends HttpServlet {
             run(request, response, true);
         } catch (Exception ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public static String noAjaxRun(String parameters, HttpServletRequest request) {
-        try {
-            ServerLog.Print("------- noAjaxRun ---------");
-            String action = parameters;
-            String reqClazz = "";
-            String method = "";
-            int index1 = action.indexOf("do=");
-            int index2 = action.indexOf(".");
-            if (index1 >= 0 && index2 > 0) {// do  ÙˆØ¬ÙˆØ¯ Ø¯Ø§Ø±Ø¯ØŸ
-                index1 = action.indexOf("=", index1) + 1;
-                reqClazz = action.substring(index1, index2);
-                index1 = index2 + 1;// Ø¨Ø¹Ø¯ Ø§Ø²  Ù†Ù‚Ø·Ù‡ Ø¨Ø±Ø§ÛŒ Ù¾ÛŒØ¯Ø§ Ú©Ø±Ø¯Ù† ØªØ§Ø¨Ø¹
-                index2 = action.indexOf("&");// Ø¨Ø¹Ø¯ Ø§Ø²  Ù†Ù‚Ø·Ù‡ Ø¨Ø±Ø§ÛŒ Ù¾ÛŒØ¯Ø§ Ú©Ø±Ø¯Ù† ØªØ§Ø¨Ø¹
-                method = action.substring(index1, index2);
-            }
-            String attributes[] = parameters.split("&");
-            for (int i = 0; i < attributes.length; i++) {
-                if (attributes[i].matches(".*=.*")) {
-                    ServerLog.Print(attributes[i]);
-                    String attribNameAndValue[] = attributes[i].split("=");
-                    request.setAttribute(attribNameAndValue[0], attribNameAndValue[1]);
-                }
-            }
-            jjTools.ShowAllAttribute(request);
-//            String reqClazz = jjTools.getParameter(request, "tbl");
-//            String method = jjTools.getParameter(request, "act");
-//            String method = jjTools.getParameter(request, "act");
-
-//            String reqClazz = jjTools.getParameter(request, "tbl");
-            int dot = action.indexOf(".");
-            String content = cms.tools.Server.run(Server.getClazzes(), reqClazz, method, request, db, false);
-            return content;
-        } catch (Exception ex) {
-            ServerLog.Print(ex);
-            ServerLog.Print(ex);
-            return ex.toString();
         }
     }
 
@@ -296,9 +303,9 @@ public class Server extends HttpServlet {
             map.put(Comment._title, "Ù…Ø´Ú©Ù„ÛŒ Ø¯Ø± Ø³ÛŒØ³ØªÙ…");
             map.put(Comment._answer, "");
             db.insert(Comment.tableName, map);
-            return Js.dialog(dbErrorWrite.toString());
+            return Js.modal(dbErrorWrite.toString(), "systemException");
         } catch (Exception ex2) {
-            return Js.dialog("Error in Server ErrorHandler");
+            return Js.modal("Error in Server ErrorHandler", "systemException");
         }
     }
 //    public static void setSettingProject(String siteName, String userName, String password, String databaseName, String defaultLang) {

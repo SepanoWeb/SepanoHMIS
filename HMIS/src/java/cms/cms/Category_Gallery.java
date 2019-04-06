@@ -92,7 +92,7 @@ public class Category_Gallery {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuffer html = new StringBuffer();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#CategoryGallery_button", "<input type=\"button\" id=\"insert_CategoryGallery_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_CategoryGallery_new", Js.jjCategoryGallery.insert()));
@@ -253,8 +253,8 @@ public class Category_Gallery {
             html.append(Js.setVal("#" + _lang, row.get(0).get(_lang)));
             html.append(Js.setVal("#" + _parent, row.get(0).get(_parent)));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
 
             if (accEdt) {
                 html2.append("<input type='button' id='edit_CategoryGallery' value='" + lbl_edit + "' class='tahoma10'>");
@@ -269,11 +269,11 @@ public class Category_Gallery {
                 }
             }
             //============ BY RASHIDI ========>
-            //            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);//====== COMMENTED BY RASHIDI ======
-            boolean acclng2 = Access_User.hasAccess2(request, db, rul_lng2);//====== BY RASHIDI ======
-            boolean acclng3 = Access_User.hasAccess2(request, db, rul_lng3);//====== BY RASHIDI ======
-            boolean acclng4 = Access_User.hasAccess2(request, db, rul_lng4);//====== BY RASHIDI ======
-            boolean acclng5 = Access_User.hasAccess2(request, db, rul_lng5);//====== BY RASHIDI ======
+            //            boolean acclng = Access_User.hasAccess(request, db, rul_lng);//====== COMMENTED BY RASHIDI ======
+            boolean acclng2 = Access_User.hasAccess(request, db, rul_lng2);//====== BY RASHIDI ======
+            boolean acclng3 = Access_User.hasAccess(request, db, rul_lng3);//====== BY RASHIDI ======
+            boolean acclng4 = Access_User.hasAccess(request, db, rul_lng4);//====== BY RASHIDI ======
+            boolean acclng5 = Access_User.hasAccess(request, db, rul_lng5);//====== BY RASHIDI ======
             ///**************LANGUAAGE ADDED*******>
 //            if (acclng) {
 //                List<Map<String, Object>> rowEn = jjDatabase.separateRow(db.Select(tableName, _parent + "=" + id + " AND " + _lang + "=2"));
@@ -380,7 +380,7 @@ public class Category_Gallery {
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _lang, "2"));
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#CategoryGallery_button", "<input type=\"button\" id=\"insert_CategoryGallery_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_CategoryGallery_new", Js.jjCategoryGallery.insert()));
@@ -415,7 +415,7 @@ public class Category_Gallery {
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _lang, "3"));
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#CategoryGallery_button", "<input type='button' id='insert_CategoryGallery_new_ar' value='" + lbl_insert + "' class='tahoma10'>"));
                 html.append(Js.buttonMouseClick("#insert_CategoryGallery_new_ar", Js.jjCategoryGallery.insert()));
@@ -452,7 +452,7 @@ public class Category_Gallery {
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _lang, lang));
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#CategoryGallery_button", "<input type='button' id='insert_CategoryGallery_new_lang' value='" + lbl_insert + "' class='tahoma10'>"));
                 html.append(Js.buttonMouseClick("#insert_CategoryGallery_new_lang", Js.jjCategoryGallery.insert()));

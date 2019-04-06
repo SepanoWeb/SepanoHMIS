@@ -5925,7 +5925,7 @@ button.close {
 }
 .modal-backdrop.fade {
   filter: alpha(opacity=0);
-  opacity: 0;
+  opacity: .1;
 }
 .modal-backdrop.in {
   filter: alpha(opacity=50);
@@ -5937,6 +5937,7 @@ button.close {
 }
 .modal-header .close {
   margin-top: -2px;
+  position: absolute;
 }
 .modal-title {
   margin: 0;

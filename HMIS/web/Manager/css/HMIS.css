@@ -12,7 +12,9 @@
     font-style:normal;
     font-weight:normal;
 }
-
+.table img {
+    max-width: 3em;
+}
 .commeteeTable td {
     text-align: center;
     border: thin solid;
@@ -39,4 +41,7 @@ commeteeTable thead{
 .l{
     text-align: left;
     direction: ltr;
+}
+.p{
+    cursor: pointer;
 }

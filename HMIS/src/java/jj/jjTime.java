@@ -11,12 +11,9 @@ import jj.jjNumber;
  */
 public class jjTime {
 
-
-
     /**
      *
-     *  work by time NumberOfMin can be - or +
-     * sample getDateTime(12 ,30, -20)
+     * work by time NumberOfMin can be - or + sample getDateTime(12 ,30, -20)
      * return "12:10"
      */
     public static String getDateTimeDifferent(int hour, int min, int NumberOfMin) {
@@ -25,6 +22,21 @@ public class jjTime {
 //        c.add(Calendar.MINUTE, NumberOfMin);
         return (c.get(Calendar.HOUR_OF_DAY) < 10 ? "0" + c.get(Calendar.HOUR_OF_DAY) : c.get(Calendar.HOUR_OF_DAY))
                 + ":" + (c.get(Calendar.MINUTE) < 10 ? "0" + c.get(Calendar.MINUTE) : c.get(Calendar.MINUTE));
+    }
+
+    public static String getTime5lenth(String time4lenth) {
+        if(time4lenth.length()!=4){
+            return "";
+        }
+        return time4lenth.substring(0, 2) + ":" + time4lenth.substring(2, 4);
+    }
+    public static String getTime4lenth(String time5lenth) {
+        time5lenth=time5lenth.replaceAll(" ", "");
+        if(time5lenth.length()!=5){
+            System.out.println("PPPPPPPPPPPPPPPPPP"+time5lenth);
+            return "";
+        }
+        return time5lenth.replace(":", "");
     }
 
     public static String getDateTimeDifferentSecond(int hour, int min, int second, long Second) {
@@ -83,7 +95,7 @@ public class jjTime {
 
     /**
      *
-     *  get now persian date and return Help.MyDate
+     * get now persian date and return Help.MyDate
      */
     public static MyDate getDateNowPersian() {
         java.util.Date d = new java.util.Date();
@@ -101,7 +113,7 @@ public class jjTime {
 
     /**
      *
-     *  get date from number like 13891129
+     * get date from number like 13891129
      */
     public static MyDate getDatePersian(int dateBy_8_Length) {
         try {
@@ -132,7 +144,7 @@ public class jjTime {
 
     /**
      *
-     *  get date from number like 20101230
+     * get date from number like 20101230
      */
     public static MyDate getDateGregorian(int dateBy_8_Length) {
         String myDateValue = String.valueOf(dateBy_8_Length);
@@ -154,7 +166,7 @@ public class jjTime {
 
     /**
      *
-     *  get now Gregorian date and return Help.MyDate
+     * get now Gregorian date and return Help.MyDate
      */
     public static MyDate getDateNowGregorian() {
         Calendar c = Calendar.getInstance();
@@ -169,7 +181,7 @@ public class jjTime {
 
     /**
      *
-     *  get selected persian date and return Help.MyDate
+     * get selected persian date and return Help.MyDate
      */
     public static MyDate getDateSelectedPersian(int year, int month, int day) {
         java.util.Date d = new java.util.Date();
@@ -188,7 +200,7 @@ public class jjTime {
 
     /**
      *
-     *  get selected Gregorian date and return Help.MyDate
+     * get selected Gregorian date and return Help.MyDate
      */
     public static MyDate getDateSelectedGregorian(int year, int month, int day) {
         Calendar c = Calendar.getInstance();
@@ -245,8 +257,6 @@ public class jjTime {
         }
     }
 
-
-
     private static class JulianDayConvertor {
 
         private CalendarArithmetic calendarArithmetic = new CalendarArithmetic();
@@ -256,8 +266,9 @@ public class jjTime {
         private final double PERSIAN_EPOCH = 1948320.5;
 
         /**
-         * WEEKDAY_BEFORE  --  Return Julian date of given weekday (0 = Sunday)
-         *                     in the seven days ending on jd.
+         * WEEKDAY_BEFORE -- Return Julian date of given weekday (0 = Sunday) in
+         * the seven days ending on jd.
+         *
          * @param weekday
          * @param jd
          * @return
@@ -267,11 +278,12 @@ public class jjTime {
         }
 
         /**
-         * SEARCH_WEEKDAY  --  Determine the Julian date for
-         * @param weekday:  Day of week desired, 0 = Sunday
-         * @param jd:  Julian date to begin search
-         * @param direction:  1 = next weekday, -1 = last weekday
-         * @param offset:  Offset from jd to begin search
+         * SEARCH_WEEKDAY -- Determine the Julian date for
+         *
+         * @param weekday: Day of week desired, 0 = Sunday
+         * @param jd: Julian date to begin search
+         * @param direction: 1 = next weekday, -1 = last weekday
+         * @param offset: Offset from jd to begin search
          * @return
          */
         private double search_weekday(int weekday, double jd, int direction, double offset) {
@@ -280,6 +292,7 @@ public class jjTime {
 
         /**
          * Utility weekday functions, just wrappers for search_weekday
+         *
          * @param weekday
          * @param jd
          * @return
@@ -305,7 +318,9 @@ public class jjTime {
         }
 
         /**
-         * LEAP_GREGORIAN  --  Is a given year in the Gregorian calendar a leap year ?
+         * LEAP_GREGORIAN -- Is a given year in the Gregorian calendar a leap
+         * year ?
+         *
          * @param year
          * @return
          */
@@ -314,7 +329,8 @@ public class jjTime {
         }
 
         /**
-         * LEAP_PERSIAN  --  Is a given year a leap year in the Persian calendar ?
+         * LEAP_PERSIAN -- Is a given year a leap year in the Persian calendar ?
+         *
          * @param year
          * @return
          */
@@ -323,7 +339,9 @@ public class jjTime {
         }
 
         /**
-         * GREGORIAN_TO_JD  --  Determine Julian day number from Gregorian calendar date
+         * GREGORIAN_TO_JD -- Determine Julian day number from Gregorian
+         * calendar date
+         *
          * @param year
          * @param month
          * @param day
@@ -336,12 +354,13 @@ public class jjTime {
                     + (-Math.floor((year - 1) / 100))
                     + Math.floor((year - 1) / 400)
                     + Math.floor((((367 * month) - 362) / 12)
-                    + ((month <= 2) ? 0 : (leap_gregorian(year) ? -1 : -2))
-                    + day);
+                            + ((month <= 2) ? 0 : (leap_gregorian(year) ? -1 : -2))
+                            + day);
         }
 
         /**
-         * JD_TO_GREGORIAN  --  Calculate Gregorian calendar date from Julian day
+         * JD_TO_GREGORIAN -- Calculate Gregorian calendar date from Julian day
+         *
          * @param jd
          * @return
          */
@@ -373,7 +392,8 @@ public class jjTime {
         }
 
         /**
-         * PERSIAN_TO_JD  --  Determine Julian day from Persian date
+         * PERSIAN_TO_JD -- Determine Julian day from Persian date
+         *
          * @param year
          * @param month
          * @param day
@@ -387,8 +407,8 @@ public class jjTime {
 
             return day
                     + ((month <= 7)
-                    ? ((month - 1) * 31)
-                    : (((month - 1) * 30) + 6))
+                            ? ((month - 1) * 31)
+                            : (((month - 1) * 30) + 6))
                     + Math.floor(((epyear * 682) - 110) / 2816)
                     + (epyear - 1) * 365
                     + Math.floor(epbase / 2820) * 1029983
@@ -396,7 +416,8 @@ public class jjTime {
         }
 
         /**
-         * JD_TO_PERSIAN  --  Calculate Persian date from Julian day
+         * JD_TO_PERSIAN -- Calculate Persian date from Julian day
+         *
          * @param jd
          * @return
          */
@@ -450,9 +471,9 @@ public class jjTime {
         public double oterms[] = {-4680.93, -1.55, 1999.25, -51.38, -249.67, -39.05,
             7.12, 27.87, 5.79, 2.45};
         /**
-         * Periodic terms for nutation in longiude (delta \Psi) and
-         * obliquity (delta \Epsilon) as given in table 21.A of
-         * Meeus, "Astronomical Algorithms", first edition.
+         * Periodic terms for nutation in longiude (delta \Psi) and obliquity
+         * (delta \Epsilon) as given in table 21.A of Meeus, "Astronomical
+         * Algorithms", first edition.
          */
         public int nutArgMult[] = {
             0, 0, 0, 0, 1, -2, 0, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 0, 2,
@@ -537,8 +558,8 @@ public class jjTime {
             -3, 0, 0, 0, /*  0,  0,  3,  2,  2 */
             -3, 0, 0, 0 /*  2, -1,  0,  2,  2 */};
         /**
-         * Table of observed Delta T values at the beginning of
-         * even numbered years from 1620 through 2002.
+         * Table of observed Delta T values at the beginning of even numbered
+         * years from 1620 through 2002.
          */
         public double deltaTtab[] = {
             121, 112, 103, 95, 88, 82, 77, 72, 68, 63, 60, 56, 53, 51, 48, 46,
@@ -599,7 +620,8 @@ public class jjTime {
         };
 
         /**
-         * ASTOR  --  Arc-seconds to radians.
+         * ASTOR -- Arc-seconds to radians.
+         *
          * @param
          * @return
          */
@@ -608,7 +630,8 @@ public class jjTime {
         }
 
         /**
-         * DTR  --  Degrees to radians.
+         * DTR -- Degrees to radians.
+         *
          * @param
          * @return
          */
@@ -617,7 +640,8 @@ public class jjTime {
         }
 
         /**
-         * RTD  --  Radians to degrees.
+         * RTD -- Radians to degrees.
+         *
          * @param
          * @return
          */
@@ -626,7 +650,8 @@ public class jjTime {
         }
 
         /**
-         * FIXANGLE  --  Range reduce angle in degrees.
+         * FIXANGLE -- Range reduce angle in degrees.
+         *
          * @param
          * @return
          */
@@ -635,7 +660,8 @@ public class jjTime {
         }
 
         /**
-         * FIXANGR  --  Range reduce angle in radians.
+         * FIXANGR -- Range reduce angle in radians.
+         *
          * @param
          */
         public double fixangr(double a) {
@@ -643,7 +669,8 @@ public class jjTime {
         }
 
         /**
-         * DSIN  --  Sine of an angle in degrees
+         * DSIN -- Sine of an angle in degrees
+         *
          * @param
          * @return
          */
@@ -652,7 +679,8 @@ public class jjTime {
         }
 
         /**
-         * DCOS  --  Cosine of an angle in degrees
+         * DCOS -- Cosine of an angle in degrees
+         *
          * @param d
          * @return
          */
@@ -661,7 +689,8 @@ public class jjTime {
         }
 
         /**
-         * MOD  --  Modulus function which works for non-integers.
+         * MOD -- Modulus function which works for non-integers.
+         *
          * @param a
          * @param b
          * @return
@@ -671,7 +700,8 @@ public class jjTime {
         }
 
         /**
-         * AMOD  --  Modulus function which returns numerator if modulus is zero
+         * AMOD -- Modulus function which returns numerator if modulus is zero
+         *
          * @param a
          * @param b
          * @return
@@ -681,8 +711,9 @@ public class jjTime {
         }
 
         /**
-         * Convert Julian time to hour, minutes, and seconds,
-         * returned as a three-element array.
+         * Convert Julian time to hour, minutes, and seconds, returned as a
+         * three-element array.
+         *
          * @param j
          * @return
          */
@@ -690,6 +721,7 @@ public class jjTime {
             double ij;
 
             j += 0.5;                 /* Astronomical to civil */
+
             ij = (j - Math.floor(j)) * 86400.0;
             double arrTime[] = {Math.floor(ij / 3600),
                 Math.floor((ij / 60) % 60),
@@ -698,7 +730,8 @@ public class jjTime {
         }
 
         /**
-         * JWDAY  --  Calculate day of week from Julian day
+         * JWDAY -- Calculate day of week from Julian day
+         *
          * @param j
          * @return
          */
@@ -707,16 +740,15 @@ public class jjTime {
         }
 
         /**
-         * OBLIQEQ  --  Calculate the obliquity of the ecliptic for a given
-         *           Julian date.  This uses Laskar's tenth-degree
-         *           polynomial fit (J. Laskar, Astronomy and
-         *           Astrophysics, Vol. 157, page 68 [1986]) which is
-         *           accurate to within 0.01 arc second between AD 1000
-         *           and AD 3000, and within a few seconds of arc for
-         *           +/-10000 years around AD 2000.  If we're outside the
-         *           range in which this fit is valid (deep time) we
-         *           simply return the J2000 value of the obliquity, which
-         *           happens to be almost precisely the mean.
+         * OBLIQEQ -- Calculate the obliquity of the ecliptic for a given Julian
+         * date. This uses Laskar's tenth-degree polynomial fit (J. Laskar,
+         * Astronomy and Astrophysics, Vol. 157, page 68 [1986]) which is
+         * accurate to within 0.01 arc second between AD 1000 and AD 3000, and
+         * within a few seconds of arc for +/-10000 years around AD 2000. If
+         * we're outside the range in which this fit is valid (deep time) we
+         * simply return the J2000 value of the obliquity, which happens to be
+         * almost precisely the mean.
+         *
          * @param jd
          * @return
          */
@@ -734,10 +766,11 @@ public class jjTime {
         }
 
         /**
-         * NUTATION  --  Calculate the nutation in longitude, deltaPsi, and
-         *               obliquity, deltaEpsilon for a given Julian date
-         *               jd.  Results are returned as a two element Array
-         *               giving (deltaPsi, deltaEpsilon) in degrees.
+         * NUTATION -- Calculate the nutation in longitude, deltaPsi, and
+         * obliquity, deltaEpsilon for a given Julian date jd. Results are
+         * returned as a two element Array giving (deltaPsi, deltaEpsilon) in
+         * degrees.
+         *
          * @param jd
          * @return
          */
@@ -748,8 +781,8 @@ public class jjTime {
             double dp = 0, de = 0, ang;
             t3 = t * (t2 = t * t);
             /* Calculate angles.  The correspondence between the elements
-            of our array and the terms cited in Meeus are:
-            ta[0] = D  ta[0] = M  ta[2] = M'  ta[3] = F  ta[4] = \Omega
+             of our array and the terms cited in Meeus are:
+             ta[0] = D  ta[0] = M  ta[2] = M'  ta[3] = F  ta[4] = \Omega
              */
             ta[0] = dtr(297.850363 + 445267.11148 * t - 0.0019142 * t2 + t3 / 189474.0);
             ta[1] = dtr(357.52772 + 35999.05034 * t - 0.0001603 * t2 - t3 / 300000.0);
@@ -758,7 +791,7 @@ public class jjTime {
             ta[4] = dtr(125.04452 - 1934.136261 * t + 0.0020708 * t2 + t3 / 450000.0);
 
             /* Range reduce the angles in case the sine and cosine functions
-            don't do it as accurately or quickly. */
+             don't do it as accurately or quickly. */
             for (int i = 0; i < 5; i++) {
                 ta[i] = fixangr(ta[i]);
             }
@@ -776,7 +809,7 @@ public class jjTime {
             }
 
             /* Return the result, converting from ten thousandths of arc
-            seconds to radians in the process. */
+             seconds to radians in the process. */
             deltaPsi = dp / (3600.0 * 10000.0);
             deltaEpsilon = de / (3600.0 * 10000.0);
 
@@ -785,13 +818,12 @@ public class jjTime {
         }
 
         /**
-         * ECLIPTOEQ  --  Convert celestial (ecliptical) longitude and
-         *                latitude into right ascension (in degrees) and
-         *                declination.  We must supply the time of the
-         *                conversion in order to compensate correctly for the
-         *                varying obliquity of the ecliptic over time.
-         *                The right ascension and declination are returned
-         *                as a two-element Array in that order.
+         * ECLIPTOEQ -- Convert celestial (ecliptical) longitude and latitude
+         * into right ascension (in degrees) and declination. We must supply the
+         * time of the conversion in order to compensate correctly for the
+         * varying obliquity of the ecliptic over time. The right ascension and
+         * declination are returned as a two-element Array in that order.
+         *
          * @param jd
          * @param Lambda
          * @param Beta
@@ -817,8 +849,9 @@ public class jjTime {
         }
 
         /**
-         * DELTAT  --  Determine the difference, in seconds, between
-         *             Dynamical time and Universal time.
+         * DELTAT -- Determine the difference, in seconds, between Dynamical
+         * time and Universal time.
+         *
          * @param year
          * @return
          */
@@ -829,6 +862,7 @@ public class jjTime {
             if ((year >= 1620) && (year <= 2000)) {
                 i = (int) Math.floor((year - 1620) / 2);
                 f = ((year - 1620) / 2) - i;  /* Fractional part of year */
+
                 dt = deltaTtab[i] + ((deltaTtab[i + 1] - deltaTtab[i]) * f);
             } else {
                 t = (year - 2000) / 100;
@@ -845,13 +879,10 @@ public class jjTime {
         }
 
         /**
-         * EQUINOX  --  Determine the Julian Ephemeris Day of an
-         *              equinox or solstice.  The "which" argument
-         *              selects the item to be computed:
-         *                 0   March equinox
-         *                 1   June solstice
-         *                 2   September equinox
-         *                 3   December solstice
+         * EQUINOX -- Determine the Julian Ephemeris Day of an equinox or
+         * solstice. The "which" argument selects the item to be computed: 0
+         * March equinox 1 June solstice 2 September equinox 3 December solstice
+         *
          * @param year
          * @param which
          * @return
@@ -859,8 +890,8 @@ public class jjTime {
         public double equinox(int year, int which) {
             double deltaL, JDE0, JDE, JDE0tab[][], S, T, W, Y;
             /*  Initialise terms for mean equinox and solstices.  We
-            have two sets: one for years prior to 1000 and a second
-            for subsequent years.  */
+             have two sets: one for years prior to 1000 and a second
+             for subsequent years.  */
             if (year < 1000) {
                 JDE0tab = JDE0tab1000;
                 Y = year / 1000;
@@ -887,11 +918,11 @@ public class jjTime {
         }
 
         /**
-         * SUNPOS  --  Position of the Sun.  Please see the comments
-         *             on the return statement at the end of this function
-         *             which describe the array it returns.  We return
-         *             intermediate values because they are useful in a
-         *             variety of other contexts.
+         * SUNPOS -- Position of the Sun. Please see the comments on the return
+         * statement at the end of this function which describe the array it
+         * returns. We return intermediate values because they are useful in a
+         * variety of other contexts.
+         *
          * @param jd
          * @return
          */
@@ -940,9 +971,9 @@ public class jjTime {
         }
 
         /**
-         * EQUATIONOFTIME  --  Compute equation of time for a given moment.
-         *                     Returns the equation of time as a fraction of
-         *                     a day.
+         * EQUATIONOFTIME -- Compute equation of time for a given moment.
+         * Returns the equation of time as a fraction of a day.
+         *
          * @param jd
          * @return
          */

@@ -5,6 +5,7 @@
 package cms.tools;
 
 //import cms.ticeAccess.Tice_User;
+import HMIS.Role;
 import cms.access.Access_User;
 //import java.io.File;
 import java.io.OutputStream;
@@ -156,7 +157,15 @@ public class jjTools {
     }
 
     public static int getSeassionUserId(HttpServletRequest request) {
-        return jjNumber.isDigit(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) ? Integer.parseInt(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase()).toString()) : 0;
+        return jjNumber.isDigit(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) ? Integer.parseInt(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) : 0;
+    }
+    /**
+     * رشته ای را برمیگرداند که در آن نقش های کاربر با کاراکتر های خاص از هم جدا میشوند
+     * @param request
+     * @return 5%A%21%A%55%A%
+     */
+    public static String getSeassionUserRole(HttpServletRequest request) {
+        return jjTools.getSessionAttribute(request, "#ROLE_ID")==null ? "" : jjTools.getSessionAttribute(request, "#ROLE_ID");
     }
 
     public static String getParameter(HttpServletRequest request, String name) {

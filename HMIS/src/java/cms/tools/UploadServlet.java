@@ -10,7 +10,6 @@ import java.util.*;
 import java.util.regex.Pattern;
 import javax.servlet.*;
 import javax.servlet.http.*;
-
 import jj.jjNumber;
 import jj.jjPicture;
 
@@ -53,8 +52,10 @@ public class UploadServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json");
-        request.setCharacterEncoding("utf-8");
+        System.out.println(UploadServlet.class+">>>>");
+        jjTools.ShowAllParameter(request);
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("utf-8");
         if (jjNumber.isDigit(jjTools.getParameter(request, "maxSize"))) {
             maxSize = Long.parseLong(jjTools.getParameter(request, "maxSize"));
         }
@@ -70,10 +71,8 @@ public class UploadServlet extends HttpServlet {
 //        catch (SQLException ex) {
 //            Logger.getLogger(UploadServlet.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        response.setCharacterEncoding("utf-8");
         String name = request.getParameter("name");
         name = name == null ? "" : name;
-        response.setContentType("text/plain");
         super.init(getServletConfig());
 //        response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
@@ -88,7 +87,6 @@ public class UploadServlet extends HttpServlet {
         String result = "";
 //        fileItemFactory.setSizeThreshold(1024 * 1024); //1 MB
         try {
-
             DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
             ServletFileUpload uploadHandler = new ServletFileUpload(fileItemFactory);
             List items = uploadHandler.parseRequest(request);

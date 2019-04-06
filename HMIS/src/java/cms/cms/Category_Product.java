@@ -405,7 +405,7 @@ public class Category_Product {
     public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuffer html = new StringBuffer();
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Categoryproduct_button", "<input type=\"button\" id=\"insert_Categoryproduct_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_Categoryproduct_new", Js.jjCategoryProduct.insert()));
@@ -571,9 +571,9 @@ public class Category_Product {
             html.append(Js.setVal("#" + _parent, row.get(0).get(_parent)));
             html.append(Js.setVal("#" + _upperNode, row.get(0).get(_upperNode)));
 
-            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);
-            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);
-//            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);
+            boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
+            boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
+//            boolean acclng = Access_User.hasAccess(request, db, rul_lng);
 
             if (accEdt) {
                 html2.append("<input type=\"button\" id=\"edit_Categoryproduct\" value=\"" + lbl_edit + "\" class=\"tahoma10\">");
@@ -611,11 +611,11 @@ public class Category_Product {
 //                }
 //            }
             ///**************LANGUAAGE ADDED*******>
-//            boolean acclng = Access_User.hasAccess2(request, db, rul_lng);//====== COMMENTED BY RASHIDI ======
-            boolean acclng2 = Access_User.hasAccess2(request, db, rul_lng2);//====== BY RASHIDI ======
-            boolean acclng3 = Access_User.hasAccess2(request, db, rul_lng3);//====== BY RASHIDI ======
-            boolean acclng4 = Access_User.hasAccess2(request, db, rul_lng4);//====== BY RASHIDI ======
-            boolean acclng5 = Access_User.hasAccess2(request, db, rul_lng5);//====== BY RASHIDI ======
+//            boolean acclng = Access_User.hasAccess(request, db, rul_lng);//====== COMMENTED BY RASHIDI ======
+            boolean acclng2 = Access_User.hasAccess(request, db, rul_lng2);//====== BY RASHIDI ======
+            boolean acclng3 = Access_User.hasAccess(request, db, rul_lng3);//====== BY RASHIDI ======
+            boolean acclng4 = Access_User.hasAccess(request, db, rul_lng4);//====== BY RASHIDI ======
+            boolean acclng5 = Access_User.hasAccess(request, db, rul_lng5);//====== BY RASHIDI ======
             if (acclng2) {
                 List<Map<String, Object>> row2 = jjDatabase.separateRow(db.Select(tableName, _parent + "=" + id + " AND " + _lang + "=2"));
                 if (row2.size() > 0) {
@@ -700,7 +700,7 @@ public class Category_Product {
             html.append(Js.setVal("#" + _parent, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _lang, 2));
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Categoryproduct_button", "<input type=\"button\" id=\"insert_Categoryproduct_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_Categoryproduct_new", Js.jjCategoryProduct.insert()));
@@ -736,7 +736,7 @@ public class Category_Product {
             html.append(Js.setVal("#" + _parent, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _lang, 3));
 
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Categoryproduct_button", "<input type='button' id='insert_Categoryproduct_new_ar' value='" + lbl_insert + "' class='tahoma10'>"));
                 html.append(Js.buttonMouseClick("#insert_Categoryproduct_new_ar", Js.jjCategoryProduct.insert()));
@@ -773,7 +773,7 @@ public class Category_Product {
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _parent, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _lang, lang));
-            boolean accIns = Access_User.hasAccess2(request, db, rul_ins);
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append(Js.setHtml("#Categoryproduct_button", "<input type='button' id='insert_Categoryproduct_new_lang' value='" + lbl_insert + "' class='tahoma10'>"));
                 html.append(Js.buttonMouseClick("#insert_Categoryproduct_new_lang", Js.jjCategoryProduct.insert()));

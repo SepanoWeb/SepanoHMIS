@@ -118,7 +118,7 @@ body {
     direction: rtl;
     margin: 0;
     font-family: Iranian-Sans, BYekan, Arial, sans-serif;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     font-weight: normal;
     line-height: 1.5;
     color: #868ba1;
@@ -1505,7 +1505,7 @@ pre code {
     display: block;
     width: 100%;
     padding: 0.65rem 0.75rem;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     line-height: 1.25;
     color: #495057;
     background-color: #fff;
@@ -1562,14 +1562,14 @@ select.form-control:focus::-ms-value {
 .col-form-label-sm {
     padding-top: calc(0.25rem - 1px * 2);
     padding-bottom: calc(0.25rem - 1px * 2);
-    font-size: 0.875rem;
+    font-size: 1.3rem;
 }
 
 .col-form-legend {
     padding-top: 0.65rem;
     padding-bottom: 0.65rem;
     margin-bottom: 0;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
 }
 
 .form-control-plaintext {
@@ -1596,7 +1596,7 @@ select.form-control:focus::-ms-value {
 .input-group-sm > .input-group-btn > .btn,
 .sp-container .input-group-sm > .input-group-btn > button {
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     line-height: 1.5;
     border-radius: 0.2rem;
 }
@@ -1907,7 +1907,7 @@ textarea.custom-file-input.parsley-error:focus {
     user-select: none;
     border: 1px solid transparent;
     padding: 0.65rem 0.75rem;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     line-height: 1.25;
     border-radius: 3px;
     transition: all 0.15s ease-in-out;
@@ -2343,7 +2343,7 @@ fieldset[disabled] a.btn {
 
 .btn-sm, .btn-group-sm > .btn, .sp-container .btn-group-sm > button {
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     line-height: 1.5;
     border-radius: 0.2rem;
 }
@@ -2432,7 +2432,7 @@ tbody.collapse.show {
     min-width: 10rem;
     padding: 0.5rem 0;
     margin: 0.125rem 0 0;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     color: #868ba1;
     text-align: right;
     list-style: none;
@@ -2488,7 +2488,7 @@ tbody.collapse.show {
     display: block;
     padding: 0.5rem 1.5rem;
     margin-bottom: 0;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     color: #868e96;
     white-space: nowrap;
 }
@@ -2709,7 +2709,7 @@ tbody.collapse.show {
 .input-group-addon {
     padding: 0.65rem 0.75rem;
     margin-bottom: 0;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     font-weight: normal;
     line-height: 1.25;
     color: #495057;
@@ -2723,7 +2723,7 @@ tbody.collapse.show {
 .input-group-sm > .input-group-btn > .input-group-addon.btn,
 .sp-container .input-group-sm > .input-group-btn > button.input-group-addon {
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     border-radius: 0.2rem;
 }
 .input-group-addon.form-control-lg, .dataTables_filter .input-group-lg > input.input-group-addon,
@@ -2974,7 +2974,7 @@ tbody.collapse.show {
     content: "Browse";
 }
 .custom-file-control.selected:lang(en)::after {
-  content: "" !important;
+    content: "" !important;
 }
 
 .nav {
@@ -3649,7 +3649,7 @@ tbody.collapse.show {
 
 .pagination-sm .page-link {
     padding: 0.25rem 0.5rem;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     line-height: 1.5;
 }
 .pagination-sm .page-item:first-child .page-link {
@@ -4348,7 +4348,7 @@ button.close {
     word-spacing: normal;
     white-space: normal;
     line-break: auto;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     word-wrap: break-word;
     opacity: 0;
 }
@@ -4447,7 +4447,7 @@ button.close {
     word-spacing: normal;
     white-space: normal;
     line-break: auto;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     word-wrap: break-word;
     background-color: #fff;
     background-clip: padding-box;
@@ -4570,7 +4570,7 @@ button.close {
 .popover-header {
     padding: 8px 14px;
     margin-bottom: 0;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     color: inherit;
     background-color: #f7f7f7;
     border-bottom: 1px solid #ebebeb;
@@ -4624,10 +4624,10 @@ button.close {
 }
 /*@supports (transform-style: preserve-3d)*/
 /*{*/
-    .carousel-item-next.carousel-item-left,
-    .carousel-item-prev.carousel-item-right {
-        transform: translate3d(0, 0, 0);
-    }
+.carousel-item-next.carousel-item-left,
+.carousel-item-prev.carousel-item-right {
+    transform: translate3d(0, 0, 0);
+}
 /*}*/
 
 .carousel-item-next,
@@ -4635,10 +4635,10 @@ button.close {
     transform: translateX(100%);
 }
 /*@supports (transform-style: preserve-3d) {*/
-    .carousel-item-next,
-    .active.carousel-item-right {
-        transform: translate3d(100%, 0, 0);
-    }
+.carousel-item-next,
+.active.carousel-item-right {
+    transform: translate3d(100%, 0, 0);
+}
 /*}*/
 
 .carousel-item-prev,
@@ -4646,10 +4646,10 @@ button.close {
     transform: translateX(-100%);
 }
 /*@supports (transform-style: preserve-3d) {*/
-    .carousel-item-prev,
-    .active.carousel-item-left {
-        transform: translate3d(-100%, 0, 0);
-    }
+.carousel-item-prev,
+.active.carousel-item-left {
+    transform: translate3d(-100%, 0, 0);
+}
 /*}*/
 
 .carousel-control-prev,
@@ -5853,11 +5853,11 @@ a.bg-dark:focus, a.bg-dark:hover {
 }
 
 /*@supports (position: sticky) {*/
-    .sticky-top {
-        position: sticky;
-        top: 0;
-        z-index: 1020;
-    }
+.sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
 /*}*/
 
 .sr-only {
@@ -9346,7 +9346,8 @@ textarea.parsley-error:active {
 }
 .modal .modal-dialog {
     display: inline-block;
-    text-align: left;
+    text-align: right;
+    direction: rtl;
     vertical-align: middle;
 }
 .modal .modal-header,
@@ -11030,7 +11031,7 @@ textarea.parsley-success:focus {
 .select2-results__option {
     border-radius: 0;
     margin-bottom: 1px;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     padding-left: 8px;
 }
 
@@ -11385,7 +11386,7 @@ textarea.parsley-success:focus {
 .bootstrap-tagsinput .label {
     background-color: #5B93D3;
     color: #fff;
-    font-size: 0.875rem;
+    font-size: 1.3rem;
     padding: 2px 8px;
     margin-top: 6px;
     display: inline-block;

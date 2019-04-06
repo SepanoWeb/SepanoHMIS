@@ -43,7 +43,7 @@ var hmisSteps = {
 //        param += "&panel=" + (containerId == null ? "swContentTbl" : containerId);
 //        param += "&sort=" + (sortField == null ? "0" : sortField);
 //        param += "&height=" + (tableHeight == null ? PanelHeight : tableHeight);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
 //        himsPlansForAssess.tabSizeTbl();
     },
     m_show_form: function () {
@@ -82,7 +82,7 @@ var hmisSteps = {
         param += "do=" + hmisSteps.tableName + ".insert";
         param += "&" + new jj('#stepsForm').jjSerial();
         param += "&hmis_plans_id=" + new jj("#hmis_plans_id").jjVal();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisSteps.m_show_tbl();
         hmisSteps.m_clean();
         $("html, body").delay(1000).animate({scrollTop: $('#tblSteps').offset().top}, 800);
@@ -98,7 +98,7 @@ var hmisSteps = {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".edit";
         param += "&" + new jj('#swStepsForm').jjSerial();
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisSteps.m_show_tbl();
         hmisSteps.m_clean();
 //        } else {
@@ -118,7 +118,7 @@ var hmisSteps = {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".delete";
         param += "&" + hmisSteps.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisSteps.m_show_tbl();
         hmisSteps.m_clean();
     },
@@ -126,14 +126,14 @@ var hmisSteps = {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".select";
         param += "&" + hmisSteps.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         hmisSteps.m_show_form();
     },
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".add_EN";
         param += "&" + hmisSteps.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisSteps.f_parent).jjVal(id);
         new jj("#" + hmisSteps.f_lang).jjVal("2");
         hmisSteps.m_show_form();
@@ -142,7 +142,7 @@ var hmisSteps = {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".add_Ar";
         param += "&" + hmisSteps.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisSteps.f_parent).jjVal(id);
         new jj("#" + hmisSteps.f_lang).jjVal("3");
         hmisSteps.m_show_form();
@@ -153,7 +153,7 @@ var hmisSteps = {
         param += "do=" + hmisSteps.tableName + ".add_lang";
         param += "&" + hmisSteps.f_id + "=" + (id == null ? "" : id);
         param += "&myLang=" + (langId == null ? "1" : langId);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#" + hmisSteps.f_parent).jjVal(id);
         new jj("#" + hmisSteps.f_lang).jjVal(langId);
 //        alert(id+"&&&&&"+langId);
@@ -164,13 +164,13 @@ var hmisSteps = {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".searchTextInTitle";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_searchTextInAll: function (text) {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".searchTextInAll";
         param += "&text=" + (text == null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //============ BY RASHIDI ========>    
     m_searchTags: function () {
@@ -178,14 +178,14 @@ var hmisSteps = {
         param += "do=" + hmisSteps.tableName + ".searchTags";
         param += "&" + new jj('#swStepsForm').jjSerial();
         param += "&panel=content_search_tags_result";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".insertTags";
         param += "&" + new jj('#swStepsForm').jjSerial();
 //        param += "&panel=content_tags_div";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
     tabSizeTbl: function () {
