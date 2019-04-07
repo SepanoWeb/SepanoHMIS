@@ -44,7 +44,7 @@ var cmsUser = {
                  new jj('#sendPicSignature').jjAjaxFileUpload2('user_file_Signature', '#user_attachAxSignature', '#PicPreviewSignature');
                 $('#user_pic2').keyup(function () {
                     $('#PicPreviewSignature').attr('src', 'upload/' + $('#user_pic2').val());
-                    if ($('#user_pic2').val() == '') {
+                    if ($('#user_pic2').val() == '') {m_
                         $('#PicPreviewSignature').attr('src', 'img/preview.jpg');
                     }
                 });
@@ -128,6 +128,9 @@ var cmsUser = {
         $("#user_pic4").html('');
         $("#inputAfterSelect").html('');
         
+         new jj("#user_attachAxPersonal").jjVal('');
+         new jj("#user_attachAxPersonnelCard").jjVal('');
+         new jj("#user_attachAxSignature").jjVal('');
 
 
 //         $("#usersPicPreview1").removeAttr("src");
@@ -231,7 +234,7 @@ var cmsUser = {
         var param = "";
         param += "do=" + cmsUser.tableName + ".select";
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
-       new jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsUser.m_show_form();
         cmsUser.m_getGroups(id);
 

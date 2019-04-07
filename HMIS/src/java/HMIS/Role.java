@@ -47,6 +47,10 @@ public class Role {
     public static String _condition = "role_condition";//
 //    public static String _condition2 = "role_condition2";//
     public static String _comment = "role_comment";//
+    public static String _discription = "role_discription";//
+    public static String _name = "role_name";//
+    public static String _family = "role_family";//
+    public static String _email = "role_email";//
 
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
@@ -137,7 +141,7 @@ public class Role {
             html1.append("<th width='10%'>نام</th>");
             html1.append("<th width='15%'>نام خانوادگی</th>");
             html1.append("<th width='10%'>ایمیل </th>");
-            html1.append("<th width='10%'>مشاهده اطلاعات اثر</th>");
+            html1.append("<th width='10%'>مشاهده </th>");
             html1.append("</thead><tbody>");
             for (int i = 0; i < userRow.size(); i++) {
                 html1.append("<tr>");
@@ -181,24 +185,25 @@ public class Role {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
-               Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
                 return "";
             }
 
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(_condition, jjTools.getParameter(request, _condition));
-//            map.put(_condition2, jjTools.getParameter(request, _condition2));
-            map.put(_title, jjTools.getParameter(request, _title));
-            map.put(_user_id, jjTools.getParameter(request, _user_id));
-            map.put(_comment, jjTools.getParameter(request, _comment));
-            map.put(_date, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _date), true));
 
+            map.put(_title, jjTools.getParameter(request, _title));
+
+            map.put(_user_id, jjTools.getParameter(request, _user_id));
+            map.put(_discription, jjTools.getParameter(request, _discription));
+            map.put(_date, jjTools.getParameter(request, _date));
+            map.put(_comment, request.getParameter("role_comment"));
             if (db.insert(tableName, map).getRowCount() == 0) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                
+
                 Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
                 return "";
             }
@@ -228,7 +233,7 @@ public class Role {
                 Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
                 return "";
             }
-
+            StringBuilder html1 = new StringBuilder();
 //            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
 //            if (!errorMessageId.equals("")) {
 //                if (jjTools.isLangEn(request)) {
@@ -240,8 +245,41 @@ public class Role {
 //                String errorMessage = "شما اجازه مشاهده اطلاعات این شخص را ندارید";
 //                return Js.dialog(errorMessage) + Js.jjUser.showTbl();
 //            }
+
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, _id + "=" + row.get(0).get(Role._user_id)));
+            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, _id + "=" + row.get(0).get(_user_id)));
+            ///ایجاد جدول کاربران 
+            ///توسط شیران1
+            ////
+            List<Map<String, Object>> userRows = jjDatabase.separateRow(db.Select(Access_User.tableName));
+
+            html1.append("<table class='table display responsive nowrap' id='RefreshlistKarbaranDarSelect'><thead>");
+            html1.append("<th width='10%'>کد </th>");
+
+            html1.append("<th width='10%'>نام</th>");
+
+            html1.append("<th width='15%'>نام خانوادگی</th>");
+            html1.append("<th width='10%'>ایمیل </th>");
+            html1.append("<th width='10%'>مشاهده </th>");
+            html1.append("</thead><tbody>");
+            for (int i = 0; i < userRows.size(); i++) {
+//         
+                html1.append("<tr>");
+
+                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._id)) + "</td>");
+
+                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._family)) + "</td>");
+                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._name)) + "</td>");
+                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._email)) + "</td>");
+
+                html1.append("<td style='margin:auto;color:blue;font-size: 26px;' class='fa fa-user'  onclick='hmisRole.m_selectKarbar(" + userRows.get(i).get(Access_User._id) + ");' ></td>");
+//             
+                html1.append("</tr>");
+            }
+            html1.append("</tbody></table>");
+
+            String script2 = "$('#ListKarbaranDarSelect').html(\"" + html1.toString() + "\");\n";
+            script2 += Js.table("#RefreshlistKarbaranDarSelect", "400", 0, "", "لیست کاربران");
             if (row.isEmpty()) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
                 if (jjTools.isLangEn(request)) {
@@ -255,16 +293,17 @@ public class Role {
             StringBuilder html2 = new StringBuilder();
 
             html.append(Js.setVal("#role_" + _id, row.get(0).get(_id)));
-
+            
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
+            html.append(Js.setVal("#role_discription", row.get(0).get(_discription)));
             html.append(Js.setVal("#role_family", userRow.get(0).get(Access_User._family)));
             html.append(Js.setVal("#role_name", userRow.get(0).get(Access_User._name)));
             html.append(Js.setVal("#role_email", userRow.get(0).get(Access_User._email)));
-            html.append(Js.setVal("#role_comment", row.get(0).get(_comment)));
-            html.append(Js.setVal("#role_date", row.get(0).get(_date)));
+            html.append(Js.setValSummerNote("#role_comment", row.get(0).get(_comment)));
+//            html.append(Js.setVal("#role_date", row.get(0).get(_date)));
             html.append(Js.setVal("#role_user_id", row.get(0).get(_user_id)));
-            html.append(Js.setVal("#active", "active"));
-            html.append(Js.setVal("#noActive", "noActive"));
+            html.append(Js.setVal("#role_condition1", "active"));
+            html.append(Js.setVal("#role_condition2", "noActive"));
 //            html.append(Js.setVal("#role_condition"  , ));
             if (row.get(0).get(_condition).equals("active")) {
 //                html.append(Js.setVal("#active", row.get(0).get(_condition)));
@@ -294,7 +333,7 @@ public class Role {
                 html.append(Js.buttonMouseClick("#delete_Role", Js.jjRole.delete(id)));
 //                }
             }
-            Server.outPrinter(request, response, (Js.setHtml("#Role_button", html2.toString())) + html.toString());
+            Server.outPrinter(request, response, (Js.setHtml("#Role_button", html2.toString())) + html.toString()+script2);
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -351,16 +390,22 @@ public class Role {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                 Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
                 return "";
             }
             System.out.println("jjTools.getParameter(request, _id)=" + jjTools.getParameter(request, _id));
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(_title, request.getParameter(_title));
-            map.put(_condition, request.getParameter(_condition));
+           map.put(_condition, jjTools.getParameter(request, _condition));
             map.put(_user_id, request.getParameter(_user_id));
-            map.put(_comment, jjTools.getParameter(request, _comment));
+            map.put(_discription, request.getParameter(_discription));
+            map.put(_name, request.getParameter(_name));
+            map.put(_family, request.getParameter(_family));
+            map.put(_email, request.getParameter(_email));
+
+//          map.put(_date, new jjCalendar_IR().getDBFormat_8length());
             map.put(_date, jjTools.getParameter(request, _date));
+            map.put(_comment, request.getParameter("role_comment"));
 
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -368,9 +413,9 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                 Server.outPrinter(request, response, Js.dialog(errorMessageId));
-            return "";
-               
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
+
             }
             if (!db.update(tableName, map, _id + "=" + jjTools.getParameter(request, _id))) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
@@ -395,7 +440,7 @@ public class Role {
 
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-               Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
                 return "";
             }
             String id = jjTools.getParameter(request, _id);

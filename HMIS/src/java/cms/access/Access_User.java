@@ -189,7 +189,7 @@ public class Access_User {
 //            }
             Map<String, Object> map = new HashMap<String, Object>();
 
-            map.put(_attachFile, jjTools.getParameter(request, _attachFile));
+           
             map.put(_attachAxPersonal, jjTools.getParameter(request, _attachAxPersonal));
             map.put(_attachAxPersonnelCard, jjTools.getParameter(request, _attachAxPersonnelCard));
             map.put(_attachAxSignature, jjTools.getParameter(request, _attachAxSignature));
@@ -497,24 +497,36 @@ public class Access_User {
             html.append(Js.setVal("#user_shomareShenasnameUser", row.get(0).get(_shomareShenasname)));
             html.append(Js.setVal("#user_passUser", row.get(0).get(_pass)));
             html.append(Js.setVal("#user_passwordReminderUser", row.get(0).get(_passwordReminder)));
-            html.append(Js.setHtml("#user_pic1", row.get(0).get(_attachAxPersonal)));
-            html.append(Js.setHtml("#user_pic3", row.get(0).get(_attachAxPersonnelCard)));
-            html.append(Js.setHtml("#user_pic2", row.get(0).get(_attachAxSignature)));
+            html.append(Js.setVal("#user_attachAxPersonnelCard", row.get(0).get(_attachAxPersonnelCard)));
+            html.append(Js.setVal("#user_attachAxPersonal", row.get(0).get(_attachAxPersonal)));
+            html.append(Js.setVal("#user_attachAxSignature", row.get(0).get(_attachAxSignature)));
+
+
+//            html.append(Js.setHtml("#user_pic1", row.get(0).get(_attachAxPersonal)));
+//            html.append(Js.setHtml("#user_pic3", row.get(0).get(_attachAxPersonnelCard)));
+//            html.append(Js.setHtml("#user_pic2", row.get(0).get(_attachAxSignature)));
             html.append(Js.setVal("#user_attachFile", row.get(0).get(_attachFile)));
             String attachFiles = row.get(0).get(_attachFile).toString();
 
             String[] attachFilesArray = attachFiles.split("#A#");
             String script1 = "";
             StringBuilder html3 = new StringBuilder();
+            StringBuilder html4 = new StringBuilder();
             StringBuilder script = new StringBuilder();
 
+//      if (row.get(0).get(Access_User._attachFile).equals("")) {
+//      html4.append("$('#inputAfterSelect').hide()");}
+//      else{
+//           html4.append("$('#inputAfterSelect').show()");
             for (int l = 0; l < attachFilesArray.length; l++) {
-
-//                List<Map<String, Object>> userRowFile = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName));                  
-//                for (int i = 0; i < userRowFile.size(); i++) {
-                html3.append("<input class='col-xs-12' value='" + attachFilesArray[l] + "'/> ");
-//                }                
+                List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
+                if (!fileRow.isEmpty()) {
+                    String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
+                    html3.append("<div >" + "<input class='col-xs-12' disabled='disabled'  value='" + attachFilesArray[l] + "'/>"  + "</div>");
+//                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='cmsUser.removeFile(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/images.png' style='width:2%' />" + "</div>" + "</div>");
+                }
             }
+
             script1 = Js.setHtml("#inputAfterSelect", html3);
 
             if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
@@ -535,6 +547,7 @@ public class Access_User {
 
             html.append(Js.setVal("#user_addressUser", row.get(0).get(_address)));
             html.append(Js.setValDate("#user_birthdateUserUser", row.get(0).get(_birthdate)));
+///////////////////////////
             /////این تابع برای نمایش فایل های اپلود شده توسط فردی که واردشده نوشته شده است
             /////شیران1
 
@@ -555,7 +568,7 @@ public class Access_User {
                     html.append(Js.buttonMouseClick("#delete_User", Js.jjUser.delete(id)));
                 }
             }
-            Server.outPrinter(request, response, (Js.setHtml("#User_button", html2.toString())) + html.toString() + script1.toString() + script.toString());
+            Server.outPrinter(request, response, (Js.setHtml("#User_button", html2.toString())) + html.toString() + script1 + script.toString());
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
