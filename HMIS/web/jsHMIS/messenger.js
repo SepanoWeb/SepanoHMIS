@@ -50,7 +50,7 @@ var hmisMessenger = {
         hmisMessenger.m_show_tbl();
     },
     m_add_new: function () {
-        jj("do=" + hmisMessenger.tableName + ".add_new").jjAjax2(false);
+        new jj("do=" + hmisMessenger.tableName + ".add_new").jjAjax2(false);
 
         hmisMessenger.m_show_form();
         hmisMessenger.m_clean();

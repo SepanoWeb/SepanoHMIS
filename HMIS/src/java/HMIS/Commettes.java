@@ -34,8 +34,9 @@ public class Commettes {
     public static String _dateOfHoldingMeeting = "commettes_dateOfHoldingMeeting";//برگزاری جلسات
     public static String _members = "commettes_members";//اعضای کمیته  همان نقش میشود از جدول نقش ها می اید 
     public static String _regulationFile = "commettes_regulationFile";//آئین نامه
-//    public static String _regulationFile2 = "commettes_regulationFile2";//آئین نامه
-//    public static String _regulationFile3 = "commettes_regulationFile3";//آئین نامه
+    public static String _regulationFile1 = "commettes_regulationFile1";//آئین نامه
+    public static String _regulationFile2 = "commettes_regulationFile2";//آئین نامه
+    public static String _regulationFile3 = "commettes_regulationFile3";//آئین نامه
     public static String _description = "commettes_description";//توضیحات
 
 //    public static String _members = "commettes_members";//اعضای کمیته

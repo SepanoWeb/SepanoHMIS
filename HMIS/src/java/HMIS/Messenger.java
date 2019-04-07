@@ -10,11 +10,13 @@ import cms.tools.Js;
 import cms.tools.Server;
 import cms.tools.jjTools;
 import cms.tools.jjValidation;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
@@ -51,7 +53,7 @@ public class Messenger {
     public static int rul_print = 0;
     public static int rul_ins = 0;
 
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         String id = jjTools.getParameter(request, _id);
         try {
 //            String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
@@ -128,15 +130,18 @@ public class Messenger {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshMessenger", height, 0, "", "لیست پیام ها");
-
+            Server.outPrinter(request, response, html2);
+            return "";
 //       
-            return html2;
+
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
         }
     }
 
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         StringBuilder html = new StringBuilder();
         StringBuilder script = new StringBuilder();
         try {
@@ -146,9 +151,13 @@ public class Messenger {
                 html.append(Js.setHtml("#Messenger_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Messenger_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
                 html.append(Js.buttonMouseClick("#insert_Messenger_new", Js.jjMessenger.insert()));
             }
-            return html.toString() + script;
+            Server.outPrinter(request, response, html.toString() + script);
+            return "";
+
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+
         }
     }
 
@@ -161,11 +170,12 @@ public class Messenger {
      * @return
      * @throws Exception
      */
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+            Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
             }
 
             Map<String, Object> map = new HashMap<String, Object>();
@@ -183,11 +193,17 @@ public class Messenger {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
-            return Js.jjMessenger.refresh();
+            Server.outPrinter(request, response, Js.jjMessenger.refresh());
+            return "";
+
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
@@ -196,7 +212,7 @@ public class Messenger {
      *
      * @param id
      */
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -204,7 +220,9 @@ public class Messenger {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                 Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+                return "";
+               
             }
             StringBuilder script = new StringBuilder();
 
@@ -243,17 +261,23 @@ public class Messenger {
                 html.append(Js.buttonMouseClick("#delete_Messenger", Js.jjMessenger.delete(id)));
 //                }
             }
-            return (Js.setHtml("#Messenger_button", html2.toString())) + html.toString() + script;
+            Server.outPrinter(request, response, (Js.setHtml("#Messenger_button", html2.toString())) + html.toString() + script);
+            return "";
+
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+
         }
     }
 
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
+
             }
             String id = jjTools.getParameter(request, _id);
 //           
@@ -277,21 +301,27 @@ public class Messenger {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
+
             }
 //            return Js.jjDepartment.refresh();
             return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String delete(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
 //            Content.catchProductTitle = null;
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
+
             }
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -299,7 +329,9 @@ public class Messenger {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+                return "";
+
             }
 
             if (!db.delete(tableName, _id + "=" + id)) {
@@ -307,19 +339,24 @@ public class Messenger {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Delete Fail;";
                 }
-                return Js.dialog(errorMessage);
-            }
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
 
-            return Js.jjMessenger.refresh();
+            }
+            Server.outPrinter(request, response, Js.jjMessenger.refresh());
+            return "";
+
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
 
     }
 
     //     * 
     /**
-     * ارسال پیام 
+     * ارسال پیام
      *
      * @param db
      * @param receiver//گیرنده
@@ -329,10 +366,9 @@ public class Messenger {
      * @param textMessage//متن پیام
      * @return
      */
-    public static String sendMesseage(jjDatabaseWeb db, String receiver, String sender, String sendingMethod, String postageDate, String textMessage) {
+    public static String sendMesseage(HttpServletRequest request, HttpServletResponse response,jjDatabaseWeb db, String receiver, String sender, String sendingMethod, String postageDate, String textMessage) throws IOException {
         Map<String, Object> map = new HashMap<>();
 
-     
         String receiverMessage = receiver;
         //این تابع برای دریافت گیرنده ها نوشته شده 
         ///شیران1
@@ -342,9 +378,9 @@ public class Messenger {
             List<Map<String, Object>> userRow = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + receiverMessageArray[j]));//در ستون نویسندگان آی دی نویسنده ها قرار دارد                  
             for (int i = 0; i < userRow.size(); i++) {
                 map.put(_receiver, receiverMessageArray[j]);
-                map.put(_sender,sender );
-                map.put(_sendingMethod,sendingMethod );
-                map.put(_postageDate,postageDate );
+                map.put(_sender, sender);
+                map.put(_sendingMethod, sendingMethod);
+                map.put(_postageDate, postageDate);
 
                 map.put(_textMessage, textMessage);
 //        map.put(_postageDate, jjCalendar_IR.getDatabaseFormat_8length(null, true));
@@ -356,10 +392,13 @@ public class Messenger {
         if (db.insert(tableName, map).getRowCount() > 0) {
             return "";
         }
-        return "ارسال پیام با خطایی مواجه شده است";
+        String errorMessage = "ارسال پیام با خطایی مواجه شده است";
+        Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+        return "";
+
     }
 
-    public static String ersalPayamBaEmail(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String ersalPayamBaEmail(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
 
             String email = jjTools.getParameter(request, _email);
@@ -373,14 +412,19 @@ public class Messenger {
             StringBuilder script = new StringBuilder();
 
             if (Server.sendEmail("sepanoweb@gmail.com", Email, "پیام های ارسال شده", "", true, request)) {
+                String errorMessage = "ایمیل ارسال شد";
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
 
-                return "alert('ایمیل ارسال شد');";
             }
-
-            return "alert('ایمیل ارسال نشد');";
+            String errorMessage = "ایمیل ارسال نشد";
+            Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+            return "";
 
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 

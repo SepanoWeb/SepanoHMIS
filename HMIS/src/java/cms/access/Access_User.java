@@ -96,7 +96,7 @@ public class Access_User {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                Server.outPrinter(request, response, hasAccess);
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
                 return "";
             }
             StringBuilder html = new StringBuilder();
@@ -320,7 +320,7 @@ public class Access_User {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                Server.outPrinter(request, response, hasAccess);
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
                 return "";
             }
 
@@ -330,7 +330,7 @@ public class Access_User {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
                 return "";
             }
 

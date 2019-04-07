@@ -54,7 +54,7 @@ var hmisDepartment = {
         hmisDepartment.m_show_tbl();
     },
     m_add_new: function () {
-        jj("do=" + hmisDepartment.tableName + ".add_new").jjAjax2(false);
+        new jj("do=" + hmisDepartment.tableName + ".add_new").jjAjax2(false);
         $('.summernote').summernote();///برای تبدیل شدن به textEditor
         hmisDepartment.m_show_form();
         hmisDepartment.m_clean();

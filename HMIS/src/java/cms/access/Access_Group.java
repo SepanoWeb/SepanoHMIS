@@ -10,10 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Arvin1
+ * @author shiran1
+ * ایجاد تغییرات در Return ها 
+ * 1398/01/18
  */
 public class Access_Group {
 
@@ -46,10 +49,11 @@ public class Access_Group {
      * @param sort is number of default sort column number
      * @param panel is container id
      */
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
         if (!hasAccess.equals("")) {
-            return hasAccess;
+            Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+            return "";
         }
         StringBuffer html = new StringBuffer();
         String where = "";
@@ -58,12 +62,12 @@ public class Access_Group {
             where = _creator + "=" + creator;
         }
         List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, where));
-          html.append(" <div class='card bd-primary mg-t-20'>"
-                    + "    <div class='card-header bg-primary tx-white'>جدول گروه های کاربری</div>"
-                    + "    <div class='card-body pd-sm-30'>"
-                    + "        <p class='mg-b-20 mg-sm-b-30'>"
-                    + "            <a  class='btn btn-success pd-sm-x-20 mg-sm-r-5' style='color: white;' onclick='cmsGroup.m_add_new();' > گروه جدید</a>"
-                    + "        </p>");
+        html.append(" <div class='card bd-primary mg-t-20'>"
+                + "    <div class='card-header bg-primary tx-white'>جدول گروه های کاربری</div>"
+                + "    <div class='card-body pd-sm-30'>"
+                + "        <p class='mg-b-20 mg-sm-b-30'>"
+                + "            <a  class='btn btn-success pd-sm-x-20 mg-sm-r-5' style='color: white;' onclick='cmsGroup.m_add_new();' > گروه جدید</a>"
+                + "        </p>");
         html.append("<table class='table display responsive nowrap' id='refreshAccessGroup' dir='rtl'><thead>");
         html.append("<th width='5%'>کد</th>");
         html.append("<th width='90%'>عنوان</th>");
@@ -88,17 +92,21 @@ public class Access_Group {
         }
         String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
         html2 += Js.table("#refreshAccessGroup", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "10" : "", "لیست گروه ها");
-        return html2;
+
+        Server.outPrinter(request, response, html2);
+        return "";
     }
 
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         StringBuffer html = new StringBuffer();
         boolean accIns = Access_User.hasAccess(request, db, rul_ins);
         if (accIns) {
             html.append(Js.setHtml("#Group_button", "<input type=\"button\" id=\"insert_Group_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
             html.append(Js.buttonMouseClick("#insert_Group_new", Js.jjGroup.insert()));
         }
-        return html.toString();
+        Server.outPrinter(request, response, html.toString());
+        return "";
+
     }
 
     /**
@@ -109,10 +117,11 @@ public class Access_Group {
      * @param content_lang
      * @param content_parent
      */
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
         if (!hasAccess.equals("")) {
-            return hasAccess;
+            Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+            return "";
         }
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -131,9 +140,13 @@ public class Access_Group {
             if (jjTools.getParameter(request, "myLang").equals("2")) {
                 errorMessage = "Edit Fail;";
             }
-            return Js.dialog(errorMessage);
+            Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+            return "";
+
         }
-        return Js.jjGroup.refresh();
+        Server.outPrinter(request, response, Js.jjGroup.refresh());
+        return "";
+
     }
 
     /**
@@ -142,10 +155,11 @@ public class Access_Group {
      * @param group_title
      * @param group_des
      */
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
         if (!hasAccess.equals("")) {
-            return hasAccess;
+            Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+            return "";
         }
 
         String id = jjTools.getParameter(request, _id);
@@ -154,13 +168,17 @@ public class Access_Group {
             if (jjTools.isLangEn(request)) {
                 errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
             }
-            return Js.dialog(errorMessageId);
+            Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+            return "";
+
         }
 
         String creator = jjTools.getSessionAttribute(request, "#ID");
         if (jjNumber.isDigit(creator)) {
             if (db.Select(tableName, _id + "=" + id + " AND " + _creator + "=" + creator).getRowCount() == 0) {
-                return Js.dialog("شما اجازه ویرایش این گروه را ندارید.");
+                String errorMessage1 = "شما اجازه ویرایش این گروه را ندارید.";
+                Server.outPrinter(request, response, Js.modal(errorMessage1, "پیام سامانه"));
+                return "";
             }
         }
 
@@ -171,7 +189,7 @@ public class Access_Group {
             String thisRow = _chk + (i < 10 ? "0" + i : i);
             map.put(thisRow, jjTools.getSessionAttribute(request, "#NOACCESS").contains("$" + i + "$") ? 0
                     : Integer.parseInt(jjNumber.isDigit(jjTools.getParameter(request, thisRow))
-                                    ? jjTools.getParameter(request, thisRow) : "0"));
+                            ? jjTools.getParameter(request, thisRow) : "0"));
         }
         ServerLog.Print(map);
         if (creator.equals("1") && id.equals("1")) {
@@ -199,19 +217,24 @@ public class Access_Group {
             if (jjTools.isLangEn(request)) {
                 errorMessage = "Edit Fail;";
             }
-            return Js.dialog(errorMessage);
+            Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+            return "";
+
         }
-        return Js.jjGroup.refresh();
+        Server.outPrinter(request, response, Js.jjGroup.refresh());
+        return "";
+
     }
 
     /**
      *
      * @param id
      */
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String delete(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
         if (!hasAccess.equals("")) {
-            return hasAccess;
+            Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+            return "";
         }
 
         String id = jjTools.getParameter(request, _id);
@@ -220,13 +243,16 @@ public class Access_Group {
             if (jjTools.isLangEn(request)) {
                 errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
             }
-            return Js.dialog(errorMessageId);
+            Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+            return "";
         }
 
         String creator = jjTools.getSessionAttribute(request, "#ID");
         if (jjNumber.isDigit(creator)) {
             if (db.Select(tableName, _id + "=" + id + " AND " + _creator + "=" + creator).getRowCount() == 0) {
-                return Js.dialog("شما اجازه حذف این گروه را ندارید.");
+                String errorMessage2 = "شما اجازه حذف این گروه را ندارید.";
+                Server.outPrinter(request, response, Js.modal(errorMessage2, "پیام سامانه"));
+                return "";
             }
         }
 
@@ -235,24 +261,29 @@ public class Access_Group {
             if (jjTools.isLangEn(request)) {
                 errorMessage = "Delete Fail;";
             }
-            return Js.dialog(errorMessage);
+            Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+            return "";
         }
         db.delete(Access_Group_User.tableName, Access_Group_User._group_id + "=" + id);
-        return Js.jjGroup.refresh();
+
+        Server.outPrinter(request, response, Js.jjGroup.refresh());
+        return "";
     }
 
     /**
      *
      * @param id
      */
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         String id = jjTools.getParameter(request, _id);
         String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
         if (!errorMessageId.equals("")) {
             if (jjTools.isLangEn(request)) {
                 errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
             }
-            return Js.dialog(errorMessageId);
+            Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+            return "";
+
         }
         List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
         if (row.size() == 0) {
@@ -260,7 +291,8 @@ public class Access_Group {
             if (jjTools.isLangEn(request)) {
                 errorMessage = "Select Fail;";
             }
-            return Js.dialog(errorMessage);
+            Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+            return "";
         }
         StringBuffer html = new StringBuffer();
         StringBuffer html2 = new StringBuffer();
@@ -282,10 +314,12 @@ public class Access_Group {
             html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_Group\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div>");
             html.append(Js.buttonMouseClick("#delete_Group", Js.jjGroup.delete(id)));
         }
-        return (Js.setHtml("#Group_button", html2.toString())) + html.toString();
+        Server.outPrinter(request, response, (Js.setHtml("#Group_button", html2.toString())) + html.toString());
+        return "";
+
     }
 
-    public static String getMenu(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String getMenu(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         StringBuffer html = new StringBuffer();
         List<Map<String, Object>> row = jjDatabase.separateRow(db.SelectAll(tableName));
         html.append("&nbsp;&nbsp;<ul>");
@@ -293,7 +327,9 @@ public class Access_Group {
             html.append("<li onclick='swNewsCategory(" + row.get(i).get(_id) + ");'>&nbsp;" + row.get(i).get(_title) + " </li>");
         }
         html.append("</ul>");
-        return html.toString();
+        Server.outPrinter(request, response, html.toString());
+        return "";
+
     }
 
     /**
@@ -306,7 +342,7 @@ public class Access_Group {
      * @return
      * @throws Exception
      */
-    public static String getOptions(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String getOptions(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         StringBuffer html = new StringBuffer();
         String panel = jjTools.getParameter(request, "panel");//====== BY RASHIDI ======
 //        if (panel.equals("")) {
@@ -316,11 +352,12 @@ public class Access_Group {
         for (int i = 0; i < row.size(); i++) {
             html.append("<option value='" + row.get(i).get(_id) + "'>" + row.get(i).get(_title).toString() + "</option>");
         }
-        return Js.setHtml("#" + panel, html.toString());//====== EDITED BY RASHIDI ======
 
+        Server.outPrinter(request, response, Js.setHtml("#" + panel, html.toString()));
+        return "";
     }
 
-    public static String getCheckboxList(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String getCheckboxList(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         StringBuffer html = new StringBuffer();
         List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName));
 
@@ -368,12 +405,12 @@ public class Access_Group {
             }
             html.append("</div></td></table></div>");
         }
-        return Js.setHtml("#" + panel, html.toString());
+         Server.outPrinter(request, response, Js.setHtml("#" + panel, html.toString()));
+        return "";
+      
     }
-    
+
 //============ BY RASHIDI ========>
-    
-    
 //این قسمت برای افزودن ستون به جدول دسترسی ها نوشته شده
 //    public static void main(String[] args) throws SQLException {
 //        try {
@@ -399,7 +436,5 @@ public class Access_Group {
 //            System.err.println("SQLException: " + ex.getMessage());
 //        }
 //    }
-
 //<============ BY RASHIDI ========
-    
 }

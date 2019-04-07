@@ -273,7 +273,7 @@ public class Department {
             }
 
             script.append(Js.setVal("#selectHospital", row.get(0).get(_location)));
-       
+     
             script.append(Js.setValSummerNote("#department_publicContent", row.get(0).get(_publicContent)));
             script.append(Js.setValSummerNote("#department_praivateContent", row.get(0).get(_praivateContent)));
 
