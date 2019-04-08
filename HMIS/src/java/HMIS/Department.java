@@ -166,7 +166,51 @@ public class Department {
             return "";
         }
     }
-
+    ///شیران1
+//این تابع برای دراوردن موقعیت بخش ها نوشته شده
+//    public static String selectOptionDepartment(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+//        StringBuilder html = new StringBuilder();
+//        try {
+//            StringBuilder html3 = new StringBuilder();
+//            String script = "";
+//            String selectHospital = jjTools.getParameter(request, "selectHospital");
+//
+//            String html4 = "<select  class='form-control' id='selectHospital' style='height: 34%;  '><option  style='color:black' value='بیمارستان مورد نظر راانتخاب کنید' >بیمارستان مورد نظر راانتخاب کنید</option>";
+//
+//            Document doc = Jsoup.parse(html4);
+//            List<Map<String, Object>> rowLocation = jjDatabase.separateRow(db.Select(DepartmentPosition.tableName, "*", "id>=0", DepartmentPosition._parent));
+//
+//            for (int i = 0; i < rowLocation.size(); i++) {
+//                String parentID = rowLocation.get(i).get(DepartmentPosition._parent).toString();
+//                String space = "-";
+//                for (int j = 0; j <= Integer.parseInt(rowLocation.get(i).get(DepartmentPosition._level).toString()); j++) {
+//                    space += "--";
+//                }
+//                String optionHtml = "<option id='selectHospital" + rowLocation.get(i).get(_id) + "'  value='" + rowLocation.get(i).get(_id) + "'>"
+//                        + space
+//                        + rowLocation.get(i).get(DepartmentPosition._subcategory)
+//                        + "</option>";
+//                doc.getElementById("selectHospital" + parentID).append(optionHtml);
+//                String level = rowLocation.get(i).get(_level).toString();
+//
+////                for (int j = 0; j <  ; j++) {
+////                doc.select(parentID).append("<div id='" + rowLocation.get(i).get(_id) + "' level='" + level + "' class='parentTree closed level" + level + "' >" + rowLocation.get(i).get(Department._subcategory) + "</div>");
+////                }
+//                String haspitalname = rowLocation.get(i).get(DepartmentPosition._subcategory).toString();
+//
+////                doc.select(parentSelector).append("<div  level='" + level + "' class='parentTree closed level" + level + "' > <span onclick=\"cmsLocation.showsubdiv(this);\" style='cursor: pointer;'>+</span><span onclick=\"cmsLocation.saveuniversity(this);\" id='" + row.get(i).get(_id) + "'>" + row.get(i).get(_universityname) + "</span></div>");
+//            }
+////       
+//
+//            doc.append("</select >");
+//
+//            script += Js.setHtml("#locationSelectOption", doc.toString());
+//
+//            return script;
+//        } catch (Exception e) {
+//            return Server.ErrorHandler(e);
+//        }
+//    }
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString) throws Exception {
         StringBuilder html = new StringBuilder();
         StringBuilder script = new StringBuilder();
@@ -263,9 +307,9 @@ public class Department {
             script.append(Js.setVal("#department_" + _id, row.get(0).get(_id)));
 
             script.append(Js.setVal("#" + _title, row.get(0).get(_title)));
-
+            script.append(Js.setAttr("#IconDownload", "href", "upload/" + row.get(0).get(_icon)));
             script.append(Js.setVal("#" + _organizationalCode, row.get(0).get(_organizationalCode)));
-            script.append(Js.setHtml("#departmentIcon" , row.get(0).get(_icon)));
+//            script.append(Js.setVal("#IconDownload" , row.get(0).get(_icon)));
              if (row.get(0).get(_icon).equals("")) {
                 script.append(Js.setAttr("#PicPreviewIcon", "src", "img/preview.jpg"));
             } else {

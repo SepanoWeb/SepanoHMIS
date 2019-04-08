@@ -54,7 +54,7 @@
                                             </div>
                                                 
                                         </div>
-                                        <div class="col-lg" style="">
+<!--                                        <div class="col-lg" style="">
                                               <input id="department_icon" name="department_icon" type="hidden" />
                                                <img id="PicPreviewIcon"  class="img-thumbnail"  name="PicPreviewIcon" src="#" style="    width: 33%;"/>
                                             آیکون
@@ -67,7 +67,26 @@
                                                 <span class="form-control" id="departmentIcon" ></span>
                                             </div>
                                             
-                                        </div>
+                                        </div>-->
+                                        <div class="col-lg" style="">
+                                    <div>
+                                    آیکون
+                                    </div>
+                                    
+                                    <input id="department_icon" name="department_icon" type="hidden">
+                                    <img id="PicPreviewIcon" name="PicPreviewIcon" class="img-thumbnail" src="img/preview.jpg" style="width: 50%;height: 90%;float: right">
+                                    <div class="row">
+                                        <input class="btn btn-primary" id="sendPicIcon" type="submit" value="ارسال">
+                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                        <input id="upload_fileIcon" name="upload_fileIcon" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                        <span id="departmentIcon"  class="form-control"></span>
+                                        <!--<span class="form-control"></span>-->
+                                    </div>
+                                     <a  class="" id="IconDownload" href="" style="" target="_blank">
+                        دانلود آیکون
+                    </a>
+                                   
+                                </div>
                                         <!--                                        <div class="col-lg">
                                                                                     آیکون
                                         

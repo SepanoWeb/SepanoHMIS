@@ -27,7 +27,7 @@ var cmsUser = {
                 });
                 $("#user_file_personal").button().click(function () {
                 });
-                new jj('#sendPic1').jjAjaxFileUpload2('user_file_personal', '#user_attachAxPersonal', '#PicPreviewPersonal');
+                new jj('#sendPic1').jjAjaxFileUpload2('user_file_personal', '#user_attachPicPersonal', '#PicPreviewPersonal');
 //                new jj('#sendPic1').jjAjaxFileUploadPersonal('#user_file_personal', '#user_attachAxPersonal', '#PicPreviewPersonal');
                 $('#user_pic1').keyup(function () {
                     $('#PicPreviewPersonal').attr('src', 'upload/' + $('#user_pic1').val());
@@ -41,7 +41,7 @@ var cmsUser = {
                 $("#user_file_Signature").button().click(function () {
                 });
 //                new jj('#sendPicSignature').jjAjaxFileUploadAxSignature('#user_file_Signature', '#user_attachAxSignature', '#PicPreviewSignature');
-                 new jj('#sendPicSignature').jjAjaxFileUpload2('user_file_Signature', '#user_attachAxSignature', '#PicPreviewSignature');
+                 new jj('#sendPicSignature').jjAjaxFileUpload2('user_file_Signature', '#user_attachPicSignature', '#PicPreviewSignature');
                 $('#user_pic2').keyup(function () {
                     $('#PicPreviewSignature').attr('src', 'upload/' + $('#user_pic2').val());
                     if ($('#user_pic2').val() == '') {m_
@@ -55,7 +55,7 @@ var cmsUser = {
                 });
                 $("#uploaded_file").button().click(function () {
                 });
-                 new jj('#sendPicupload').jjAjaxFileUpload2('uploaded_file', '#user_attachAxPersonnelCard', '#PicPreview');
+                 new jj('#sendPicupload').jjAjaxFileUpload2('uploaded_file', '#user_attachPicPersonnelCard', '#PicPreview');
 //                new jj('#sendPicupload').jjAjaxFileUploadPersonnelCard('#uploaded_file', '#user_attachAxPersonnelCard', '#PicPreview');
                 $('#user_pic3').keyup(function () {
                     $('#PicPreview').attr('src', 'upload/' + $('#user_pic3').val());
@@ -128,9 +128,9 @@ var cmsUser = {
         $("#user_pic4").html('');
         $("#inputAfterSelect").html('');
         
-         new jj("#user_attachAxPersonal").jjVal('');
-         new jj("#user_attachAxPersonnelCard").jjVal('');
-         new jj("#user_attachAxSignature").jjVal('');
+         new jj("#user_attachPicPersonal").jjVal('');
+         new jj("#user_attachPicPersonnelCard").jjVal('');
+         new jj("#user_attachPicSignature").jjVal('');
 
 
 //         $("#usersPicPreview1").removeAttr("src");
@@ -151,6 +151,9 @@ var cmsUser = {
     },
     m_add_new: function () {
        new jj("do=" + cmsUser.tableName + ".add_new").jjAjax2(false);
+       $("#DownloadPicPersonal").hide();
+       $("#DownloadPicPersonnelCard").hide();
+       $("#DownloadPicSignature").hide();
         cmsUser.m_show_form();
         cmsUser.m_clean();
         cmsUser.m_getGroups();
@@ -207,9 +210,9 @@ var cmsUser = {
         param += "do=" + cmsUser.tableName + ".edit";
 //        param += "&pic=" + $('#user_file_personal').val();
         param += "&pic=" + $('#swUser').val();
-        param += "&user_attachAxPersonal=" + $('#user_attachAxPersonal').val();
-        param += "&user_attachAxPersonnelCard=" + $('#user_attachAxPersonnelCard').val();
-        param += "&user_attachAxSignature=" + $('#user_attachAxSignature').val();
+        param += "&user_attachAxPersonal=" + $('#user_attachPicPersonal').val();
+        param += "&user_attachAxPersonnelCard=" + $('#user_attachPicPersonnelCard').val();
+        param += "&user_attachAxSignature=" + $('#user_attachPicSignature').val();
         param += "&user_attachFile=" + $('#user_attachFile').val();
         param += "&" +new jj('#swUser').jjSerial(param);
 

@@ -32,13 +32,13 @@ public class Access_User {
     public static String _grade = "user_grade";
     ////برای عکس پرسنلی  
     ///توسط شیران1
-    public static String _attachAxPersonal = "user_attachAxPersonal";
+    public static String _attachPicPersonal = "user_attachPicPersonal";
     ////برای عکس کارت پرسنلی  
     ///توسط شیران1
-    public static String _attachAxPersonnelCard = "user_attachAxPersonnelCard";
+    public static String _attachPicPersonnelCard = "user_attachPicPersonnelCard";
     ////برای عکس امضا  
     ///توسط شیران1
-    public static String _attachAxSignature = "user_attachAxSignature";
+    public static String _attachPicSignature = "user_attachPicSignature";
 
     public static String _address = "user_address";
     public static String _isActive = "user_is_active";
@@ -158,7 +158,25 @@ public class Access_User {
                 html.append(Js.setHtml("#User_button", "<div class='row'><div class='col-lg-6'><input type=\"button\" id=\"insert_User_new\" value=\"" + lbl_insert + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div></div>"));
                 html.append(Js.buttonMouseClick("#insert_User_new", Js.jjUser.insert()));
             }
-            Server.outPrinter(request, response, html.toString());
+             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName));
+            StringBuilder script2 = new StringBuilder();
+            if (row.get(0).get(Access_User._attachPicPersonal).equals("")) {
+                script2.append(Js.setAttr("#PicPreviewPersonal", "src", "img/preview.jpg"));
+            } else {
+                script2.append(Js.setAttr("#PicPreviewPersonal", "src", "upload/" + row.get(0).get(Access_User._attachPicPersonal).toString() + ""));
+            }
+            if (row.get(0).get(Access_User._attachPicPersonnelCard).equals("")) {
+                script2.append(Js.setAttr("#PicPreview", "src", "img/preview.jpg"));
+            } else {
+                script2.append(Js.setAttr("#PicPreview", "src", "upload/" + row.get(0).get(Access_User._attachPicPersonnelCard).toString() + ""));
+            }
+            if (row.get(0).get(Access_User._attachPicSignature).equals("")) {
+                script2.append(Js.setAttr("#PicPreviewSignature", "src", "img/preview.jpg"));
+            } else {
+                script2.append(Js.setAttr("#PicPreviewSignature", "src", "upload/" + row.get(0).get(Access_User._attachPicSignature).toString() + ""));
+            }
+          
+            Server.outPrinter(request, response, html.toString()+script2);
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -190,9 +208,9 @@ public class Access_User {
             Map<String, Object> map = new HashMap<String, Object>();
 
            
-            map.put(_attachAxPersonal, jjTools.getParameter(request, _attachAxPersonal));
-            map.put(_attachAxPersonnelCard, jjTools.getParameter(request, _attachAxPersonnelCard));
-            map.put(_attachAxSignature, jjTools.getParameter(request, _attachAxSignature));
+            map.put(_attachPicPersonal, jjTools.getParameter(request, _attachPicPersonal));
+            map.put(_attachPicPersonnelCard, jjTools.getParameter(request, _attachPicPersonnelCard));
+            map.put(_attachPicSignature, jjTools.getParameter(request, _attachPicSignature));
             map.put(_email, email.toLowerCase());
             map.put(_family, jjTools.getParameter(request, _family));
             map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
@@ -343,9 +361,10 @@ public class Access_User {
             map.put(_isActive, jjTools.getParameter(request, _isActive).equals("1"));
             map.put(_name, jjTools.getParameter(request, _name));
             map.put(_attachFile, jjTools.getParameter(request, _attachFile));
-            map.put(_attachAxPersonal, jjTools.getParameter(request, _attachAxPersonal));
-            map.put(_attachAxPersonnelCard, jjTools.getParameter(request, _attachAxPersonnelCard));
-            map.put(_attachAxSignature, jjTools.getParameter(request, _attachAxSignature));
+            map.put(_attachPicPersonal, jjTools.getParameter(request, _attachPicPersonal));
+            map.put(_attachPicPersonnelCard, jjTools.getParameter(request, _attachPicPersonnelCard));
+            map.put(_attachPicSignature, jjTools.getParameter(request, _attachPicSignature));
+            
             map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
             map.put(_grade, jjTools.getParameter(request, _grade));
             map.put(_passwordReminder, jjTools.getParameter(request, _passwordReminder));
@@ -497,10 +516,13 @@ public class Access_User {
             html.append(Js.setVal("#user_shomareShenasnameUser", row.get(0).get(_shomareShenasname)));
             html.append(Js.setVal("#user_passUser", row.get(0).get(_pass)));
             html.append(Js.setVal("#user_passwordReminderUser", row.get(0).get(_passwordReminder)));
-            html.append(Js.setVal("#user_attachAxPersonnelCard", row.get(0).get(_attachAxPersonnelCard)));
-            html.append(Js.setVal("#user_attachAxPersonal", row.get(0).get(_attachAxPersonal)));
-            html.append(Js.setVal("#user_attachAxSignature", row.get(0).get(_attachAxSignature)));
-
+            html.append(Js.setVal("#user_attachPicPersonnelCard", row.get(0).get(_attachPicPersonnelCard)));
+            html.append(Js.setVal("#user_attachPicPersonal", row.get(0).get(_attachPicPersonal)));
+            html.append(Js.setVal("#user_attachPicSignature", row.get(0).get(_attachPicSignature)));
+             html.append(Js.setAttr("#DownloadPicPersonal", "href", "upload/" + row.get(0).get(_attachPicPersonal)));
+             html.append(Js.setAttr("#DownloadPicPersonnelCard", "href", "upload/" + row.get(0).get(_attachPicPersonnelCard)));
+             /////برای دانلود عکس ها نوشته شده
+             html.append(Js.setAttr("#DownloadPicSignature", "href", "upload/" + row.get(0).get(_attachPicSignature)));
 
 //            html.append(Js.setHtml("#user_pic1", row.get(0).get(_attachAxPersonal)));
 //            html.append(Js.setHtml("#user_pic3", row.get(0).get(_attachAxPersonnelCard)));
@@ -529,20 +551,24 @@ public class Access_User {
 
             script1 = Js.setHtml("#inputAfterSelect", html3);
 
-            if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
+            if (row.get(0).get(Access_User._attachPicPersonal).equals("")) {
                 script.append(Js.setAttr("#PicPreviewPersonal", "src", "img/preview.jpg"));
             } else {
-                script.append(Js.setAttr("#PicPreviewPersonal", "src", "upload/" + row.get(0).get(Access_User._attachAxPersonal).toString() + ""));
+                script.append(Js.setAttr("#PicPreviewPersonal", "src", "upload/" + row.get(0).get(Access_User._attachPicPersonal).toString() + ""));
+                script.append(Js.show("#DownloadPicPersonal"));
+                
             }
-            if (row.get(0).get(Access_User._attachAxPersonnelCard).equals("")) {
+            if (row.get(0).get(Access_User._attachPicPersonnelCard).equals("")) {
                 script.append(Js.setAttr("#PicPreview", "src", "img/preview.jpg"));
             } else {
-                script.append(Js.setAttr("#PicPreview", "src", "upload/" + row.get(0).get(Access_User._attachAxPersonnelCard).toString() + ""));
+                script.append(Js.setAttr("#PicPreview", "src", "upload/" + row.get(0).get(Access_User._attachPicPersonnelCard).toString() + ""));
+                script.append(Js.show("#DownloadPicPersonnelCard"));
             }
-            if (row.get(0).get(Access_User._attachAxSignature).equals("")) {
+            if (row.get(0).get(Access_User._attachPicSignature).equals("")) {
                 script.append(Js.setAttr("#PicPreviewSignature", "src", "img/preview.jpg"));
             } else {
-                script.append(Js.setAttr("#PicPreviewSignature", "src", "upload/" + row.get(0).get(Access_User._attachAxSignature).toString() + ""));
+                script.append(Js.setAttr("#PicPreviewSignature", "src", "upload/" + row.get(0).get(Access_User._attachPicSignature).toString() + ""));
+                script.append(Js.show("#DownloadPicSignature"));
             }
 
             html.append(Js.setVal("#user_addressUser", row.get(0).get(_address)));
