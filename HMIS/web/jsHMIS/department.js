@@ -17,23 +17,23 @@ var hmisDepartment = {
                     hmisDepartment.m_show_tbl();
                 });
 
-                $("#sendPicIcon").button().click(function () {
-                });
-                $("#upload_fileIcon").button().click(function () {
-                });
+//                $("#sendPicIcon").button().click(function () {
+//                });
+//                $("#upload_fileIcon").button().click(function () {
+//                });
 //                new jj('#sendPicIcon').jjAjaxFileUploadIcon('#upload_fileIcon', '#department_icon', '#PicPreviewIcon');
-                 new jj('#sendPicIcon').jjAjaxFileUpload2('upload_fileIcon', '#department_icon', '#PicPreviewIcon');
+                new jj('#sendPicIcon').jjAjaxFileUpload2('upload_fileIcon', '#department_icon', '#PicPreviewIcon');
                 $('#departmentIcon').keyup(function () {
                     $('#PicPreviewIcon').attr('src', 'upload/' + $('#departmentIcon').val());
                     if ($('#departmentIcon').val() == '') {
                         $('#PicPreviewIcon').attr('src', 'img/preview.jpg');
                     }
                 });
-                hmisDepartment.selectOptionDepartment("locationSelectOption");
-                $("#locationSelectOption").select2({
-                    minimumResultsForSearch: '',
-                    width: '100%'
-                });
+                hmisDepartment.selectOptionDepartment("department_location");
+//                $("#department_location").select2({
+//                    minimumResultsForSearch: '',
+//                    width: '100%'
+//                });
             });
 
 
@@ -57,6 +57,8 @@ var hmisDepartment = {
     m_add_new: function () {
         new jj("do=" + hmisDepartment.tableName + ".add_new").jjAjax2(false);
         $('.summernote').summernote();///برای تبدیل شدن به textEditor
+        $('#department_location').val("null").trigger('change');
+        $("#IconDownload").hide();
         hmisDepartment.m_show_form();
         hmisDepartment.m_clean();
 
@@ -101,7 +103,7 @@ var hmisDepartment = {
         param += "&department_praivateContent=" + $('#department_praivateContent').summernote('code');
         param += "&department_publicContent=" + $('#department_publicContent').summernote('code');
         param += "&jj=1";
-        param += "&selectOptionDepartement=" + $("#selectHospital option:selected").val();
+//        param += "&selectOptionDepartement=" + $("#locationSelectOption option:selected").val();
         new jj(param).jjAjax2(false);
         hmisDepartment.m_show_tbl();
         hmisDepartment.m_clean();
@@ -114,7 +116,7 @@ var hmisDepartment = {
         param += "&department_publicContent=" + $('#department_publicContent').summernote('code');
         param += "&" + new jj("#swDepartmentForm").jjSerial();
         param += "&jj=1";
-        param += "&selectOptionDepartement=" + $("#locationSelectOption option:selected").val();
+//        param += "&selectOptionDepartement=" + $("#locationSelectOption option:selected").val();
         new jj(param).jjAjax2(false);
         hmisDepartment.m_show_tbl();
         hmisDepartment.m_clean();

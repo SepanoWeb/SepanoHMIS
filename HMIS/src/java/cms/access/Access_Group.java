@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author shiran1
- * ایجاد تغییرات در Return ها 
- * 1398/01/18
+ * @author shiran1 ایجاد تغییرات در Return ها 1398/01/18
  */
 public class Access_Group {
 
@@ -100,10 +98,16 @@ public class Access_Group {
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         StringBuffer html = new StringBuffer();
         boolean accIns = Access_User.hasAccess(request, db, rul_ins);
-        if (accIns) {
-            html.append(Js.setHtml("#Group_button", "<input type=\"button\" id=\"insert_Group_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
-            html.append(Js.buttonMouseClick("#insert_Group_new", Js.jjGroup.insert()));
-        }
+         if (accIns) {
+                html.append(Js.setHtml("#Group_button", "<div class='col-lg-6'><input type='button' id='insert_Group_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
+                html.append(Js.click("#insert_Group_new", Js.jjUser.insert()));
+            } else {
+                html.append(Js.setHtml("#Group_button", ""));
+            }
+//        if (accIns) {
+//            html.append(Js.setHtml("#Group_button", "<input type=\"button\" id=\"insert_Group_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
+//            html.append(Js.buttonMouseClick("#insert_Group_new", Js.jjGroup.insert()));
+//        }
         Server.outPrinter(request, response, html.toString());
         return "";
 
@@ -296,6 +300,7 @@ public class Access_Group {
         }
         StringBuffer html = new StringBuffer();
         StringBuffer html2 = new StringBuffer();
+        StringBuilder script2 = new StringBuilder();
         html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
         html.append(Js.setVal("#" + _des, row.get(0).get(_des)));
         for (int i = 1; i < chkNumber; i++) {
@@ -305,16 +310,26 @@ public class Access_Group {
 
         boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
         boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
-
-        if (accEdt) {
-            html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_Group\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
-            html.append(Js.buttonMouseClick("#edit_Group", Js.jjGroup.edit()));
+        String htmlBottons = "";
+        boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
+        if (accEdit) {
+            htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjGroup.edit() + "' id='edit_Group'>" + lbl_edit + "</button></div>";
+//               
         }
-        if (accDel) {
-            html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_Group\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div>");
-            html.append(Js.buttonMouseClick("#delete_Group", Js.jjGroup.delete(id)));
+        boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
+        if (accDelete) {
+            htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjGroup.delete(id) + "' id='delete_Group'>" + lbl_delete + "</button></div>";
         }
-        Server.outPrinter(request, response, (Js.setHtml("#Group_button", html2.toString())) + html.toString());
+        script2.append(Js.setHtml("#Group_button", htmlBottons));
+//        if (accEdt) {
+//            html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_Group\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
+//            html.append(Js.buttonMouseClick("#edit_Group", Js.jjGroup.edit()));
+//        }
+//        if (accDel) {
+//            html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_Group\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div>");
+//            html.append(Js.buttonMouseClick("#delete_Group", Js.jjGroup.delete(id)));
+//        }
+        Server.outPrinter(request, response, script2 + html.toString());
         return "";
 
     }
@@ -405,9 +420,9 @@ public class Access_Group {
             }
             html.append("</div></td></table></div>");
         }
-         Server.outPrinter(request, response, Js.setHtml("#" + panel, html.toString()));
+        Server.outPrinter(request, response, Js.setHtml("#" + panel, html.toString()));
         return "";
-      
+
     }
 
 //============ BY RASHIDI ========>

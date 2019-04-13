@@ -159,9 +159,15 @@ public class Role {
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
 
             if (accIns) {
-                html.append(Js.setHtml("#Role_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
-                html.append(Js.buttonMouseClick("#insert_Role_new", Js.jjRole.insert()));
+                html.append(Js.setHtml("#Role_button", "<div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
+                html.append(Js.click("#insert_Role_new", Js.jjRole.insert()));
+            } else {
+                html.append(Js.setHtml("#Role_button", ""));
             }
+//            if (accIns) {
+//                html.append(Js.setHtml("#Role_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
+//                html.append(Js.buttonMouseClick("#insert_Role_new", Js.jjRole.insert()));
+//            }
             Server.outPrinter(request, response, html.toString() + script2);
             return "";
 
@@ -234,6 +240,7 @@ public class Role {
                 return "";
             }
             StringBuilder html1 = new StringBuilder();
+            StringBuilder script1 = new StringBuilder();
 //            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
 //            if (!errorMessageId.equals("")) {
 //                if (jjTools.isLangEn(request)) {
@@ -293,7 +300,7 @@ public class Role {
             StringBuilder html2 = new StringBuilder();
 
             html.append(Js.setVal("#role_" + _id, row.get(0).get(_id)));
-            
+
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#role_discription", row.get(0).get(_discription)));
             html.append(Js.setVal("#role_family", userRow.get(0).get(Access_User._family)));
@@ -320,20 +327,30 @@ public class Role {
 
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
-
-            if (accEdt) {
-//                if (!id.equals("1")) {
-                html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_Role\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
-                html.append(Js.buttonMouseClick("#edit_Role", Js.jjRole.edit()));
-//                }
+            String htmlBottons = "";
+            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
+            if (accEdit) {
+                htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjRole.edit() + "' id='edit_Role'>" + lbl_edit + "</button></div>";
+//               
             }
-            if (accDel) {
-//                if (!id.equals("1")) {
-                html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_Role\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div></div>");
-                html.append(Js.buttonMouseClick("#delete_Role", Js.jjRole.delete(id)));
-//                }
+            boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
+            if (accDelete) {
+                htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjRole.delete(id) + "' id='delete_Role'>" + lbl_delete + "</button></div>";
             }
-            Server.outPrinter(request, response, (Js.setHtml("#Role_button", html2.toString())) + html.toString()+script2);
+            script1.append(Js.setHtml("#Role_button", htmlBottons));
+//            if (accEdt) {
+////                if (!id.equals("1")) {
+//                html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_Role\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
+//                html.append(Js.buttonMouseClick("#edit_Role", Js.jjRole.edit()));
+////                }
+//            }
+//            if (accDel) {
+////                if (!id.equals("1")) {
+//                html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_Role\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div></div>");
+//                html.append(Js.buttonMouseClick("#delete_Role", Js.jjRole.delete(id)));
+////                }
+//            }
+            Server.outPrinter(request, response, script1 + html.toString() + script2);
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -396,7 +413,7 @@ public class Role {
             System.out.println("jjTools.getParameter(request, _id)=" + jjTools.getParameter(request, _id));
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(_title, request.getParameter(_title));
-           map.put(_condition, jjTools.getParameter(request, _condition));
+            map.put(_condition, jjTools.getParameter(request, _condition));
             map.put(_user_id, request.getParameter(_user_id));
             map.put(_discription, request.getParameter(_discription));
             map.put(_name, request.getParameter(_name));

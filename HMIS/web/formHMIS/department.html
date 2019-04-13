@@ -49,8 +49,9 @@
                                         </div>
                                         <div  class="col-lg">
                                             موقعیت بخش
-                                            <div class="form-control select2" style=" margin-bottom: 20px;" onchange='$("#selectHospital").val();'>
-                                                <select  id="locationSelectOption" style='height: 34%;  '></select>
+                                            <div class="form-group" style=" margin-bottom: 20px;" >
+                                                <select id="department_location" name="department_location"  class="form-control">   
+                                                </select>
                                             </div>
                                                 
                                         </div>
@@ -237,13 +238,27 @@
 
                                 </div><!-- row  -->
                             </div><!-- card-body -->
-                            <table>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                             <div class="row col-lg-12">
+                                        <div class="mg-t-20  col-lg">
+                                            <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="hmisDepartment.m_show_tbl();">بازگشت </button>                
+                                        </div><!-- col -->
+                                        <div id="Department_button" class="col-lg-9 mg-t-20 row">            
+                                        </div>
+                                    </div><!-- card -->
+<!--                            <table>
                                 <tr >
                                 <div style=" text-align: right;width: 30%">
                                     <a  id="cancel_Department"  class="btn btn-secondary btn-block mg-b-10"  style=" color: white;    position: relative;
                                         top: 45px; right: 17px;"  >بازگشت</a>
                                 </div>
-                                <!--<td style="text-align: right">-->
+                                <td style="text-align: right">
 
 
 
@@ -255,9 +270,9 @@
                                      color: white;
                                      ">
                                 </div>
-                                <!--</td>-->
+                                </td>
                                 </tr>
-                            </table>
+                            </table>-->
                         </div><!-- card -->
                     </div><!-- col -->
                 </div><!-- col -->

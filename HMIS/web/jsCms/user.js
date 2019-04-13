@@ -23,10 +23,10 @@ var cmsUser = {
                     cmsUser.m_clean();
                     cmsUser.m_show_tbl();
                 });
-                $("#sendPic1").button().click(function () {
-                });
-                $("#user_file_personal").button().click(function () {
-                });
+//                $("#sendPic1").button().click(function () {
+//                });
+//                $("#user_file_personal").button().click(function () {
+//                });
                 new jj('#sendPic1').jjAjaxFileUpload2('user_file_personal', '#user_attachPicPersonal', '#PicPreviewPersonal');
 //                new jj('#sendPic1').jjAjaxFileUploadPersonal('#user_file_personal', '#user_attachAxPersonal', '#PicPreviewPersonal');
                 $('#user_pic1').keyup(function () {
@@ -36,10 +36,10 @@ var cmsUser = {
                     }
                 });
                 //////برای عکس امضا 
-                $("#sendPicSignature").button().click(function () {
-                });
-                $("#user_file_Signature").button().click(function () {
-                });
+//                $("#sendPicSignature").button().click(function () {
+//                });
+//                $("#user_file_Signature").button().click(function () {
+//                });
 //                new jj('#sendPicSignature').jjAjaxFileUploadAxSignature('#user_file_Signature', '#user_attachAxSignature', '#PicPreviewSignature');
                  new jj('#sendPicSignature').jjAjaxFileUpload2('user_file_Signature', '#user_attachPicSignature', '#PicPreviewSignature');
                 $('#user_pic2').keyup(function () {
@@ -51,10 +51,10 @@ var cmsUser = {
                 /////برای تصویر
 
 
-                $("#sendPicupload").button().click(function () {
-                });
-                $("#uploaded_file").button().click(function () {
-                });
+//                $("#sendPicupload").button().click(function () {
+//                });
+//                $("#uploaded_file").button().click(function () {
+//                });
                  new jj('#sendPicupload').jjAjaxFileUpload2('uploaded_file', '#user_attachPicPersonnelCard', '#PicPreview');
 //                new jj('#sendPicupload').jjAjaxFileUploadPersonnelCard('#uploaded_file', '#user_attachAxPersonnelCard', '#PicPreview');
                 $('#user_pic3').keyup(function () {
@@ -64,12 +64,12 @@ var cmsUser = {
                     }
                 });
                 ///////فایل ها
-                $("#sendPicFiles").button().click(function () {
-//                        $('#AttachFileUpload').append($('#user_pic4').val());
-                });
-
-                $("#attachFile").button().click(function () {
-                });
+//                $("#sendPicFiles").button().click(function () {
+////                        $('#AttachFileUpload').append($('#user_pic4').val());
+//                });
+//
+//                $("#attachFile").button().click(function () {
+//                });
                 
                 new jj('#sendPicFiles').jjAjaxFileUpload3('#attachFile', '#user_attachFile');
 
@@ -238,6 +238,7 @@ var cmsUser = {
         param += "do=" + cmsUser.tableName + ".select";
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
+         $("#user_pic4").html('');
         cmsUser.m_show_form();
         cmsUser.m_getGroups(id);
 
@@ -261,6 +262,22 @@ var cmsUser = {
     heightTab: "519",
     mainTabSetSize: function () {
         $('#swAccessAll').css('height', cmsUser.heightTab);
+    },
+  m_remove: function (idUpload,id) {
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف","cmsUser.removeFile("+idUpload+","+id+");");
+    },
+  removeFile: function (idUpload,idUser) {
+     
+        var param = "";
+        param += "do=" + cmsUser.tableName + ".removeFile";
+        
+        param += "&upload_id=" +idUpload;
+        param += "&access_user_id=" +idUser;
+        
+      
+        new jj(param).jjAjax2(false);
+        cmsUser.m_show_tbl();
+        cmsUser.m_clean();
     }
 }
 function loginToCMS() {
