@@ -11,12 +11,14 @@ var hmisSessions = {
     loadForm: function () {
         if ($("#swSessionsForm").html() == '') {
             $("#swSessionsForm").load("formHMIS/05OneSession.html", null, function () {
+                new jj('#sendFilesApproved').jjAjaxFileUpload3('attachFileApproved', '#approved_file', '');
                 new jj("#sessions_nextSessionDate").jjCalendarWithYearSelector(1397, 1420);
                 $("#cancel_Sessions").button().click(function (e) {
                     hmisSessions.m_clean();
                     hmisSessions.m_show_tbl();
                 });
                 hmisSessions.m_refresh();
+
             });
         }
     },
@@ -70,12 +72,20 @@ var hmisSessions = {
     m_edit: function () {
 //        var valid = hmisPlan.m_validation();
 //        if (valid == "") {
+        var temp = $('#audience input:checkbox[class=checkboxAudience]:checked');//مدعوین سمت دار
+        var temp2=""
+        for(var i=0;i<temp.size();i++){
+            temp2 +=$(temp[i]).val()+"%23A%23";
+        }
+        alert(temp2)
         var param = "";
         param += "do=" + hmisSessions.tableName + ".edit";
+
         param += "&" + new jj('#swSessionsForm').jjSerial();
         param += "&id=" + new jj('#hmis_Sessions_id').jjVal();
+        param += "&sessions_audience=" + temp2;
         new jj(param).jjAjax2(false);
-        hmisSessions.m_show_tbl();
+        hmisSessions.m_show_tbl();    
         hmisSessions.m_clean();
 //        } else {
 //            new jj(valid).jjDialog();

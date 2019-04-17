@@ -36,38 +36,15 @@
                     <input class="form-control" id="sessions_titleSessions" name="sessions_title" placeholder="عنوان جلسه را وارد کنید" type="text" value="جلسه ی خرداد ماه کمیته ی اجرایی">
                 </div>
             </div><!-- row -->
-            <p><span id="sessions_DateInvitation" style="display: block;"></span>: تاریخ ارسال دعوت نامه</p>
+            <p><input id="sessions_invitationDate"  type="text"  style="display: block;">: تاریخ ارسال دعوت نامه</p>
             <div class="card-header btn-teal tx-white">
                 دستور جلسه:
             </div>
             <textarea rows="7" id="sessions_agendaSessions" class="form-control is-valid mg-t-20" placeholder="Textarea (success state)">
               
             </textarea>                        
-            <!--            <div align="right">
-                            <div class="card-header bg-primary tx-white">
-                                جدول مصوبات قبلی:
-                            </div>
-                            <table id="datatable1" class="table table-responsive table-wrapper">
-                                <thead>
-                                    <tr>                    
-                                        <td>کد</td>
-                                        <td>عنوان مصوبه</td>
-                                        <td>مسئول اجرا</td>
-                                        <td>مسئول پیگیری</td>
-                                        <td>تاریخ شروع</td><td>تاریخ پایان</td>
-                                        <td>وضعیت</td><td>ویرایش</td>
-            
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="background-color: #fffabe"><td><br></td><td>درصد تحقق اهداف اختصصاصی تعیین گردد</td><td>مدیر مرکز</td><td><font color="#397b21">رئیس مرکز</font></td><td>97/3/20</td><td>97/5/20<br></td><td>در حال انجام</td><td><i onclick="$('#insertMosavabeh').slideDown()();" class="icon ion-eye" ></i></td></tr>
-                                    <tr style="background-color: #ffbebe"><td><br></td><td>بخش سی سی یو راه اندازی شود</td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/2/20<br></td><td>97/3/20<br></td><td><span  style="background-color: rgb(255, 0, 0); color: rgb(255, 255, 255);">انجام نشد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye"></i></td></tr>
-                                    <tr style="background-color: #c7ffba"><td><br></td><td>برنامه بازدید های میدانی ایمنی بیمار سه ماهه اول ابلاغ گردد<br></td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/3/20<br></td><td>97/5/20<br></td><td><span  style="background-color: rgb(107, 165, 74); color: rgb(255, 255, 255);">انجام شد</span></td><td><i onclick="$('#insertMosavabeh').slideDown();" class="icon ion-eye" ></i></td></tr>
-                                    <tr><td><br></td><td></td><td></td><td></td><td></td><td></td><td></td><td><br></td></tr>
-                                </tbody></table>
-            
-                        </div>-->
-            <div id="insertMosavabeh" class="card-body pd-sm-30" style="display: none">
+    
+            <div id="insertApproved" class="card-body pd-sm-30" style="display: none">
                 <div class="row">
                     <div class="col-lg-12">
                         عنوان مصوبه:
@@ -157,7 +134,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="form-group has-success mg-b-0">
-                            <button class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#insertMosavabeh').slideUp();">لغو
+                            <button class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#insertApproved').slideUp();">لغو
                             </button>
                         </div><!-- form-group -->
                     </div><!-- col -->
@@ -244,12 +221,12 @@
             <div class="card-body pd-sm-30">
                 <div class="row">
                     <div class="col-lg-3">
-                        <button  id="addNewApproved" class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#insertMosavabeh2').slideDown();hmisApproved.m_add_new();">
+                        <button  id="addNewApproved" class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#insertApproved2').slideDown();hmisApproved.m_add_new();">
                             افزودن مصوبه
                             <i class="fa fa-star"></i>
                         </button>
                     </div>
-                    <div id="insertMosavabeh2" class="card-body pd-sm-30" style="display: none">
+                    <div id="insertApproved2" class="card-body pd-sm-30" style="display: none">
                         <div class="row">
                             <input type="hidden" id="hmis_approved_id" name="hmis_approved_id"/>
 
@@ -264,9 +241,6 @@
                                     مسئول اجرا
                                     <select id="approved_responsibleForExecutionId" name="approved_responsibleForExecutionId" class="form-control">
                                         <!--در واقع از جدول اشخاص باید بیاورد-->
-                                        <option value="">انتخاب مسئول اجرا</option>
-                                        <option value="1">مدیر مرکز</option>
-                                        <option value="1">دکتر امیری</option>
                                     </select>
                                 </div><!-- form-group -->
                             </div><!-- col -->
@@ -310,39 +284,30 @@
                             </div><!-- col -->   
 
                             <div class="col-lg-3">
-                                بارگذاری مستندات
-                                <br/>
-                                <label class="custom-file">
-                                    <input id="approved_file" name="approved_file" type="file"  class="custom-file-input">
-                                    <span class="custom-file-control custom-file-control-primary"></span>
-                                </label>
-                                <!--                                <a href="">
-                                                                    <label class="custom-file">
-                                                                        مستندات بارگذاری شده:
-                                                                        <i class="icon ion-paperclip"></i>
-                                                                    </label>
-                                                                    <label class="custom-file">
-                                                                        مستندات بارگذاری شده:
-                                                                        <i class="icon ion-paperclip"></i>
-                                                                    </label>
-                                                                    <label class="custom-file">
-                                                                        مستندات بارگذاری شده:
-                                                                        <i class="icon ion-paperclip"></i>
-                                                                    </label>
-                                                                </a>-->
+                                 بارگذاری مستندات:<br/>
+                                   <input id="approved_file" name="approved_file" type="hidden" />
+                                    <!--<img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>-->
+                                    <div class="row">
+                                        <input class="btn btn-primary" id="sendFilesApproved" type="submit" value="ارسال">
+                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                        <input id="attachFileApproved" name="attachFileApproved" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                        <span class="form-control col-lg"></span>
+                                    </div>
+                                    <!--                                    <a onclick="hmisDepartment.downloadIcon();"></a>-->
+                                    <!--</label>-->
+                                    <div id="inputTextSelectorDiv"></div>
+
                             </div><!-- col -->   
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group has-success mg-b-0">
-                                    <button class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#insertMosavabeh2').slideUp();">لغو
+                                    <button class="btn btn-outline-success active btn-block mg-b-10" onclick="$('#insertApproved2').slideUp();">لغو
                                     </button>
                                 </div><!-- form-group -->
                             </div><!-- col -->
                             <div class="col-lg-3" id="Approved_button">
-                                <!--                                <button class="btn btn-outline-success active btn-block mg-b-10" onclick="alert('ثبت انجام شد')">ثبت
-                                                                    <i class="fa fa-star"></i>
-                                                                </button>-->
+                          
                             </div><!-- col -->
                         </div>
                     </div><!-- card-body -->
@@ -350,9 +315,9 @@
 
                 </div>
             </div><!-- card-body -->
-            <div class="col-lg-12">
 
-                <div class="row">
+            <div class="row">
+                <div class="col-lg-12">
                     <p >
                         شرح جلسه:
                     </p>
@@ -360,44 +325,10 @@
                 جلسه با یک ساعت تاخیر برگزار شد و میهامانان جلسه با استفاده از پاور پوینت مطالبی را مطرح کردند.
                     </textarea>
                 </div>
-
                 <div class="col-lg-12">
                     حضور و غیاب مدعوین به جلسه : 
-                    <div class="form-group has-danger mg-b-0">
-                        <label class="ckbox">
-                            <input type="checkbox"><span>
-                                کارشناس بهداشت حرفه ای - مهسا کریمی
-                            </span>
-                        </label>
-                    </div><!-- form-group -->
-                    <div class="form-group has-danger mg-b-0">
-                        <label class="ckbox">
-                            <input type="checkbox"><span>
-                                کارشناس یهیود کیفیت-مجید شریعتی
-                            </span>
-                        </label>
-                    </div><!-- form-group -->
-                    <div class="form-group has-danger mg-b-0">
-                        <label class="ckbox">
-                            <input type="checkbox"><span>
-                                محمد ثالثی-رییس امورعمومی
-                            </span>
-                        </label>
-                    </div><!-- form-group -->
-                    <div class="form-group has-danger mg-b-0">
-                        <label class="ckbox">
-                            <input type="checkbox"><span>
-                                رضا کریمی متخصص آی تی- مهمان خارج از سازمان
-                            </span>
-                        </label>
-                    </div><!-- form-group -->
-                    <div class="form-group has-danger mg-b-0">
-                        <label class="ckbox">
-                            <input type="checkbox"><span>
-                                محمود دولت آبادی متخصص آی تی- مهمان خارج از سازمان
-                            </span>
-                        </label>
-                    </div><!-- form-group -->
+                    <div id="audience"></div>
+
                 </div><!-- col -->
                 <div class="col-lg-3">
                     تاریخ جلسه بعد:
@@ -406,33 +337,7 @@
                     </div><!-- form-group -->
                 </div><!-- col -->   
             </div>
-            <div class="row l">
-                <div id="Sessions_button" class="col-lg-3"></div>
-                <div class="col-lg-3">
-                    <a href="feiz/login.html">
-                        <button class="btn btn-outline-primary active btn-block mg-b-10">
-                            چاپ صورت جلسه
-                        </button>   
-                    </a>
-                </div><!-- col --> 
-                   <div class="col-lg-3">
-                    <button class="btn btn-outline-success active btn-block mg-b-10">
-                        تایید نهایی و ارسال به مسئولین اجرا
-                        <i class="fa fa-star"></i>
-                    </button>   
-                </div><!-- col -->
-<!--                <div class="col-lg-3">
-                    <button class="btn btn-outline-warning active btn-block mg-b-10">
-                        ثبت موقت 
-                    </button>   
-                </div> col -->
-                <div class="col-lg-3">
-                    <button id="cancel_Sessions" class="btn btn-outline-dark active btn-block mg-b-10">
-                        لغو
-                    </button>   
-                </div><!-- col --> 
-
-            </div>
+            <!--</div>-->
         </div><!-- card-body -->
     </div><!-- card -->
 
@@ -440,6 +345,23 @@
         <div class="card-header bg-primary tx-white">شرح کامل</div>
     </div><!-- card -->
 </div><!-- sh-pagebody -->
+<div class="row l">
+    <div id="Sessions_button" ></div>
+    <div class="col-lg-3">
+        <a href="feiz/login.html">
+            <button class="btn btn-outline-primary active btn-block mg-b-10">
+                چاپ صورت جلسه
+            </button>   
+        </a>
+    </div><!-- col --> 
+    
+    <div class="col-lg-3">
+        <button id="cancel_Sessions" class="btn btn-outline-dark active btn-block mg-b-10">
+            لغو
+        </button>   
+    </div><!-- col --> 
+
+</div>
 <script>
     $(function () {
         'use strict';

@@ -46,7 +46,7 @@ var hmisRole = {
         hmisRole.m_show_tbl();
     },
     m_add_new: function () {
-        jj("do=" + hmisRole.tableName + ".add_new").jjAjax2(false);
+        new jj("do=" + hmisRole.tableName + ".add_new").jjAjax2(false);
         hmisRole.m_show_form();
 //        $('.summernote').summernote();///برای تبدیل شدن به textEditor
 

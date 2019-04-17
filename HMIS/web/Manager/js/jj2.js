@@ -1971,7 +1971,7 @@ var jj = function (selector) {
     this.jjAjaxFileUpload3 = function (inputFileId, inputTextSelector) {
         $(this.selector).click(function () {
             if ($("#" + inputFileId.replace("#", "")).val() == "") {
-                new jj("ابتدا  فایلی را انتخاب نمایید.").jjDialog();
+               alert("ابتدا  فایلی را انتخاب نمایید.");
                 return;
             }
             $.ajaxFileUpload({

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 import jj.jjCalendar_IR;
 import jj.jjDatabase;
@@ -63,7 +64,7 @@ public class Role {
      * @param sort is number of default sort column number
      * @param panel is container id
      */
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
 //            String hasAccess = Role.getAccessDialog(request, db, rul_rfs);
 //            if (!hasAccess.equals("")) {
@@ -115,13 +116,15 @@ public class Role {
             }
             String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
             html2 += Js.table("#refreshRole", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست نقش ها");
-            return html2;
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
         }
     }
 
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             StringBuilder html = new StringBuilder();
             StringBuilder html1 = new StringBuilder();
@@ -132,7 +135,7 @@ public class Role {
             html1.append("<table class='table display responsive nowrap' id='RefreshlistKarbaran'><thead>");
             html1.append("<th width='10%'>کد </th>");
             html1.append("<th width='10%'>نام</th>");
-            html1.append("<th width='15%'>نام خانوادگی</th>");  
+            html1.append("<th width='15%'>نام خانوادگی</th>");
             html1.append("<th width='10%'>ایمیل </th>");
             html1.append("<th width='10%'>مشاهده اطلاعات اثر</th>");
             html1.append("</thead><tbody>");
@@ -155,9 +158,12 @@ public class Role {
                 html.append(Js.setHtml("#Role_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
                 html.append(Js.buttonMouseClick("#insert_Role_new", Js.jjRole.insert()));
             }
-            return html.toString() + script2;
+            Server.outPrinter(request, response, html.toString() + script2);
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+
         }
     }
 //
@@ -171,11 +177,12 @@ public class Role {
 //     * @throws Exception
 //     */
 
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
 
             Map<String, Object> map = new HashMap<String, Object>();
@@ -184,18 +191,21 @@ public class Role {
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_user_id, jjTools.getParameter(request, _user_id));
             map.put(_comment, jjTools.getParameter(request, _comment));
-            map.put(_date, jjCalendar_IR.getDatabaseFormat_8length( jjTools.getParameter(request, _date),true));
+            map.put(_date, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _date), true));
 
             if (db.insert(tableName, map).getRowCount() == 0) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
             }
-            return Js.jjPlans.refresh();
+            Server.outPrinter(request, response,Js.jjPlans.refresh());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+           Server.outPrinter(request, response, Server.ErrorHandler(ex));
+           return "";
         }
     }
 //
@@ -204,7 +214,7 @@ public class Role {
 //     * @param id
 //     */
 
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request,  HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -212,7 +222,8 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
             }
 
 //            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -233,7 +244,8 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
@@ -254,7 +266,7 @@ public class Role {
 //                html.append(Js.setVal("#active", row.get(0).get(_condition)));
                 html.append(Js.setAttr("#active", "checked", "checked"));
 //                html.append(Js.removeAttr("#noActive", "checked"));
-            } else{
+            } else {
 //                html.append(Js.setVal("#noActive", row.get(0).get(_condition)));
                 html.append(Js.setAttr("#noActive", "checked", "checked"));
             }
@@ -278,13 +290,15 @@ public class Role {
                 html.append(Js.buttonMouseClick("#delete_Role", Js.jjRole.delete(id)));
 //                }
             }
-            return (Js.setHtml("#Role_button", html2.toString())) + html.toString();
+            Server.outPrinter(request, response,Js.setHtml("#Role_button", html2.toString()) + html.toString());
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+           Server.outPrinter(request, response,Server.ErrorHandler(e));
+           return "";
         }
     }
 
-    public static String selectKarbar(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String selectKarbar(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -292,7 +306,8 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response,Js.dialog(errorMessageId));
+                return "";
             }
 
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + id));
@@ -301,7 +316,8 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response,Js.dialog(errorMessage));
+                return "";
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
@@ -314,18 +330,21 @@ public class Role {
             html.append(Js.setVal("#role_email", row.get(0).get(Access_User._email)));
 
 //            }
-            return html.toString();
+          Server.outPrinter(request, response,html.toString());
+          return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+           Server.outPrinter(request, response,Server.ErrorHandler(e));
+           return "";
         }
     }
 //
 
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String edit(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean neddString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
             System.out.println("jjTools.getParameter(request, _id)=" + jjTools.getParameter(request, _id));
             Map<String, Object> map = new HashMap<String, Object>();
@@ -341,27 +360,32 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
             }
             if (!db.update(tableName, map, _id + "=" + jjTools.getParameter(request, _id))) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
             }
-            return Js.jjRole.refresh();
+            Server.outPrinter(request, response, Js.jjRole.refresh());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String delete(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
 
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -369,7 +393,8 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+               Server.outPrinter(request, response, Js.dialog(errorMessageId));
+               return "";
             }
 
             if (!db.delete(tableName, _id + "=" + id)) {
@@ -377,12 +402,15 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Delete Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
             }
 
-            return Js.jjRole.refresh();
+            Server.outPrinter(request, response, Js.jjRole.refresh());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 }

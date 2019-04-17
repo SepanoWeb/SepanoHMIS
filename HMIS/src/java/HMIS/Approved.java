@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 import jj.jjCalendar_IR;
 import jj.jjDatabase;
@@ -50,7 +51,7 @@ public class Approved {
     public static String lbl_delete = "حذف";
     public static String lbl_edit = "ویرایش";
 
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isFromClient) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isFromClient) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
@@ -60,12 +61,7 @@ public class Approved {
             DefaultTableModel dtm = db.Select(Approved.tableName);
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
 
-//            html.append("        <div class=\"card-header bg-primary tx-white\">لیست جلسات</div>\n");
-//            html.append(" <div class=\"card-body pd-sm-30\">\n"
-//                    + "                                        <p class=\"mg-b-20 mg-sm-b-30\">\n"
-//                    + "                                            <a style='color:#fff' class=\"btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white\" onclick=\"hmisCommettes.m_add_new();\" >کمیته جدید</a>\n"
-//                    + "                                        </p>\n"
-//                    + "                                    </div>");
+
             html.append("        <div class=\"table-wrapper\">\n");
             html.append("<table id='refreshSessions' class='table display responsive' class='tahoma10' style='direction: rtl;width:982px'><thead>");
             html.append("<th width='5%'>کد</th>");
@@ -78,7 +74,6 @@ public class Approved {
             html.append("<th width='40%'>ویرایش</th>");
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
-//            List<Map<String,Object>> commettedRow=jjDatabase.separateRow(db.Select(Commettes.tableName,Commettes._id+"="+row.get(i).get(_commetteId)));
                 html.append("<tr onclick='hmisSessions.m_select(" + row.get(i).get(_id) + ")' class='mousePointer'>");
                 html.append("<td class='c'>" + row.get(i).get(_id) + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_title) + "</td>");
@@ -103,9 +98,11 @@ public class Approved {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshSessions", "300", 0, "", "جلسات");
-            return html2;
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+             Server.outPrinter(request, response,Server.ErrorHandler(ex));
+             return "";
         }
     }
 
@@ -118,7 +115,7 @@ public class Approved {
      * @return
      * @throws Exception
      */
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
@@ -144,12 +141,15 @@ public class Approved {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                 Server.outPrinter(request, response, Js.dialog(errorMessage));
+                 return "";
             }
 
-            return Js.jjSessions.select(sessionsId);
+            Server.outPrinter(request, response,Js.jjSessions.select(sessionsId));
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response,Server.ErrorHandler(ex));
+            return "";
         }
     }
 
@@ -162,18 +162,20 @@ public class Approved {
      * @return
      * @throws Exception
      */
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             StringBuffer html = new StringBuffer();
 
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
-                html.append(Js.setHtml("#Approved_button", "<input type=\"button\" class=\"btn btn-outline-success active btn-block mg-b-10\" id=\"insert_Approved_new\" value=\"" + lbl_insert + "\" >"));
-                html.append(Js.buttonMouseClick("#insert_Approved_new", Js.jjApproved.insert()));
+                html.append(Js.setHtml("#Approved_button", "<button  class=\"btn btn-outline-success active btn-block mg-b-10\" id=\"insert_Approved_new\" onclick='"+Js.jjApproved.insert()+"'>"+lbl_insert+"</button>"));
+//                html.append(Js.buttonMouseClick("#insert_Approved_new", Js.jjApproved.insert()));
             }
-            return html.toString();
+            Server.outPrinter(request, response,html.toString());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+             Server.outPrinter(request, response,Server.ErrorHandler(ex));
+             return "";
         }
     }
 
@@ -186,7 +188,7 @@ public class Approved {
      * @return
      * @throws Exception
      */
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             System.out.println("id=" + id);
@@ -202,6 +204,7 @@ public class Approved {
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
+            StringBuilder html3 = new StringBuilder();
 
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
 
@@ -212,27 +215,37 @@ public class Approved {
             html.append(Js.setVal("#" + _responsibleForExecutionId, row.get(0).get(_responsibleForExecutionId)));
             html.append(Js.setVal("#" + _endDate, jjCalendar_IR.getViewFormat(row.get(0).get(_endDate))));
             html.append(Js.setVal("#" + _startDate, jjCalendar_IR.getViewFormat(row.get(0).get(_startDate))));
+            if (!row.get(0).get(_file).toString().equals("")) {
+                String[] File = (row.get(0).get(_file).toString()).split("%23A%23");
+                for (int i = 0; i < File.length; i++) {
+                    html3.append("<input class='col-xs-12' value='" + File[i] + "' >");
+                }
+            }
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
             html2.append("<div class='row'>");
             if (accEdt) {
                 html2.append("<div class=\"col-lg-6\">");
-                html2.append("<input type='button' id='edit_Approved' value='" + lbl_edit + "' class='btn btn-success btn-block mg-b-10 tahoma10'>");
-                html.append(Js.buttonMouseClick("#edit_Approved", Js.jjApproved.edit()));
+                html2.append("<button  id='edit_Approved' class='btn btn-outline-warning btn-block mg-b-10' onclick='"+Js.jjApproved.edit()+"' >"+lbl_edit+"</button>");
+//                html.append(Js.buttonMouseClick("#edit_Approved", ));
                 html2.append("</div>");
             }
             if (accDel) {
                 html2.append("<div class=\"col-lg-6\">");
-                html2.append("<input type='button' id='delete_Approved' value='" + lbl_delete + "' class='btn btn-success btn-block mg-b-10 tahoma10'  />");
-                html.append(Js.buttonMouseClick("#delete_Approved", Js.jjApproved.delete(id)));
+                html2.append("<button id='delete_Approved'  class='btn btn-outline-danger btn-block mg-b-10' onclick='"+Js.jjApproved.delete(id)+"'>"+lbl_delete+"</button>");
+//                html.append(Js.buttonMouseClick("#delete_Approved", ));
                 html2.append("</div>");
             }
             html2.append("</div>");
             String script = Js.setHtml("Approved_button", html2);
             script += html.toString();
-            return script;
+            script += Js.setHtml("#inputTextSelectorDiv", html3);
+            Server.outPrinter(request, response, script);
+            return "";
+            
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+           Server.outPrinter(request, response,Server.ErrorHandler(ex));
+           return "";
         }
     }
 
@@ -245,14 +258,15 @@ public class Approved {
      * @return
      * @throws Exception
      */
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String edit(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String id = jjTools.getParameter(request, "hmis_approved_id");
             String sessionsId = jjTools.getParameter(request, "hmis_sessions_id");
 
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                  Server.outPrinter(request, response, hasAccess);
+                  return "";
             }
 
             Map<String, Object> map = new HashMap<>();
@@ -273,18 +287,21 @@ public class Approved {
                 return Js.dialog(errorMessage);
             }
             String script=Js.jjSessions.select(sessionsId);
-            script +="$('#insertMosavabeh2').slideUp();";
-            return script;
+            script +="$('#insertApproved2').slideUp();";
+              Server.outPrinter(request, response, script);
+              return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+              Server.outPrinter(request, response,Server.ErrorHandler(ex));
+              return "";
         }
     }
 
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String delete(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                  Server.outPrinter(request, response, hasAccess);
+                  return "";
             }
             String id = jjTools.getParameter(request, _id);
             System.out.println("id="+id);
@@ -300,13 +317,16 @@ public class Approved {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Delete Fail;";
                 }
-                return Js.dialog(errorMessage);
+                  Server.outPrinter(request, response, Js.dialog(errorMessage));
+                  return "";
             }
             String script =Js.jjSessions.select(id);
-            script +="$('#insertMosavabeh2').slideUp();";
-            return script;
+            script +="$('#insertApproved2').slideUp();";
+              Server.outPrinter(request, response, script);
+              return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+              Server.outPrinter(request, response, Server.ErrorHandler(ex));
+              return "";
         }
     }
 }

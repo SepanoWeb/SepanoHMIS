@@ -24,7 +24,6 @@ var hmisApproved = {
 
 
 
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
 //                $("#upload_Content_file").button().click(function () {
 //                });
                 //============ BY RASHIDI ========>
@@ -66,7 +65,7 @@ var hmisApproved = {
         new jj("#" + hmisApproved.f_title).jjVal("");
         new jj("#" + hmisApproved.f_lang).jjVal("1");
         new jj("#" + hmisApproved.f_parent).jjVal("0");
-        new jj("#insertMosavabeh2").jjFormClean();
+        new jj("#insertApproved2").jjFormClean();
         new jj("#approved_responsibleForTrackId").jjVal("");
         new jj("#approved_responsibleForExecutionId").jjVal("");
 
@@ -75,7 +74,7 @@ var hmisApproved = {
 
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
-        jj("do=" + hmisApproved.tableName + ".add_new&jj=1").jjAjax2(false);
+        new jj("do=" + hmisApproved.tableName + ".add_new&jj=1").jjAjax2(false);
         hmisApproved.m_clean();
 //        hmisApproved.m_show_form();
 //                $('#newCommetteForm').show();
@@ -96,9 +95,14 @@ var hmisApproved = {
 //        var valid =  hmisApproved.m_validation();
 //        if (valid == "") {
         var param = "";
-        param += "do=" + hmisApproved.tableName + ".insert";
+        param += "&do=" + hmisApproved.tableName + ".insert";
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-        param += "&" + new jj('#insertMosavabeh2').jjSerial();
+        var temp = $("#inputTextSelectorDiv input");
+        for (var i = 0; i < temp.size(); i++) {
+            temp += $(temp[i]).val() + "%23A%23";
+        }
+        param += "&approved_file=" + temp;
+        param += "&" + new jj('#insertApproved2').jjSerial();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
@@ -111,7 +115,7 @@ var hmisApproved = {
 //        if (valid == "") {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".edit";
-        param += "&" + new jj('#insertMosavabeh2').jjSerial();
+        param += "&" + new jj('#insertApproved2').jjSerial();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
 
         new jj(param).jjAjax2(false);
@@ -139,13 +143,13 @@ var hmisApproved = {
         hmisApproved.m_clean();
     },
     m_select: function (id) {
-        $('#insertMosavabeh2').slideDown();
-        $("html, body").delay(1000).animate({scrollTop: $('#insertMosavabeh2').offset().top}, 800);
+        $('#insertApproved2').slideDown();
+        $("html, body").delay(1000).animate({scrollTop: $('#insertApproved2').offset().top}, 800);
 
         var param = "";
         param += "do=" + hmisApproved.tableName + ".select";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
-        param += "&hmis_sessions_id=" +new jj('#hmis_sessions_id').jjVal();
+        param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_form();
     },
