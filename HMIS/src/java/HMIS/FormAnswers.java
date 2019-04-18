@@ -36,6 +36,9 @@ public class FormAnswers {
     public static final String _time = "formAnswers_time";//بخش یا بخش هایی که این فرم را باید ببینند
     public static final String _status = "formAnswers_status";//سمت هایی که به این فرم دسترسی 
     public static final String _answer = "formAnswers_answer";// اشخاصی که به این فرم دسترسی 
+    public static final String _userMAC = "formAnswers_userMAC";// مک آدرس پر کننده ی فرم
+    public static final String _userIPV4 = "formAnswers_userIPV4";// آی پی پر کننده ی فرم
+    public static final String _userIPV6 = "formAnswers_userIPV6";// آی پی ورژن شش پر کننده ی فرم
 //   
     public static final String lbl_insert = "ثبت و افزودن سوال";
     public static final String lbl_delete = "حذف فرم";

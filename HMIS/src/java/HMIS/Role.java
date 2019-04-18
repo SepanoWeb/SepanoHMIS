@@ -5,7 +5,6 @@
  */
 package HMIS;
 
-
 /**
  *
  * @author PadidarNB
@@ -16,7 +15,6 @@ package HMIS;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import cms.access.Access_User;
 import cms.tools.Js;
 import cms.tools.Server;
@@ -27,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 import jj.jjCalendar_IR;
 import jj.jjDatabase;
@@ -35,20 +34,23 @@ import jj.jjNumber;
 
 /**
  *
- * @author Shiran1
- * نقش ها
+ * @author Shiran1 نقش ها
  */
 public class Role {
 
     public static String tableName = "hmis_role";// قبل از اسم جداول دیتا بیس hmis_ بگذارید
     public static String _id = "id";
-   
+
     public static String _title = "role_title";
     public static String _date = "role_date";
     public static String _user_id = "role_user_id";//
     public static String _condition = "role_condition";//
+//    public static String _condition2 = "role_condition2";//
     public static String _comment = "role_comment";//
-
+    public static String _discription = "role_discription";//
+    public static String _name = "role_name";//
+    public static String _family = "role_family";//
+    public static String _email = "role_email";//
 
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
@@ -66,7 +68,7 @@ public class Role {
      * @param sort is number of default sort column number
      * @param panel is container id
      */
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
 //            String hasAccess = Role.getAccessDialog(request, db, rul_rfs);
 //            if (!hasAccess.equals("")) {
@@ -95,8 +97,12 @@ public class Role {
                 html.append("<tr  onclick='hmisRole.m_select(" + row.get(i).get(_id) + ");' class='mousePointer' >");
                 html.append("<td class='tahoma10' style='text-align: center;'>" + (row.get(i).get(_id).toString()) + "</td>");
                 html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_title).toString()) + "</td>");
-//              
-                html.append("<td class='tahoma10' style='text-align: right;'>" + (row.get(i).get(_condition).toString()) + "</td>");
+                if ((row.get(i).get(_condition).toString()).equals("active")) {
+                    html.append("<td class='tahoma10' style='text-align: right;'>فعال</td>");
+                } else {
+                    html.append("<td class='tahoma10' style='text-align: right;'>غیر فعال</td>");
+                }
+//                html.append("<td class='tahoma10' style='text-align: right;'>" + (row.get(i).get(_condition2).toString()) + "</td>");
 
                 html.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'><a src='img/l.png' style='cursor: pointer;height:30px' onclick='hmisRole.m_select(" + row.get(i).get(_id) + ");' ></a></td>");
                 html.append("</tr>");
@@ -114,27 +120,28 @@ public class Role {
             }
             String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
             html2 += Js.table("#refreshRole", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست نقش ها");
-            return html2;
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
         }
     }
 
-    
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
-        StringBuilder html = new StringBuilder();
-        StringBuilder html1 = new StringBuilder();
+            StringBuilder html = new StringBuilder();
+            StringBuilder html1 = new StringBuilder();
             ///ایجاد جدول کاربران 
             ///توسط شیران1
-            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName ));
-       
+            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
+
             html1.append("<table class='table display responsive nowrap' id='RefreshlistKarbaran'><thead>");
             html1.append("<th width='10%'>کد </th>");
             html1.append("<th width='10%'>نام</th>");
-            html1.append("<th width='15%'>نام خانوادگی</th>");  
+            html1.append("<th width='15%'>نام خانوادگی</th>");
             html1.append("<th width='10%'>ایمیل </th>");
-            html1.append("<th width='10%'>مشاهده اطلاعات اثر</th>");
+            html1.append("<th width='10%'>مشاهده </th>");
             html1.append("</thead><tbody>");
             for (int i = 0; i < userRow.size(); i++) {
                 html1.append("<tr>");
@@ -148,14 +155,25 @@ public class Role {
             html1.append("</tbody></table>");
             String script2 = "$('#ListKarbaran').html(\"" + html1.toString() + "\");\n";
             script2 += Js.table("#RefreshlistKarbaran", "400", 0, "", "لیست کاربران");
+
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
+
             if (accIns) {
-                html.append(Js.setHtml("#Role_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
-                html.append(Js.buttonMouseClick("#insert_Role_new", Js.jjRole.insert()));
+                html.append(Js.setHtml("#Role_button", "<div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
+                html.append(Js.click("#insert_Role_new", Js.jjRole.insert()));
+            } else {
+                html.append(Js.setHtml("#Role_button", ""));
             }
-            return html.toString()+script2;
+//            if (accIns) {
+//                html.append(Js.setHtml("#Role_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Role_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
+//                html.append(Js.buttonMouseClick("#insert_Role_new", Js.jjRole.insert()));
+//            }
+            Server.outPrinter(request, response, html.toString() + script2);
+            return "";
+
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
         }
     }
 //
@@ -168,11 +186,13 @@ public class Role {
 //     * @return
 //     * @throws Exception
 //     */
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
             }
 
             Map<String, Object> map = new HashMap<String, Object>();
@@ -181,19 +201,24 @@ public class Role {
             map.put(_title, jjTools.getParameter(request, _title));
 
             map.put(_user_id, jjTools.getParameter(request, _user_id));
-            map.put(_comment, jjTools.getParameter(request, _comment));
-            map.put(_date, jjCalendar_IR.getDatabaseFormat_8length( jjTools.getParameter(request, _date),true));
-
+            map.put(_discription, jjTools.getParameter(request, _discription));
+            map.put(_date, jjTools.getParameter(request, _date));
+            map.put(_comment, request.getParameter("role_comment"));
             if (db.insert(tableName, map).getRowCount() == 0) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
-            return Js.jjPlans.refresh();
+
+            Server.outPrinter(request, response, Js.jjPlans.refresh());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 //
@@ -201,7 +226,8 @@ public class Role {
 //     *
 //     * @param id
 //     */
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -209,9 +235,12 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
-            }
 
+                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+                return "";
+            }
+            StringBuilder html1 = new StringBuilder();
+            StringBuilder script1 = new StringBuilder();
 //            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
 //            if (!errorMessageId.equals("")) {
 //                if (jjTools.isLangEn(request)) {
@@ -223,14 +252,49 @@ public class Role {
 //                String errorMessage = "شما اجازه مشاهده اطلاعات این شخص را ندارید";
 //                return Js.dialog(errorMessage) + Js.jjUser.showTbl();
 //            }
+
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, _id + "=" + row.get(0).get(Role._user_id)));
+            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, _id + "=" + row.get(0).get(_user_id)));
+            ///ایجاد جدول کاربران 
+            ///توسط شیران1
+            ////
+            List<Map<String, Object>> userRows = jjDatabase.separateRow(db.Select(Access_User.tableName));
+
+            html1.append("<table class='table display responsive nowrap' id='RefreshlistKarbaranDarSelect'><thead>");
+            html1.append("<th width='10%'>کد </th>");
+
+            html1.append("<th width='10%'>نام</th>");
+
+            html1.append("<th width='15%'>نام خانوادگی</th>");
+            html1.append("<th width='10%'>ایمیل </th>");
+            html1.append("<th width='10%'>مشاهده </th>");
+            html1.append("</thead><tbody>");
+            for (int i = 0; i < userRows.size(); i++) {
+//         
+                html1.append("<tr>");
+
+                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._id)) + "</td>");
+
+                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._family)) + "</td>");
+                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._name)) + "</td>");
+                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._email)) + "</td>");
+
+                html1.append("<td style='margin:auto;color:blue;font-size: 26px;' class='fa fa-user'  onclick='hmisRole.m_selectKarbar(" + userRows.get(i).get(Access_User._id) + ");' ></td>");
+//             
+                html1.append("</tr>");
+            }
+            html1.append("</tbody></table>");
+
+            String script2 = "$('#ListKarbaranDarSelect').html(\"" + html1.toString() + "\");\n";
+            script2 += Js.table("#RefreshlistKarbaranDarSelect", "400", 0, "", "لیست کاربران");
             if (row.isEmpty()) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
@@ -238,39 +302,63 @@ public class Role {
             html.append(Js.setVal("#role_" + _id, row.get(0).get(_id)));
 
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
-            html.append(Js.setVal("#role_family"  , userRow.get(0).get(Access_User._family)));
-            html.append(Js.setVal("#role_name"  , userRow.get(0).get(Access_User._name)));
-            html.append(Js.setVal("#role_email"  , userRow.get(0).get(Access_User._email)));
-            html.append(Js.setVal("#role_comment"  , row.get(0).get(_comment)));
-            html.append(Js.setVal("#role_date"  , row.get(0).get(_date)));
-          String condition=row.get(0).get(_condition).toString();
-            html.append(Js.setRadio("#role_condition1" ,condition ));
-            html.append(Js.setRadio("#role_condition2" ,condition ));
-
-         
-
+            html.append(Js.setVal("#role_discription", row.get(0).get(_discription)));
+            html.append(Js.setVal("#role_family", userRow.get(0).get(Access_User._family)));
+            html.append(Js.setVal("#role_name", userRow.get(0).get(Access_User._name)));
+            html.append(Js.setVal("#role_email", userRow.get(0).get(Access_User._email)));
+            html.append(Js.setValSummerNote("#role_comment", row.get(0).get(_comment)));
+//            html.append(Js.setVal("#role_date", row.get(0).get(_date)));
+            html.append(Js.setVal("#role_user_id", row.get(0).get(_user_id)));
+            html.append(Js.setVal("#role_condition1", "active"));
+            html.append(Js.setVal("#role_condition2", "noActive"));
+//            html.append(Js.setVal("#role_condition"  , ));
+            if (row.get(0).get(_condition).equals("active")) {
+//                html.append(Js.setVal("#active", row.get(0).get(_condition)));
+                html.append(Js.setAttr("#active", "checked", "checked"));
+//                html.append(Js.removeAttr("#noActive", "checked"));
+            } else {
+//                html.append(Js.setVal("#noActive", row.get(0).get(_condition)));
+                html.append(Js.setAttr("#noActive", "checked", "checked"));
+            }
+//          String condition=row.get(0).get(_condition).toString();
+//          String condition2=row.get(0).get(_condition2).toString();
+//            html.append(Js.setRadio("#role_condition1" ,condition1 ));
+//            html.append(Js.setRadio("#role_condition2" ,condition2 ));
 
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
-
-            if (accEdt) {
-//                if (!id.equals("1")) {
-                html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_Role\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
-                html.append(Js.buttonMouseClick("#edit_Role", Js.jjRole.edit()));
-//                }
+            String htmlBottons = "";
+            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
+            if (accEdit) {
+                htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjRole.edit() + "' id='edit_Role'>" + lbl_edit + "</button></div>";
+//               
             }
-            if (accDel) {
-//                if (!id.equals("1")) {
-                html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_Role\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div></div>");
-                html.append(Js.buttonMouseClick("#delete_Role", Js.jjRole.delete(id)));
-//                }
+            boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
+            if (accDelete) {
+                htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjRole.delete(id) + "' id='delete_Role'>" + lbl_delete + "</button></div>";
             }
-            return (Js.setHtml("#Role_button", html2.toString())) + html.toString() ;
+            script1.append(Js.setHtml("#Role_button", htmlBottons));
+//            if (accEdt) {
+////                if (!id.equals("1")) {
+//                html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_Role\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
+//                html.append(Js.buttonMouseClick("#edit_Role", Js.jjRole.edit()));
+////                }
+//            }
+//            if (accDel) {
+////                if (!id.equals("1")) {
+//                html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_Role\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div></div>");
+//                html.append(Js.buttonMouseClick("#delete_Role", Js.jjRole.delete(id)));
+////                }
+//            }
+            Server.outPrinter(request, response, script1 + html.toString() + script2);
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
         }
     }
-    public static String selectKarbar(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+
+    public static String selectKarbar(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -278,52 +366,63 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+
+                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+                return "";
             }
 
-
-            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(Access_User.tableName,Access_User._id+"="+id));
+            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + id));
             if (row.isEmpty()) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
+
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
 
 //            html.append(Js.setVal("#role_" + _id, row.get(0).get(_id)));
 //            for (int i = 0; i < row.size(); i++) {
-            html.append(Js.setVal("#role_user_id" , row.get(0).get(Access_User._id)));
-            html.append(Js.setVal("#role_name" , row.get(0).get(Access_User._name)));
-            html.append(Js.setVal("#role_family" , row.get(0).get(Access_User._family)));
-            html.append(Js.setVal("#role_email" , row.get(0).get(Access_User._email)));
-
+            html.append(Js.setVal("#role_user_id", row.get(0).get(Access_User._id)));
+            html.append(Js.setVal("#role_name", row.get(0).get(Access_User._name)));
+            html.append(Js.setVal("#role_family", row.get(0).get(Access_User._family)));
+            html.append(Js.setVal("#role_email", row.get(0).get(Access_User._email)));
 
 //            }
-          
-            return  html.toString();
+            Server.outPrinter(request, response, html.toString());
+            return "";
+
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+
         }
     }
 //
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
             }
-
+            System.out.println("jjTools.getParameter(request, _id)=" + jjTools.getParameter(request, _id));
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(_title, request.getParameter(_title));
-            map.put(_condition, request.getParameter(_condition));
+            map.put(_condition, jjTools.getParameter(request, _condition));
             map.put(_user_id, request.getParameter(_user_id));
-            map.put(_comment, jjTools.getParameter(request, _comment));
-//             map.put(_date, new jjCalendar_IR().getDBFormat_8length());
-            map.put(_date, jjTools.getParameter(request, _date));
+            map.put(_discription, request.getParameter(_discription));
+            map.put(_name, request.getParameter(_name));
+            map.put(_family, request.getParameter(_family));
+            map.put(_email, request.getParameter(_email));
 
+//          map.put(_date, new jjCalendar_IR().getDBFormat_8length());
+            map.put(_date, jjTools.getParameter(request, _date));
+            map.put(_comment, request.getParameter("role_comment"));
 
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -331,26 +430,35 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
+
             }
             if (!db.update(tableName, map, _id + "=" + jjTools.getParameter(request, _id))) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
-            return Js.jjRole.refresh();
+
+            Server.outPrinter(request, response, Js.jjRole.refresh());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+
+    public static String delete(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
 
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
             }
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -358,7 +466,9 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
+
             }
 
             if (!db.delete(tableName, _id + "=" + id)) {
@@ -366,12 +476,15 @@ public class Role {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Delete Fail;";
                 }
-                return Js.dialog(errorMessage);
-            }
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
 
-            return Js.jjRole.refresh();
+            }
+            Server.outPrinter(request, response, Js.jjRole.refresh());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 }

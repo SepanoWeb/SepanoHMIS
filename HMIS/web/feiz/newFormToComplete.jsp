@@ -4,6 +4,8 @@
     Author     : Mohammad
 --%>
 
+<%@page import="HMIS.FormQuestionOptions"%>
+<%@page import="HMIS.FormQuestions"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="HMIS.FormAnswers"%>
@@ -13,19 +15,20 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     jjDatabaseWeb db = (jjDatabaseWeb) request.getAttribute("db");
-    String FormId = jjTools.getParameter(request, FormAnswers._formId);
-    String where =Forms._id + "=" + FormId +" AND " + Forms._isActive + "=1";
+    String formId = jjTools.getParameter(request, FormAnswers._formId);
+    String where = Forms._id + "=" + formId + " AND " + Forms._isActive + "=1";
     List<Map<String, Object>> formRow = jjDatabaseWeb.separateRow(db.Select(Forms.tableName, where));
-    if(formRow.isEmpty()){
-        return ;
+    List<Map<String, Object>> questionsRow = jjDatabaseWeb.separateRow(db.Select(FormQuestions.tableName, FormQuestions._formID + "=" + formId));
+    if (formRow.isEmpty()) {
+        return;
     }
-    
+
 %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><%=formRow.get(0).get(Forms._title) %></title>
+        <title><%=formRow.get(0).get(Forms._title)%></title>
         <link href="./Manager/font-awesome.css" rel="stylesheet">
         <link href="./Manager/ionicons.css" rel="stylesheet">
         <link href="./Manager/perfect-scrollbar.css" rel="stylesheet">
@@ -51,205 +54,83 @@
         <!--<link href="css/bootstap.min.css" rel="stylesheet" type="text/css"/>-->
         <!--<link href="Manager/cssw.css" rel="stylesheet" type="text/css"/>-->
         <link href="Manager/css/HMIS.css" rel="stylesheet" type="text/css"/>
-        <%= formRow.get(0).get(Forms._css) %>
+        <%= formRow.get(0).get(Forms._css)%>
     </head>
     <body>
         <div id="swOneFormToCompleteForm">
             <div class="card bd-primary mg-t-20" id="newFormQuestion">
-                <div class="card-header bg-primary tx-white"><%=formRow.get(0).get(Forms._title) %></div>
+                <div class="card-header bg-primary tx-white"><%=formRow.get(0).get(Forms._title)%></div>
                 <div class="card-body pd-sm-30">
-                    <p class="mg-b-20 mg-sm-b-30"><%=formRow.get(0).get(Forms._description) %></p>
-                    <%=formRow.get(0).get(Forms._htmlContent) %>
-                    <div id="swFormQuestionsForm" class="card bd-primary">
-                        <div class="card-header bg-info tx-white">افزودن یا ویرایش یکی از سوالات فرم</div>
-                        <div   class="col-lg-12">
-                            <div class="row mg-t-20 card-body">
-                                <div class="row mg-t-20 card-body">
-                                    <div class="col-lg-3" style="margin-bottom: 20px">
-                                        <input id="hmis_formquestions_id" name="id" type="hidden" />
-                                        <input id="formQuestions_icon" name="formQuestions_icon" type="hidden" />
-                                        آیکن مخصوص این سوال
-                                        <img id="formQuestions_icon_Preview"  class="img-thumbnail"  src="img/preview.jpg"/>
-                                        <div class="row">
-                                            <input  class="btn btn-primary" id="send_formQuestions_icon" type="submit"  value="ارسال" >
-                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();" >انتخاب فایل</span>
-                                            <input id="formQuestions_icon_file" name="formQuestions_icon_file"  onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                            <span class="form-control col-lg"></span>
-                                        </div>
-                                    </div>  
-                                </div> <!-- row -->
-                                <div class="row mg-t-20">
-                                    <div class="col-lg-10">
-                                        <div class="form-group has-success mg-b-0">
-                                            متن سوال:
-                                            <input id="formQuestions_title" name="formQuestions_title"  class="form-control" placeholder="متن سوال را حداکثر در 1000 کارامتر وارد کنید :" type="text">                            
-                                        </div><!-- form-group -->
-                                    </div><!-- col -->
-                                    <div class="col-lg-10">
-                                        <div class="form-group has-success mg-b-0">
-                                            مقدار پیشفرض:
-                                            <input id="formQuestions_defaultValue" name="formQuestions_defaultValue"  class="form-control" placeholder="وقتی کاربر فرم را باز می کند مقدار پیشفرض در پاسخ قرار دارد" type="text">                            
-                                        </div><!-- form-group -->
-                                    </div><!-- col -->
-                                    <div class="col-lg-10">
-                                        <div class="form-group has-success mg-b-0">
-                                            راهنمای درون فیلد های متنی(place holder):
-                                            <input id="formQuestions_placeHolder" name="formQuestions_placeHolder"  class="form-control" placeholder="وقتی کاربر فرم را باز می کند مقدار پیشفرض در پاسخ قرار دارد" type="text">                            
-                                        </div><!-- form-group -->
-                                    </div><!-- col -->
-                                    <div class="col-lg-2">
-                                        <div class="form-group has-warning mg-b-0">
-                                            ضریب وزنی سوال:
-                                            <input id="formQuestions_weight" name="formQuestions_weight" class="form-control" placeholder="فقط عدد" type="number" value="1">                            
-                                        </div><!-- form-group -->
-                                    </div><!-- col -->
-                                    <div class="col-lg-2">
-                                        <label class="ckbox">
-                                            <input id="formQuestions_isRequierd" name="formQuestions_isRequierd" type="checkbox"><span>پاسخ اجباری باشد</span>
-                                        </label>
-                                    </div><!-- col -->
+                    <p class="mg-b-20 mg-sm-b-30">
+                        <%=formRow.get(0).get(Forms._description)%></p>
+                        <%=formRow.get(0).get(Forms._htmlContent)%>
+                    <div id="swFormQuestionsForm" class="card bd-primary pd-10">
+                        <div class="card-header bg-info tx-white">سوالات فرم : </div>
+                        <%
+                            for (int i = 0; i < questionsRow.size(); i++) {
+                        %>
+                        <div class="col-lg-12 card bd-primary mg-t-10">
+                            <div class="card-body row">
+                                <input id="hmis_formquestions_id" name="id" type="hidden" />
+                                <div class="col-lg-3 col-sm-6">
+                                    <img id="formQuestions_icon_Preview"  class="col-lg-12 img-thumbnail" 
+                                         <%=/*اگرگزینه  آبکن نداشت*/ questionsRow.get(i).get(FormQuestions._icon).toString().isEmpty() ? "src='./upload/optionIcon.svg' style='width:40%;min-width: 50px;' " : ("src='./upload/"+questionsRow.get(i).get(FormQuestions._icon)+"'") %>  />
+                                </div>
+                                <div class="col-lg-9">
                                     <div class="col-lg-12">
-                                        متن تکمیلی و پیشرفته 
-                                        <textarea id="formQuestions_htmlDiscription" name="formQuestions_htmlDiscription" rows="4" class="form-control summernote" placeholder="توضیحات فرم"></textarea>
-                                    </div><!-- col -->
-                                </div><!-- row -->
-                                <input id="formQuestions_answersType" name="formQuestions_answersType"  type="hidden" value="select_option">                            
-                                <div class="row col-lg-12">
-                                    <div class="formTypeSelector">
-                                        نوع فیلد:
-                                        <ul class="choose_type list-group" style="display: inline-flex;flex-direction: row;">
-                                            <li id="field_texte" class="list-group-item pull-left text-center pointer" title="متن" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('text');
-                                            $(this).toggleClass('active');
-                                            $('#swFormQuestionOptionsForm').hide();
-                                            $('#swFormQuestionOptionsTbl').hide();">
-
-                                                <p>
-                                                    <i class="fa fa-file-text-o"></i></p>
-                                            </li>
-                                            <li id="field_textarea" class="list-group-item pull-left text-center pointer" title="متن چند خطی" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('textarea');
-                                            $(this).toggleClass('active');
-                                            $('#swFormQuestionOptionsForm').hide();
-                                            $('#swFormQuestionOptionsTbl').hide();">
-                                                <p>
-                                                    <i class="fa fa-file-text"></i></p>
-                                            </li>
-                                            <li id="field_email" class="list-group-item pull-left text-center pointer" title="ایمیل" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('email');
-                                            $(this).toggleClass('active');
-                                            $('#swFormQuestionOptionsForm').hide();
-                                            $('#swFormQuestionOptionsTbl').hide();">
-                                                <p>
-                                                    @                                    </p>
-                                            </li>
-                                            <li id="field_number" class="list-group-item pull-left text-center pointer" title="عدد" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('number');
-                                            $(this).toggleClass('active');
-                                            $('#swFormQuestionOptionsForm').hide();
-                                            $('#swFormQuestionOptionsTbl').hide();">
-                                                <p>
-                                                    123                                    </p>
-                                            </li>
-                                            <li id="field_date" class="list-group-item pull-left text-center pointer" title="تاریخ" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('date');
-                                            $(this).toggleClass('active');
-                                            $('#swFormQuestionOptionsForm').hide();
-                                            $('#swFormQuestionOptionsTbl').hide();">
-                                                <p>
-                                                    <i class="fa fa-clock-o"></i></p>
-                                            </li>
-                                            <!--                                    <li id="field_geoloc" class="list-group-item pull-left text-center pointer" title="موقعیت جغرافیایی" onclick="$('.list-group-item.active').removeClass('active');
-                                                                                    
-                                                                                        $(this).toggleClass('active');
-                                                                                       $('#swFormQuestionOptionsForm').hide();$('#swFormQuestionOptionsTbl').hide();">
-                                                                                    <p>
-                                                                                        <i class="fa fa-map"></i></p>
-                                                                                </li>-->
-                                            <li id="field_checkbox" class="list-group-item pull-left text-center pointer active" title="چک باکس" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('checkbox');
-                                            $(this).toggleClass('active');
-                                            hmisFormQuestionOptions.m_show_tbl();
-                                            hmisFormQuestionOptions.m_refresh($('#hmis_formquestions_id').val());
-                                                ">
-                                                <p>
-                                                    <i class="fa fa-check-square-o"></i></p>
-                                            </li>
-                                            <li id="field_radio" class="list-group-item pull-left text-center pointer" title="رادیو" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('radio');
-                                            $(this).toggleClass('active');
-                                            hmisFormQuestionOptions.m_show_tbl()
-                                            hmisFormQuestionOptions.m_refresh($('#hmis_formquestions_id').val());
-                                                ">
-                                                <p>
-                                                    <i class="fa fa-circle-o"></i></p>
-                                            </li>
-                                            <li id="field_select_option" class="list-group-item pull-left text-center pointer" title="کشویی" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('select_option');
-                                            $(this).toggleClass('active');
-                                            hmisFormQuestionOptions.m_show_tbl();
-                                            hmisFormQuestionOptions.m_refresh($('#hmis_formquestions_id').val());
-                                                ">
-                                                <p>
-                                                    <i class="fa fa-caret-square-o-down"></i></p>
-                                            </li>
-                                            <li id="field_image" class="list-group-item pull-left text-center pointer" title="تصویر" onclick="$('.list-group-item.active').removeClass('active');
-                                            $('#formQuestions_answersType').val('file');
-                                            $(this).toggleClass('active');
-                                            $('#swFormQuestionOptionsForm').hide();
-                                            $('#swFormQuestionOptionsTbl').hide();">
-                                                <p>
-                                                    <i class="fa fa-file-picture-o"></i></p>
-                                            </li>
-                                        </ul>
-                                    </div><!-- col-1 -->                
-                                </div><!-- row -->
-                                <div class="row col-sm-12 mg-t-20">
-                                    <div class="col-lg-3">
-                                        <button class="btn btn-outline-secondary btn-block mg-b-10" onclick="hmisFormQuestions.m_show_tbl();
-                                        $('#refreshFormQuestions').dataTable({destroy: true});">انصراف</button>
-                                    </div><!-- col-1 --> 
-                                    <div id="form_Question_buttons" class="col-lg row" >
+                                        <%=questionsRow.get(i).get(FormQuestions._title).toString()%>
                                     </div>
-                                </div><!-- row -->
-                                <div id="swFormQuestionOptionsTbl" class="col-lg-12" >
-                                </div>
-                                <div id="swFormQuestionOptionsForm" class="col-lg-12 row" style="text-align: right;">
-                                    <input type="hidden" id="hmis_formquestionOptions_id" name="id">
-                                    <div class="col-xs-3 col-sm-3 col-lg-3">
-                                        <input id="formQuestionOptions_icon" name="formQuestionOptions_icon" type="hidden">
-                                        تصویر برای نمایش این گزینه
-                                        <div>
-                                            <img id="formQuestionOptions_Preview" class="img-thumbnail" src="img/preview.jpg" style="max-width:80;height: 36px ;">
-                                            <input class="btn btn-primary" id="send_formQuestionOptions_icon" type="submit" value="ارسال">
-                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                                            <input id="formQuestionOptions_icon_file" name="formQuestionOptions_icon_file" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                            <!--<span class="form-control"></span>-->
+                                    <%
+                                        String questionType = questionsRow.get(i).get(FormQuestions._answersType).toString();
+                                        if (questionType.equals("textarea")) {
+                                    %>                                    
+                                    <textarea class="clo-lg-12 form-control" placeholder="<%=questionsRow.get(i).get(FormQuestions._placeHolder).toString()%>"><%=questionsRow.get(i).get(FormQuestions._defaultValue).toString()%></textarea>
+                                    <%
+                                    } else if (questionType.equals("checkbox")) {//اگر چک باکس بود برای گزینه های هر سوال
+                                        List<Map<String, Object>> optionsRow = jjDatabaseWeb.separateRow(db.Select(FormQuestionOptions.tableName, FormQuestionOptions._question_id + "=" + questionsRow.get(i).get(FormQuestions._id)));
+                                        for (int j = 0; j < optionsRow.size(); j++) {
+                                    %>
+                                    <div class="col-lg-12 col-sm-6 row">
+                                        <div class="col-lg-3 col-sm-6">
+                                            <img class="col-lg img-thumbnail" <%=/*اگرگزینه  آبکن نداشت*/ optionsRow.get(j).get(FormQuestionOptions._icon).toString().isEmpty() ? "src='./upload/optionIcon.svg' style='width:40%;min-width: 50px;' " : ("src='./upload/"+optionsRow.get(j).get(FormQuestionOptions._icon)+"'") %>  />
+                                        </div>
+                                        <div class="col-lg-12 mg-b-20">
+                                            <input type="checkbox" name="oio" checked="" value="<%= optionsRow.get(j).get(FormQuestionOptions._value)%>">
+                                            <label>
+                                                <%= optionsRow.get(j).get(FormQuestionOptions._lable)%>
+                                            </label>
                                         </div>
                                     </div>
-                                    <div class="col-xs-4 col-sm-4 col-lg-4">
-                                        عنوان گزینه
-                                        <input id="formQuestionOptions_lable" name="formQuestionOptions_lable" class="form-control is-valid" placeholder="متن حداکثر 1000 کاراکتر" type="text">
+                                    <%
+                                            }
+                                        } else if (questionType.equals("radio")) {//اگر رادیو بود برای گزینه های هر سوال
+                                        List<Map<String, Object>> optionsRow = jjDatabaseWeb.separateRow(db.Select(FormQuestionOptions.tableName, FormQuestionOptions._question_id + "=" + questionsRow.get(i).get(FormQuestions._id)));
+                                        for (int j = 0; j < optionsRow.size(); j++) {
+                                    %>
+                                    <div class="col-lg-12 col-sm-6 row">
+                                        <div class="col-lg-3 col-sm-6">
+                                            <img class="col-lg img-thumbnail" <%=/*اگرگزینه  آبکن نداشت*/ optionsRow.get(j).get(FormQuestionOptions._icon).toString().isEmpty() ? "src='./upload/optionIcon.svg' style='width:40%;min-width: 50px;' " : ("src='./upload/"+optionsRow.get(j).get(FormQuestionOptions._icon)+"'") %>  />
+                                        </div>
+                                        <div class="col-lg-12 mg-b-20">
+                                            <input type="radio" value="<%= optionsRow.get(j).get(FormQuestionOptions._value)%>" name="lll">
+                                            <label>
+                                                <%= optionsRow.get(j).get(FormQuestionOptions._lable)%>
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="col-lg">
-                                        مقدار عددی
-                                        <input id="formQuestionOptions_value" name="formQuestionOptions_value" class="form-control is-valid jjdigit" placeholder="برای محاسبات" type="text">
-                                    </div>
-                                    <div class="mg-t-20  col-lg">
-                                        <button class="btn btn-outline-secondary btn-block text-center" onclick="hmisFormQuestionOptions.m_show_tbl();" title="انصراف">انصراف</button>
-                                    </div>
-                                    <div id="formQuestionOption_buttons" class="mg-t-20  col-lg text-center">
-                                    </div>
+                                    <%
+                                            }
+                                        }
+                                    %>                                
                                 </div>
-                            </div><!-- row -->
-                        </div><!-- card-body -->
-                    </div><!-- card-body -->
-
-
-                    <div id="swFormQuestionsTbl" class="col-lg-12" >
+                            </div>
+                        </div>
+                        <%
+                            }
+                        %>                        
                     </div>
-                </div><!-- formquestion-->
-            </div><!-- sh-pagebody -->    
+                </div>
+            </div>
         </div>
 
 
@@ -327,6 +208,6 @@
         <!--<script src="Manager/dashboard.js"></script>-->
 
         <!--<script src="Manager/js/HMIS.js" type="text/javascript"></script>-->
-        <%= formRow.get(0).get(Forms._javaScript) %>
+        <%= formRow.get(0).get(Forms._javaScript)%>
     </body>
 </html>

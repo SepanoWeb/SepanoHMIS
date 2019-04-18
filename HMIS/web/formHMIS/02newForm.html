@@ -59,7 +59,7 @@
                     نقش مالک فرم
                     <input id="forms_ownerRoleTitle" readonly="" class="form-control" placeholder="نقش مالک فرم" type="text"/>
                     <input id="forms_ownerRole" name="forms_ownerRole" type="hidden"/>
-                </div>
+                </div>                
                 <div class="col-lg-3">
                     تاریخ ایجاد فرم
                     <input id="forms_creationDate" name="forms_creationDate" readonly="" style="direction: ltr;text-align: center;" class="form-control" placeholder="از این تاریخ به بعد فرم فعال است" type="text">
@@ -87,13 +87,9 @@
                     <div class="form-group mg-b-0">
                         <select class="form-control col-lg-12" id="forms_category_id" name="forms_category_id">
                             <option value="">انتخاب</option>
-                            <option value="ماهانه">ارزیابی کمیته ها</option>
-                            <option value="سه ماهه اول">خود ارزیابی های اعتبار بخشی</option>
-                            <option value="سه ماهه دوم">راند های پرستاری</option>
-                            <option value="سه ماهه سوم">شاخص ها</option>
-                            <option value="سه ماهه چهارم">رضایت سنجی ها</option>
-                            <option value="شش ماهه اول">فرم گزارش دهی خطا</option>
-                            <option value="شش ماهه دوم">فرم گزارش دهی خطر و حوادث و بلایا</option>
+                            <option value="فرم">فرم</option>
+                            <option value="آزمون">آزمون</option>                            
+                            <option value="ماژول پرستاری">ماژول پرستاری</option>                            
                         </select>
                     </div>
                 </div>
@@ -131,24 +127,54 @@
                     </label>
                 </div>
                 <div class="col-lg-4">
+                    &nbsp;
+                    <label class="ckbox">
+                        <input id="forms_uniqueComplete" name="forms_uniqueComplete" type="checkbox" checked="checked"><span>فرم توسط هر فرد یکبار تکمیل بشود</span>
+                    </label>
+                </div>
+                <div class="col-lg-4">
+                    &nbsp;
+                    <label class="ckbox">
+                        <input id="forms_showResultToQuestioner" name="forms_showResultToQuestioner" type="checkbox" checked="checked"><span>نتایج فرم به تکمیل کننده نشان داده بشود </span>
+                    </label>
+                </div>
+                <div class="col-lg-4">
+                    &nbsp;
+                    <label class="ckbox">
+                        <input id="forms_showAllResultToQuestioner" name="forms_showAllResultToQuestioner" type="checkbox" checked="checked"><span>آمار کلی فرم به تکمیل کننده نشان داده بشود </span>
+                    </label>
+                </div>
+                <div class="col-lg-4">
+                    نقش هایی که به نتایج آماری دسترسی دارند
+                    <select id="forms_resultAccessRole" name="forms_resultAccessRole" class="form-control" data-placeholder="نقش هایی که به آمار فرم دسترسی دارند" multiple >
+                    </select>
+                </div>
+                <div class="col-lg-4">
+                    افرادی که به نتایج آماری فرم دسترسی دارند
+                    <select id="forms_resultAccessUsers" name="forms_resultAccessUsers" class="form-control" data-placeholder="افرادی که به آمار فرم دسترسی دارند" multiple >
+                    </select>
+                </div>
+                <div class="col-lg-4">
                     نقش هایی که به این فرم دسترسی دارند
-                    <input id="forms_accesseRoles" name="forms_accesseRoles" type="text"  class="form-control"><span></span>
+                    <select id="forms_accesseRoles" name="forms_accesseRoles" class="form-control" data-placeholder="نقش ها را وارد کنید" multiple >
+                    </select>
                 </div>
                 <div class="col-lg-4">
                     شخص هایی که به این فرم دسترسی دارند
-                    <input id="forms_accessesUsers" name="forms_accessesUsers" type="text"  class="form-control"><span></span>
+                    <select id="forms_accessesUsers" name="forms_accessesUsers" class="form-control" data-placeholder="کاربرانی که می توانند فرم را پر کنند" multiple >
+                    </select>
                 </div>
                 <div class="col-lg-4">
                     دفعات دیده شدن فرم
-                    <input id="forms_visit" type="text" readonly="" class="form-control" disabled="disabled"><span></span>
+                    <input id="forms_visit" type="text" readonly="" class="form-control" disabled="disabled">
                 </div>
                 <div class="col-lg-4">
                     فرم بعد از این فرم چه باشد؟
-                    <input id="forms_nextFormId" name="forms_nextFormId" type="text"  class="form-control"><span></span>
-                    <p class="mg-b-20 mg-sm-b-30">برای ثبت فرم جدید میتوانید توضیحات قبل از تکمیل فرم را برای راهنمایی تکمیل کنندگان فرم ها ثبت نمایید</p>
+                    <input id="forms_nextFormId" name="forms_nextFormId" type="text"  class="form-control">
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12 mg-b-20 mg-t-20 mg-sm-b-30">
                     توضیحات و خلاصه
+                    <p class="mg-b-20 mg-sm-b-30">برای ثبت فرم جدید میتوانید توضیحات قبل از تکمیل فرم را برای راهنمایی تکمیل کنندگان فرم ها ثبت نمایید</p>
                     <textarea id="forms_discription" name="forms_discription" rows="4" class="form-control" placeholder="توضیحات فرم"></textarea>
                 </div><!-- col -->
                 <div class="col-lg-12">

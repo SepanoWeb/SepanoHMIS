@@ -45,6 +45,8 @@ public class Forms {
     public static final String _htmlContent = "forms_htmlContent";
     public static final String _ownerId = "forms_ownerId";//آی دی ایجاد کننده ی فرم
     public static final String _ownerRole = "forms_ownerRole";//سمت ایجاد کننده ی فرم
+    public static final String _resultAccessRole = "forms_resultAccessRole";//نتایج آماری را به چه نقش هایی نشان بدهیم
+    public static final String _resultAccessUsers = "forms_resultAccessUsers";//شخص هایی که میتوانند نتایج آماری را ببینند
     public static final String _isActive = "forms_isActive";//سمت ایجاد کننده ی فرم
     public static final String _creationDate = "forms_creationDate";
     public static final String _creationTime = "forms_creationTime";
@@ -55,6 +57,9 @@ public class Forms {
     public static final String _visit = "forms_visit";
     public static final String _nextFormId = "forms_nextFormId";// آی دی فرم بعدی که بعد از این فرم باید لود بشود
     public static final String _isAutoWiki = "forms_isAutoWiki";//برای این فرم لینک اتو ویکی در محتوا ساخته شود یا خیر
+    public static final String _showResultToQuestioner = "forms_showResultToQuestioner";//کسی که فرم را پر می کند نتیجه ی آزمونش را همان موقع ببیند یا نه
+    public static final String _showAllResultToQuestioner = "forms_showAllResultToQuestioner";//کسی که فرم را پر می کند نتیجه ی آمار را همان موقع ببیند یا نه
+    public static final String _uniqueComplete = "forms_uniqueComplete";//کسی که فرم را پر می کند نتیجه ی آمار را همان موقع ببیند یا نه
     public static final String _hasAutoWikiInContent = "forms_hasAutoWikiInContent";//در محتوای این فرم اتو ویکی فعال باشد یا نه
 
     public static final String lbl_insert = "ثبت و افزودن سوال";
@@ -196,6 +201,8 @@ public class Forms {
             map.put(_ownerId, jjTools.getSeassionUserId(request));
             map.put(_ownerRole, jjTools.getParameter(request, _ownerRole));
             map.put(_accessessUsers, jjTools.getParameter(request, _accessessUsers));
+            map.put(_resultAccessUsers, jjTools.getParameter(request, _resultAccessUsers));
+            map.put(_resultAccessRole, jjTools.getParameter(request, _resultAccessRole));
             map.put(_accessessRoles, jjTools.getParameter(request, _accessessRoles));
             if ("".equals(jjTools.getParameter(request, _creationDate))) {// اگر تاریخ شروع اعتبار وارد نکرده بود
                 map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(null, true));
@@ -208,6 +215,9 @@ public class Forms {
             map.put(_expireTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _expireTime)));
             map.put(_nextFormId, jjNumber.isDigit(jjTools.getParameter(request, _nextFormId)));
             map.put(_isAutoWiki, jjTools.getParameter(request, _isAutoWiki));
+            map.put(_uniqueComplete, jjTools.getParameter(request, _uniqueComplete));
+            map.put(_showResultToQuestioner, jjTools.getParameter(request, _showResultToQuestioner));
+            map.put(_showAllResultToQuestioner, jjTools.getParameter(request, _showAllResultToQuestioner));
             map.put(_hasAutoWikiInContent, jjTools.getParameter(request, _hasAutoWikiInContent));
             map.put(_css, jjTools.getParameter(request, _css));
             map.put(_javaScript, jjTools.getParameter(request, _javaScript));
@@ -263,6 +273,8 @@ public class Forms {
             script.append(Js.setVal("#" + _ownerRole, formRow.get(0).get(_ownerRole).toString()));
             script.append(Js.setVal("#" + _accessessUsers, formRow.get(0).get(_accessessUsers).toString()));
             script.append(Js.setVal("#" + _accessessRoles, formRow.get(0).get(_accessessRoles).toString()));
+            script.append(Js.setVal("#" + _resultAccessRole, formRow.get(0).get(_resultAccessRole).toString()));
+            script.append(Js.setVal("#" + _resultAccessUsers, formRow.get(0).get(_resultAccessUsers).toString()));
 
             script.append(Js.setVal("#" + _creationDate, jjCalendar_IR.getViewFormat(formRow.get(0).get(_creationDate).toString())));
             script.append(Js.setVal("#" + _expireDate, jjCalendar_IR.getViewFormat(formRow.get(0).get(_expireDate).toString())));
@@ -273,6 +285,9 @@ public class Forms {
 
             script.append(Js.setVal("#" + _nextFormId, formRow.get(0).get(_nextFormId).toString()));
             script.append(Js.setVal("#" + _isAutoWiki, formRow.get(0).get(_isAutoWiki).toString()));
+            script.append(Js.setVal("#" + _uniqueComplete, formRow.get(0).get(_uniqueComplete).toString()));
+            script.append(Js.setVal("#" + _showAllResultToQuestioner, formRow.get(0).get(_showAllResultToQuestioner).toString()));
+            script.append(Js.setVal("#" + _showResultToQuestioner, formRow.get(0).get(_showResultToQuestioner).toString()));
             script.append(Js.setVal("#" + _hasAutoWikiInContent, formRow.get(0).get(_hasAutoWikiInContent).toString()));
             script.append(Js.setVal("#" + _css, formRow.get(0).get(_css).toString()));
             script.append(Js.setVal("#" + _javaScript, formRow.get(0).get(_javaScript).toString()));
@@ -315,6 +330,8 @@ public class Forms {
             map.put(_isActive, jjTools.getParameter(request, _isActive));
             map.put(_icon, jjTools.getParameter(request, _icon));
             map.put(_ownerId, jjTools.getSeassionUserId(request));
+            map.put(_resultAccessUsers, jjTools.getParameter(request, _resultAccessUsers));
+            map.put(_resultAccessRole, jjTools.getParameter(request, _resultAccessRole));
             //تعیین نقش ایجاد کننده یا مالک فرم            
             // ممکن است ادمین بخواهد برای سایرین فرم ها را ایجاد کند و باید این امکان را داشته باشد
             if (!jjNumber.isDigit(jjTools.getParameter(request, _accessessUsers))) {//اگر در ریکوئست مشخص نکرده بود
@@ -341,6 +358,9 @@ public class Forms {
             map.put(_expireTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _expireTime)));
             map.put(_nextFormId, jjNumber.isDigit(jjTools.getParameter(request, _nextFormId)));
             map.put(_isAutoWiki, jjTools.getParameter(request, _isAutoWiki));
+            map.put(_uniqueComplete, jjTools.getParameter(request, _uniqueComplete));
+            map.put(_showResultToQuestioner, jjTools.getParameter(request, _showResultToQuestioner));
+            map.put(_showAllResultToQuestioner, jjTools.getParameter(request, _showAllResultToQuestioner));
             map.put(_hasAutoWikiInContent, jjTools.getParameter(request, _hasAutoWikiInContent));
             map.put(_css, jjTools.getParameter(request, _css));
             map.put(_javaScript, jjTools.getParameter(request, _javaScript));
