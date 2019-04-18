@@ -36,6 +36,9 @@ public class UploadServlet extends HttpServlet {
     public static String _date = "upload_date";
     public static String _time = "upload_time";
     public static String _loader = "upload_loader";
+    public static String _status = "upload_status";
+    public static String _logStatus = "upload_logStatus";
+     public static String status_deleted = "پاک شده توسط";
 //    public static String _loader_id = "upload_loader_id";
     
     //====================>shiri
@@ -158,7 +161,7 @@ public class UploadServlet extends HttpServlet {
                        
                         map.put(_time, new jjCalendar_IR().getTimeFormat_8length());
                         map.put(_loader, (jjTools.getSessionAttribute(request, "#USER_NAME").toString()+" " +jjTools.getSessionAttribute(request,"#USER_FAMILY").toString()));
-//                        map.put(_loader_id, (jjTools.getSessionAttribute(request, "#ID")));
+                        map.put(_logStatus, (jjTools.getParameter(request, _logStatus)));
                     
                         ServerLog.Print("Write pic in: " + file + " size:" + file.length());
                         String name2 = file.getName().substring(0, file.getName().lastIndexOf("."));
@@ -198,6 +201,7 @@ public class UploadServlet extends HttpServlet {
             throws ServletException, IOException {
         doPost(request, response);
     }
+
 
     public Map<String, String> getData() {
         return data;

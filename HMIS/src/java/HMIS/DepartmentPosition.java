@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
@@ -60,7 +61,7 @@ public class DepartmentPosition {
     public static int rul_ins = 0;
     public static int rul_edt = 0;
     public static int rul_dlt = 0;
-     public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+     public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
 //            String hasAccess = Department.getAccessDialog(request, db, rul_rfs);
 //            if (!hasAccess.equals("")) {
@@ -109,9 +110,11 @@ public class DepartmentPosition {
             }
             String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
             html2 += Js.table("#refreshParts", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست بخش ها");
-            return html2;
+             Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception e) {
-            return Server.ErrorHandler(e);
+             Server.outPrinter(request, response,Server.ErrorHandler(e));
+            return "";
         }
     }
 

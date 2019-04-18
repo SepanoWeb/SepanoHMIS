@@ -1636,6 +1636,68 @@ var jj = function (selector) {
         });
     };
     /**
+     * 
+     * @param {type} myTitle
+     * @param {type} yesFunction تابع جاوا اسکریپت یا جی کوئری
+     * @returns {undefined}
+     */
+    this.jjModal_Yes_No = function (myTitle,yesFunction) {
+        var id = Math.floor((Math.random() * 1000000) + 1);
+        var html = '<div id="' + id + '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+                '<div class="modal-dialog" role="document" >' +
+                '<div class = "modal-content bd-0 tx-14" >' +
+                '<div class = "modal-header pd-x-20" >' +
+                '<h6 class = "tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" > ' + myTitle + ' </h6>' +
+                '<button type="button" class="close" data-dismiss ="modal" aria-label = "Close" >' +
+                '<span aria-hidden="true">&times;</span>' +
+                '</button>' +
+                '</div>' +
+                '<div class = "modal-body pd-20" >' +
+                '<p class="mg-b-5" >' + this.selector + '</p>' +
+                '</div>' +
+                '<div class="modal-footer justify-content-center">' +
+                '<button type= "button" class="btn btn-secondary pd-x-20" data-dismiss="modal">بستن </button>' +
+                '<button type= "button" class="btn btn-success pd-x-20" data-dismiss="modal" onclick="'+yesFunction+'">موافقم </button>' +
+                '</div>' +
+                '</div>' +
+                '</div>' + //<!-- modal-dialog -->
+                '</div>';//<!-- modal -->
+        $("body").append(html);
+        $("#" + id).modal('show');
+        $("#" + id).on('hidden.bs.modal', function () {
+            $(this).remove();
+        });
+    };
+
+//    this.jjModal_Yes_No = function (myTitle,yesFunction) {
+//        var id = Math.floor((Math.random() * 1000000) + 1);
+//        var html = '<div id="' + id + '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+//                '<div class="modal-dialog" role="document" >' +
+//                '<div class = "modal-content bd-0 tx-14" >' +
+//                '<div class = "modal-header pd-x-20" >' +
+//                '<h6 class = "tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" > ' + myTitle + ' </h6>' +
+//                '<button type="button" class="close" data-dismiss ="modal" aria-label = "Close" >' +
+//               
+//                '<span aria-hidden="true">&times;</span>' +
+//                '</button>' +
+//                '</div>' +
+//                '<div class = "modal-body pd-20" >' +
+//                '<p class="mg-b-5" >' + this.selector + '</p>' +
+//                '</div>' +
+//                '<div class="modal-footer justify-content-center">' +
+//                '<button type= "button" class="btn btn-secondary pd-x-20" data-dismiss="modal">بستن </button>' +
+//                '<button type= "button" class="btn btn-secondary pd-x-20" data-dismiss="modal" oncilck="'+yesFunction+'">موافقم </button>' +
+//                '</div>' +
+//                '</div>' +
+//                '</div>' + //<!-- modal-dialog -->
+//                '</div>';//<!-- modal -->
+//        $("body").append(html);
+//        $("#" + id).modal('show');
+//        $("#" + id).on('hidden.bs.modal', function () {
+//            $(this).remove();
+//        });
+//    };
+    /**
      * This method show one modal dialog to user <br/>
      * @param selector is messege for show
      * @param statement is javaScript string for YES button onClick  
@@ -1831,139 +1893,140 @@ var jj = function (selector) {
             });
         });
     };
-    /**
-     * @param selector is button for send///این تابع برای عکس پرسنلی اضافه شده
-     * توسط شیران1
-     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
-     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
-     */
-    this.jjAjaxFileUploadPersonal = function (inputFileId, inputTextSelector, viewImgSelector) {
-        $(this.selector).click(function () {
-            if ($("#" + inputFileId.replace("#", "")).val() == "") {
-                alert("ابتدا  فایلی را انتخاب نمایید.");
-                return;
-            }
-            $.ajaxFileUpload({
-                url: 'UploadServlet',
-                secureuri: false,
-                fileElementId: inputFileId.replace("#", ""),
-                dataType: 'JSON',
-                cache: false,
-                success: function (data) {
-                    if (data != null) {
-                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
-                        data = data.replace("/", '').replace("/", '').replace("\\", '');
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                    $("#" + inputFileId.replace("#", "")).val('');
-                    if (data != "") {
-                        if (data != "big") {
-                            $(inputTextSelector).val(data);
-                            if (viewImgSelector != null) {
-                                $(viewImgSelector).attr('src', 'upload/' + data);
-                            }
-                        } else {
-                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
-                        }
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                }
-            });
-        });
-    };
-    /**
-     * @param selector is button for send///این تابع برای عکس کارت پرسنلی اضافه شده
-     * توسط شیران1
-     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
-     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
-     */
-    this.jjAjaxFileUploadPersonnelCard = function (inputFileId, inputTextSelector, viewImgSelector) {
-        $(this.selector).click(function () {
-            if ($("#" + inputFileId.replace("#", "")).val() == "") {
-                alert("ابتدا  فایلی را انتخاب نمایید.");
-                return;
-            }
-            $.ajaxFileUpload({
-                url: 'UploadServlet',
-                secureuri: false,
-                fileElementId: inputFileId.replace("#", ""),
-                dataType: 'JSON',
-                cache: false,
-                success: function (data) {
-                    if (data != null) {
-                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
-                        data = data.replace("/", '').replace("/", '').replace("\\", '');
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                    $("#" + inputFileId.replace("#", "")).val('');
-                    if (data != "") {
-                        if (data != "big") {
-                            $(inputTextSelector).val(data);
-                            if (viewImgSelector != null) {
-                                $(viewImgSelector).attr('src', 'upload/' + data);
-                            }
-                        } else {
-                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
-                        }
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                }
-            });
-        });
-    };
-    /**
-     * @param selector is button for send///این تابع برای عکس  امضا اضافه شده
-     * توسط شیران1
-     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
-     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
-     */
-    this.jjAjaxFileUploadAxSignature = function (inputFileId, inputTextSelector, viewImgSelector) {
-        $(this.selector).click(function () {
-            if ($("#" + inputFileId.replace("#", "")).val() == "") {
-                alert("ابتدا  فایلی را انتخاب نمایید.");
-                return;
-            }
-            $.ajaxFileUpload({
-                url: 'UploadServlet',
-                secureuri: false,
-                fileElementId: inputFileId.replace("#", ""),
-                dataType: 'JSON',
-                cache: false,
-                success: function (data) {
-                    if (data != null) {
-                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
-                        data = data.replace("/", '').replace("/", '').replace("\\", '');
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                    $("#" + inputFileId.replace("#", "")).val('');
-                    if (data != "") {
-                        if (data != "big") {
-                            $(inputTextSelector).val(data);
-                            if (viewImgSelector != null) {
-                                $(viewImgSelector).attr('src', 'upload/' + data);
-                            }
-                        } else {
-                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
-                        }
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                }
-            });
-        });
-    };
-    /**
+//    /**
+//     * @param selector is button for send///این تابع برای عکس پرسنلی اضافه شده
+//     * توسط شیران1
+//     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
+//     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
+//     */
+//    this.jjAjaxFileUploadPersonal = function (inputFileId, inputTextSelector, viewImgSelector) {
+//        $(this.selector).click(function () {
+//            if ($("#" + inputFileId.replace("#", "")).val() == "") {
+//                alert("ابتدا  فایلی را انتخاب نمایید.");
+//                return;
+//            }
+//            $.ajaxFileUpload({
+//                url: 'UploadServlet',
+//                secureuri: false,
+//                fileElementId: inputFileId.replace("#", ""),
+//                dataType: 'JSON',
+//                cache: false,
+//                success: function (data) {
+//                    if (data != null) {
+//                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
+//                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
+//                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
+//                        data = data.replace("/", '').replace("/", '').replace("\\", '');
+//                    } else {
+//                        alert('فایل به درستی ارسال نشد.');
+//                    }
+//                    $("#" + inputFileId.replace("#", "")).val('');
+//                    if (data != "") {
+//                        if (data != "big") {
+//                            $(inputTextSelector).val(data);
+//                            if (viewImgSelector != null) {
+//                                $(viewImgSelector).attr('src', 'upload/' + data);
+//                            }
+//                        } else {
+//                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
+//                        }
+//                    } else {
+//                        alert('فایل به درستی ارسال نشد.');
+//                    }
+//                }
+//            });
+//        });
+//    };
+//    /**
+//     * @param selector is button for send///این تابع برای عکس کارت پرسنلی اضافه شده
+//     * توسط شیران1
+//     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
+//     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
+//     */
+//    this.jjAjaxFileUploadPersonnelCard = function (inputFileId, inputTextSelector, viewImgSelector) {
+//        $(this.selector).click(function () {
+//            if ($("#" + inputFileId.replace("#", "")).val() == "") {
+//                alert("ابتدا  فایلی را انتخاب نمایید.");
+//                return;
+//            }
+//            $.ajaxFileUpload({
+//                url: 'UploadServlet',
+//                secureuri: false,
+//                fileElementId: inputFileId.replace("#", ""),
+//                dataType: 'JSON',
+//                cache: false,
+//                success: function (data) {
+//                    if (data != null) {
+//                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
+//                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
+//                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
+//                        data = data.replace("/", '').replace("/", '').replace("\\", '');
+//                    } else {
+//                        alert('فایل به درستی ارسال نشد.');
+//                    }
+//                    $("#" + inputFileId.replace("#", "")).val('');
+//                    if (data != "") {
+//                        if (data != "big") {
+//                            $(inputTextSelector).val(data);
+//                            if (viewImgSelector != null) {
+//                                $(viewImgSelector).attr('src', 'upload/' + data);
+//                            }
+//                        } else {
+//                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
+//                        }
+//                    } else {
+//                        alert('فایل به درستی ارسال نشد.');
+//                    }
+//                }
+//            });
+//        });
+//    };
+//    /**
+//     * @param selector is button for send///این تابع برای عکس  امضا اضافه شده
+//     * توسط شیران1
+//     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
+//     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
+//     */
+//    this.jjAjaxFileUploadAxSignature = function (inputFileId, inputTextSelector, viewImgSelector) {
+//        $(this.selector).click(function () {
+//            if ($("#" + inputFileId.replace("#", "")).val() == "") {
+//                alert("ابتدا  فایلی را انتخاب نمایید.");
+//                return;
+//            }
+//            $.ajaxFileUpload({
+//                url: 'UploadServlet',
+//                secureuri: false,
+//                fileElementId: inputFileId.replace("#", ""),
+//                dataType: 'JSON',
+//                cache: false,
+//                success: function (data) {
+//                    if (data != null) {
+//                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
+//                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
+//                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
+//                        data = data.replace("/", '').replace("/", '').replace("\\", '');
+//                    } else {
+//                        alert('فایل به درستی ارسال نشد.');
+//                    }
+//                    $("#" + inputFileId.replace("#", "")).val('');
+//                    if (data != "") {
+//                        if (data != "big") {
+//                            $(inputTextSelector).val(data);
+//                            if (viewImgSelector != null) {
+//                                $(viewImgSelector).attr('src', 'upload/' + data);
+//                            }
+//                        } else {
+//                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
+//                        }
+//                    } else {
+//                        alert('فایل به درستی ارسال نشد.');
+//                    }
+//                }
+//            });
+//        });
+//    };
+    /**این تابع برای attach file 
+     * اضافه کردن چند فایل نوشته شده
      * @param selector is button for send
      * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
      * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>

@@ -29,11 +29,27 @@ var hmisMessenger = {
 
 
 
+                hmisMessenger.selectOptionUser("messenger_receiver");
+//                $("#messenger_receiver").select2({
+//                    minimumResultsForSearch: '',
+//                    width: '100%'
+//                });
             });
 
 
-
         }
+    },
+    selectOptionUser: function (panel) {
+        var param = "";
+        param += "panel=" + panel;
+        param += "&do=" + hmisMessenger.tableName + ".selectOptionUser";
+
+        new jj(param).jjAjax2(false);
+
+
+
+
+
     },
     m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
@@ -50,8 +66,10 @@ var hmisMessenger = {
         hmisMessenger.m_show_tbl();
     },
     m_add_new: function () {
-        jj("do=" + hmisMessenger.tableName + ".add_new").jjAjax2(false);
-
+        new jj("do=" + hmisMessenger.tableName + ".add_new").jjAjax2(false);
+        $('#messenger_receiver').val("null").trigger('change');
+       $('#status').hide();
+       $('#logStatus').hide();
         hmisMessenger.m_show_form();
         hmisMessenger.m_clean();
 
@@ -72,6 +90,7 @@ var hmisMessenger = {
     },
     m_clean: function () {
         new jj("#swMessengerForm").jjFormClean();
+      
 
     },
     m_show_tbl: function () {
@@ -89,7 +108,7 @@ var hmisMessenger = {
         param += "&" + new jj("#swMessengerForm").jjSerial();
 
         param += "&jj=1";
-
+        param += "&messenger_receiver=" + $("#messenger_receiver option:selected").val();
         new jj(param).jjAjax2(false);
         hmisMessenger.m_show_tbl();
         hmisMessenger.m_clean();
@@ -100,7 +119,7 @@ var hmisMessenger = {
 
         param += "&" + new jj("#swMessengerForm").jjSerial();
         param += "&jj=1";
-
+         param += "&messenger_receiver=" + $("#messenger_receiver option:selected").val();
         new jj(param).jjAjax2(false);
         hmisMessenger.m_show_tbl();
         hmisMessenger.m_clean();
@@ -120,8 +139,9 @@ var hmisMessenger = {
         var param = "";
         param += "do=" + hmisMessenger.tableName + ".select";
         param += "&" + hmisMessenger.f_id + "=" + (id == null ? "" : id);
-
-
+       $('#status').show();
+       $('#logStatus').show();
+//        $('#UserSelectOption').trigger('change');
 
         new jj(param).jjAjax2(false);
 

@@ -22,7 +22,7 @@ var cmsGroup ={
         param += "&panel=" + (containerId==null ? "swGroupTbl" : containerId);
         param += "&sort=" + (sortField==null ? "0" : sortField);
         param += "&height=" + (tableHeight==null ? innerPanelHeight : tableHeight);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsGroup.tabSizeTbl();
     },
     m_show_form:function(){
@@ -39,7 +39,7 @@ var cmsGroup ={
         }
     },
     m_add_new:function(){
-        jj("do="+cmsGroup.tableName+".add_new").jjAjax2(false);
+       new jj("do="+cmsGroup.tableName+".add_new").jjAjax2(false);
         cmsGroup.m_show_form();
         cmsGroup.m_clean();
         
@@ -63,7 +63,7 @@ var cmsGroup ={
             var row = (i<10?"0"+i:i);
             param += "&" +cmsGroup.f_c + row + "=" + new jj("#C"+row).jjVal();
         }
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsGroup.m_show_tbl();
         cmsGroup.m_clean();
     },
@@ -78,7 +78,7 @@ var cmsGroup ={
             var row = (i<10?"0"+i:i);
             param += "&" +cmsGroup.f_c + row + "=" + new jj("#C"+row).jjVal();
         }
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsGroup.m_show_tbl();
         cmsGroup.m_clean();
     }, 
@@ -89,7 +89,7 @@ var cmsGroup ={
         var param = "";
         param += "do="+cmsGroup.tableName+".delete";
         param += "&" + cmsGroup.f_id + "=" + (id==null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsGroup.m_show_tbl();
         cmsGroup.m_clean();
     },
@@ -97,7 +97,7 @@ var cmsGroup ={
         var param = "";
         param += "do="+cmsGroup.tableName+".select";
         param += "&" + cmsGroup.f_id + "=" + (id==null ? "" : id);
-        jj(param).jjAjax2(false);
+       new jj(param).jjAjax2(false);
         cmsGroup.m_show_form();
         new jj("#"+cmsGroup.f_group_id).jjVal(id);
         new jj("#"+cmsGroup.f_id).jjVal(id);

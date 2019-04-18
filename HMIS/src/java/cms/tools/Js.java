@@ -38,6 +38,9 @@ public class Js {
     public static String modal(String comment,String title) {
         return "new jj('"+comment+"').jjModal('"+title+"');\n";
     }
+    public static String modal_yes_no(String comment,String yesFunction) {
+        return "new jj('"+comment+"').jjModal_Yes_No('"+yesFunction+"');\n";
+    }
 
     public static String bootStarpWarning(String comment) {
         return "$('<div></div>').dialog({"
