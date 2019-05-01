@@ -89,7 +89,7 @@ public class Commettes {
                 html.append("<td class='r'>" + secretaryTitle.get(0).get(Role._title) + "</td>");
                 html.append("<td class='r'>" + superwizerTitle.get(0).get(Role._title) + "</td>");
                 html.append("<td class='r'><i class='icon ion-email' onclick='hmisCommettes.showInvitationForm(" + row.get(i).get(_id) + ");' style='color:#ffcd00!important'></i></td>");
-                html.append("<td class='r'><i class='icon ion-ios-gear-outline' onclick='hmisCommettes.m_select(" + row.get(i).get(_id) + ")'></i></td>");
+                html.append("<td class='r'><i class='icon ion-ios-gear-outline'  onclick='hmisCommettes.m_select(" + row.get(i).get(_id) + ")'></i></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -138,7 +138,7 @@ public class Commettes {
                 html5.append("<td class='r'>" + roleRow.get(i).get(Role._id) + "</td>");
                 html5.append("<td class='r'>" + roleRow.get(i).get(Role._title) + "</td>");
                 html5.append("<td class='r'>" + userRow.get(0).get(Access_User._name) + " " + userRow.get(0).get(Access_User._family) + "</td>");
-                html5.append("<td class='r' id='td" + i + "'  onclick='hmisCommettes.addMembers(" + i + ")'><i id='" + roleRow.get(i).get(Role._id) + "' class='icon ion-plus-circled'></i></td>");
+                html5.append("<td class='r' id='td" + i + "' onclick='hmisCommettes.addMembers(" + i + ")'><i id='" + roleRow.get(i).get(Role._id) + "' class='icon ion-plus-circled'  style='color:#676161;' ></i></td>");
                 html5.append("</tr>");
             }
             html5.append("</tbody></table>");
@@ -263,7 +263,7 @@ public class Commettes {
             html.append(Js.setVal("#" + _superwizar, row.get(0).get(_superwizar)));
             html.append(Js.setVal("#" + _regulationFile, row.get(0).get(_regulationFile)));
             if (!row.get(0).get(_documnetsFile).toString().equals("")) {
-                String[] documentFile = (row.get(0).get(_documnetsFile).toString()).split("%23A%23");
+                String[] documentFile = (row.get(0).get(_documnetsFile).toString().replaceAll("#A#","%23A%23")).split("%23A%23");
                 for (int i = 0; i < documentFile.length; i++) {
                     html3.append("<input class='col-xs-12' value='" + documentFile[i] + "' >");
                 }
@@ -289,7 +289,7 @@ public class Commettes {
 
             } else {
                 String membersId = row.get(0).get(_members).toString();
-                String[] memberId = membersId.split("%23A%23");
+                String[] memberId = (membersId.replaceAll("#A#","%23A%23")).split("%23A%23");
                 for (int i = 0; i < memberId.length; i++) {
                     script += ("$('#tableRolesDiv #refreshRoles #" + memberId[i] + "').attr('class','icon ion-checkmark-circled').css('color','green');");
 
@@ -409,7 +409,7 @@ public class Commettes {
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + commettesId));
             html.append("<label class='ckbox'>");
             String memberId = commettesRow.get(0).get(Commettes._members).toString();
-            String[] membersId = memberId.split("%23A%23");
+            String[] membersId = (memberId.replaceAll("#A#","%23A%23")).split("%23A%23");
             for (int i = 0; i < membersId.length; i++) {
                 List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + membersId[i]));
                 List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + roleRow.get(0).get(Role._user_id)));

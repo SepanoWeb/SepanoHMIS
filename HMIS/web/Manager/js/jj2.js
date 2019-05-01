@@ -1786,6 +1786,7 @@ var jj = function (selector) {
                     }
                 }
             });
+            return "alert('فایل مورد نظر آپلود شد')";
         });
     };
     /**این تابع برای اضافه کردن آیکون در قسمت بخش ها ایجاد شده توسط شیران1
@@ -1956,6 +1957,8 @@ var jj = function (selector) {
                         } else {
                             alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
                         }
+                                                return  new jj('ارسال شد').jjDialog();;
+
                     } else {
                         alert('فایل به درستی ارسال نشد.');
                     }
@@ -1971,7 +1974,7 @@ var jj = function (selector) {
     this.jjAjaxFileUpload3 = function (inputFileId, inputTextSelector) {
         $(this.selector).click(function () {
             if ($("#" + inputFileId.replace("#", "")).val() == "") {
-               alert("ابتدا  فایلی را انتخاب نمایید.");
+                alert("ابتدا  فایلی را انتخاب نمایید.");
                 return;
             }
             $.ajaxFileUpload({
@@ -2009,6 +2012,49 @@ var jj = function (selector) {
                     }
                 }
             });
+        });
+    };
+    this.jjAjaxFileUpload4 = function (inputFileId, inputTextSelector, inputUploadSelector) {
+        $(this.selector).click(function () {
+            if ($("#" + inputFileId.replace("#", "")).val() == "") {
+                alert("ابتدا  فایلی را انتخاب نمایید.");
+                return;
+            }
+            $.ajaxFileUpload({
+                url: 'UploadServlet',
+                secureuri: false,
+                fileElementId: inputFileId.replace("#", ""),
+                dataType: 'JSON',
+                cache: false,
+                success: function (data) {
+                    if (data != null) {
+                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
+                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
+                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
+                        data = data.replace("/", '').replace("/", '').replace("\\", '');
+                    } else {
+                        new jj('فایل به درستی ارسال نشد.').jjDialog();
+                    }
+                    $("#" + inputFileId.replace("#", "")).val('');
+                    if (data != "") {
+                        if (data != "big") {
+//                                                            $(inputTextSelector).val($(inputTextSelector).val()+"%23A%23"+data);
+
+                            var temp = $(inputTextSelector).val($(inputTextSelector).val() + data + "%23A%23");
+                            for (var i = 0; i < temp.size(); i++) {
+                                $(inputUploadSelector).append("<input class='form-control is-valid hasWickedpicker col-xs-12 file' value='" + data + "'>  ");
+                            }
+
+                        } else {
+                            new jj('حجم فایل شما بیش اندازه بزرگ می باشد.').jjDialog();
+                        }
+                    } else {
+                        new jj('فایل به درستی ارسال نشد.').jjDialog();
+                    }
+                }
+                
+            });
+//            return "alert('فایل مورد نظر آپلود شد')";
         });
     };
     /**

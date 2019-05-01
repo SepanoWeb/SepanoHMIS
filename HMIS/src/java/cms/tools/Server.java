@@ -126,7 +126,7 @@ public class Server extends HttpServlet {
             clazzes.add(Messenger.class);
 //            clazzes.add(HMIS.Part.class);
             clazzes.add(Sessions.class);//صورت جلسه 13971212
-            clazzes.add(Approved.class);//صورت جلسه 13971212
+            clazzes.add(Approved.class);//مصوبات 13971212
         }
         return clazzes;
     }

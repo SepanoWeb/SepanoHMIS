@@ -114,7 +114,7 @@
                                     <div class="col-lg-3" style="margin-bottom: 20px">
                                         بارگذاری آیین نامه:<input id="commettes_regulationFile" name="commettes_regulationFile" type="hidden" />
                                         <img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>
-                                        <div class="row">
+                                        <div class="row mg-r-10">
                                             <input class="btn btn-primary" id="sendPicFilesCommettes" type="submit" value="ارسال">
                                             <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
                                             <input id="attachFileCommettes" name="attachFileCommettes" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
@@ -247,30 +247,24 @@
                                         <input id="sessions_timeReminder" name="sessions_timeReminder" style="direction:ltr;text-align: center" class="form-control is-valid" placeholder="قبل از تاریخ جلسه باشد" type="text">
                                     </div><!-- form-group -->
                                 </div><!-- col -->   
-                                <div class="col-lg-4">
-
-
-                                    <!--<div class="col-lg-12">-->
-                                    <!--<img id="PicPreviewAttach" class="img-thumbnail"  name="PicPreviewAttach" src="#" style="width:55%;height: 90%"/>-->
-                                    <input id="sessions_file" name="sessions_file" type="hidden" />
-                                    <div id="inputAfterSelect" ></div>
-                                    <div  id="inputTextSelectorInviteesDiv" ></div>
-
-
-                                    <div class="input-group">
-                                        <span class="input-group-btn">
-                                            <input class="btn btn-primary" id="sendPicFilesInvitees" type="submit" style="cursor:pointer;   border-radius: 7px;line-height: 32px;" value="ارسال" >
-                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();" style="line-height: 32px;    cursor: pointer;border-radius: 6px;">Browse</span>
-                                            <input id="attachFileInvitees"  name="attachFileInvitees"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                        </span>
-                                        <span id="Invitees_pic" style="  border-radius: 6px;height: 50px;line-height: 18px;" class="form-control"></span>
-
-
-
+                            
+                                <div class="col-lg-3">
+                                    بارگذاری مستندات برای مدعوین جلسه:<br/>
+                                    <input id="sessions_InviteesFile" name="sessions_InviteesFile" type="hidden" />
+                                    <!--<img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>-->
+                                    <div class="row mg-r-10">
+                                        <input class="btn btn-primary" id="sendFilesInvitees" type="submit" value="ارسال">
+                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                        <input id="attachFileInvitees" name="attachFileInvitees" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                        <span class="form-control col-lg"></span>
                                     </div>
+                                    <!--                                    <a onclick="hmisDepartment.downloadIcon();"></a>-->
+                                    <!--</label>-->
+                                   <div   id="inputTextSelectorInviteesDiv" ></div>
+                                        <div id="inputAfterSelect" ></div>
 
-                                </div><!-- col -->   
 
+                                </div>
                             </div>   
                             <div class="row">
                                 <div class="col-lg-12" id="InviteesDiv">
@@ -318,28 +312,28 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                                
-                                                    <input type="text" class="form-control is-valid phone"  placeholder="شماره همراه مهمان">
-                                                
+
+                                                <input type="text" class="form-control is-valid phone"  placeholder="شماره همراه مهمان">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="form-group has-danger mg-b-0">
-                                                        سمت
-                                                
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                               
+                                                سمت
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3">
-                                                 پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                                    
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                              
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -351,33 +345,33 @@
                                     </div><!--row-->
                                     <div class="row invitedOutSide"  id="invitedOutSide2" style="display: none">  
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                   
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                              
+
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                                
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -393,34 +387,34 @@
                                     </div><!--row-->
                                     <div class="row invitedOutSide"  id="invitedOutSide3"  style="display: none">  
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">                                                    
-                                                    
-                                               
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                                 
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                        
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -439,32 +433,32 @@
                                     <div class="row invitedOutSide"  id="invitedOutSide4" style="display: none">
 
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                             
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                                
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                              
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -485,32 +479,32 @@
                                     <div class="row invitedOutSide"  id="invitedOutSide5" style="display: none">
 
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                                
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                                
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                         
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -528,30 +522,30 @@
                                     <div class="row invitedOutSide"  id="invitedOutSide6" style="display: none">
 
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                                
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                                
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                 پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -568,31 +562,31 @@
                                     <div class="row invitedOutSide"  id="invitedOutSide7" style="display: none">
 
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                                
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                             
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -609,31 +603,31 @@
                                     <div class="row invitedOutSide"  id="invitedOutSide8" style="display: none">
 
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                            
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                            
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
                                             <div class="form-group has-danger mg-b-0">
-                                                        پست الکترونیکی 
-                                               
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+                                                پست الکترونیکی 
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -650,31 +644,31 @@
                                     <div class="row invitedOutSide"  id="invitedOutSide9" style="display: none">
 
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                             
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
                                             </div>
                                         </div>
 
@@ -693,31 +687,31 @@
                                     <div class="row invitedOutSide"  id="invitedOutSide10" style="display: none">
 
                                         <div class="col-lg-3">
-                                                        نام ونام خانوادگی 
+                                            نام ونام خانوادگی 
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
+
+                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        شماره همراه 
+                                            شماره همراه 
                                             <div class="form-group has-danger mg-b-0">
-                                               
-                                                    <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
+
+                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        سمت
+                                            سمت
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
+
+                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
-                                                        پست الکترونیکی 
+                                            پست الکترونیکی 
                                             <div class="form-group has-danger mg-b-0">
-                                              
-                                                    <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
+
+                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
                                             </div>
                                         </div>
                                         <div class="col-lg-3">
@@ -746,7 +740,7 @@
                     <div class="form-group has-success mg-b-0 ">
                         <button id="cancel_Commettes" class="btn btn-outline-secondary mg-b-10  btn-block" 
                                 onclick="hmisCommettes.m_clean();
-                                                hmisCommettes.m_show_tbl();" >بازگشت</button>
+                                        hmisCommettes.m_show_tbl();" >بازگشت</button>
                     </div><!-- form-group -->
                 </div>
             </div>

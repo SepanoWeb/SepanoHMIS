@@ -38,6 +38,8 @@ public class Steps {
     public static String _file2 = "steps_file2";//مستندات
     public static String _file3 = "steps_file3";//مستندات
     public static String _cost = "steps_cost";//هزینه
+    public static String _statusLog = "steps_statusLog";//روند وضعیت
+    public static String _status = "steps_status";//وضعیت
     public static int rul_rfs = 0;
     public static int rul_ins = 0;
     public static int rul_edt = 0;

@@ -17,6 +17,7 @@ var hmisCommettes = {
                 new jj("#sessions_dateReminder").jjCalendarWithYearSelector(1397, 1420);
                 new jj('#sendPicFilesCommettes').jjAjaxFileUpload2('attachFileCommettes', '#commettes_regulationFile', '#PicPreviewAttach');
                 new jj('#sendDocumentCommettes').jjAjaxFileUpload3('attachDocumentCommettes', '#commettes_documentsFile', '');
+                new jj('#sendFilesInvitees').jjAjaxFileUpload4('attachFileInvitees', '#sessions_InviteesFile', '#inputTextSelectorInviteesDiv');
                 $("#commettes_secretary").select2({
                     minimumResultsForSearch: '',
                     width: '100%'
@@ -281,7 +282,7 @@ var hmisCommettes = {
 //        alert(temp3);
 //        alert(temp4);
         param += "&sessions_Invitees=" + temp1;
-        param += "&sessions_InviteesInSide=" + temp3//مهمان داخل  سازمان
+        param += "&sessions_InviteesInSide=" + temp3;//مهمان داخل  سازمان
         param += "&sessions_InviteesOutSide=" + temp4; //مهمان خارج از  سازمان
         param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal(); //ای دی کمیته
         param += "&" + new jj('#formInvitation').jjSerial();
@@ -293,7 +294,6 @@ var hmisCommettes = {
         var temp1 = "";
         var param = "";
         if ($("#td" + i + " i").attr('class') === "icon ion-checkmark-circled") {
-
             $("#td" + i + " i").attr('class', 'icon ion-plus-circled').css("color", "red");
         } else if ($("#td" + i + " i").attr('class') === "icon ion-plus-circled") {
             var RoleId = $("#td" + i + " i").attr('id');
