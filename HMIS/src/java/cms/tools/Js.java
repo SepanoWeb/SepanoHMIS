@@ -1407,6 +1407,37 @@ public class Js {
             return hmis + ".m_show_tbl();\n";
         }
     }
+ ////////////////ایجاد مستند
+    public static class jjCreateDocumentary {
+
+        static String hmis = "hmisCreateDocumentary";
+
+        public static String insert() {
+            return "hmisCreateDocumentary.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisCreateDocumentary.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
     //فرم ها
     public static class jjForms {
 

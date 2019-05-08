@@ -4,6 +4,7 @@ package cms.tools;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+import cms.access.Access_User;
 import java.io.*;
 
 import java.util.*;
@@ -18,6 +19,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import jj.jjCalendar_IR;
+import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 
 //==================>shiri
@@ -48,8 +50,10 @@ public class UploadServlet extends HttpServlet {
 //    }
     //<================shiri
 //    private static String Save_Folder_Name = "/upload";
+     
     private static final String Save_Folder_Name = "upload" + File.separator;
     public static final String Save_Folder_Name2 = "upload" + File.separator;
+   
 
     Map<String, String> data = new HashMap<String, String>();
 
@@ -167,7 +171,7 @@ public class UploadServlet extends HttpServlet {
                         String name2 = file.getName().substring(0, file.getName().lastIndexOf("."));
                         String extension2 = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length());
                         File file2 = new File(file.getParent() + "/" + name2 + "_small." + extension2);
-                        map.put(_title, extension2);
+//                        map.put(_title, extension2);
                          db.insert(UploadServlet.tableName, map);
                         if (extension2.toLowerCase().equals("jpg") 
                                 || extension2.toLowerCase().equals("png") 

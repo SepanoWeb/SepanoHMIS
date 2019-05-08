@@ -127,6 +127,44 @@ public class Role {
             return "";
         }
     }
+    /**
+     *آی دی کاربر را می گیرد و نقش کاربر را بر می گرداند
+     * اگر آی دی کاربر را نداشت آی دی را از سشن می خواند
+     * @param request panel,id
+     * @param response
+     * @param db
+     * @param isPost
+     * @return
+     * @throws Exception 
+     */
+        public static String getRoleName(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+        try {
+            String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
+            if (!hasAccess.equals("")) {
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
+            }
+
+            StringBuilder script = new StringBuilder();
+//            String script = "";
+           
+            String panel = jjTools.getParameter(request, "panel");
+            String userId = jjTools.getParameter(request, "userId");
+
+         
+                List<Map<String, Object>> UserRowRole = jjDatabase.separateRow(db.Select(Role.tableName, Role._user_id + "=" + userId));
+                if (!UserRowRole.isEmpty()) {
+                    script.append(Js.setVal("#"+panel,UserRowRole.get(0).get(_title)) );
+                }
+            
+           Server.outPrinter(request, response, script);
+            return "";
+
+        } catch (Exception ex) {
+            return Server.ErrorHandler(ex);
+        }
+
+    }
 
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {

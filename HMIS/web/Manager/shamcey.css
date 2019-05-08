@@ -11137,7 +11137,7 @@ textarea.parsley-success:focus {
 
 .select2-dropdown {
     border-color: rgba(0, 0, 0, 0.15);
-    z-index: 200;
+    /*z-index: 200;*/
 }
 
 .select2-search--dropdown {
