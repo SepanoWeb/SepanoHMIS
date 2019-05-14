@@ -49,6 +49,7 @@ public class Messenger {
     public static String status_displayed = " دیده شده";
     public static String status_posted = " ارسال شده";
     public static String status_postQueue = " درصف ارسال";
+
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
     public static String lbl_edit = "ویرایش";
@@ -92,7 +93,7 @@ public class Messenger {
 //       
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
             if (accDel) {
-                html.append("<th width='5%'>حذف</th>");
+                html.append("<th style='text-align:center' width='5%'>حذف</th>");
             }
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
@@ -101,15 +102,15 @@ public class Messenger {
 
                 html.append("<tr class='mousePointer" + " " + dideshode + "'>");
                 html.append("<td style='text-align:center' class='c'>" + (row.get(i).get(_id).toString()) + "</td>");
-                html.append("<td style='text-align:center' class='c'>" + row.get(i).get(_postageDate).toString() + "</td>");
+                html.append("<td style='text-align:center' class='c'>" +jjCalendar_IR.getViewFormat(row.get(i).get(_postageDate)) + "</td>");
 
                 html.append("<td style='text-align:center' class='r'>" + (row.get(i).get(_textMessage).toString()) + "</td>");
 //                html.append("<td style='text-align:center' class='r'>" + (GirandeRow.get(0).get(Access_User._name).toString()) + " " + (GirandeRow.get(0).get(Access_User._family).toString()) + "</td>");
 
-                html.append("<td class='' onclick='hmisMessenger.m_select(" + row.get(i).get(_id) + ");'><img src='imgfeyz/contract.png' style='height:30px;margin:auto'/></td>");
+                html.append("<td class='' style='text-align: center;' onclick='hmisMessenger.m_select(" + row.get(i).get(_id) + ");'><img src='imgfeyz/contract.png' style='height:30px;margin:auto'/></td>");
 //               
                 if (accDel) {
-                    html.append("<td class='c mousePointer' onclick='hmisMessenger.m_delete(" + row.get(i).get(_id) + ");'><img src='imgfeyz/delet.png' style='height:30px;margin:auto'/></td>");
+                    html.append("<td class='c mousePointer' style='text-align: center;' onclick='hmisMessenger.m_delete(" + row.get(i).get(_id) + ");'><img src='imgfeyz/delet.png' style='height:30px;margin:auto'/></td>");
                 }
                 html.append("</tr>");
             }
@@ -140,7 +141,7 @@ public class Messenger {
         StringBuilder script = new StringBuilder();
 //        String id = jjTools.getSessionAttribute(request, "#ID");
         try {
-             script.append("$('#messenger_receiver').select2();\n");
+            script.append("$('#messenger_receiver').select2();\n");
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 script.append(Js.setHtml("#Messenger_button", "<div class='col-lg-6'><input type='button' id='insert_Messenger_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
@@ -213,7 +214,7 @@ public class Messenger {
             for (int i = 0; i < UserRow.size(); i++) {
 //              
 
-                String optionHtml = "<option id='selectUser"+UserRow.get(i).get(_id)+"'  value='"+UserRow.get(i).get(_id)+"'>"
+                String optionHtml = "<option id='selectUser" + UserRow.get(i).get(_id) + "'  value='" + UserRow.get(i).get(_id) + "'>"
                         + UserRow.get(i).get(Access_User._name)
                         + " "
                         + UserRow.get(i).get(Access_User._family)
@@ -256,58 +257,58 @@ public class Messenger {
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_textMessage, jjTools.getParameter(request, _textMessage));
             map.put(_dateOfCreation, jjTools.getParameter(request, _dateOfCreation));
-            map.put(_postageDate, jjTools.getParameter(request, _postageDate));
+
             map.put(_displayed, jjTools.getParameter(request, _displayed));
 
             map.put(_receiver, jjTools.getParameter(request, _receiver));
 
-
-             int date=Integer.parseInt(jjTools.getParameter(request, _postageDate).replace("/","").toString());
-             
-//         
-            if(date==jjCalendar_IR.getDatabaseFormat_8length("", true)){
-            List<Map<String , Object>> insertedRow = jjDatabase.separateRow(db.insert(tableName, map));
-            changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_created);
-            changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_posted);
-                 if (insertedRow.isEmpty()) {
-                String errorMessage = "عملیات درج به درستی صورت نگرفت.";
-                if (jjTools.isLangEn(request)) {
-                    errorMessage = "Edit Fail;";
-                }
+            if ((jjTools.getParameter(request, _postageDate)).equals("")) {
            
-
-                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
-                return "";
-            }
-               }
-            if(date>jjCalendar_IR.getDatabaseFormat_8length("", true)){
-                 List<Map<String , Object>> insertedRow = jjDatabase.separateRow(db.insert(tableName, map));
+                map.put(_postageDate, jjCalendar_IR.getDatabaseFormat_8length("", true));
+                List<Map<String, Object>> insertedRow = jjDatabase.separateRow(db.insert(tableName, map));
                 changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_created);
-                changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_postQueue);
-                 if (insertedRow.isEmpty()) {
-                String errorMessage = "عملیات درج به درستی صورت نگرفت.";
-                if (jjTools.isLangEn(request)) {
-                    errorMessage = "Edit Fail;";
+            } else {
+                int date = Integer.valueOf(jjTools.getParameter(request, _postageDate).replace("/", ""));
+
+                if (date == jjCalendar_IR.getDatabaseFormat_8length("", true)) {
+                    map.put(_postageDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _postageDate), false));
+                    List<Map<String, Object>> insertedRow = jjDatabase.separateRow(db.insert(tableName, map));
+                    changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_created);
+                    changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_posted);
+                    if (insertedRow.isEmpty()) {
+                        String errorMessage = "عملیات درج به درستی صورت نگرفت.";
+                        if (jjTools.isLangEn(request)) {
+                            errorMessage = "Edit Fail;";
+                        }
+
+                        Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                        return "";
+                    }
                 }
-           
+                if (date > jjCalendar_IR.getDatabaseFormat_8length("", true)) {
+                    map.put(_postageDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _postageDate), false));
+                    List<Map<String, Object>> insertedRow = jjDatabase.separateRow(db.insert(tableName, map));
+                    changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_created);
+                    changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_postQueue);
+                    if (insertedRow.isEmpty()) {
+                        String errorMessage = "عملیات درج به درستی صورت نگرفت.";
+                        if (jjTools.isLangEn(request)) {
+                            errorMessage = "Edit Fail;";
+                        }
 
-                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
-                return "";
+                        Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                        return "";
+                    }
+                }
+                if (date < jjCalendar_IR.getDatabaseFormat_8length("", true)) {
+                    map.put(_postageDate, jjTools.getParameter(request, _postageDate));
+                    String errorMessage = "عملیات درج صورت نگرفته است  تاریخ وارد شده صحیح نمی باشد";
+                    Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                    return "";
+
+                }
             }
-               }
-            if(date<jjCalendar_IR.getDatabaseFormat_8length("", true)){
-               String errorMessage="عملیات درج صورت نگرفته است  تاریخ وارد شده صحیح نمی باشد";
-             Server.outPrinter(request, response, Js.modal(errorMessage,"پیام سامانه"));
-            return "";
-           
 
-               
-            }
-               
-           
-
-            
-              
             Server.outPrinter(request, response, Js.jjMessenger.refresh());
             return "";
 
@@ -339,16 +340,8 @@ public class Messenger {
             StringBuilder script1 = new StringBuilder();
 
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-            
-            
-//            List<Map<String, Object>> senderRow = jjDatabase.separateRow(db.Select(Access_User.tableName, "*", Access_User._id + "=" + row.get(0).get(_sender)));
-//            if (row.isEmpty()) {
-//                String errorMessage = "رکوردی با این کد وجود ندارد.";
-//                if (jjTools.isLangEn(request)) {
-//                    errorMessage = "Select Fail;";
-//                }
-//                return Js.dialog(errorMessage);
-//            }
+
+
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
 
@@ -357,7 +350,7 @@ public class Messenger {
             script.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             script.append(Js.setVal("#" + _textMessage, row.get(0).get(_textMessage)));
 
-            script.append(Js.setVal("#"+ _receiver,row.get(0).get(_receiver)));
+            script.append(Js.setVal("#" + _receiver, row.get(0).get(_receiver)));
             script.append("$('#messenger_receiver').select2();\n");
             script.append(Js.setVal("#" + _status, row.get(0).get(_status)));
             String ravand = row.get(0).get(_logStatus).toString();
@@ -368,12 +361,11 @@ public class Messenger {
             script.append(Js.setVal("#" + _sender, jjTools.getSessionAttribute(request, "#USER_NAME") + " " + jjTools.getSessionAttribute(request, "#USER_FAMILY")));
             script.append(Js.setVal("#" + _dateOfCreation, row.get(0).get(_dateOfCreation)));
             script.append(Js.setVal("#" + _postageDate, row.get(0).get(_postageDate)));
-             
-            if(row.get(0).get(_receiver).equals(jjTools.getSessionAttribute(request,"#ID"))){
-            
-            changeStatus(request, response, db, id, status_displayed);
-            
-            
+
+            if ((row.get(0).get(_receiver).equals(jjTools.getSessionAttribute(request, "#ID"))&&(!row.get(0).get(_status).equals(status_displayed)))) {
+
+                changeStatus(request, response, db, id, status_displayed);
+
             }
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
@@ -526,6 +518,55 @@ public class Messenger {
         Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
         return "";
 
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @param db
+     * @param isPost
+     * @returnاین تابع برای ارسال پیام به کسانی هست که امضا نکرده اند
+     * @throws IOException
+     */
+    public static String sendMesseageToSignatory(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws IOException {
+        try {
+            Map<String, Object> map = new HashMap<String, Object>();
+
+            String userId = request.getParameter("userId");///ای دی یوزر
+            String IdDocumentary = request.getParameter("IdDocumentary");//عنوان مستند
+            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(CreateDocumentary.tableName, _id + "='" + IdDocumentary + "'"));
+//            for(int i=0;i<row.size();i++){
+            String title = row.get(0).get(CreateDocumentary._title).toString();
+            map.put(_title, "درخواست امضا" + title);
+//            }
+            map.put(_receiver, userId);
+
+            map.put(_postageDate, jjCalendar_IR.getDatabaseFormat_8length("", true));
+
+            map.put(_textMessage, "لطفا امضا کنید");
+
+//    
+            if (db.insert(tableName, map).getRowCount() == 0) {
+                String errorMessage = "عملیات درج به درستی صورت نگرفت.";
+                if (jjTools.isLangEn(request)) {
+                    errorMessage = "Edit Fail;";
+                }
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
+            }
+
+            List<Map<String, Object>> insertedRow = jjDatabase.separateRow(db.insert(tableName, map));
+            changeStatus(request, response, db, insertedRow.get(0).get(_id).toString(), status_created);
+
+            String errorMessage1 = "ارسال پیام به کاربر مورد نظر انجام گردید";
+            Server.outPrinter(request, response, Js.modal(errorMessage1, "پیام سامانه"));
+            return "";
+
+        } catch (Exception ex) {
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+        }
     }
 
     public static String ersalPayamBaEmail(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {

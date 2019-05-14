@@ -11,8 +11,12 @@ import HMIS.Commettes;
 //import javax.servlet.http.Part;
 //>>>>>>> origin/master
 import HMIS.PlansForAssess;
+import HMIS.Upload;
 //<<<<<<< HEAD
 import HMIS.Department;
+import HMIS.CreateDocumentary;
+import HMIS.ManagementGauges;
+
 import HMIS.Messenger;
 import HMIS.Sessions;
 import HMIS.Reports;
@@ -107,6 +111,7 @@ public class Server extends HttpServlet {
             clazzes.add(Language.class);// ADDED BY RASHIDI
             clazzes.add(email.class);
             clazzes.add(Search.class);
+            clazzes.add(Upload.class);
             ///////////////////////////////////////////////////
 
             clazzes.add(HMIS.Forms.class);   //فرم ساز
@@ -122,9 +127,11 @@ public class Server extends HttpServlet {
             clazzes.add(Department.class);
             ////////////shirn1 نقشها
             clazzes.add(Role.class);
-            ////////////shirn1 پیام ها
+            clazzes.add(CreateDocumentary.class);
+            ////////////shirn1 پیام     
             clazzes.add(Messenger.class);
-//            clazzes.add(HMIS.Part.class);
+            clazzes.add(ManagementGauges.class);
+
             clazzes.add(Sessions.class);//صورت جلسه 13971212
             clazzes.add(Approved.class);//صورت جلسه 13971212
         }

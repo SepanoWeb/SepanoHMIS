@@ -11,6 +11,9 @@ var hmisSessions = {
     loadForm: function () {
         if ($("#swSessionsForm").html() == '') {
             $("#swSessionsForm").load("formHMIS/05OneSession.html", null, function () {
+                new jj('#sendFilesApproved').jjAjaxFileUpload3('attachFileApproved', '#approved_file', '');
+                new jj('#sendFilesSessions').jjAjaxFileUpload4('attachFileSessions', '#sessions_file', '#inputTextSelectorSessionsDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
+                new jj('#sendFilesApprovedPrevious').jjAjaxFileUpload4('attachFileApprovedPrevious', '#approved_fileCheckOut', '#inputFileApprovedPreviousDiv');
                 new jj("#sessions_nextSessionDate").jjCalendarWithYearSelector(1397, 1420);
                 $("#cancel_Sessions").button().click(function (e) {
                     hmisSessions.m_clean();
@@ -39,7 +42,6 @@ var hmisSessions = {
         new jj("#" + hmisSessions.f_title).jjVal("");
         new jj("#" + hmisSessions.f_lang).jjVal("1");
         new jj("#" + hmisSessions.f_parent).jjVal("0");
-
     },
     m_add_new: function () {
         jj("do=" + hmisSessions.tableName + ".add_new&jj=1").jjAjax2(false);
@@ -70,10 +72,26 @@ var hmisSessions = {
     m_edit: function () {
 //        var valid = hmisPlan.m_validation();
 //        if (valid == "") {
+        var temp = $('#audience input:checkbox[class=checkboxAudience]:checked'); //مدعوین سمت دار
+        var temp3 = $('#audience input:checkbox[class=checkboxAudienceOutSide]:checked'); //مدعوین خارج از سازمان
+        var temp2 = "";
+        var temp4 = "";
+        for (var i = 0; i < temp.length; i++) {
+            temp2 += $(temp[i]).attr('name') + "%23A%23"; //id user audience
+//            temp2 +=$(temp[i]).val()+"%23A%23";
+        }
+        for (var i = 0; i < temp3.length; i++) {
+//ایمیل مهمانان خارج از سازمان
+            temp4 += $(temp3[i]).val() + "%23A%23";
+        }
+        alert(temp2);
+        alert(temp4);
         var param = "";
         param += "do=" + hmisSessions.tableName + ".edit";
         param += "&" + new jj('#swSessionsForm').jjSerial();
         param += "&id=" + new jj('#hmis_Sessions_id').jjVal();
+        param += "&sessions_audience=" + temp2;
+        param += "&sessions_audienceOutSide=" + temp4;
         new jj(param).jjAjax2(false);
         hmisSessions.m_show_tbl();
         hmisSessions.m_clean();
@@ -101,7 +119,6 @@ var hmisSessions = {
     m_select: function (id) {
         $('#newCommetteForm').show();
         $('#formInvitation').hide();
-
         var param = "";
         param += "do=" + hmisSessions.tableName + ".select";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
@@ -173,8 +190,72 @@ var hmisSessions = {
     tabSizeForm: function () {
         $('#swSessions').css('height', 378);
     },
+    /////////////////////shiran2////////////
+    /**
+     * 
+     * @param {type} id sessions
+     * @returns {undefined}
+     */
+    confirmationFinalSessions: function (id) {
+        var temp = $('#audience input:checkbox[class=checkboxAudience]:checked'); //مدعوین سمت دار
+        var temp3 = $('#audience input:checkbox[class=checkboxAudienceOutSide]:checked'); //مدعوین خارج از سازمان
+        if (temp.size() == 0) {
+            new jj("حضار در جلسه را مشخص نمایید").jjModal("پیام سامانه");
+        } else {
+            if (confirm("آیا از تایید و امضا صورت جلسه اطمینان دارید؟")) {
+                hmisSessions.confirmationFinalSessions_after_question(id);
+            } else {
+            }
+        }
+    },
 
-    /////////////////////shiran////////////
+    confirmationFinalSessions_after_question: function (id) {
+        var temp = $('#audience input:checkbox[class=checkboxAudience]:checked'); //مدعوین سمت دار
+        var temp3 = $('#audience input:checkbox[class=checkboxAudienceOutSide]:checked'); //مدعوین خارج از سازمان
+        var temp2 = "";
+        var temp4 = "";
+        for (var i = 0; i < temp.length; i++) {
+            temp2 += $(temp[i]).attr('name') + "%23A%23"; //id user audience
+//            temp2 +=$(temp[i]).val()+"%23A%23";
+        }
+        for (var i = 0; i < temp3.length; i++) {
+//ایمیل مهمانان خارج از سازمان
+            temp4 += $(temp3[i]).val() + "%23A%23";
+        }
+//        alert(temp2);
+//        alert(temp4);
+        var param = "";
+        param += "&do=" + hmisSessions.tableName + ".confirmationFinalSessions";
+        param += "&" + new jj('#swSessionsForm').jjSerial();
+        param += "&id=" + new jj('#hmis_Sessions_id').jjVal();
+        param += "&sessions_audience=" + temp2;
+        param += "&sessions_audienceOutSide=" + temp4;
+        new jj(param).jjAjax2(false);
+//        hmisSessions.m_show_tbl();
+        hmisSessions.m_clean();
+    },
+    /**
+     * ای دی ُجلسات
+     * دکمه ارسال به مسئولین اجرا
+     * @param {type} id
+     * @returns {undefined}
+     */
+    sendToTrackerAndExecutor: function (id) {
+
+        if (confirm("آیا مصوبات صورتجلسه به مسئولین ابلاغ شود؟")) {
+            hmisSessions.sendToTrackerAndExecutor_after_question(id);
+        } else {
+        }
+
+    },
+    sendToTrackerAndExecutor_after_question: function (id) {
+        var param = "";
+        param += "&id=" + id;
+        param += "&do=" + hmisSessions.tableName + ".sendToTrackerAndExecutor";
+        new jj(param).jjAjax2(false);
+//        hmisSessions.m_show_tbl();
+        hmisSessions.m_clean();
+    },
 //  
 
 //    mainTabSetSize: function () {

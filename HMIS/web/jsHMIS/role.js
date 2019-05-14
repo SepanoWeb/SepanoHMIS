@@ -162,8 +162,23 @@ var hmisRole = {
     mainTabSetSize: function () {
         $('#swRole').css('height', hmisRole.heightTab);
     },
+    /**
+     * عنوان نقش کاربر با آی دی مشخص در یک تکست فیلد
+     * @param {type} userId آی دی کاربر
+     * @param {type} panel آی دی تکست فیلد
+     * @returns {undefined}
+     */
+    getRoleName: function (userId,panel) {
+        var param = "";
+       param += "panel=" + panel;
+       param += "&userId=" +userId; 
+       param += "&do=" +hmisRole.tableName + ".getRoleName";
+        
+        new jj(param).jjAjax2(false);
 
-}
+    }
+
+};
 
 
 

@@ -11,11 +11,8 @@ var hmisApproved = {
 
     loadForm: function () {
         if ($("#swApprovedForm").html() == '') {
-            $("#swApprovedForm").load("formHMIS/05newCommette.html", null, function () {
-//                $('#sessions_time').wickedpicker();
-//                $('#sessions_timeReminder').wickedpicker();
-//                new jj("#sessions_date").jjCalendarWithYearSelector(1397, 1420);
-//                new jj("#sessions_dateReminder").jjCalendarWithYearSelector(1397, 1420);
+            $("#swApprovedForm").load("formHMIS/05approved.html", null, function () {
+                new jj('#sendFilesApproved').jjAjaxFileUpload4('attachFileApproved', '#approved_fileOfResponsible', '#inputFileApprovedDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
 
                 $("#cancel_Approved").button().click(function (e) {
                     hmisApproved.m_clean();
@@ -24,7 +21,6 @@ var hmisApproved = {
 
 
 
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
 //                $("#upload_Content_file").button().click(function () {
 //                });
                 //============ BY RASHIDI ========>
@@ -66,16 +62,17 @@ var hmisApproved = {
         new jj("#" + hmisApproved.f_title).jjVal("");
         new jj("#" + hmisApproved.f_lang).jjVal("1");
         new jj("#" + hmisApproved.f_parent).jjVal("0");
-        new jj("#insertMosavabeh2").jjFormClean();
-        new jj("#approved_responsibleForTrackId").jjVal("");
-        new jj("#approved_responsibleForExecutionId").jjVal("");
+        new jj("#insertApproved2").jjFormClean();
+        new jj("#approved_trackerId").jjVal("");
+        new jj("#approved_executorId").jjVal("");
 
     },
     m_add_new: function () {
-
+        $("#approved_status").val("در حال انجام");
+        $("#approved_status").attr("disabled", "disabled");
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
-        jj("do=" + hmisApproved.tableName + ".add_new&jj=1").jjAjax2(false);
+        new jj("do=" + hmisApproved.tableName + ".add_new&jj=1").jjAjax2(false);
         hmisApproved.m_clean();
 //        hmisApproved.m_show_form();
 //                $('#newCommetteForm').show();
@@ -95,10 +92,17 @@ var hmisApproved = {
     m_insert: function () {
 //        var valid =  hmisApproved.m_validation();
 //        if (valid == "") {
+        $("#inputTextSelectorDiv").html("");
         var param = "";
-        param += "do=" + hmisApproved.tableName + ".insert";
+        param += "&do=" + hmisApproved.tableName + ".insert";
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-        param += "&" + new jj('#insertMosavabeh2').jjSerial();
+        var temp = $("#inputTextSelectorDiv input");
+        var attachedFile = "";
+        for (var i = 0; i < temp.length; i++) {
+            attachedFile += $(temp[i]).val() + "%23A%23";
+        }
+        param += "&approved_file=" + attachedFile;
+        param += "&" + new jj('#insertApproved2').jjSerial();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
@@ -107,11 +111,35 @@ var hmisApproved = {
 //        }
     },
     m_edit: function () {
+        var param = "";
+        param += "&do=" + hmisApproved.tableName + ".edit";
+        param += "&" + new jj('#swApprovedForm').jjSerial();
+        new jj(param).jjAjax2(false);
+        hmisApproved.m_show_tbl();
+        hmisApproved.m_clean();
+    },
+    editInSessions: function () {
 //        var valid = hmisPlan.m_validation();
 //        if (valid == "") {
         var param = "";
-        param += "do=" + hmisApproved.tableName + ".edit";
-        param += "&" + new jj('#insertMosavabeh2').jjSerial();
+        param += "&do=" + hmisApproved.tableName + ".editInSessions";
+        param += "&" + new jj('#insertApproved2').jjSerial();
+        param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+
+        new jj(param).jjAjax2(false);
+        hmisApproved.m_show_tbl();
+        hmisApproved.m_clean();
+//        } else {
+//            new jj(valid).jjDialog();
+//        }
+    },
+    editApprovedPrevious: function () {
+//        var valid = hmisPlan.m_validation();
+//        if (valid == "") {
+        var param = "";
+        param += "&do=" + hmisApproved.tableName + ".editApprovedPrevious";
+        param += "&" + new jj('#approvedPreviousDiv').jjSerial();
+        param += "&approvedId=" + new jj('#approvedPrevious_id').jjVal();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
 
         new jj(param).jjAjax2(false);
@@ -127,27 +155,61 @@ var hmisApproved = {
 //        }
 //        return "";
 //    },
+    /**
+     * ای دی مصوبات
+     * @param {type} id
+     * @returns {undefined}
+     */
     m_delete: function (id) {
         new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisApproved.m_delete_after_question(' + id + ');\n', true, "");
     },
     m_delete_after_question: function (id) {
         var param = "";
-        param += "do=" + hmisApproved.tableName + ".delete";
+//        alert(new jj('#hmis_sessions_id').jjVal());
+        param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+        param += "&do=" + hmisApproved.tableName + ".delete";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
     },
     m_select: function (id) {
-        $('#insertMosavabeh2').slideDown();
-        $("html, body").delay(1000).animate({scrollTop: $('#insertMosavabeh2').offset().top}, 800);
-
+        $('#inputFileApprovedDiv').html("");
+        new jj("#startDate").jjCalendarWithYearSelector(1340, 1420);
+        new jj("#endDate").jjCalendarWithYearSelector(1340, 1420);
         var param = "";
         param += "do=" + hmisApproved.tableName + ".select";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
-        param += "&hmis_sessions_id=" +new jj('#hmis_sessions_id').jjVal();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_form();
+    },
+    /**
+     *  انتخاب مصوبات در قسمت جلسات برای بررسی مصوبات قبلی این کمیته
+     * @param {type} id
+     * ای دی مصوبه انتخاب شده
+     * @returns {undefined}
+     */
+    selectApprovedPrevious: function (id) {
+        $('#approvedPreviousDiv').slideDown();
+        new jj("#approvedPrevious_startDate").jjCalendarWithYearSelector(1340, 1420);
+        new jj("#approvedPrevious_endDate").jjCalendarWithYearSelector(1340, 1420);
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".selectApprovedPrevious";
+        param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
+        new jj(param).jjAjax2(false);
+//        hmisApproved.m_show_form();
+    },
+    selectInSessions: function (id) {
+        new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
+        new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
+        $('#insertApproved2').slideDown();
+        $("html, body").delay(1000).animate({scrollTop: $('#insertApproved2').offset().top}, 800);
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".selectInSessions";
+        param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
+        param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+        new jj(param).jjAjax2(false);
+//        hmisApproved.m_show_form();
     },
     m_add_EN: function (id) {
         var param = "";
