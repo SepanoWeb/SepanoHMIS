@@ -270,7 +270,7 @@ public class Sessions {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                Server.outPrinter(request, response, Js.modal(errorMessage,"پیام سامانه"));
                 return "";
             }
             StringBuilder html = new StringBuilder();
@@ -536,7 +536,7 @@ public class Sessions {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                Server.outPrinter(request, response, Js.modal(errorMessage,"پیام سامانه"));
                 return "";
             }
             Server.outPrinter(request, response, Js.jjSessions.refresh());
@@ -602,7 +602,7 @@ public class Sessions {
                     if (jjTools.isLangEn(request)) {
                         errorMessage = "Edit Fail;";
                     }
-                    script += Js.dialog(errorMessage);
+                    script += Js.modal(errorMessage,"پیام سامانه");
                 }
                 String result = changeStatus(db, id, status_confirmationFinal);
                 if (result.isEmpty()) {
