@@ -3,8 +3,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <link rel="stylesheet" href="../css/style1.css" type="text/css"/>
     </head>
-
-
     <body>
         <div class="card bd-primary mg-t-20">
             <div class="card bd-primary">
@@ -19,12 +17,7 @@
                 <input id="hmis_sessions_id" name="hmis_sessions_id" type="hidden"/>
                 <div id="newCommetteForm" style="display: none">
                     <div class="sh-pagetitle">
-                        <!--        <div class="input-group">
-                                    <input type="search" class="form-control" placeholder="Search">
-                                    <span class="input-group-btn">
-                                        <button class="btn"><i class="fa fa-search"></i></button>
-                                    </span> input-group-btn 
-                                </div> input-group -->
+
                         <div class="sh-pagetitle-left">
                             <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
                             <div class="sh-pagetitle-title">
@@ -36,8 +29,13 @@
                     <div id="formQuestions" class="col-lg-12">
                         <div class="card bd-primary mg-t-20" id="newFormQuestion">
                             <div class="card-header bg-primary tx-white">مشخصات </div>
-                            <div class="card bd-primary mg-t-20">
+                            <div class="card bd-primary mg-t-20 pd-20">
                                 <div class="row">
+                                    <div class="col-lg-12">
+                                        وضعیت :
+                                        <input value="1" id="active" name="commettes_isActive" type="radio" checked="checked">فعال است 
+                                        <input value="0" id="noActive" name="commettes_isActive" type="radio">غیرفعال است
+                                    </div>
                                     <div class="col-lg-4">
                                         <div class="form-group has-success mg-b-0">
                                             عنوان:
@@ -48,12 +46,7 @@
                                         <div class="form-group has-warning mg-b-0">
                                             رئیس :
                                             <div id="selectOptionRoleTwo"></div>
-                                            <!--                                    <select id="commettes_superwizar" name="commettes_superwizar" class="form-control">
-                                                                                    در واقع از جدول اشخاص باید بیاورد
-                                                                                    <option value="">انتخاب کنید</option>
-                                                                                    <option value="1">دکتر شفیعیون</option>
-                                                                                    <option value="1">دکتر امیری</option>
-                                                                                </select>-->
+
                                         </div><!-- form-group -->
                                     </div><!-- col -->
                                     <div class="col-lg-4">
@@ -89,26 +82,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-
-
-                                        <!--<div class="col-lg-12">-->
-                                        <!--<img id="PicPreviewAttach" class="img-thumbnail"  name="PicPreviewAttach" src="#" style="width:55%;height: 90%"/>-->
                                         <div id="inputAfterSelect" ></div>
                                         <div  id="inputTextSelectorCommettesDiv" ></div>
-
-
-                                        <!--                                        <div class="input-group">
-                                                                                    <span class="input-group-btn">
-                                                                                        <input class="btn btn-primary" id="sendPicFilesCommettes" type="submit" style="cursor:pointer;   border-radius: 7px;line-height: 32px;" value="ارسال" >
-                                                                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();" style="line-height: 32px;    cursor: pointer;border-radius: 6px;">Browse</span>
-                                                                                        <input id="attachFileCommettes"  name="attachFileCommettes"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                                                                    </span>
-                                                                                    <span id="user_pic4" style="  border-radius: 6px;height: 50px;line-height: 18px;" class="form-control"></span>
-                                        
-                                        
-                                        
-                                                                                </div>-->
-
                                     </div><!-- col -->   
 
                                     <div class="col-lg-3" style="margin-bottom: 20px">
@@ -124,7 +99,6 @@
                                     </div>
                                     <div class="col-lg-3" style="margin-bottom: 20px">
                                         بارگذاری مستندات:<input id="commettes_documentsFile" name="commettes_documentsFile" type="hidden" />
-                                        <!--<img id="PicPreviewDocumentFile"  class="img-thumbnail"  src="img/preview.jpg" style=""/>-->
                                         <div class="row">
                                             <input class="btn btn-primary" id="sendDocumentCommettes" type="submit" value="ارسال">
                                             <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
@@ -142,43 +116,13 @@
                                                         });
                                                         return false;" > افزودن عضو جدید</a>
                                             </p>
-                                            <!--<div align="right">-->
                                             <input id="commettes_members" name="commettes_members" type="hidden">  
-
                                             <div  id="tableRolesDiv"></div>
-                                            <!--                                    <table class="table table-responsive table-wrapper">
-                                                                                    <thead>
-                                                                                        <tr>                    
-                                                                                            <td>کد</td>                                    
-                                                                                            <td>سمت</td>
-                                                                                            <td>نام و نام خانوادگی</td>
-                                                                                            <td>حذف اعضا</td>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody>
-                                                                                        <tr><td>11</td><td>کارشناس بهداشت حرفه ای</td><td>مهسا کریمی</td><td><i class="icon ion-minus-circled" onclick="$(this).parent().parent().hide();"></i></td></tr>
-                                                                                        <tr><td>12</td><td>کارشناس بهداشت</td><td>مجید شریعتی</td><td><i class="icon ion-minus-circled" onclick="$(this).parent().parent().hide();"></i></td></tr>
-                                                                                        <tr><td>25</td><td>رئیس امور عمومی</td><td>محمد ثالثی</td><td><i class="icon ion-plus-circled" onclick="$(this).parent().parent().hide();"></i></td></tr>
-                                                                                    </tbody>
-                                                                                </table>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!--<div class="row c">-->
-                            <!--                            <div class="col-lg-3">
-                                                            <div class="form-group has-success mg-b-0">
-                                                                <button class="btn btn-secondary btn-block mg-b-10"  id="cancel_Commettes"
-                                                                        >لغو</button>
-                                                            </div> form-group 
-                                                        </div> col -->
-                            <!--                            <div class="col-lg-3">-->
-                            <!--                            
-                                                        <button class="btn btn-success btn-block mg-b-10" onclick="alert('ثبت انجام شد');$('.sh-mainpanel').load('05commettes.html', null, function () {
-                                                                });
-                                                                return false;">ذخیره</button>-->
-                            <!--</div> col -->
-                            <!--</div>-->
+
                             <div id="Commette_button"></div>
                         </div><!-- card -->
                     </div><!-- card-body -->
@@ -186,12 +130,7 @@
             </div><!--newCommetteFrom -->
             <div id="formInvitation"  style="display: none">
                 <div class="sh-pagetitle">
-                    <!--        <div class="input-group">
-                                <input type="search" class="form-control" placeholder="Search">
-                                <span class="input-group-btn">
-                                    <button class="btn"><i class="fa fa-search"></i></button>
-                                </span> input-group-btn 
-                            </div> input-group -->
+
                     <div class="sh-pagetitle-left">
                         <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
                         <div class="sh-pagetitle-title">
@@ -200,10 +139,10 @@
                         </div><!-- sh-pagetitle-left-title -->
                     </div><!-- sh-pagetitle-left -->
                 </div><!-- sh-pagetitle -->
-                <div id="formQuestions" class="col-lg-12">
-                    <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div  class="col-lg-12">
+                    <div class="card bd-primary mg-t-20" >
                         <div class="card-header bg-primary tx-white">تنظیم دعوتنامه</div>
-                        <div class="card bd-primary mg-t-20">
+                        <div class="card bd-primary mg-t-20 pd-20">
                             <div class="row">
                                 <div class="col-lg-12">
                                     عنوان جلسه
@@ -226,7 +165,7 @@
                                 <div class="col-lg-3">
                                     تاریخ جلسه
                                     <div class="form-group has-success mg-b-0">
-                                        <input class="form-control is-valid" name="sessions_date" id="sessions_date" placeholder="تاریخ جلسه" type="text">
+                                        <input class="form-control is-valid" onkeyup="hmisCommettes.dateRegex(this);" name="sessions_date" id="sessions_date" placeholder="تاریخ جلسه" type="text">
                                     </div><!-- form-group -->
                                 </div><!-- col -->   
                                 <div class="col-lg-3">
@@ -238,7 +177,7 @@
                                 <div class="col-lg-3">
                                     تاریخ یادآوری به اعضا
                                     <div class="form-group has-success mg-b-0">
-                                        <input id="sessions_dateReminder" name="sessions_dateReminder" class="form-control is-valid" placeholder="قبل از تاریخ جلسه باشد" type="text">
+                                        <input id="sessions_dateReminder" onkeyup="hmisCommettes.dateRegex(this);" name="sessions_dateReminder" class="form-control is-valid" placeholder="قبل از تاریخ جلسه باشد" type="text">
                                     </div><!-- form-group -->
                                 </div><!-- col -->   
                                 <div class="col-lg-3">
@@ -247,507 +186,140 @@
                                         <input id="sessions_timeReminder" name="sessions_timeReminder" style="direction:ltr;text-align: center" class="form-control is-valid" placeholder="قبل از تاریخ جلسه باشد" type="text">
                                     </div><!-- form-group -->
                                 </div><!-- col -->   
-                            
+
                                 <div class="col-lg-3">
                                     بارگذاری مستندات برای مدعوین جلسه:<br/>
-                                    <input id="sessions_InviteesFile" name="sessions_InviteesFile" type="hidden" />
-                                    <!--<img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>-->
+                                    <input id="sessions_InviteesFile" name="sessions_InviteesFile" type="hidden"/>
                                     <div class="row mg-r-10">
                                         <input class="btn btn-primary" id="sendFilesInvitees" type="submit" value="ارسال">
                                         <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
                                         <input id="attachFileInvitees" name="attachFileInvitees" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                                         <span class="form-control col-lg"></span>
                                     </div>
-                                    <!--                                    <a onclick="hmisDepartment.downloadIcon();"></a>-->
-                                    <!--</label>-->
-                                   <div   id="inputTextSelectorInviteesDiv" ></div>
-                                        <div id="inputAfterSelect" ></div>
-
-
+                                    <div   id="inputTextSelectorInviteesDiv" ></div>
+                                    <div id="inputAfterSelect" ></div>
                                 </div>
                             </div>   
                             <div class="row">
-                                <div class="col-lg-12" id="InviteesDiv">
-                                    مدعوین به جلسه : 
-                                    <div class="form-group has-danger mg-b-0">
-                                        <div id="invitessDiv"></div>
-                                        <!--                                    <label class="ckbox">
-                                                                                <input type="checkbox" value="1" class="checkBoxInvitees" name="sessions_Invitees" id="sessions_Invitees" ><span>
-                                                                                    کارشناس بهداشت حرفه ای - مهسا کریمی
-                                                                                </span>
-                                                                            </label>-->
-                                    </div><!-- form-group -->
-                                    <!--                                <div class="form-group has-danger mg-b-0">
-                                                                        <label class="ckbox">
-                                                                            <input type="checkbox"  class="checkBoxInvitees" value="2" id="sessions_Invitees" name="sessions_Invitees"><span>
-                                                                                کارشناس یهیود کیفیت-مجید شریعتی
-                                                                            </span>
-                                                                        </label>
-                                                                    </div> form-group 
-                                                                    <div class="form-group has-danger mg-b-0">
-                                                                        <label class="ckbox">
-                                                                            <input type="checkbox"  class="checkBoxInvitees" value="3" id="sessions_Invitees" name="sessions_Invitees"><span>
-                                                                                محمد ثالثی-رییس امورعمومی
-                                                                            </span>
-                                                                        </label>
-                                                                    </div> form-group -->
-                                    <div class="form-group has-danger mg-b-0" >
-                                        <!--<input id="sessions_InviteesInSide" onkeyup="hmisCommettes.showUsersList();">-->
-                                        <!--<div id="usersListDiv"></div>-->
-                                        <select id='sessions_InviteesInSide' multiple name='sessions_InviteesInSide' class='form-control select2 select2-hidden-accessible' tabindex='-1' aria-hidden="true">
+                                <div class="row col-lg-12" id="InviteesDiv">
+                                    <div class=" col-lg-12 pd-20">
+                                        مدعوین به جلسه : 
+                                        <div class="form-group has-danger mg-b-0">
+                                            <div id="invitessDiv"></div>
+                                        </div><!-- form-group -->
+                                    </div>
+                                    <div class="col-lg-12 mg-b-10">
 
-                                        </select>
-
+                                        <div class="form-group has-danger mg-b-0" >
+                                            <span>
+                                                مهمان داخل سازمان
+                                            </span>
+                                            <select id='sessions_InviteesInSide' multiple name='sessions_InviteesInSide' class='form-control select2 select2-hidden-accessible' tabindex='-1' aria-hidden="true">
+                                            </select>
+                                        </div><!-- form-group -->
+                                    </div>
+                                    <div class="col-lg-12">
                                         <span>
-                                            مهمان داخل سازمان
-                                        </span>
-                                    </div><!-- form-group -->
-                                    <span>
-                                        مهمان خارج سازمان
-                                    </span> <div class="row invitedOutSide"  id="invitedOutSide1">
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی
-                                            <div class="form-group has-danger mg-b-0">
-                                                <input type="text" class="form-control is-valid name"  placeholder="نام و نام خانوادگی مهمان">
+                                            مهمان خارج سازمان
+                                            <div  id="rows20" style='display:none'>
+                                                <div class='col-lg-12 addSigner' id='row'>
+                                                    </span> <div class="row invitedOutSide"  id="invitedOutSide_x">
+                                                        <div class="col-lg-3">
+                                                            نام ونام خانوادگی
+                                                            <div class="form-group has-danger mg-b-0">
+                                                                <input type="text" class="form-control is-valid name signerDiv"  id='sessions_invitedOutSide_name_x' placeholder="نام و نام خانوادگی مهمان">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            شماره همراه 
+                                                            <div class="form-group has-danger mg-b-0">
+                                                                <input type="text" onkeyup="hmisCommettes.mobileRegex(this)" class="form-control is-valid phone " id='sessions_invitedOutSide_mobile_x' placeholder="شماره همراه مهمان">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <div class="form-group has-danger mg-b-0">
+                                                                سمت
+                                                                <input type="text" id='sessions_invitedOutSide_role_x' placeholder="سمت مهمان" class="form-control is-valid role ">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            پست الکترونیکی 
+                                                            <div class="form-group has-danger mg-b-0">
+                                                                <input onkeyup="hmisCommettes.emailRegex(this);" type="text" id='sessions_invitedOutSide_email_x' placeholder="پست الکترونیکی مهمان" class="form-control is-valid email ">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <button class="btn btn-outline-danger btn-block mg-t-20 mg-b-20  buttonRemove">حذف</button>
+                                                        </div>
+
+                                                    </div><!-- form-group -->
+                                                </div><!--row-->
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
+                                            <div id="signatorysAdd"></div>
 
-                                                <input type="text" class="form-control is-valid phone"  placeholder="شماره همراه مهمان">
-
+                                            <div class='col-lg-12'>
+                                                <button class="btn btn-outline-success  btn-block mg-b-10" id="add"  ><img  style="width: 2%;" src="imgfeyz/add_1.png" />افزودن</button>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                سمت
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton1" onclick="hmisCommettes.addFormInvitedOutSide1();" style="display: none" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-                                                <!--<button id="removeButton1" onclick="//hmisCommettes.removeFormInvitedOutSide1();" style="display: none" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>-->
-                                            </div><!-- col-lg-3 -->
-                                        </div><!-- form-group -->
-                                    </div><!--row-->
-                                    <div class="row invitedOutSide"  id="invitedOutSide2" style="display: none">  
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton2" style="display: none" onclick="hmisCommettes.addFormInvitedOutSide2();"  class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton2" style="display: none" onclick="hmisCommettes.removeFormInvitedOutSide2();"  class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-                                            </div>
-                                        </div><!-- form-group -->
-                                    </div><!--row-->
-                                    <div class="row invitedOutSide"  id="invitedOutSide3"  style="display: none">  
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">                                                    
-
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton3" style="display: none" onclick="hmisCommettes.addFormInvitedOutSide3();" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton3" style="display: none" onclick="hmisCommettes.removeFormInvitedOutSide3();" class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-
-                                            </div><!-- form-group -->
-                                        </div>
                                     </div>
 
-                                    <div class="row invitedOutSide"  id="invitedOutSide4" style="display: none">
-
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton4" style="display: none" onclick="hmisCommettes.addFormInvitedOutSide4();" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton4" style="display: none" onclick="hmisCommettes.removeFormInvitedOutSide4();" class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-
-                                            </div><!-- form-group -->
-                                        </div>
-                                    </div>
-                                    <!--                                    <div class="form-group has-danger mg-b-0 invitedOut">
-                                                                        </div> form-group -->
-                                    <div class="row invitedOutSide"  id="invitedOutSide5" style="display: none">
-
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton5" style="display: none" onclick="hmisCommettes.addFormInvitedOutSide5();" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton5" style="display: none" onclick="hmisCommettes.removeFormInvitedOutSide5();" class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-
-                                            </div><!-- form-group -->
-                                        </div><!-- form-group -->
-                                    </div><!-- form-group -->
-                                    <div class="row invitedOutSide"  id="invitedOutSide6" style="display: none">
-
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton6" style="display: none" onclick="hmisCommettes.addFormInvitedOutSide6();" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton6" style="display: none"  onclick="hmisCommettes.removeFormInvitedOutSide6();" class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-                                            </div>
-                                        </div><!-- form-group -->
-                                    </div>
-                                    <div class="row invitedOutSide"  id="invitedOutSide7" style="display: none">
-
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton7" style="display: none" onclick="hmisCommettes.addFormInvitedOutSide7();" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton7" style="display: none" onclick="hmisCommettes.removeFormInvitedOutSide7();" class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-                                            </div>
-                                        </div><!-- form-group -->
-                                    </div>
-                                    <div class="row invitedOutSide"  id="invitedOutSide8" style="display: none">
-
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                پست الکترونیکی 
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton8" onclick="hmisCommettes.addFormInvitedOutSide8();" style="display: none" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton8" onclick="hmisCommettes.removeFormInvitedOutSide8();" style="display: none" class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-                                            </div>
-                                        </div><!-- form-group -->
-                                    </div>
-                                    <div class="row invitedOutSide"  id="invitedOutSide9" style="display: none">
-
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="addButton9" style="display: none" onclick="hmisCommettes.addFormInvitedOutSide9();" class="btn btn-outline-success active btn-block mg-b-10">افزودن</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton9" style="display: none" onclick="hmisCommettes.removeFormInvitedOutSide9();" class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-                                            </div>
-                                        </div>
-                                    </div><!-- row -->
-
-                                    <div class="row invitedOutSide"  id="invitedOutSide10" style="display: none">
-
-                                        <div class="col-lg-3">
-                                            نام ونام خانوادگی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="نام و نام خانوادگی مهمان" class="form-control is-valid name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            شماره همراه 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="شماره همراه مهمان" class="form-control is-valid phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            سمت
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="سمت مهمان" class="form-control is-valid role">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            پست الکترونیکی 
-                                            <div class="form-group has-danger mg-b-0">
-
-                                                <input type="text" placeholder="پست الکترونیکی مهمان" class="form-control is-valid email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <div class="form-group has-danger mg-b-0">
-                                                <button id="removeButton10" style="display: none" onclick="hmisCommettes.removeFormInvitedOutSide10();" class="btn btn-outline-danger btn-block mg-b-10">حذف</button>
-
-                                            </div>
-                                        </div>
-
-                                    </div><!-- form-group -->
-
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <!--دسترسی برای کسی که امکان ان را داشته باشد-->
-                                            <button class="btn btn-danger btn-block mg-b-10" onclick="hmisCommettes.Invitees();"><i class="fa fa-envelope mg-r-10"></i> ارسال دعوت نامه برای مدعوین جلسه </button>
-                                        </div>                    
-                                    </div>
+<!--                                    <div id="signatorysAdd"></div>-->
+                                </div>
+                                    <!--//////////////////////////////////////////////////////-->
+                                    <div class="col-lg">
+                                        <!--دسترسی برای کسی که امکان ان را داشته باشد-->
+                                        <button class="btn btn-danger btn-block mg-b-10" onclick="hmisCommettes.Invitees();"><i class="fa fa-envelope mg-r-10"></i> ارسال دعوت نامه برای مدعوین جلسه </button>
+                                    </div>                    
                                 </div>
                             </div><!-- card -->
                         </div><!-- card-body -->
                     </div><!-- formInvitation -->
                 </div><!-- card-body -->
             </div><!-- card-body -->
-            <div class="row R">
-                <div class="col-lg-12">
-                    <div class="form-group has-success mg-b-0 ">
-                        <button id="cancel_Commettes" class="btn btn-outline-secondary mg-b-10  btn-block" 
-                                onclick="hmisCommettes.m_clean();
-                                        hmisCommettes.m_show_tbl();" >بازگشت</button>
-                    </div><!-- form-group -->
-                </div>
+        </div>
+        <div class="row R">
+            <div class="col-lg-12">
+                <div class="form-group has-success mg-b-0 ">
+                    <button id="cancel_Commettes" class="btn btn-outline-secondary mg-b-10  btn-block" 
+                            onclick="hmisCommettes.m_clean();
+                                    hmisCommettes.m_show_tbl();" >بازگشت</button>
+                </div><!-- form-group -->
             </div>
-            <script>
-                $('#sessions_InviteesInSide').select2({minimumResultsForSearch: '', width: '20%'});
-            </script>
+        </div>
+        <script>
+            $('#sessions_InviteesInSide').select2({minimumResultsForSearch: '', width: '20%'});
+        </script>
+        <script>
 
+            $('#add').click(function () {
+                var i = 1;
+                var available = $(".signerDiv");
+                for (var j = 0; j < 4; j++) {
+                    var k = (j + 1);
+
+                    if ($("#sessions_invitedOutSide_name_" + k).length == 0) {
+                        i = j + 1;
+                        j = 5;
+                    }
+                }
+                if (i > 4) {
+                    return;
+                }
+                new jj("افزودن مهمان شماره ی " + i).jjModal("تعریف مهمان");
+                var temp = $('#rows20').html().replace(/_x/igm, ("_" + i));
+                //            var temp = $('#rows20').html().replace(/_x/igm, ("_" + i));
+
+                $("#signatorysAdd").append(temp);
+                //            $("#signatorysAdd .signerDivTemp").addClass("signerDiv");
+                //            $("#signatorysAdd .signerDivTemp").removeClass("signerDivTemp");
+                //            $('#rows20').show();
+                //            $("#createDocumentary_signatory_user_" + (i)).select2({width: '100%'});
+            });
+
+            $(document).on('click', '.buttonRemove', function () {
+                $(this).parent().parent().remove();
+
+            });
+        </script>
     </body>
 
 </html>

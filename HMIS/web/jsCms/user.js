@@ -98,7 +98,7 @@ var cmsUser = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? innerPanelHeight : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsUser.tabSizeTbl();
     },
     m_show_form: function () {
@@ -143,7 +143,7 @@ var cmsUser = {
         new jj("#" + cmsUser.f_parent).jjVal('');
     },
     m_add_new: function () {
-        jj("do=" + cmsUser.tableName + ".add_new").jjAjax2(false);
+         new jj("do=" + cmsUser.tableName + ".add_new").jjAjax2(false);
         cmsUser.m_show_form();
         cmsUser.m_clean();
         cmsUser.m_getGroups();
@@ -186,9 +186,9 @@ var cmsUser = {
 //            flag = false;
 //        }
 //        if ((validatePass(pass) && new jj('#user_passUser').jjVal() != "") & (validateEmail(email) && new jj('#user_emailUser').jjVal() !== "")) {
-            param += "&" + jj('#AccessuserForm').jjSerial();
+            param += "&" + new jj('#AccessuserForm').jjSerial();
 //            param += "&" + jj('#AccessuserForm').jjSerial();
-            jj(param).jjAjax2(false);
+         new jj(param).jjAjax2(false);
 
             cmsUser.m_show_tbl();
             cmsUser.m_clean();
@@ -204,10 +204,10 @@ var cmsUser = {
         param += "&user_attachAxPersonnelCard=" + $('#user_attachAxPersonnelCard').val();
         param += "&user_attachAxSignature=" + $('#user_attachAxSignature').val();
         param += "&user_attachFile=" + $('#user_attachFile').val();
-        param += "&" + jj('#swUser').jjSerial(param);
+        param += "&" + new jj('#swUser').jjSerial(param);
 
 
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsUser.m_show_tbl();
         $("#inputTextSelectorDiv").html('');
 
@@ -219,7 +219,7 @@ var cmsUser = {
         var param = "";
         param += "do=" + cmsUser.tableName + ".delete";
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+       new jj(param).jjAjax2(false);
         cmsUser.m_show_tbl();
         cmsUser.m_clean();
     },
@@ -227,7 +227,7 @@ var cmsUser = {
         var param = "";
         param += "do=" + cmsUser.tableName + ".select";
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+     new   jj(param).jjAjax2(false);
         cmsUser.m_show_form();
         cmsUser.m_getGroups(id);
 
@@ -238,7 +238,7 @@ var cmsUser = {
         param += "do=" + cmsGroup.tableName + ".getCheckboxList";
         param += "&panel=group_checkbox_list";
         param += "&" + cmsUser.f_user_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {
         $('#swAccessAll').css('height', 519);

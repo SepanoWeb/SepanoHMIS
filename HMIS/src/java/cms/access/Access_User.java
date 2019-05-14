@@ -32,14 +32,13 @@ public class Access_User {
     public static String _grade = "user_grade";
     ////برای عکس پرسنلی  
     ///توسط شیران1
-    public static String _attachAxPersonal = "user_attachAxPersonal";
+    public static String _attachPicPersonal = "user_attachPicPersonal";
     ////برای عکس کارت پرسنلی  
     ///توسط شیران1
-    public static String _attachAxPersonnelCard = "user_attachAxPersonnelCard";
+    public static String _attachPicPersonnelCard = "user_attachPicPersonnelCard";
     ////برای عکس امضا  
     ///توسط شیران1
-    public static String _attachAxSignature = "user_attachAxSignature";
-
+    public static String _attachPicSignature = "user_attachPicSignature";
     public static String _address = "user_address";
     public static String _isActive = "user_is_active";
     public static String _registDate = "user_createDate";
@@ -190,9 +189,9 @@ public class Access_User {
             Map<String, Object> map = new HashMap<String, Object>();
 
             map.put(_attachFile, jjTools.getParameter(request, _attachFile));
-            map.put(_attachAxPersonal, jjTools.getParameter(request, _attachAxPersonal));
-            map.put(_attachAxPersonnelCard, jjTools.getParameter(request, _attachAxPersonnelCard));
-            map.put(_attachAxSignature, jjTools.getParameter(request, _attachAxSignature));
+            map.put(_attachPicPersonal, jjTools.getParameter(request, _attachPicPersonal));
+            map.put(_attachPicPersonnelCard, jjTools.getParameter(request, _attachPicPersonnelCard));
+            map.put(_attachPicSignature, jjTools.getParameter(request, _attachPicSignature));
             map.put(_email, email.toLowerCase());
             map.put(_family, jjTools.getParameter(request, _family));
             map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
@@ -343,9 +342,9 @@ public class Access_User {
             map.put(_isActive, jjTools.getParameter(request, _isActive).equals("1"));
             map.put(_name, jjTools.getParameter(request, _name));
             map.put(_attachFile, jjTools.getParameter(request, _attachFile));
-            map.put(_attachAxPersonal, jjTools.getParameter(request, _attachAxPersonal));
-            map.put(_attachAxPersonnelCard, jjTools.getParameter(request, _attachAxPersonnelCard));
-            map.put(_attachAxSignature, jjTools.getParameter(request, _attachAxSignature));
+            map.put(_attachPicPersonal, jjTools.getParameter(request, _attachPicPersonal));
+            map.put(_attachPicPersonnelCard, jjTools.getParameter(request, _attachPicPersonnelCard));
+            map.put(_attachPicSignature, jjTools.getParameter(request, _attachPicSignature));
             map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
             map.put(_grade, jjTools.getParameter(request, _grade));
             map.put(_passwordReminder, jjTools.getParameter(request, _passwordReminder));
@@ -353,15 +352,7 @@ public class Access_User {
             map.put(_codeMeli, jjTools.getParameter(request, _codeMeli));
             map.put(_shomareShenasname, jjTools.getParameter(request, _shomareShenasname));
             map.put(_address, jjTools.getParameter(request, _address));
-//             map.put(_file_personal, jjTools.getParameter(request, _file_personal));
-//            map.put(_file_Signature, jjTools.getParameter(request, _file_Signature));
-//            map.put(_upload_file, jjTools.getParameter(request, _upload_file));
-
-//            map.put(_file_personal, jjTools.getParameter(request, _));
-//            String parent = jjTools.getParameter(request, _parent);
-//            map.put(_parent, jjNumber.isDigit(parent) ? Integer.parseInt(parent) : 0);
             map.put(_pass, jjTools.getParameter(request, _pass).toLowerCase());
-//            map.put(_question, jjTools.getParameter(request, _question));
             map.put(_birthdate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _birthdate), false));
 
             if (id.equals("1")) {
@@ -453,7 +444,7 @@ public class Access_User {
      *
      * @param id
      */
-    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+   public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -497,44 +488,67 @@ public class Access_User {
             html.append(Js.setVal("#user_shomareShenasnameUser", row.get(0).get(_shomareShenasname)));
             html.append(Js.setVal("#user_passUser", row.get(0).get(_pass)));
             html.append(Js.setVal("#user_passwordReminderUser", row.get(0).get(_passwordReminder)));
-            html.append(Js.setHtml("#user_pic1", row.get(0).get(_attachAxPersonal)));
-            html.append(Js.setHtml("#user_pic3", row.get(0).get(_attachAxPersonnelCard)));
-            html.append(Js.setHtml("#user_pic2", row.get(0).get(_attachAxSignature)));
+            html.append(Js.setVal("#user_attachPicPersonnelCard", row.get(0).get(_attachPicPersonnelCard)));
+            html.append(Js.setVal("#user_attachPicPersonal", row.get(0).get(_attachPicPersonal)));
+            html.append(Js.setVal("#user_attachPicSignature", row.get(0).get(_attachPicSignature)));
+            html.append(Js.setAttr("#DownloadPicPersonal", "href", "upload/" + row.get(0).get(_attachPicPersonal)));
+            html.append(Js.setAttr("#DownloadPicPersonnelCard", "href", "upload/" + row.get(0).get(_attachPicPersonnelCard)));
+            /////برای دانلود عکس ها نوشته شده
+            html.append(Js.setAttr("#DownloadPicSignature", "href", "upload/" + row.get(0).get(_attachPicSignature)));
+
+//            html.append(Js.setHtml("#user_pic1", row.get(0).get(_attachAxPersonal)));
+//            html.append(Js.setHtml("#user_pic3", row.get(0).get(_attachAxPersonnelCard)));
+//            html.append(Js.setHtml("#user_pic2", row.get(0).get(_attachAxSignature)));
             html.append(Js.setVal("#user_attachFile", row.get(0).get(_attachFile)));
             String attachFiles = row.get(0).get(_attachFile).toString();
 
             String[] attachFilesArray = attachFiles.split("#A#");
             String script1 = "";
             StringBuilder html3 = new StringBuilder();
+            StringBuilder html4 = new StringBuilder();
             StringBuilder script = new StringBuilder();
+            StringBuilder script2 = new StringBuilder();
 
+//      if (row.get(0).get(Access_User._attachFile).equals("")) {
+//      html4.append("$('#inputAfterSelect').hide()");}
+//      else{
+//           html4.append("$('#inputAfterSelect').show()");
             for (int l = 0; l < attachFilesArray.length; l++) {
-
-//                List<Map<String, Object>> userRowFile = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName));                  
-//                for (int i = 0; i < userRowFile.size(); i++) {
-                html3.append("<input class='col-xs-12' value='" + attachFilesArray[l] + "'/> ");
-//                }                
+                List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
+                if (!fileRow.isEmpty()) {
+                    String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
+//                    html3.append("<div >" + "<input class='col-xs-12' disabled='disabled'  value='" + attachFilesArray[l] + "'/>"  + "</div>");
+                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" + "</div>");
+//                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='"+Js.modal("hjgjhgkjgkjgk", id)+"'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" + "</div>");
+                   
+                }
             }
+
             script1 = Js.setHtml("#inputAfterSelect", html3);
 
-            if (row.get(0).get(Access_User._attachAxPersonal).equals("")) {
+            if (row.get(0).get(Access_User._attachPicPersonal).equals("")) {
                 script.append(Js.setAttr("#PicPreviewPersonal", "src", "img/preview.jpg"));
             } else {
-                script.append(Js.setAttr("#PicPreviewPersonal", "src", "upload/" + row.get(0).get(Access_User._attachAxPersonal).toString() + ""));
+                script.append(Js.setAttr("#PicPreviewPersonal", "src", "upload/" + row.get(0).get(Access_User._attachPicPersonal).toString() + ""));
+                script.append(Js.show("#DownloadPicPersonal"));
+
             }
-            if (row.get(0).get(Access_User._attachAxPersonnelCard).equals("")) {
+            if (row.get(0).get(Access_User._attachPicPersonnelCard).equals("")) {
                 script.append(Js.setAttr("#PicPreview", "src", "img/preview.jpg"));
             } else {
-                script.append(Js.setAttr("#PicPreview", "src", "upload/" + row.get(0).get(Access_User._attachAxPersonnelCard).toString() + ""));
+                script.append(Js.setAttr("#PicPreview", "src", "upload/" + row.get(0).get(Access_User._attachPicPersonnelCard).toString() + ""));
+                script.append(Js.show("#DownloadPicPersonnelCard"));
             }
-            if (row.get(0).get(Access_User._attachAxSignature).equals("")) {
+            if (row.get(0).get(Access_User._attachPicSignature).equals("")) {
                 script.append(Js.setAttr("#PicPreviewSignature", "src", "img/preview.jpg"));
             } else {
-                script.append(Js.setAttr("#PicPreviewSignature", "src", "upload/" + row.get(0).get(Access_User._attachAxSignature).toString() + ""));
+                script.append(Js.setAttr("#PicPreviewSignature", "src", "upload/" + row.get(0).get(Access_User._attachPicSignature).toString() + ""));
+                script.append(Js.show("#DownloadPicSignature"));
             }
 
             html.append(Js.setVal("#user_addressUser", row.get(0).get(_address)));
             html.append(Js.setValDate("#user_birthdateUserUser", row.get(0).get(_birthdate)));
+///////////////////////////
             /////این تابع برای نمایش فایل های اپلود شده توسط فردی که واردشده نوشته شده است
             /////شیران1
 
@@ -542,20 +556,32 @@ public class Access_User {
 //            html.append(Js.setVal("#uploaded_file", rowUpload.get(0).get(UploadServlet._file_name)));
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);
+            String htmlBottons = "";
+            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
+            if (accEdit) {
+                htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjUser.edit() + "' id='edit_User'>" + lbl_edit + "</button></div>";
+//               
+            }
+            boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
+            if (accDelete) {
+                htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjUser.delete(id) + "' id='delete_User'>" + lbl_delete + "</button></div>";
+            }
+            script2.append(Js.setHtml("#User_button", htmlBottons));
 
-            if (accEdt) {
-                if (!id.equals("1")) {
-                    html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_User\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
-                    html.append(Js.buttonMouseClick("#edit_User", Js.jjUser.edit()));
-                }
-            }
-            if (accDel) {
-                if (!id.equals("1")) {
-                    html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_User\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div></div>");
-                    html.append(Js.buttonMouseClick("#delete_User", Js.jjUser.delete(id)));
-                }
-            }
-            Server.outPrinter(request, response, (Js.setHtml("#User_button", html2.toString())) + html.toString() + script1.toString() + script.toString());
+            /////
+//            if (accEdt) {
+//                if (!id.equals("1")) {
+//                    html2.append("<div class=\"row\"><div class=\"col-lg-6\"><input type=\"button\" id=\"edit_User\" value=\"" + lbl_edit + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div>");
+//                    html.append(Js.buttonMouseClick("#edit_User", Js.jjUser.edit()));
+//                }
+//            }
+//            if (accDel) {
+//                if (!id.equals("1")) {
+//                    html2.append("<div class=\"col-lg-6\"><input type=\"button\" id=\"delete_User\" value=\"" + lbl_delete + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"  /></div></div>");
+//                    html.append(Js.buttonMouseClick("#delete_User", Js.jjUser.delete(id)));
+//                }
+//            }
+            Server.outPrinter(request, response, script2 + html.toString() + script1 + script.toString());
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));

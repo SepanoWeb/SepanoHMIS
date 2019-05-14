@@ -92,13 +92,14 @@ var hmisCommettes = {
 //        var valid =  hmisCommettes.m_validation();
 //        if (valid == "") {
         var param = "";
+        var temp2 = "";
         var temp = $("#inputTextSelectorDiv input");
-        for (var i = 0; i < temp.size(); i++) {
-            temp += $(temp[i]).val() + "%23A%23";
+        for (var i = 0; i < temp.length; i++) {
+            temp2 += $(temp[i]).val() + "%23A%23";
         }
 
         param += "&do=" + hmisCommettes.tableName + ".insert";
-        param += "&commettes_documentsFile=" + temp;
+        param += "&commettes_documentsFile=" + temp2;
         param += "&" + new jj('#newCommetteForm').jjSerial();
         new jj(param).jjAjax2(false);
         hmisCommettes.m_show_tbl();
@@ -110,14 +111,16 @@ var hmisCommettes = {
     m_edit: function () {
 //        var valid = hmisPlan.m_validation();
 //        if (valid == "") {
+        var temp2 = "";
         var param = "";
-        param += "do=" + hmisCommettes.tableName + ".edit";
+        param += "&do=" + hmisCommettes.tableName + ".edit";
         param += "&" + new jj('#newCommetteForm').jjSerial();
         param += "&id=" + new jj('#hmis_commettes_id').jjVal();
         var temp = $("#inputTextSelectorDiv input");
-        for (var i = 0; i < temp.size(); i++) {
-            temp += $(temp[i]).val() + "%23A%23";
+        for (var i = 0; i < temp.length; i++) {
+            temp2 += $(temp[i]).val() + "%23A%23";
         }
+        param += "&commettes_documentsFile=" + temp2;
         new jj(param).jjAjax2(false);
         hmisCommettes.m_show_tbl();
         hmisCommettes.m_clean();
@@ -243,53 +246,54 @@ var hmisCommettes = {
 //    },
     Invitees: function () {//مدعوین
 
-        var param = "";
-        var temp = $('#InviteesDiv input:checkbox[class=checkBoxInvitees]:checked');//مدعوین سمت دار
-        var InviteesOutSide = $('#InviteesDiv .invitedOutSide');
-        var InviteesInSide = $('#sessions_InviteesInSide').val();
+//        var allowDo = $('#formInvitation input.required').length;
+//        if (allowDo = 0) {
+            var param = "";
+            var temp = $('#InviteesDiv input:checkbox[class=checkBoxInvitees]:checked'); //مدعوین سمت دار
+            var InviteesOutSide = $('#InviteesDiv .invitedOutSide');
+            var InviteesInSide = $('#sessions_InviteesInSide').val();
 //        alert(InviteesInSide);
-        if (temp.size() == 0) {//اگر تیک عضوی را نزده بود
-            alert("لطفا افراد را انتخاب کنید");
-            return;
-        }
-        var temp1 = "";
-        var temp2 = "";
-        var temp3 = "";
-        var temp4 = "";
-        var temp5 = "";
-        ///////////////////////مدعوین سمت دار
-        for (var i = 0; i < temp.size(); i++) {
-            temp1 += $(temp[i]).attr('value') + "%23A%23"; //نام چک باکس عدد مورد نظر
-        }
-        /////////////////////////////مهمانان داخل سازمان
-        for (var i = 0; i < InviteesInSide.length; i++) {
+            if (temp.size() == 0) {//اگر تیک عضوی را نزده بود
+                alert("لطفا افراد را انتخاب کنید");
+                return;
+            }
+            var temp1 = "";
+            var temp2 = "";
+            var temp3 = "";
+            var temp4 = "";
+            var temp5 = "";
+            ///////////////////////مدعوین سمت دار
+            for (var i = 0; i < temp.size(); i++) {
+                temp1 += $(temp[i]).attr('value') + "%23A%23"; //نام چک باکس عدد مورد نظر
+            }
+            /////////////////////////////مهمانان داخل سازمان
+            for (var i = 0; i < InviteesInSide.length; i++) {
 //            if ($(InviteesInSide[i]).val() !== "") {
                 temp3 += InviteesInSide[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
 //            }
-        }
-////////////////
-        ///////////////////////مهمانان خارج از سازمان
-        //این قسمت نام و نام خانوادگی فرد مهمان را میگیرد واگر خالی باشد چیزی ارسال نمی شود 
-        // اول دیو کلی را می گیرد  بعد اینپوت هایی که داخل دیو ها هستند را در می آورد
-        for (var i = 1; i < InviteesOutSide.size(); i++) {
-            var InputInviteesOutSide = $("#InviteesDiv #invitedOutSide" + [i] + " input");
-            if ($("#InviteesDiv #invitedOutSide" + [i] + " .name").val() !== "" && +$("#InviteesDiv #invitedOutSide" + [i] + " .phone").val() !== "" && $("#InviteesDiv #invitedOutSide" + [i] + " .email").val() !== "" && $("#InviteesDiv #invitedOutSide" + [i] + " .role").val() !== "") {
-                temp4 += $("#InviteesDiv #invitedOutSide" + [i] + " .name").val() + "," + $("#InviteesDiv #invitedOutSide" + [i] + " .phone").val() + "," + $("#InviteesDiv #invitedOutSide" + [i] + " .email").val() + "," + $("#InviteesDiv #invitedOutSide" + [i] + " .role").val() + "%23A%23";
-            } else {
             }
-        }
-//        alert(temp1);
-//        alert(temp3);
-//        alert(temp4);
-        param += "&sessions_Invitees=" + temp1;
-        param += "&sessions_InviteesInSide=" + temp3;//مهمان داخل  سازمان
-        param += "&sessions_InviteesOutSide=" + temp4; //مهمان خارج از  سازمان
-        param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal(); //ای دی کمیته
-        param += "&" + new jj('#formInvitation').jjSerial();
-        param += "&do=Sessions.requestSendComment&jj=1";
-        new jj(param).jjAjax2(false);
+///////////////////////////////////////مهمانان خارج از سازمان
+            //این قسمت نام و نام خانوادگی فرد مهمان را میگیرد واگر خالی باشد چیزی ارسال نمی شود 
+            // اول دیو کلی را می گیرد  بعد اینپوت هایی که داخل دیو ها هستند را در می آورد
+            for (var i = 1; i < InviteesOutSide.length; i++) {
+                var InputInviteesOutSide = $("#InviteesDiv #invitedOutSide_" + [i] + " input");
+                if ($("#InviteesDiv #invitedOutSide_" + [i] + " .name").val() !== "" && +$("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() !== "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() !== "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() !== "") {
+                    temp4 += $("#InviteesDiv #invitedOutSide_" + [i] + " .name").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() + "%23A%23";
+                } else {
+                }
+            }
+/////////////////////////////////////////////////////////////////
+            param += "&sessions_Invitees=" + temp1;
+            param += "&sessions_InviteesInSide=" + temp3; //مهمان داخل  سازمان
+            param += "&sessions_InviteesOutSide=" + temp4; //مهمان خارج از  سازمان
+            param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal(); //ای دی کمیته
+            param += "&" + new jj('#formInvitation').jjSerial();
+            param += "&do=Sessions.requestSendComment&jj=1";
+            new jj(param).jjAjax2(false);
+//        } else {
+//            new jj('همه فیلدها را پر نمایید').jjModal('پیام سامانه');
+//        }
     },
-
     addMembers: function (i) {
         var temp1 = "";
         var param = "";
@@ -310,113 +314,64 @@ var hmisCommettes = {
 
 
     },
-    addFormInvitedOutSide1: function () {
-        $('#addButton1').hide();
-        $('#addButton2').show();
-        $('#removeButton2').show();
-        $('#invitedOutSide2').show();
+    validateEmail: function (email) {
+        var emailPathern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//    var re = /^.*$/;
+        return emailPathern.test(email);
     },
-    addFormInvitedOutSide2: function () {
-        $('#addButton2').hide();
-        $('#addButton3').show();
-        $('#removeButton3').show();
-        $('#invitedOutSide3').show();
+    emailRegex: function (obj) {
+        var email = $(obj).val();
+//        alert(email);
+        if (!hmisCommettes.validateEmail(email)) {
+//            $(obj).css('box-shadow', '1px 2px 0px red');
+            $(obj).css('border', '1px solid red');
+            $(obj).addClass('require');
+
+        } else {
+            $(obj).css('border', '1px solid #23BF08');
+            $(obj).removeClass('require');
+
+        }
+
     },
-    removeFormInvitedOutSide2: function () {
-        $('#addButton2').hide();
-        $('#addButton1').show();
-        $('#invitedOutSide2').hide();
-        $('#invitedOutSide2 input').val("");
+    validateDate: function (date) {
+        var datePathern = /^$|^([1۱][۰-۹ 0-9]{3}[/\/]([0 ۰][۱-۶ 1-6])[/\/]([0 ۰][۱-۹ 1-9]|[۱۲12][۰-۹ 0-9]|[3۳][01۰۱])|[1۱][۰-۹ 0-9]{3}[/\/]([۰0][۷-۹ 7-9]|[1۱][۰۱۲012])[/\/]([۰0][1-9 ۱-۹]|[12۱۲][0-9 ۰-۹]|(30|۳۰)))$/;//تاریخ شمسی
+//        var datePathern =/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;//تاریخ میلادی 
+//    var re = /^.*$/;
+        return datePathern.test(date);
     },
-    addFormInvitedOutSide3: function () {
-        $('#addButton3').hide();
-        $('#addButton4').show();
-        $('#removeButton4').show();
-        $('#invitedOutSide4').show();
+    dateRegex: function (obj) {
+        var date = $(obj).val();
+//        alert(email);
+        if (!hmisCommettes.validateDate(date)) {
+//            $(obj).css('box-shadow', '1px 2px 0px red');
+            $(obj).css('border', '1px solid red');
+            $(obj).addClass('require');
+
+        } else {
+            $(obj).css('border', '1px solid #23BF08');
+            $(obj).removeClass('require');
+
+        }
+
     },
-    removeFormInvitedOutSide3: function () {
-        $('#addButton3').hide();
-        $('#addButton2').show();
-        $('#invitedOutSide3').hide();
-        $('#invitedOutSide3 input').val("");
+    validateMobile: function (mobile) {
+        var regx = /^(09|9)[0-9]{9}$/;
+        return regx.test(mobile);
     },
-    addFormInvitedOutSide4: function () {
-        $('#addButton4').hide();
-        $('#addButton5').show();
-        $('#removeButton5').show();
-        $('#invitedOutSide5').show();
-    },
-    removeFormInvitedOutSide4: function () {
-        $('#addButton4').hide();
-        $('#addButton3').show();
-        $('#invitedOutSide4').hide();
-        $('#invitedOutSide4 input').val("");
-    },
-    addFormInvitedOutSide5: function () {
-        $('#addButton5').hide();
-        $('#addButton6').show();
-        $('#removeButton6').show();
-        $('#invitedOutSide6').show();
-    },
-    removeFormInvitedOutSide5: function () {
-        $('#addButton5').hide();
-        $('#addButton4').show();
-        $('#invitedOutSide5').hide();
-        $('#invitedOutSide5 input').val("");
-    },
-    addFormInvitedOutSide6: function () {
-        $('#addButton6').hide();
-        $('#addButton7').show();
-        $('#removeButton7').show();
-        $('#invitedOutSide7').show();
-    },
-    removeFormInvitedOutSide6: function () {
-        $('#addButton6').hide();
-        $('#addButton5').show();
-        $('#invitedOutSide6').hide();
-        $('#invitedOutSide6 input').val("");
-    },
-    addFormInvitedOutSide7: function () {
-        $('#addButton7').hide();
-        $('#addButton8').show();
-        $('#removeButton8').show();
-        $('#invitedOutSide8').show();
-    },
-    removeFormInvitedOutSide7: function () {
-        $('#addButton7').hide();
-        $('#addButton6').show();
-        $('#invitedOutSide7').hide();
-        $('#invitedOutSide7 input').val("");
-    },
-    addFormInvitedOutSide8: function () {
-        $('#addButton8').hide();
-        $('#addButton9').show();
-        $('#removeButton9').show();
-        $('#invitedOutSide9').show();
-    },
-    removeFormInvitedOutSide8: function () {
-        $('#addButton8').hide();
-        $('#addButton7').show();
-        $('#invitedOutSide8').hide();
-        $('#invitedOutSide8 input').val("");
-    },
-    addFormInvitedOutSide9: function () {
-        $('#addButton9').hide();
-        $('#addButton10').show();
-        $('#removeButton10').show();
-        $('#invitedOutSide10').show();
-    },
-    removeFormInvitedOutSide9: function () {
-        $('#addButton9').hide();
-        $('#addButton8').show();
-        $('#invitedOutSide9').hide();
-        $('#invitedOutSide9 input').val("");
-    },
-    removeFormInvitedOutSide10: function () {
-        $('#addButton10').hide();
-        $('#addButton9').show();
-        $('#invitedOutSide10').hide();
-        $('#invitedOutSide10 input').val("");
+    mobileRegex: function (obj) {
+        var mobile = $(obj).val();
+//        alert(email);
+        if (!hmisCommettes.validateMobile(mobile)) {
+//            $(obj).css('box-shadow', '1px 2px 0px red');
+            $(obj).css('border', '1px solid red');
+            $(obj).addClass('require');
+        } else {
+            $(obj).css('border', '1px solid #23BF08');
+            $(obj).removeClass('require');
+
+        }
+
     },
 //    mainTabSetSize: function () {
 ////        var aa = $("#swContent").children();

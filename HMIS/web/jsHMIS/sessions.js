@@ -15,10 +15,10 @@ var hmisSessions = {
                 new jj('#sendFilesSessions').jjAjaxFileUpload4('attachFileSessions', '#sessions_file', '#inputTextSelectorSessionsDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
                 new jj('#sendFilesApprovedPrevious').jjAjaxFileUpload4('attachFileApprovedPrevious', '#approved_fileCheckOut', '#inputFileApprovedPreviousDiv');
                 new jj("#sessions_nextSessionDate").jjCalendarWithYearSelector(1397, 1420);
-                $("#cancel_Sessions").button().click(function (e) {
-                    hmisSessions.m_clean();
-                    hmisSessions.m_show_tbl();
-                });
+//                $("#cancel_Sessions").button().click(function (e) {
+//                    hmisSessions.m_clean();
+//                    hmisSessions.m_show_tbl();
+//                });
                 hmisSessions.m_refresh();
             });
         }
@@ -27,6 +27,22 @@ var hmisSessions = {
         var param = "";
         param += "do=" + hmisSessions.tableName + ".refresh";
         param += "&panel=" + (containerId == null ? "swSessionsTbl" : containerId);
+        param += "&sort=" + (sortField == null ? "0" : sortField);
+        param += "&height=" + (tableHeight == null ? 800 : tableHeight);
+        param += "&jj=1";
+        new jj(param).jjAjax2(false);
+    },
+    /**
+     * آرشیو صورت جلسه
+     * @param {type} containerId
+     * @param {type} sortField
+     * @param {type} tableHeight
+     * @returns {undefined}
+     */
+    archivesSessionsRefresh: function (containerId, sortField, tableHeight) {
+        var param = "";
+        param += "do=" + hmisSessions.tableName + ".archivesSessionsRefresh";
+        param += "&panel=" + (containerId == null ? "swArchivesSessionsTbl" : containerId);
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? 800 : tableHeight);
         param += "&jj=1";
@@ -256,6 +272,7 @@ var hmisSessions = {
 //        hmisSessions.m_show_tbl();
         hmisSessions.m_clean();
     },
+    
 //  
 
 //    mainTabSetSize: function () {

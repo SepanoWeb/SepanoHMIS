@@ -194,12 +194,14 @@
                                     hmisMySessions.loadForm();" class="nav-link ShowOneDiv">صورت جلسات من</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" onclick="$('.sh-mainpanel').load('05sessionsForPrint.html', null, function () {
-                                    });
-                                    return false;" class="nav-link ShowOneDiv">آرشیو صورت جلسات</a>
+                            <a href="#swArchivesSessions" onclick="if ($('#swArchivesSessionsTbl').html() == '') {
+                                        hmisSessions.archivesSessionsRefresh();
+                                    }
+                                    ;
+                                    hmisSessions.loadForm();" class="nav-link ShowOneDiv">آرشیو صورت جلسات</a>
                         </li>
                         <li class="nav-item">
-                                <a href="#swApproved" onclick="if ($('#swApprovedTbl').html() == '') {
+                            <a href="#swApproved" onclick="if ($('#swApprovedTbl').html() == '') {
                                         hmisApproved.m_refresh();
                                     }
                                     ;
@@ -590,6 +592,10 @@
                             <div class="Alldiv" id="swSessions">
                                 <div id="swSessionsTbl" style=""></div>
                                 <div id="swSessionsForm" style="display: none;"></div>
+                            </div><!--swSession-->
+                            <div class="Alldiv" id="swArchivesSessions">
+                                <div id="swArchivesSessionsTbl" style=""></div>
+                                <div id="swArchivesSessionsForm" style="display: none;"></div>
                             </div><!--swSession-->
                             <div class="Alldiv" id="swMySessions">
                                 <div id="swMySessionsTbl" style=""></div>

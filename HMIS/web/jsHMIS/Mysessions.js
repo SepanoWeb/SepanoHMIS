@@ -53,7 +53,6 @@ var hmisMySessions = {
         hmisMySessions.tabSizeTbl();
     },
     m_select: function (id) {
-
         var param = "";
         param += "do=" + hmisSessions.tableName + ".selectMySessions";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);

@@ -28,6 +28,7 @@ public class Commettes {
 
     public static String tableName = "hmis_commettes";
     public static String _id = "id";
+    public static String _isActive = "commettes_isActive";//وضعیت فعال وغیر فعال
     public static String _creatorId = "commettes_creatorId";//عنوان کمیته
     public static String _title = "commettes_title";//عنوان کمیته
     public static String _superwizar = "commettes_superwizar";//رئیس کمیته
@@ -182,9 +183,11 @@ public class Commettes {
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_regulationFile, jjTools.getParameter(request, _regulationFile));
             map.put(_documnetsFile, jjTools.getParameter(request, _documnetsFile));
+            map.put(_isActive, jjTools.getParameter(request, _isActive));
 
             DefaultTableModel dtm = db.insert(tableName, map);
-            if (dtm.getRowCount() == 0) {
+            if (dtm.getRowCount() == 0) { 
+                
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
@@ -262,6 +265,17 @@ public class Commettes {
             html.append(Js.setVal("#" + _secretary, row.get(0).get(_secretary)));
             html.append(Js.setVal("#" + _superwizar, row.get(0).get(_superwizar)));
             html.append(Js.setVal("#" + _regulationFile, row.get(0).get(_regulationFile)));
+            html.append(Js.setVal("#active", "1"));
+            html.append(Js.setVal("#noActive", "0"));
+//            html.append(Js.setVal("#role_condition"  , ));
+            if (row.get(0).get(_isActive).equals("1")) {
+//                html.append(Js.setVal("#active", row.get(0).get(_condition)));
+                html.append(Js.setAttr("#active", "checked", "checked"));
+//                html.append(Js.removeAttr("#noActive", "checked"));
+            } else {
+//                html.append(Js.setVal("#noActive", row.get(0).get(_condition)));
+                html.append(Js.setAttr("#noActive", "checked", "checked"));
+            }
             if (!row.get(0).get(_documnetsFile).toString().equals("")) {
                 String[] documentFile = (row.get(0).get(_documnetsFile).toString().replaceAll("#A#","%23A%23")).split("%23A%23");
                 for (int i = 0; i < documentFile.length; i++) {
@@ -339,6 +353,7 @@ public class Commettes {
             map.put(_superwizar, jjTools.getParameter(request, _superwizar));
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_regulationFile, jjTools.getParameter(request, _regulationFile));
+            map.put(_isActive, jjTools.getParameter(request, _isActive));
             map.put(_documnetsFile, jjTools.getParameter(request, _documnetsFile));
             if (!db.update(tableName, map, _id + "=" + id)) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
@@ -428,23 +443,10 @@ public class Commettes {
             for (int i = 0; i < usersRow.size(); i++) {
                 html2.append("<option value='" + usersRow.get(i).get(Access_User._id) + "'>" + usersRow.get(i).get(Access_User._name) + " " + usersRow.get(i).get(Access_User._family) + "</option> ");
             }
-//            html2.append("</select>");
-//                html2.append("<tr>");
-//                html2.append("<td  ><input id='" + usersRow.get(i).get(Access_User._id) + "' name='" + usersRow.get(i).get(Access_User._id) + "' value='" + usersRow.get(i).get(Access_User._name) + "  " + usersRow.get(i).get(Access_User._family) + "' onclick=' var selectVal = $(this).val();\n"
-//                        + "                                $(\"#sessions_InviteesInSide\").val(selectVal);\n"
-//                        + "                                //        $(\".login-wrap\").css(\"height\",\"1808px\");\n"
-//                        + "                                $(\"#usersListTable\").hide();'></td>");
-//                html2.append("</tr>");
-//            html2.append("</tbody>");
-//            html2.append("</table>");
-//            html3.append(Js.setVal(Sessions._time, jjCalendar_IR.getViewFormat(sessionsRow.get(0).get(Sessions._time))));
-//            html3.append(Js.setVal(Sessions._date, sessionsRow.get(0).get(Sessions._date)));
-//            html3.append(Js.setVal(Sessions._dateReminder, jjCalendar_IR.getViewFormat(sessionsRow.get(0).get(Sessions._dateReminder))));
-//            html3.append(Js.setVal(Sessions._timeReminder, sessionsRow.get(0).get(Sessions._timeReminder)));       
+
             String script = "";
             script += Js.setHtml("#sessions_InviteesInSide", html2);
             script += Js.setHtml("#invitessDiv", html);
-//            script += Js.setVal(Sessions._time, jjCalendar_IR.getViewFormat(sessionsRow.get(0).get(Sessions._time)));
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {

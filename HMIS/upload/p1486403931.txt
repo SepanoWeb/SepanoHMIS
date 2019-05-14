@@ -1,0 +1,26 @@
+            html.append(Js.setVal("#" + _regulationFile, row.get(0).get(_regulationFile)));
+
+254
+ 
+
+//            html.append(Js.setVal("#" + _regulationFile2, row.get(0).get(_regulationFile2)));
+
+255
+ 
+
+//            html.append(Js.setVal("#" + _regulationFile3, row.get(0).get(_regulationFile3)));
+
+256
+ 
+
+            boolean accEdt = Access_User.hasAccess2(request, db, rul_edt);//
+
+257
+ 
+
+            boolean accDel = Access_User.hasAccess2(request, db, rul_dlt);//
+
+258
+ 
+
+            html2.append("<div class='row'>");

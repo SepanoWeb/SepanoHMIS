@@ -65,14 +65,18 @@ var hmisApproved = {
         new jj("#insertApproved2").jjFormClean();
         new jj("#approved_trackerId").jjVal("");
         new jj("#approved_executorId").jjVal("");
+        $("#inputTextSelectorDiv").html("");
 
     },
     m_add_new: function () {
+        var param = "";
         $("#approved_status").val("در حال انجام");
         $("#approved_status").attr("disabled", "disabled");
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
-        new jj("do=" + hmisApproved.tableName + ".add_new&jj=1").jjAjax2(false);
+        param += "&hmis_sessions_id=" + new jj("#hmis_sessions_id").jjVal();
+        param += "&do=" + hmisApproved.tableName + ".add_new&jj=1";
+        new jj(param).jjAjax2(false);
         hmisApproved.m_clean();
 //        hmisApproved.m_show_form();
 //                $('#newCommetteForm').show();
@@ -96,12 +100,12 @@ var hmisApproved = {
         var param = "";
         param += "&do=" + hmisApproved.tableName + ".insert";
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-        var temp = $("#inputTextSelectorDiv input");
-        var attachedFile = "";
-        for (var i = 0; i < temp.length; i++) {
-            attachedFile += $(temp[i]).val() + "%23A%23";
-        }
-        param += "&approved_file=" + attachedFile;
+//        var temp = $("#inputTextSelectorDiv input");
+//        var attachedFile = "";
+//        for (var i = 0; i < temp.length; i++) {
+//            attachedFile += $(temp[i]).val() + "%23A%23";
+//        }
+//        param += "&approved_file=" + attachedFile;
         param += "&" + new jj('#insertApproved2').jjSerial();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
@@ -125,7 +129,6 @@ var hmisApproved = {
         param += "&do=" + hmisApproved.tableName + ".editInSessions";
         param += "&" + new jj('#insertApproved2').jjSerial();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
@@ -137,13 +140,15 @@ var hmisApproved = {
 //        var valid = hmisPlan.m_validation();
 //        if (valid == "") {
         var param = "";
-        param += "&do=" + hmisApproved.tableName + ".editInSessions";
+        param += "&do=" + hmisApproved.tableName + ".editApprovedPrevious";
         param += "&" + new jj('#approvedPreviousDiv').jjSerial();
+        param += "&approvedId=" + new jj('#approvedPrevious_id').jjVal();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
+        $("#inputFileApprovedPreviousDiv").html("");
+
 //        } else {
 //            new jj(valid).jjDialog();
 //        }
@@ -159,10 +164,15 @@ var hmisApproved = {
      * @param {type} id
      * @returns {undefined}
      */
+
     m_delete: function (id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisApproved.m_delete_after_question(' + id + ');\n', true, "");
+//        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisApproved.m_delete_after_question(' + id + ');\n', true, "");
+        if (confirm("آیا از حذف این رکورد اطمینان دارید؟")) {
+            hmisApproved.confirmationFinalApproved_after_question(id);
+        } else {
+        }
     },
-    m_delete_after_question: function (id) {
+    confirmationFinalApproved_after_question: function (id) {
         var param = "";
 //        alert(new jj('#hmis_sessions_id').jjVal());
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
@@ -196,6 +206,8 @@ var hmisApproved = {
         param += "do=" + hmisApproved.tableName + ".selectApprovedPrevious";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
+        $("#inputFileApprovedPreviousDiv").html("");
+
 //        hmisApproved.m_show_form();
     },
     selectInSessions: function (id) {
@@ -210,6 +222,25 @@ var hmisApproved = {
         new jj(param).jjAjax2(false);
 //        hmisApproved.m_show_form();
     },
+    /**
+     * حذف فایل آپلود شده
+     */
+//     m_remove: function (idUpload,id) {
+//        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف","cmsUser.removeFile("+idUpload+","+id+");");
+//    },
+//  removeFile: function (idUpload,idUser) {
+//     
+//        var param = "";
+//        param += "do=" + hmisApproved.tableName + ".removeFile";
+//        
+//        param += "&upload_id=" +idUpload;
+//        param += "&access_user_id=" +idUser;
+//        
+//      
+//        new jj(param).jjAjax2(false);
+//        hmisApproved.m_show_tbl();
+//        hmisApproved.m_clean();
+//    },
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".add_EN";

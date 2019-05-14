@@ -1784,6 +1784,7 @@ var jj = function (selector) {
                     } else {
                         alert('فایل به درستی ارسال نشد.');
                     }
+                    
                 }
             });
             return "alert('فایل مورد نظر آپلود شد')";
