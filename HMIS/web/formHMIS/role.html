@@ -13,7 +13,7 @@ and open the template in the editor.
         <div class="card bd-primary mg-t-20">
 
             <div class="card bd-primary">
-              
+
                 <div class="sh-breadcrumb">
                     <nav class="breadcrumb">
                         <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
@@ -22,7 +22,7 @@ and open the template in the editor.
                     </nav>
                 </div><!-- sh-breadcrumb -->
                 <div class="sh-pagetitle">
-             
+
                     <div class="sh-pagetitle-left">
                         <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
                         <div class="sh-pagetitle-title">
@@ -32,102 +32,125 @@ and open the template in the editor.
                     </div><!-- sh-pagetitle-left -->
                 </div><!-- sh-pagetitle -->
                 <div class="col-lg-12">
-                      
+
                     <div class="card bd-primary mg-t-20" id='AccessuserForm'>
                         <input type="hidden" id="role_id" name="id" />
                         <input type="hidden" id="role_user_id" name="role_user_id" />
                         <div class="card-header bg-primary tx-white">نقش ها</div>
                         <div class="card-body pd-sm-30">                    
                             <div class="row">
-                             
-                                <div class="col-lg">
-                                    نام 
-                                    <input class="form-control" id="role_name"  placeholder="نام" type="text">
-                                </div>
-                                <div class="col-lg">
-                                    نام  خانوادگی
-                                    <input class="form-control" id="role_family"  placeholder="نام خانوادگی" type="text">
-                                </div>
-                                <div class="col-lg">
-                                    ایمیل
-                                    <input class="form-control"  id="role_email"   placeholder="ایمیل" type="text">
-                                </div>
-                            </div>
-                            <div class="row">
-                             
                                 <div class="col-lg">
                                     عنوان 
                                     <input class="form-control" id="role_title"  name="role_title" placeholder="عنوان" type="text">
-                                </div>
-                                <div class="col-lg">
-                                    تاریخ 
-                                    <input class="form-control" id="role_date"  name="role_date" placeholder="تاریخ" type="text">
                                 </div>
                                 <div class="col-lg">
                                     وضعیت :
                                     <input  id="role_condition1"  name="role_condition"  type="radio">فعال
                                     <input  id="role_condition2"  name="role_condition"  type="radio">غیر فعال
                                 </div>
-                               
+
                             </div>
                             <div class="row">
-                             
+                                <div class="col-lg">
+                                    نام 
+                                    <input class="form-control" id="role_name"  name="role_name" placeholder="نام" type="text">
+                                </div>
+                                <div class="col-lg">
+                                    نام  خانوادگی
+                                    <input class="form-control" id="role_family"  name="role_family" placeholder="نام خانوادگی" type="text">
+                                </div>
+                                <div class="col-lg">
+                                    ایمیل
+                                    <input class="form-control"  id="role_email" name="role_email"  placeholder="ایمیل" type="text">
+                                </div>
+
+                                <!--                                <div class="col-lg">
+                                                                    تاریخ 
+                                                                    <input class="form-control" id="role_date"  name="role_date" placeholder="تاریخ" type="text">
+                                                                </div>-->
+
+
+                            </div>
+                            <div class="row">
+
                                 <div class="col-lg">
                                     شرح وظایف 
-                                    <textarea class="form-control" id="role_comment"  name="role_comment" ></textarea>
+                                    <div class="summernote" id="role_comment"  ></div>
                                 </div>
-                               
-                               
+
+
+
                             </div>
-                                <div class="col-lg-12">
-                                    <div  style="display: none" id="ListKarbaran"></div>
+                            <div class="row">
+
+
+                                <div class="col-lg">
+                                    توضیحات
+                                    <textarea class="form-control"  id="role_discription" name="role_discription" ></textarea>
                                 </div>
+
+
+                            </div>
+                            <div class="col-lg-12">
+                                <div  style="display: none" id="ListKarbaran"></div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div  style="display: none" id="ListKarbaranDarSelect"></div>
+                            </div>
 
                             <br/>
-                          
-                     
-                          </div>  
-                        </div>
-                    </div><!-- card-body -->
-                </div><!-- card -->
-                
 
-                <table class="col-lg-12">
-                    <tr style="background-color: #eaeaf4;height: 40px">
-                       
-                    <div style="float: right">
-                        <a id="cancel_Role" class="btn btn-secondary btn-block mg-b-10" style="  
 
-                           color: white;
-                           width: 20%;
-                           position: relative;
-                           top: 45px;
-
-                           "  >
-                            بازگشت
-                        </a>
-
-                        <div id="Role_button" style="position: relative;float: left;   width: 57%;
-                             padding-top: 1%;
-                             padding-bottom: 1%;
-                             color: white;
-                             ">
-                        </div>
+                        </div>  
                     </div>
-                 
-                    </tr>
-                </table>
-
-            </div>
+                </div><!-- card-body -->
+            </div><!-- card -->
 
 
-        </div><!-- card -->
+            <!--            <table class="col-lg-12">
+                            <tr style="background-color: #eaeaf4;height: 40px">
+            
+                            <div style="float: right">
+                                <a id="cancel_Role" class="btn btn-secondary btn-block mg-b-10" style="  
+            
+                                   color: white;
+                                   width: 20%;
+                                   position: relative;
+                                   top: 45px;
+            
+                                   "  >
+                                    بازگشت
+                                </a>
+            
+                                <div id="Role_button" style="position: relative;float: left;   width: 57%;
+                                     padding-top: 1%;
+                                     padding-bottom: 1%;
+                                     color: white;
+                                     ">
+                                </div>
+                            </div>
+            
+                            </tr>
+                        </table>-->
+            <div class="row col-lg-12">
+                <div class="mg-t-20  col-lg">
+                    <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="hmisRole.m_show_tbl();">بازگشت </button>                
+                </div><!-- col -->
+                <div id="Role_button" class="col-lg-9 mg-t-20 row">            
+                </div>
+            </div><!-- card -->
+        </div>
 
-        
+    </div>
+
+
+</div><!-- card -->
+
+
 <!--        <script>
        
 
 
         </script>-->
-    </body>
+</body>
 </html>

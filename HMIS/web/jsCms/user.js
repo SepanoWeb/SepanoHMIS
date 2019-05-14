@@ -23,11 +23,12 @@ var cmsUser = {
                     cmsUser.m_clean();
                     cmsUser.m_show_tbl();
                 });
-                $("#sendPic1").button().click(function () {
-                });
-                $("#user_file_personal").button().click(function () {
-                });
-                new jj('#sendPic1').jjAjaxFileUploadPersonal('#user_file_personal', '#user_attachAxPersonal', '#PicPreviewPersonal');
+//                $("#sendPic1").button().click(function () {
+//                });
+//                $("#user_file_personal").button().click(function () {
+//                });
+                new jj('#sendPic1').jjAjaxFileUpload2('user_file_personal', '#user_attachPicPersonal', '#PicPreviewPersonal');
+//                new jj('#sendPic1').jjAjaxFileUploadPersonal('#user_file_personal', '#user_attachAxPersonal', '#PicPreviewPersonal');
                 $('#user_pic1').keyup(function () {
                     $('#PicPreviewPersonal').attr('src', 'upload/' + $('#user_pic1').val());
                     if ($('#user_pic1').val() == '') {
@@ -35,25 +36,27 @@ var cmsUser = {
                     }
                 });
                 //////برای عکس امضا 
-                $("#sendPicSignature").button().click(function () {
-                });
-                $("#user_file_Signature").button().click(function () {
-                });
-                new jj('#sendPicSignature').jjAjaxFileUploadAxSignature('#user_file_Signature', '#user_attachAxSignature', '#PicPreviewSignature');
+//                $("#sendPicSignature").button().click(function () {
+//                });
+//                $("#user_file_Signature").button().click(function () {
+//                });
+//                new jj('#sendPicSignature').jjAjaxFileUploadAxSignature('#user_file_Signature', '#user_attachAxSignature', '#PicPreviewSignature');
+                 new jj('#sendPicSignature').jjAjaxFileUpload2('user_file_Signature', '#user_attachPicSignature', '#PicPreviewSignature');
                 $('#user_pic2').keyup(function () {
                     $('#PicPreviewSignature').attr('src', 'upload/' + $('#user_pic2').val());
-                    if ($('#user_pic2').val() == '') {
+                    if ($('#user_pic2').val() == '') {m_
                         $('#PicPreviewSignature').attr('src', 'img/preview.jpg');
                     }
                 });
                 /////برای تصویر
 
 
-                $("#sendPicupload").button().click(function () {
-                });
-                $("#uploaded_file").button().click(function () {
-                });
-                new jj('#sendPicupload').jjAjaxFileUploadPersonnelCard('#uploaded_file', '#user_attachAxPersonnelCard', '#PicPreview');
+//                $("#sendPicupload").button().click(function () {
+//                });
+//                $("#uploaded_file").button().click(function () {
+//                });
+                 new jj('#sendPicupload').jjAjaxFileUpload2('uploaded_file', '#user_attachPicPersonnelCard', '#PicPreview');
+//                new jj('#sendPicupload').jjAjaxFileUploadPersonnelCard('#uploaded_file', '#user_attachAxPersonnelCard', '#PicPreview');
                 $('#user_pic3').keyup(function () {
                     $('#PicPreview').attr('src', 'upload/' + $('#user_pic3').val());
                     if ($('#user_pic3').val() == '') {
@@ -61,12 +64,13 @@ var cmsUser = {
                     }
                 });
                 ///////فایل ها
-                $("#sendPicFiles").button().click(function () {
-//                        $('#AttachFileUpload').append($('#user_pic4').val());
-                });
-
-                $("#attachFile").button().click(function () {
-                });
+//                $("#sendPicFiles").button().click(function () {
+////                        $('#AttachFileUpload').append($('#user_pic4').val());
+//                });
+//
+//                $("#attachFile").button().click(function () {
+//                });
+                
                 new jj('#sendPicFiles').jjAjaxFileUpload3('#attachFile', '#user_attachFile');
 
 //                $('#user_pic4').keyup(function () {
@@ -98,7 +102,7 @@ var cmsUser = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? innerPanelHeight : tableHeight);
         param += "&jj=1";
-        jj(param).jjAjax2(false);
+       new jj(param).jjAjax2(false);
         cmsUser.tabSizeTbl();
     },
     m_show_form: function () {
@@ -124,6 +128,9 @@ var cmsUser = {
         $("#user_pic4").html('');
         $("#inputAfterSelect").html('');
         
+         new jj("#user_attachPicPersonal").jjVal('');
+         new jj("#user_attachPicPersonnelCard").jjVal('');
+         new jj("#user_attachPicSignature").jjVal('');
 
 
 //         $("#usersPicPreview1").removeAttr("src");
@@ -143,7 +150,10 @@ var cmsUser = {
         new jj("#" + cmsUser.f_parent).jjVal('');
     },
     m_add_new: function () {
-        jj("do=" + cmsUser.tableName + ".add_new").jjAjax2(false);
+       new jj("do=" + cmsUser.tableName + ".add_new").jjAjax2(false);
+       $("#DownloadPicPersonal").hide();
+       $("#DownloadPicPersonnelCard").hide();
+       $("#DownloadPicSignature").hide();
         cmsUser.m_show_form();
         cmsUser.m_clean();
         cmsUser.m_getGroups();
@@ -186,9 +196,9 @@ var cmsUser = {
 //            flag = false;
 //        }
 //        if ((validatePass(pass) && new jj('#user_passUser').jjVal() != "") & (validateEmail(email) && new jj('#user_emailUser').jjVal() !== "")) {
-            param += "&" + jj('#AccessuserForm').jjSerial();
+            param += "&" +new jj('#AccessuserForm').jjSerial();
 //            param += "&" + jj('#AccessuserForm').jjSerial();
-            jj(param).jjAjax2(false);
+            new jj(param).jjAjax2(false);
 
             cmsUser.m_show_tbl();
             cmsUser.m_clean();
@@ -200,14 +210,14 @@ var cmsUser = {
         param += "do=" + cmsUser.tableName + ".edit";
 //        param += "&pic=" + $('#user_file_personal').val();
         param += "&pic=" + $('#swUser').val();
-        param += "&user_attachAxPersonal=" + $('#user_attachAxPersonal').val();
-        param += "&user_attachAxPersonnelCard=" + $('#user_attachAxPersonnelCard').val();
-        param += "&user_attachAxSignature=" + $('#user_attachAxSignature').val();
+        param += "&user_attachAxPersonal=" + $('#user_attachPicPersonal').val();
+        param += "&user_attachAxPersonnelCard=" + $('#user_attachPicPersonnelCard').val();
+        param += "&user_attachAxSignature=" + $('#user_attachPicSignature').val();
         param += "&user_attachFile=" + $('#user_attachFile').val();
-        param += "&" + jj('#swUser').jjSerial(param);
+        param += "&" +new jj('#swUser').jjSerial(param);
 
 
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsUser.m_show_tbl();
         $("#inputTextSelectorDiv").html('');
 
@@ -219,7 +229,7 @@ var cmsUser = {
         var param = "";
         param += "do=" + cmsUser.tableName + ".delete";
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsUser.m_show_tbl();
         cmsUser.m_clean();
     },
@@ -227,7 +237,8 @@ var cmsUser = {
         var param = "";
         param += "do=" + cmsUser.tableName + ".select";
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
+         $("#user_pic4").html('');
         cmsUser.m_show_form();
         cmsUser.m_getGroups(id);
 
@@ -238,7 +249,7 @@ var cmsUser = {
         param += "do=" + cmsGroup.tableName + ".getCheckboxList";
         param += "&panel=group_checkbox_list";
         param += "&" + cmsUser.f_user_id + "=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
+       new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {
         $('#swAccessAll').css('height', 519);
@@ -251,6 +262,22 @@ var cmsUser = {
     heightTab: "519",
     mainTabSetSize: function () {
         $('#swAccessAll').css('height', cmsUser.heightTab);
+    },
+  m_remove: function (idUpload,id) {
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف","cmsUser.removeFile("+idUpload+","+id+");");
+    },
+  removeFile: function (idUpload,idUser) {
+     
+        var param = "";
+        param += "do=" + cmsUser.tableName + ".removeFile";
+        
+        param += "&upload_id=" +idUpload;
+        param += "&access_user_id=" +idUser;
+        
+      
+        new jj(param).jjAjax2(false);
+        cmsUser.m_show_tbl();
+        cmsUser.m_clean();
     }
 }
 function loginToCMS() {
