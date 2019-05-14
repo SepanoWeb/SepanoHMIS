@@ -6,13 +6,15 @@
 package HMIS;
 
 import cms.access.Access_User;
+import HMIS.FormAnswers;
 import cms.tools.Js;
 import cms.tools.Server;
 import cms.tools.jjTools;
-import java.text.Normalizer;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
@@ -24,9 +26,9 @@ import jj.jjNumber;
  *
  * @author Mohammad
  */
-public class FormAnswers {
+public class FormAnswerSet {
 
-    public static final String tableName = "hmis_formAnswers";
+    public static final String tableName = "hmis_formAnswerSet";
     public static final String _id = "id";
     public static final String _formId = "formAnswers_formId";
     public static final String _userId = "formAnswers_userId";
@@ -35,7 +37,7 @@ public class FormAnswers {
     public static final String _date = "formAnswers_date";
     public static final String _time = "formAnswers_time";//بخش یا بخش هایی که این فرم را باید ببینند
     public static final String _status = "formAnswers_status";//سمت هایی که به این فرم دسترسی 
-    public static final String _answer = "formAnswers_answer";// اشخاصی که به این فرم دسترسی 
+    public static final String _statusLog = "formAnswers_statusLog";//سمت هایی که به این فرم دسترسی 
     public static final String _userMAC = "formAnswers_userMAC";// مک آدرس پر کننده ی فرم
     public static final String _userIPV4 = "formAnswers_userIPV4";// آی پی پر کننده ی فرم
     public static final String _userIPV6 = "formAnswers_userIPV6";// آی پی ورژن شش پر کننده ی فرم
@@ -62,7 +64,9 @@ public class FormAnswers {
 
 //    public static int rul_lng5 = 68;
     public static final String lbl_add_ln2 = "برچسب";
-    public static final String lbl_edit_ln2 = "ویرایش بخش انگلیسی";
+    public static final String statues_sabteAvalie = "ثبت اولیه";
+    public static final String statues_sabteNahei = "ثبت نهایی";
+
     public static final String lbl_add_ln3 = "افزودن زبان عربی";
     public static final String lbl_edit_ln3 = "ویرایش بخش عربی";
     public static final String lbl_add_ln4 = "افزودن زبان آلمانی";
@@ -71,6 +75,7 @@ public class FormAnswers {
     public static final String lbl_edit_ln5 = "ویرایش بخش چینی";
 
     /**
+     * نمایش فرم های در اختیار نقش یا شخص جاری در سشن
      *
      * @param request
      * @param response
@@ -91,14 +96,19 @@ public class FormAnswers {
             int userId = jjTools.getSeassionUserId(request);
             String userRoleInsession = jjTools.getSeassionUserRole(request);
             System.out.println(">>>>>>>>UserRoles is:" + userRoleInsession);
-            String where = " WHERE ";
+            String where = " WHERE (";
             String userRoles[] = userRoleInsession.split("%23A%23");
             for (int i = 0; i < userRoles.length; i++) {
                 where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "\\%23A\\%23%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
             }
+            if (!jjTools.getSeassionUserRole(request).isEmpty()) {// اگر کاربر جاری نقشی در سیستم دارد
+                where += Forms._accessessRoles + " like " + "'%ALL%'" + " OR ";//فرم هایی که برای همه ی سمت ها دسترسی دارند را هم نشان بدهیم
+            }
             where += Forms._accessessUsers + " like " + "'%" + userId + "\\%23A\\%23%'" + " OR ";
             where += Forms._accessessUsers + " like " + "'%ALL%'" + " OR ";
-            where += Forms._accessessUsers + "='' ; ";
+            where += Forms._accessessUsers + " = " + "''" + " OR ";
+            where += Forms._accessessUsers + "='' ) AND  ";
+            where += Forms._isActive + "=1 ; ";
 
             List<Map<String, Object>> formRows = jjDatabaseWeb.separateRow(db.otherSelect("SELECT * FROM " + Forms.tableName + where));
             StringBuilder html = new StringBuilder();
@@ -114,10 +124,10 @@ public class FormAnswers {
             html.append("</thead><tbody>");
             for (int i = 0; i < formRows.size(); i++) {
                 html.append("<tr>");
-                html.append("<td class='r'>" + formRows.get(i).get(Forms._code) + "</td>");
+                html.append("<td class='r'>" + formRows.get(i).get(Forms._id) + formRows.get(i).get(Forms._code) + "</td>");
                 html.append("<td class='r'>" + formRows.get(i).get(Forms._title) + "</td>");
-                html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjFormAnswers.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
-                html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswers.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "'></i></td>");
+                html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
+                html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "'></i></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -146,25 +156,46 @@ public class FormAnswers {
             if (!hasAccess.equals("")) {
                 return hasAccess;
             }
-            StringBuilder html = new StringBuilder();
             int userId = jjTools.getSeassionUserId(request);
-//            DefaultTableModel dtm = db.JoinLeft(tableName, Forms.tableName, tableName + ".*" + "," + Forms._title, _formId, Forms._id);//@ToDo فقط ستون هایی که لازم هست را بگیریم که در مصرف حاقظه رم سرفه جویی بشود
+            StringBuilder html = new StringBuilder();
             String formId = jjTools.getParameter(request, _formId);
-            List<Map<String, Object>> FormTitleRow = jjDatabaseWeb.separateRow(db.Select(Forms.tableName, Forms._title, Forms._id + "=" + formId));
+            List<Map<String, Object>> FormTitleRow = jjDatabaseWeb.separateRow(db.Select(Forms.tableName, Forms._title + "," + Forms._uniqueComplete, Forms._id + "=" + formId));
             if (FormTitleRow.isEmpty()) {
                 Server.outPrinter(request, response, "کد صحیح نیست");
                 return "";
             }
+            //ویژگی : اگر فردی در سمتی یک فرم را پر کند و فرد دیگری در آن سمت قرار گیرد نمیتواند فرم تکمیل شده ی فرم قبلی را ببیند ولی مدیران با دسترسی بالاتر میبینند
+            //ویژگی : اگر فردی در سمتی یک فرم را پر کند و فرد دیگری در آن سمت قرار گیرد نمیتواند فرم تکمیل شده ی فرم قبلی را ببیند ولی مدیران با دسترسی بالاتر میبینند
+
+            DefaultTableModel dtm = db.Select(tableName, _formId + "=" + formId + " AND " + _userId + "=" + userId);
+            List<Map<String, Object>> row = jjDatabaseWeb.separateRow(dtm);
             html.append("<p class='mg-b-20 mg-sm-b-30'>");
             html.append("عنوان :" + FormTitleRow.get(0).get(Forms._title));
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
-            if (accIns) {
+            //ویژگی : اگر کاربر قبلا دسترسی داشته و اکنون دسترسی اش برای فرم خاصی برداشته شده یا نقشش عوض شده که به فرمی دسترسی ندارد دیگر دکمهی یجدید را نمی بیند
+            //تشخیص دسترسی نقش یا شخص کاربر برای تکمیل این فرم---------------------------------------------------
+            String userRoleInsession = jjTools.getSeassionUserRole(request);
+            System.out.println(">>>>>>>>UserRoles is:" + userRoleInsession);
+            String where = " WHERE (";
+            String userRoles[] = userRoleInsession.split("%23A%23");
+            for (int i = 0; i < userRoles.length; i++) {
+                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "\\%23A\\%23%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
+            }
+            if (!jjTools.getSeassionUserRole(request).isEmpty()) {// اگر کاربر جاری نقشی در سیستم دارد
+                where += Forms._accessessRoles + " like " + "'%ALL%'" + " OR ";//فرم هایی که برای همه ی سمت ها دسترسی دارند را هم نشان بدهیم
+            }
+            where += Forms._accessessUsers + " like " + "'%" + userId + "\\%23A\\%23%'" + " OR ";
+            where += Forms._accessessUsers + " like " + "'%ALL%'" + " OR ";
+            where += Forms._accessessUsers + " = " + "''" + " OR ";
+            where += Forms._accessessUsers + "='' ) AND  ";
+            where += Forms._id + "=" + jjTools.getParameter(request, FormAnswerSet._formId) + "  AND  ";
+            where += Forms._isActive + "=1 ; ";
+            //--------------------------------------------------------------------------------------------------------------------
+            if (accIns && db.otherSelect("SELECT * FROM " + Forms.tableName + where).getRowCount() > 0) {//و اگر نقش یا شخص این کاربر موجود در سشن به این فرم دسترسی داشته باشد  دکمه جدید را نشان بدهد
                 html.append("<br/>");
-                html.append("<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' href ='Server?do=FormAnswers.add_new&formAnswers_formId="+formId+"' target='_blank' >تکمیل یک نمونه فرم جدید</a>");
+                html.append("<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' href ='Server?do=FormAnswerSet.add_new&formAnswers_formId=" + formId + "' target='_blank' >تکمیل یک نمونه فرم جدید</a>");
             }
             html.append("</p>");
-            DefaultTableModel dtm = db.Select(tableName, _formId + "=" + formId + " AND " + _userId + "=" + userId);
-            List<Map<String, Object>> row = jjDatabaseWeb.separateRow(dtm);
             html.append("<div class='table-wrapper'>");
             html.append("<table id='refreshAnswers' class='table display responsive' class='tahoma10' style='direction: rtl'><thead>");
             html.append("<th width='5%' class='r'>کد</th>");
@@ -173,16 +204,17 @@ public class FormAnswers {
             html.append("<th width='20%' class='c'>تاریخ</th>");
             html.append("<th width='20%' class='c'>ساعت</th>");
             html.append("<th width='20%' class='c'>آنالیز و آمار</th>");
+            html.append("<th width='20%' class='c'>آنالیز و آمار</th>");
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
-                html.append("<tr  class='mousePointer'>");
+                html.append("<tr  class='mousePointer " + getClassByStatus(row.get(i).get(_status).toString()) + "' >");
                 html.append("<td class='r'>" + row.get(i).get(_id) + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_userName) + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_userRole) + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_date) + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_time) + "</td>");
-                html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjForms.select(row.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
-                html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjForms.select(row.get(i).get(_id).toString()) + "'></i></td>");
+                html.append("<td class='c'><a href='Server?do=FormAnswerSet.selectToEdit&formAnswers_formId=13&id=" + row.get(i).get(_id).toString() + "' target='_blank'><i class='p icon ion-ios-gear-outline' style='color:#ffcd00!important'></i></td>");
+                html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswerSet.select(row.get(i).get(_id).toString()) + "'></i></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -206,38 +238,90 @@ public class FormAnswers {
 
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
-            StringBuilder script = new StringBuilder();
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
-            if (!accIns) {
+            //بررسی دسترسی برای تکمیل یک فرم بر اساس نقش و شخص------------------------------------------------
+            int userId = jjTools.getSeassionUserId(request);
+            String userRoleInsession = jjTools.getSeassionUserRole(request);
+            String where = " WHERE (";
+            String userRoles[] = userRoleInsession.split("%23A%23");
+            for (int i = 0; i < userRoles.length; i++) {
+                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "\\%23A\\%23%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
+            }
+            if (!jjTools.getSeassionUserRole(request).isEmpty()) {// اگر کاربر جاری نقشی در سیستم دارد
+                where += Forms._accessessRoles + " like " + "'%ALL%'" + " OR ";//فرم هایی که برای همه ی سمت ها دسترسی دارند را هم نشان بدهیم
+            }
+            where += Forms._accessessUsers + " like " + "'%" + userId + "\\%23A\\%23%'" + " OR ";
+            where += Forms._accessessUsers + " like " + "'%ALL%'" + " OR ";
+            where += Forms._accessessUsers + " = " + "''" + " OR ";
+            where += Forms._accessessUsers + "='' ) AND  ";
+            where += Forms._id + "=" + jjTools.getParameter(request, FormAnswerSet._formId) + "  AND  ";
+            where += Forms._isActive + "=1 ; ";
+            if (!accIns && db.otherSelect("SELECT * FROM " + Forms.tableName + where).getRowCount() == 0) {//و اگر نقش یا شخص این کاربر موجود در سشن به این فرم دسترسی داشته باشد این متد کار می کند
                 Server.outPrinter(request, response, "شما اجازه ی ثبت این فرم را ندارید");
                 return "";
             }
+            //--------------------------------------------------------------------------------------------------------------------
             String formId = jjTools.getParameter(request, _formId);
             if (!jjNumber.isDigit(formId)) {
                 Server.outPrinter(request, response, "کد فرم باید عدد باشد");
                 return "";
             }
+            System.out.println("********************************");
+            for (int k = 0; k < request.getCookies().length; k++) {
+                System.out.println("=========================COOKIES No " + k + ":");
+                System.out.println(request.getCookies()[k].getName());
+                System.out.println(request.getCookies()[k].getValue());
+            }
+            List<Map<String, Object>> formRow = jjDatabaseWeb.separateRow(db.Select(Forms.tableName, Forms._id + "=" + formId + " AND " + Forms._isActive + "=1"));
+            if (formRow.isEmpty()) {
+                Server.outPrinter(request, response, "چنین فرمی وجود ندارد");
+                return "چنین فرمی وجود ندارد";
+            }
+            System.out.println("********************************");
+            String userMAC = jjTools.getCookie(request, "#USER_MAC");
+            if (formRow.get(0).get(Forms._uniqueComplete).toString().equals("1")) {// اگر از نوع فرم های یکبار پر کردنی بود
+                where = FormAnswerSet._formId + "=" + formId + " AND (" + FormAnswerSet._userId + "=" + jjTools.getSeassionUserId(request) + " OR "
+                        + FormAnswerSet._userMAC + "=" + userMAC + ") ;";// جایی که پاسخ در حالت ثبت اولیه نباشد و با همین فرم آی دی و همین کاربر یا همین مک
+                List<Map<String, Object>> uniqueForm = jjDatabaseWeb.separateRow(db.Select(FormAnswerSet.tableName, where));
+                if (!uniqueForm.isEmpty()) {// اگر فرم باید توسط هر کاربر بصورت یونیک پر شود و اگر قبلا ثبت نهایی کرده است 
+                    Server.outPrinter(request, response, "شما مجاز به تکمیل مجدد این فرم نیستید");
+                    return "شما مجاز به تکمیل مجدد این فرم نیستید";
+                }
+            } else {//اگر قبلا فرمی ایجاد کرده و ثبت نهایی نکرده
+                //@ToDo می توانیم اینجا چک کنیم اگر پاسخ ثبلی در وضعیت ثبت اولیه بود کاربر را بفرستیم به ویرایش 
+            }
             //مهم : دز اینجا یک صفحه ی جی اس پی را در پاسخ می فرستیم
             request.setAttribute("db", db);
-            request.getRequestDispatcher("feiz/newFormToComplete.jsp").forward(request, response);
+            System.out.println("------->>>>>feiz/newAnswer.jsp");
+            request.getRequestDispatcher("feiz/newAnswer.jsp").forward(request, response);
             return "";
-//            script.append(Js.setVal(_formId, jjTools.getSeassionUserId(request)));
-//            script.append(Js.setVal(_formId, jjTools.getSeassionUserId(request)));
-//            script.append(Js.setVal("#forms_ownerName", jjTools.getSessionAttribute(request, "#USER_NAME") + " " + jjTools.getSessionAttribute(request, "#USER_FAMILY")));//برای استخراج نام و نام خانوادگی کاربری که در سشن فعال است
-//            script.append(Js.setVal(_userId, jjTools.getSeassionUserRole(request)));
-//            List<Map<String, Object>> userRoleRow = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, _id + "=" + jjTools.getSeassionUserRole(request)));//برای در آوردن نقش کاربر موجود
-//            if (!userRoleRow.isEmpty()) {// ممکن است کاربر جاری نقشی در سیستم نداشته باشد ولی دسترسی هایی داشته باشد
-//                script.append(Js.setVal("#forms_ownerRoleTitle", userRoleRow.get(0).get(Access_User._name).toString() + " " + userRoleRow.get(0).get(Access_User._family).toString()));
-//            }
-//            script.append(Js.setHtml("#forms_buttons", "<div class='col-lg-6'><input type='button' id='insert_Forms_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
-//            script.append(Js.click("#insert_Forms_new", Js.jjForms.insert()));
-        } catch (Exception ex) {
+        } catch (IOException | ServletException ex) {
             return Server.ErrorHandler(ex);
         }
     }
 
     /**
+     * نشان داده یک فرمکه ثبت شده برای ویرایش توسط کاربر ممکن است بعد از ثبت
+     * اولیه باشد و ممکن است بعد از انتخاب از جدول
      *
+     * @param request
+     * @param response
+     * @param db
+     * @param isPost
+     * @return
+     * @throws Exception
+     */
+    public static String selectToEdit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+        request.setAttribute("db", db);
+        System.out.println("------->>>>>feiz/newAnswerSelectToEdit.jsp");
+        request.getRequestDispatcher("feiz/newAnswerSelectToEdit.jsp").forward(request, response);
+        return "";
+    }
+
+    /**
+     * درج در دیتابیس برای اولین بار ثبت موقت فرم و ثبت نهایی و آزمون توسط کاربر
+     * این تابع اگر فرم یونیک باشد و قبلا توسط این مک یا این کاربر پر شده باشد
+     * اجازه تکمیل نمیدهد
      *
      * @param request
      * @param db
@@ -251,47 +335,229 @@ public class FormAnswers {
             if (!hasAccess.equals("")) {
                 return Js.modal(hasAccess, "پیام سامانه");
             }
-            jjCalendar_IR ir = new jjCalendar_IR();
-            Map<String, Object> map = new HashMap<String, Object>();
-//            map.put(_title, jjTools.getParameter(request, _title));
-//            map.put(_code, jjTools.getParameter(request, _code));
-//            map.put(_departments, jjTools.getParameter(request, _departments));
-//            map.put(_isActive, jjTools.getParameter(request, _isActive));
-//            map.put(_icon, jjTools.getParameter(request, _icon));
-//            map.put(_ownerId, jjTools.getSeassionUserId(request));
-//            map.put(_ownerRole, jjTools.getParameter(request, _ownerRole));
-//            map.put(_accessessUsers, jjTools.getParameter(request, _accessessUsers));
-//            map.put(_accessessRoles, jjTools.getParameter(request, _accessessRoles));
-//            if ("".equals(jjTools.getParameter(request, _creationDate))) {// اگر تاریخ شروع اعتبار وارد نکرده بود
-//                map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(null, true));
-//            } else {
-//                map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _accessessRoles), true));
-//            }
-//            jjCalendar_IR date = new jjCalendar_IR();
-//            map.put(_creationTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _creationTime)));
-//            map.put(_expireDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _expireDate), false));
-//            map.put(_expireTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _expireTime)));
-//            map.put(_nextFormId, jjNumber.isDigit(jjTools.getParameter(request, _nextFormId)));
-//            map.put(_isAutoWiki, jjTools.getParameter(request, _isAutoWiki));
-//            map.put(_hasAutoWikiInContent, jjTools.getParameter(request, _hasAutoWikiInContent));
-//            map.put(_css, jjTools.getParameter(request, _css));
-//            map.put(_javaScript, jjTools.getParameter(request, _javaScript));
-//            map.put(_htmlContent, jjTools.getParameter(request, _htmlContent));
-//            map.put(_description, jjTools.getParameter(request, _description));
+            String formId = jjTools.getParameter(request, _formId);
+            String script = "";
+            List<Map<String, Object>> formRow = jjDatabaseWeb.separateRow(db.Select(Forms.tableName, Forms._id + "=" + formId));
+            String userMAC = jjTools.getCookie(request, "#USER_MAC");
+            if (formRow.isEmpty()) {
+                Server.outPrinter(request, response, "این فرم وجود ندارد");
+                return "این فرم وجود ندارد";
+            } else if (formRow.get(0).get(Forms._uniqueComplete).toString().equals("1")) {// اگر فرم باید توسط هر کاربر بصورت یونیک پر شود
+                //چک می کنیم که قبلا این کاربر یا این مک آدرس فرم را پر نکرده باشد
+                String where = _formId + "=" + formId + " AND (" + _userId + "=" + jjTools.getSeassionUserId(request) + " OR "
+                        + _userMAC + "=" + userMAC + ")";// جایی که پاسخ در حالت ثبت اولیه نباشد و با همین فرم آی دی و همین کاربر یا همین مک
+                List<Map<String, Object>> uniqueForm = jjDatabaseWeb.separateRow(db.Select(tableName, where));
+                if (!uniqueForm.isEmpty()) {
+                    script = "alert('این فرم قبلا توسط شما تکمیل شده است و شما مجازهستید فقط یکبار این فرم را تکمیل کنید');\n";
+                    script += Js.setHtml("#formAnserSetBtn", "این فرم قبلا توسط شما تکمیل شده است و شما مجازهستید فقط یکبار این فرم را تکمیل کنید");
+                    Server.outPrinter(request, response, script);
+                    return script;
+                }
+            }
 
-            List<Map<String, Object>> insertedFormRow = jjDatabaseWeb.separateRow(db.insert(tableName, map));
-            StringBuilder script = new StringBuilder();
-            if (insertedFormRow.isEmpty()) {
-                String errorMessage = "عملیات درج به درستی صورت نگرفت.";
+            Map<String, Object> map = new HashMap();
+
+            map.put(_formId, formId);
+            map.put(_userId, jjTools.getSeassionUserId(request));
+            if (jjTools.getSeassionUserRole(request).split("%23A%23").length > 1) {// اگر بیشتر از یک نقش در سشن داشت از ریکوئست نقش انتخابی کاربر را بخواند
+                map.put(_userRole, jjTools.getParameter(request, _userRole));
+            } else {// در غیر اینصورت نقش را  از سشن بخواند که ممکن است تهی باشدیعنی نقشی نداشته باشد
+                map.put(_userRole, jjTools.getSeassionUserRole(request));
+            }
+            map.put(_userName, jjTools.getSeassionUserNameAndFamily(request));
+            map.put(_userMAC, userMAC);
+            map.put(_userIPV4, jjTools.getuserIP(request));
+            map.put(_userIPV6, jjTools.getuserIP(request));
+            jjCalendar_IR date = new jjCalendar_IR();
+            map.put(_date, date.getDBFormat_8length());
+            map.put(_time, date.getTimeFormat_4length());
+
+            //درج یک ست پاسخ در دیتابیس برای اتصال پاسخ های تکی به هم
+            List<Map<String, Object>> answerSetRow = jjDatabaseWeb.separateRow(db.insert(tableName, map));
+            if (answerSetRow.isEmpty()) {
+                String errorMessage = "عملیات درج به درستی صورت نگرفت. 12-324";
+                Server.outPrinter(request, response, "alert('" + errorMessage + "')");
                 return Js.modal(errorMessage, "پیام سامانه");
             }
-            script.append(Js.jjForms.refresh());
-            //کاربر بعد از ثبت مشخصات فرم یاد سوالات فرم را یکی یکی یا دسته ای اضافه کند
-            script.append(Js.jjForms.select(insertedFormRow.get(0).get(_id).toString()));// برای اینکه در واقع مثل موقعی بشود که یک فرم قبلا ثبت شده را انتخاب کرده سلکت جاوا اسکریپتی را بعد از اینسرت صدا میزنیم
-            return script.toString();
+            String id = answerSetRow.get(0).get(_id).toString();// وقتی در جدول ردیف مخصوص پاسخ را درج کردیم آی دی را مقدار دهی می کنیم
+            //به تعداد سوالات موجود در فرم اصلی باید پاسخ ایجاد کنیم
+            List<Map<String, Object>> questionRows = jjDatabaseWeb.separateRow(db.Select(FormQuestions.tableName, FormQuestions._formID + "=" + formId));
+            boolean flag = true;
+            String qNo = "";
+            for (int i = 0; i < questionRows.size(); i++) {// در پاسخ های فرم در ستون پاسخ ها
+                Map<String, Object> answerMap = new HashMap();
+                String answerI = jjTools.getParameter(request, "q" + questionRows.get(i).get(_id));
+                if (questionRows.get(i).get(FormQuestions._isRequierd).equals("1") && answerI.isEmpty()) {//در ثبت نهایی اگر پاسخ سوالی ضروری بود و کاربر پاسخ نداده بودباید فرم را از حالت ثبت نهایی خارج کنیم
+                    flag = false;
+                    qNo += "سوال شماره ی" + (i + 1) + "،";//سوال هایی که ضروری هستند و پاسخ داده نشده اند
+                }
+                answerMap.put(FormAnswers._questionId, questionRows.get(i).get(_id));
+                answerMap.put(FormAnswers._answer, answerI.replaceAll("#A#", "%23A%23"));
+                answerMap.put(FormAnswers._answerSet_id, id);
+                db.insert(FormAnswers.tableName, answerMap);// برای هر پاسخ یک سطر در جدول پاسخ ها داریم
+            }
+            String message = "";
+            //تغییر وضعیت==================================================
+            if (jjTools.getParameter(request, _status).equals(statues_sabteNahei) && flag) {//اگر درخواست ثبت نهایی بود و به همه ی سوالات اجباری پاسخ داده بود
+                changeStatus(id, statues_sabteNahei, db);
+                message = "پاسخ شما در سامانه ثبت نهایی شد";
+                script += "addFormIdToCookie(" + formId + ");\n";//در کوکی ست کنیم که این فرم قبلا ثبت نهایی شده است
+            } else {
+                changeStatus(id, statues_sabteAvalie, db);
+                if (!qNo.isEmpty()) {// اگر به سوالات اجباری پاسخ نداده بود
+                    message = "شما به " + qNo + "پاسخ نداده اید ";
+                }
+                message += ". فرم شما موقتا ثبت شد";
+                script += "removeFormIdFromCookie(" + formId + ");\n";//در کوکی پاک کنیم که این فرم قبلا ثبت نهایی شده است
+            }
+            //==========================================================
+            script += Js.setVal("#" + tableName + "_id", id);// وقتی که آی دی را بگذاریم در فرم سمت جاوا اسکریپت کنترل می کنیم که کدام تابع صدا زده بشود
+            script += Js.modal(message, "پیام سامانه");
+            script += "$('#formAnserSetBtn').html('');\n";// برای اینکه کاربر نتواند دکمه درج را مجدد بزند
+            script += "window.location.replace('Server?do=FormAnswerSet.selectToEdit&formAnswers_formId=" + formId + "&id=" + id + "');\n";// برای اینکه کاربر نتواند دکمه درج را مجدد بزند
+
+//                    return "alert('" + message + "')";//@ToDo چون رکورد فرم ثبت شده باید دکمه ثبت را به ویرایش تغییر بدهیم
+            //@ToDo فرم بعد از این فرم چه باید باشد و صدا زدن ان در ثبت نهایی
+            Server.outPrinter(request, response, script);
+            return Js.setVal("#" + tableName + "_id", id);
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }
+    }
+
+    public static String changeStatus(String id, String newStatus, jjDatabaseWeb db) throws Exception {
+        try {
+            if (!jjNumber.isDigit(id)) {
+                return "خطا در تغییر وضعیت  12-375";
+            }
+            db.otherStatement("UPDATE " + tableName + " SET " + _statusLog
+                    + "=concat(ifnull(" + _statusLog + ",''),'"
+                    + newStatus
+                    + ","
+                    + jjCalendar_IR.getViewFormat(new jjCalendar_IR().getDBFormat_8length())
+                    + ","
+                    + new jjCalendar_IR().getTimeFormat_8length()
+                    + "%23A%23"
+                    + "') ,"
+                    + _status + "='" + newStatus + "'  WHERE id=" + id + ";");
+            return "";
+        } catch (Exception ex) {
+            System.out.println("err: عملیات تغییر وضعیت به درستی صورت نگرفت.12-390");
+            Server.ErrorHandler(ex);
+            return "عملیات تغییر وضعیت به درستی صورت نگرفت.12-390";
+        }
+    }
+
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+        String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
+        if (!hasAccess.equals("")) {
+            return Js.modal(hasAccess, "پیام سامانه");
+        }
+        String formId = jjTools.getParameter(request, _formId);
+        String id = jjTools.getParameter(request, _id);
+        //اگر پاسخ را ثبت نهایی کرده بود  امکان تغییر ندارد
+        if (db.Select(tableName, _id + "=" + id + " AND " + _status + "='" + statues_sabteNahei + "'").getRowCount() == 1) {
+            Server.outPrinter(request, response, Js.modal("امکان ویرایش فرمی که ثبت نهایی شده وجود ندارد", "فرم قبلا ثبت نهایی شده!"));
+            return "امکان ویرایش فرمی که ثبت نهایی شده وجود ندارد";
+        }
+        //@ToDo هرکسی بتواند فقط فرم خودش را ویرایش کند
+        String script = "";
+        List<Map<String, Object>> formRow = jjDatabaseWeb.separateRow(db.Select(Forms.tableName, Forms._id + "=" + formId));
+        String userMAC = jjTools.getCookie(request, "#USER_MAC");
+        if (formRow.isEmpty()) {
+            Server.outPrinter(request, response, "این فرم وجود ندارد");
+            return "این فرم وجود ندارد";
+        } else if (formRow.get(0).get(Forms._uniqueComplete).toString().equals("1")) {// اگر فرم باید توسط هر کاربر بصورت یونیک پر شود
+            //چک می کنیم که قبلا این کاربر یا این مک آدرس فرم را پر نکرده باشد
+            String where = _formId + "=" + formId + " AND (" + _userId + "=" + jjTools.getSeassionUserId(request) + " OR "
+                    + _userMAC + "=" + userMAC + ") AND " + _status + "=" + statues_sabteNahei;// جایی که پاسخ در حالت ثبت نهایی نباشد و با همین فرم آی دی و همین کاربر یا همین مک
+            List<Map<String, Object>> uniqueForm = jjDatabaseWeb.separateRow(db.Select(tableName, where));
+            if (!uniqueForm.isEmpty()) {
+                script = "alert('این فرم قبلا توسط شما تکمیل شده است و شما مجازهستید فقط یکبار این فرم را تکمیل کنید');\n";
+                script += Js.setHtml("#formAnserSetBtn", "این فرم قبلا توسط شما تکمیل شده است و شما مجازهستید فقط یکبار این فرم را تکمیل کنید");
+                Server.outPrinter(request, response, script);
+                return script;
+            }
+        }
+        Map<String, Object> map = new HashMap();
+        map.put(_formId, formId);
+        map.put(_userId, jjTools.getSeassionUserId(request));
+        if (jjTools.getSeassionUserRole(request).split("%23A%23").length > 1) {// اگر بیشتر از یک نقش در سشن داشت از ریکوئست نقش انتخابی کاربر را بخواند
+            map.put(_userRole, jjTools.getParameter(request, _userRole));
+        } else {// در غیر اینصورت نقش را  از سشن بخواند که ممکن است تهی باشدیعنی نقشی نداشته باشد
+            map.put(_userRole, jjTools.getSeassionUserRole(request));
+        }
+        map.put(_userName, jjTools.getSeassionUserNameAndFamily(request));
+        map.put(_userMAC, userMAC);
+        map.put(_userIPV4, jjTools.getuserIP(request));
+        map.put(_userIPV6, jjTools.getuserIP(request));
+        jjCalendar_IR date = new jjCalendar_IR();
+        map.put(_date, date.getDBFormat_8length());
+        map.put(_time, date.getTimeFormat_4length());
+
+        //آپدیت یک ست پاسخ در دیتابیس برای اتصال پاسخ های تکی به هم
+        if (!db.update(tableName, map, _id + "=" + id)) {
+            String errorMessage = "عملیات ویاریش به درستی صورت نگرفت. 12-324";
+            Server.outPrinter(request, response, "alert('" + errorMessage + "')");
+            return Js.modal(errorMessage, "پیام سامانه");
+        }
+
+        changeStatus(_id, statues_sabteAvalie, db);
+        //ویژگی : اگر ادمین سوالات یک فرم را کم یا زیاد کند در ویرایش آم فرم اشکالی بوجود نمی آید
+        List<Map<String, Object>> questions = jjDatabaseWeb.separateRow(db.Select(FormQuestions.tableName, FormQuestions._formID + "=" + formId));
+        //ویژگی : سوالات اجباری را در هنگام ویرایش هشدار می دهد
+        boolean flag = true;
+        String qNo = "";
+        for (int i = 0; i < questions.size(); i++) {//برای هر سوال
+            map.clear();
+            String answer = jjTools.getParameter(request, "q" + questions.get(i).get(FormQuestions._id));
+            map.put(FormAnswers._answer, answer.replaceAll("#A#", "%23A%23"));// از ریکوئست بخوانیم مقدار پاسخ جدید را
+            if (!db.update(FormAnswers.tableName, map, FormAnswers._answerSet_id + "=" + id + " AND " + FormAnswers._questionId + "=" + questions.get(i).get(FormQuestions._id))) {//اگر قبلا پاسخی وجود داشت که بروز رسانی بکن و اگر نداشت اینسرت کن
+                map.put(FormAnswers._answerSet_id, id);//اینجا سوالی که قبلا نبوده اضافه شده و باید پاسخ داده شود
+                map.put(FormAnswers._questionId, questions.get(i).get(FormQuestions._id));
+                db.insert(FormAnswers.tableName, map);
+            }
+            if (questions.get(i).get(FormQuestions._isRequierd).equals("1") && answer.isEmpty()) {//در ثبت نهایی اگر پاسخ سوالی ضروری بود و کاربر پاسخ نداده بود باید فرم را از حالت ثبت نهایی خارج کنیم
+                flag = false;
+                qNo += "سوال شماره ی" + (i + 1) + "،";//سوال هایی که ضروری هستند و پاسخ داده نشده اند
+            }
+        }
+        //ویژگی : تغییر وضعیت هنگام ویرایش یا ثبت نهایی فرم
+        String message = "";
+        if (jjTools.getParameter(request, _status).equals(statues_sabteNahei) && flag) {//اگر درخواست ثبت نهایی بود و به همه ی سوالات اجباری پاسخ داده بود
+            changeStatus(id, statues_sabteNahei, db);
+            message = "پاسخ شما در سامانه ثبت نهایی شد";
+            if (formRow.get(0).get(Forms._uniqueComplete).equals("1")) {
+                script += "addFormIdToCookie(" + formId + ");\n";//در کوکی ست کنیم که این فرم قبلا ثبت نهایی شده است                
+            }else{
+                script += "removeFormIdFromCookie(" + formId + ");\n";//در کوکی پاک کنیم که این فرم قبلا ثبت نهایی شده است
+            }
+        } else {
+            changeStatus(id, statues_sabteAvalie, db);
+            if (!qNo.isEmpty()) {// اگر به سوالات اجباری پاسخ نداده بود
+                message = "شما به " + qNo + "پاسخ نداده اید ";
+            }
+            message += ". فرم شما موقتا ثبت شد";
+            
+//            script += "window.location.replace('Server?do=FormAnswerSet.selectToEdit&formAnswers_formId=" + formId + "&id=" + id + "');\n";// برای اینکه کاربر نتواند دکمه درج را مجدد بزند
+        }
+        //==========================================================
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+        script += Js.setVal("#" + tableName + "_id", id);// وقتی که آی دی را بگذاریم در فرم سمت جاوا اسکریپت کنترل می کنیم که کدام تابع صدا زده بشود
+        script += Js.modal(message, "پیام سامانه");
+        //@ToDo فرم بعد از این فرم چه باید باشد و صدا زدن ان در ثبت نهایی
+        Server.outPrinter(request, response, script);
+        return script;
+
+    }
+
+    public static String getClassByStatus(String status) {
+        if (status.equals(statues_sabteAvalie)) {
+            return "yellow";
+        } else if (status.equals(statues_sabteNahei)) {
+            return "green";
+        }
+        return "";
     }
 
     public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
@@ -300,6 +566,8 @@ public class FormAnswers {
             if (!hasAccess.equals("")) {
                 return Js.modal(hasAccess, "پیام سامانه");
             }
+
+            request.getRequestDispatcher("feiz/newFormToComplete.jsp").forward(request, response);
 
             String id = jjTools.getParameter(request, _id);
             List<Map<String, Object>> formRow = jjDatabaseWeb.separateRow(db.Select(tableName, _id + "=" + id));
@@ -351,52 +619,6 @@ public class FormAnswers {
             script.append(Js.setHtml("#forms_buttons", htmlBottons));
             //کاربر بعد از ثبت مشخصات فرم یاد سوالات فرم را یکی یکی یا دسته ای اضافه کند
             return script.toString();
-        } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
-        }
-    }
-
-    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
-        try {
-            String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
-            if (!hasAccess.equals("")) {
-                return Js.modal(hasAccess, "پیام سامانه");
-            }
-
-            String id = jjTools.getParameter(request, _id);
-            jjCalendar_IR ir = new jjCalendar_IR();
-            Map<String, Object> map = new HashMap<String, Object>();
-//            map.put(_title, jjTools.getParameter(request, _title));
-//            map.put(_code, jjTools.getParameter(request, _code));
-//            map.put(_departments, jjTools.getParameter(request, _departments));
-//            map.put(_isActive, jjTools.getParameter(request, _isActive));
-//            map.put(_icon, jjTools.getParameter(request, _icon));
-//            map.put(_ownerId, jjTools.getSeassionUserId(request));
-//            map.put(_ownerRole, jjTools.getParameter(request, _ownerRole));
-//            map.put(_accessessUsers, jjTools.getParameter(request, _accessessUsers));
-//            map.put(_accessessRoles, jjTools.getParameter(request, _accessessRoles));
-//            if ("".equals(jjTools.getParameter(request, _creationDate))) {// اگر تاریخ شروع اعتبار وارد نکرده بود
-//                map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(null, true));
-//            } else {
-//                map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _accessessRoles), true));
-//            }
-//            jjCalendar_IR date = new jjCalendar_IR();
-//            map.put(_creationTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _creationTime)));
-//            map.put(_expireDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _expireDate), false));
-//            map.put(_expireTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _expireTime)));
-//            map.put(_nextFormId, jjNumber.isDigit(jjTools.getParameter(request, _nextFormId)));
-//            map.put(_isAutoWiki, jjTools.getParameter(request, _isAutoWiki));
-//            map.put(_hasAutoWikiInContent, jjTools.getParameter(request, _hasAutoWikiInContent));
-//            map.put(_css, jjTools.getParameter(request, _css));
-//            map.put(_javaScript, jjTools.getParameter(request, _javaScript));
-//            map.put(_htmlContent, jjTools.getParameter(request, _htmlContent));
-//            map.put(_description, jjTools.getParameter(request, _description));
-
-            if (db.update(tableName, map, _id + "=" + id)) {
-                return Js.modal("ویرایش بدرستی انجام شد", "پیام سامانه");
-            } else {
-                return Js.modal("ویرایش انجام نشد", "پیام سامانه");
-            }
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }

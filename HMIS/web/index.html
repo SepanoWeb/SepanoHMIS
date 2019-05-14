@@ -109,7 +109,7 @@
                                     hmisForms.loadForm();
                                 return false;" class="nav-link ShowOneDiv">فرم ها </a></li>
                         <li class="nav-item"><a href="#swForms" onclick="hmisForms.showMyForms(0);return false;" class="nav-link ShowOneDiv">آرشیو فرم های تکمیل شده</a></li>
-                        <li class="nav-item"><a href="#swMyForms" target="_blank" onclick="hmisFormAnswers.showMyForms();return false;" class="nav-link ShowOneDiv">تکمیل فرم های من</a></li>
+                        <li class="nav-item"><a href="#swMyForms" target="_blank" onclick="hmisFormAnswerSets.showMyForms();return false;" class="nav-link ShowOneDiv">تکمیل فرم های من</a></li>
                     </ul>
                 </li><!-- nav-item -->
                 <li class="nav-item">
@@ -479,7 +479,7 @@
                                 </div><!-- media -->
                             </a>
                             <a href="index.html" class="media-list-link read">
-                                <div class="media pd-x-20 pd-y-15">
+                                <div class="media pd-x-20 p-dy-15">
                                     <img src="./Manager/img5.jpg" class="wd-40 rounded-circle" alt="">
                                     <div class="media-body">
                                         <p class="tx-13 mg-b-0"><strong class="tx-medium">سیستم یاد آور</strong>فرم خطا و خطر	بخش اطفال در اختیار شما قرار گرفته است<strong class="tx-medium">ماژول فرم ساز/تکمیل فرم های من</strong></p>
@@ -651,7 +651,7 @@
             <script src="jsHMIS/messenger.js" type="text/javascript"></script>
             <!--///نقش  ها-->
             <script src="jsHMIS/role.js" type="text/javascript"></script>
-            <script src="js/jquery/ajaxfileupload.js" type="text/javascript"></script>
+            <script src="Manager/js/ajaxfileupload.js" type="text/javascript"></script>
             <script src="Manager/bootstrap-filestyle.js" type="text/javascript"></script>
             <script src="Manager/bootstrap-filestyle.min.js" type="text/javascript"></script>
             <!--forms-->
@@ -672,7 +672,6 @@
                                     $(".nav-sub a.nav-link").on('click', function () {
                                         $("a.nav-link.active").removeClass("active");
                                         $(this).parent().parent().parent().find('a.nav-link.with-sub').addClass("active");
-
                                         $(this).addClass("active");
                                     });
             </script>

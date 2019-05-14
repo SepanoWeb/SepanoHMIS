@@ -31,12 +31,12 @@ var hmisFormQuestions = {
     },
     m_clean: function () {
         new jj("#swFormQuestionsForm").jjFormClean();
+        $("#swFormQuestionOptionsTbl").html("");// برای پاک کردن آپشن ها و گزینه های قبلی که ممکن است مربوط به سوال قبلی باشد
     },
     m_add_new: function () {
         new jj("do=" + hmisFormQuestions.tableName + ".add_new&jj=1").jjAjax2(false);
         hmisFormQuestions.m_show_form();
         hmisFormQuestions.m_clean();
-        $('#swFormQuestionOptionsTbl').hide();
     },
     m_show_tbl: function () {
         $('#swFormQuestionsTbl').slideDown('slow');

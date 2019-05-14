@@ -112,7 +112,7 @@ public class Server extends HttpServlet {
             clazzes.add(HMIS.Forms.class);   //فرم ساز
             clazzes.add(HMIS.FormQuestions.class);   //فرم ساز
             clazzes.add(HMIS.FormQuestionOptions.class);   //فرم ساز
-            clazzes.add(HMIS.FormAnswers.class);   //فرم ساز
+            clazzes.add(HMIS.FormAnswerSet.class);   //فرم ساز
             clazzes.add(HMIS.Plans.class);   //برنامه های عملیاتی
             clazzes.add(PlansForAssess.class);//برنامه پایش
             clazzes.add(Steps.class);//گام های اجرایی

@@ -139,10 +139,15 @@ var hmisRole = {
 //       $("#role_email").val('');
         new jj(param).jjAjax2(false);
     },
-
-    m_getMenu: function () {
+/**
+ *  قراردادن نقش ها در سلکت آپشن ها
+ * @param {type} selector میتوانیم هر سلکتوری بدهیم مثلا سلکتور کلاس بدهیم
+ * @returns {undefined}
+ */
+    getSelectOption: function (panel) {
         var param = "";
-        param += "do=" + hmisRole.tableName + ".getMenu";
+        param += "panel=" + panel;
+        param += "&do=" + hmisRole.tableName + ".getSelectOption";
         new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {

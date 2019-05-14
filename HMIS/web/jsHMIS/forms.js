@@ -13,7 +13,7 @@ var hmisForms = {
 //        if (true) {
             $("#swFormsForm").load("formHMIS/02newForm.html", null, function () {
 
-                $('.summernote').summernote({ height: 150});///برای تبدیل شدن به textEditor
+                $('.summernote').summernote({height: 150});///برای تبدیل شدن به textEditor
                 new jj("#forms_creationDate").jjCalendarWithYearSelector(1340, 1420);
                 $('#forms_creationTime').wickedpicker({
                     twentyFour: true
@@ -28,12 +28,24 @@ var hmisForms = {
                 new jj('#send_forms_icon').jjAjaxFileUpload2('forms_icon_file', '#forms_icon', '#forms_icon_Preview');
                 new jj('#send_formQuestions_icon').jjAjaxFileUpload2('formQuestions_icon_file', '#formQuestions_icon', '#formQuestions_icon_Preview');
                 new jj('#send_formQuestionOptions_icon').jjAjaxFileUpload2('formQuestionOptions_icon_file', '#formQuestionOptions_icon', '#formQuestionOptions_Preview');
-                new jj('#formQuestions_weight').jjDigitOnly(10,20);
+                new jj('#formQuestions_weight').jjDigitOnly(10, 20);
+                hmisRole.getSelectOption("#swFormsForm .roleSelectOption");// برای قرار گرفتن سلکت آپشن نقش ها در قسمت های مربوطه
+                $(".roleSelectOption").select2({
+                    width: '100%' 
+                });
+                cmsUser.getSelectOption("#swFormsForm .userSelectOption");// برای قرار گرفتن سلکت آپشن نقش ها در قسمت های مربوطه
+                $(".userSelectOption").select2({
+                    width: '100%' 
+                });
                 $("#forms_category_id").select2({
                     minimumResultsForSearch: '',
                     width: '100%'
                 });
                 $("#forms_departments").select2({
+                    minimumResultsForSearch: '',
+                    width: '100%'
+                });
+                $("#forms_accesseRoles").select2({
                     minimumResultsForSearch: '',
                     width: '100%'
                 });
@@ -60,6 +72,10 @@ var hmisForms = {
     },
     m_clean: function () {
         new jj("#swFormsForm").jjFormClean();
+        $("#swFormsForm .img-thumbnail").attr("src","img/preview.jpg");
+        $("#swFormsForm select").val("");
+        $("#swFormsForm select").select2({with:'100%'});
+        
     },
     m_add_new: function () {
         new jj("do=" + hmisForms.tableName + ".add_new&jj=1").jjAjax2(false);
@@ -70,6 +86,9 @@ var hmisForms = {
     },
     m_show_tbl: function () {
         $('#swFormsTbl').show();
+         $('#swFormsTbl table').dataTable({//برای اینکه بعضی مواقع جدول در حالت رسپانسیو نمایش داده میشود
+            destroy: true
+        });
         $('#swFormsForm').hide();
         $('#formQuestions').hide();
     },
@@ -85,10 +104,9 @@ var hmisForms = {
         param += "do=" + hmisForms.tableName + ".edit";
         param += "&" + new jj('#swFormsForm #newForm').jjSerial();
         new jj(param).jjAjax2(false);
-        this.m_show_tbl();
-        this.m_clean();
+        hmisForms.m_refresh();
+        hmisForms.m_clean();
     },
-
     m_delete: function (id) {
         new jj("آیا از حذف این رکورد اطمینان دارید؟با حذف این فرم سوال ها و  گزینه های زیر مجموعه ی آن هم حذف می شود").jjDialog_YesNo(' hmisForms.m_delete_after_question(' + id + ');\n', true, "");
     },
@@ -100,12 +118,13 @@ var hmisForms = {
         hmisForms.m_show_tbl();
         hmisForms.m_clean();
     },
-    m_select: function (id) {     
+    m_select: function (id) {
         var param = "";
         param += "do=" + hmisForms.tableName + ".select";
         param += "&" + hmisForms.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
         hmisForms.m_show_form();
+        hmisForms.m_clean();
         $("#formQuestions").show();// در سلکت فرم افزودن سوالات را نسان میدهیم چون وقتی فرم نداریم نباید بتوانیم سوالی را ایجاد کنیم
         hmisFormQuestions.m_refresh(id);//ّبرای نشان دادن گزینه های این فرم
     },
@@ -118,8 +137,8 @@ var hmisForms = {
     },
     showMyForms: function (isAjax) {//مدعوین
         $("swMyFormsTbl").show();
-        var param = ""; 
-        param += "&do="+hmisForms.tableName+".showMyForms&jj="+isAjax;
+        var param = "";
+        param += "&do=" + hmisForms.tableName + ".showMyForms&jj=" + isAjax;
         new jj(param).jjAjax2(false);
-    } 
+    }
 };

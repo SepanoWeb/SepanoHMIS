@@ -137,6 +137,7 @@ public class Department {
             String script = "";
             String panel = jjTools.getParameter(request, "panel");
             String html4 = "<option id='selectHospital0' style='color:black' value=''>موقعیت مورد نظر را انتخاب کنید</option>";
+            html4 += "<option id='selectHospital0' style='color:black' value='ALL'>همه بخش ها</option>";
             Document doc = Jsoup.parse(html4);
             List<Map<String, Object>> rowLocation = jjDatabase.separateRow(db.Select(DepartmentPosition.tableName, "*", "id>=0", DepartmentPosition._parent));
             for (int i = 0; i < rowLocation.size(); i++) {

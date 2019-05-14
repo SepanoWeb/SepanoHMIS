@@ -8,16 +8,13 @@ package HMIS;
 import cms.access.Access_User;
 import cms.tools.Js;
 import cms.tools.Server;
-import cms.tools.ServerLog;
 import cms.tools.jjTools;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
-import jdk.nashorn.internal.runtime.ScriptObject;
 import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
@@ -59,6 +56,7 @@ public class Forms {
     public static final String _isAutoWiki = "forms_isAutoWiki";//برای این فرم لینک اتو ویکی در محتوا ساخته شود یا خیر
     public static final String _showResultToQuestioner = "forms_showResultToQuestioner";//کسی که فرم را پر می کند نتیجه ی آزمونش را همان موقع ببیند یا نه
     public static final String _showAllResultToQuestioner = "forms_showAllResultToQuestioner";//کسی که فرم را پر می کند نتیجه ی آمار را همان موقع ببیند یا نه
+    public static final String _showCometePreAproveForm = "forms_showCometePreAproveForm";//کسی که فرم را پر می کند نتیجه ی آمار را همان موقع ببیند یا نه
     public static final String _uniqueComplete = "forms_uniqueComplete";//کسی که فرم را پر می کند نتیجه ی آمار را همان موقع ببیند یا نه
     public static final String _hasAutoWikiInContent = "forms_hasAutoWikiInContent";//در محتوای این فرم اتو ویکی فعال باشد یا نه
 
@@ -148,25 +146,29 @@ public class Forms {
 
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
-            StringBuilder script = new StringBuilder();
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
-            if (accIns) {
-
-            }
-            if (accIns) {
-                List<Map<String, Object>> userRow = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, _id + "=" + jjTools.getSeassionUserId(request)));//برای استخراج نام و نام خانوادگی کاربری که در سشن فعال است
-                script.append(Js.setVal(_ownerId, jjTools.getSeassionUserId(request)));
-                script.append(Js.setVal("#forms_ownerName", userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString()));
-                script.append(Js.setVal(_ownerRole, jjTools.getSeassionUserRole(request)));
-                List<Map<String, Object>> userRoleRow = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, _id + "=" + jjTools.getSeassionUserRole(request)));//برای در آوردن نقش کاربر موجود
-                if (!userRoleRow.isEmpty()) {// ممکن است کاربر جاری نقشی در سیستم نداشته باشد ولی دسترسی هایی داشته باشد
-                    script.append(Js.setVal("#forms_ownerRoleTitle", userRoleRow.get(0).get(Access_User._name).toString() + " " + userRoleRow.get(0).get(Access_User._family).toString()));
-                }
-                script.append(Js.setHtml("#forms_buttons", "<div class='col-lg-6'><input type='button' id='insert_Forms_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
-                script.append(Js.click("#insert_Forms_new", Js.jjForms.insert()));
-            } else {
+            StringBuilder script = new StringBuilder();
+            if (!accIns) {
                 script.append(Js.setHtml("#forms_buttons", ""));
+                script.append(Js.modal("لطفا دوباره وارد شوید", "شما دسترسی به این قسمت ندارد"));
+                Server.outPrinter(request, response, script);
+                return "";
             }
+            List<Map<String, Object>> userRow = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, _id + "=" + jjTools.getSeassionUserId(request)));//برای استخراج نام و نام خانوادگی کاربری که در سشن فعال است
+            script.append(Js.setVal(_ownerId, jjTools.getSeassionUserId(request)));
+            script.append(Js.setVal("#forms_ownerName", userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString()));
+            String userRolesOptions = Role.getUeserRolesSelectOption(jjTools.getSeassionUserId(request), db);
+            if (!userRolesOptions.isEmpty()) {// ممکن است کاربر جاری نقشی در سیستم نداشته باشد ولی دسترسی هایی داشته باشد
+                script.append(Js.setHtml("#" + _ownerRole, userRolesOptions));
+            } else {
+                script.append(Js.setVal("#" + _ownerRole, "<option value=''></option>"));
+            }
+            script.append(Js.setVal("#" + _creationDate, jjCalendar_IR.getViewFormat(jjCalendar_IR.getDatabaseFormat_8length(null, true))));
+            script.append(Js.setVal("#" + _creationTime, jj.jjTime.getTime5lenth("")));
+
+            script.append(Js.select2("#" + _ownerRole, "width:'100%'"));
+            script.append(Js.setHtml("#forms_buttons", "<div class='col-lg-6'><input type='button' id='insert_Forms_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success btn-block mg-b-10'></div>"));
+            script.append(Js.click("#insert_Forms_new", Js.jjForms.insert()));
             Server.outPrinter(request, response, script.toString());
             return "";
         } catch (Exception ex) {
@@ -200,10 +202,11 @@ public class Forms {
             map.put(_icon, jjTools.getParameter(request, _icon));
             map.put(_ownerId, jjTools.getSeassionUserId(request));
             map.put(_ownerRole, jjTools.getParameter(request, _ownerRole));
-            map.put(_accessessUsers, jjTools.getParameter(request, _accessessUsers));
-            map.put(_resultAccessUsers, jjTools.getParameter(request, _resultAccessUsers));
-            map.put(_resultAccessRole, jjTools.getParameter(request, _resultAccessRole));
-            map.put(_accessessRoles, jjTools.getParameter(request, _accessessRoles));
+
+            map.put(_accessessUsers, jjTools.getParameter(request, _accessessUsers).replaceAll(",", "%23A%23"));
+            map.put(_accessessRoles, jjTools.getParameter(request, _accessessRoles).replaceAll(",", "%23A%23"));
+            map.put(_resultAccessUsers, jjTools.getParameter(request, _resultAccessUsers).replaceAll(",", "%23A%23"));
+            map.put(_resultAccessRole, jjTools.getParameter(request, _resultAccessRole).replaceAll(",", "%23A%23"));
             if ("".equals(jjTools.getParameter(request, _creationDate))) {// اگر تاریخ شروع اعتبار وارد نکرده بود
                 map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(null, true));
             } else {
@@ -218,6 +221,7 @@ public class Forms {
             map.put(_uniqueComplete, jjTools.getParameter(request, _uniqueComplete));
             map.put(_showResultToQuestioner, jjTools.getParameter(request, _showResultToQuestioner));
             map.put(_showAllResultToQuestioner, jjTools.getParameter(request, _showAllResultToQuestioner));
+            map.put(_showCometePreAproveForm, jjTools.getParameter(request, _showCometePreAproveForm));
             map.put(_hasAutoWikiInContent, jjTools.getParameter(request, _hasAutoWikiInContent));
             map.put(_css, jjTools.getParameter(request, _css));
             map.put(_javaScript, jjTools.getParameter(request, _javaScript));
@@ -264,17 +268,21 @@ public class Forms {
             script.append(Js.setVal("#" + _code, formRow.get(0).get(_code).toString()));
             script.append(Js.setVal("#" + _departments, formRow.get(0).get(_departments).toString()));
             script.append("$('#forms_departments').select2();\n");
-            script.append(Js.setVal("#" + _isActive, formRow.get(0).get(_isActive).toString()));
+            script.append(Js.setVal("#" + _isActive, formRow.get(0).get(_isActive)));
             script.append(Js.setVal("#" + _icon, formRow.get(0).get(_icon).toString()));
             if (!formRow.get(0).get(_icon).toString().isEmpty()) {//اگر عکس داشت نشان بدهد
                 script.append(Js.setAttr("#forms_icon_Preview", "src", "upload/" + formRow.get(0).get(_icon).toString()));
             }
-            script.append(Js.setVal("#" + _ownerId, formRow.get(0).get(_ownerId).toString()));
+            script.append(Js.setVal("#" + _ownerId, formRow.get(0).get(_ownerId)));
             script.append(Js.setVal("#" + _ownerRole, formRow.get(0).get(_ownerRole).toString()));
-            script.append(Js.setVal("#" + _accessessUsers, formRow.get(0).get(_accessessUsers).toString()));
-            script.append(Js.setVal("#" + _accessessRoles, formRow.get(0).get(_accessessRoles).toString()));
-            script.append(Js.setVal("#" + _resultAccessRole, formRow.get(0).get(_resultAccessRole).toString()));
-            script.append(Js.setVal("#" + _resultAccessUsers, formRow.get(0).get(_resultAccessUsers).toString()));
+            script.append(Js.setVal("#" + _accessessUsers, formRow.get(0).get(_accessessUsers).toString().replaceAll("%23A%23", ",")));
+            script.append(Js.select2("#" + _accessessUsers, ""));
+            script.append(Js.setVal("#" + _accessessRoles, formRow.get(0).get(_accessessRoles).toString().replaceAll("%23A%23", ",")));
+            script.append(Js.select2("#" + _accessessRoles, ""));
+            script.append(Js.setVal("#" + _resultAccessRole, formRow.get(0).get(_resultAccessRole).toString().replaceAll("%23A%23", ",")));
+            script.append(Js.select2("#" + _resultAccessRole, ""));
+            script.append(Js.setVal("#" + _resultAccessUsers, formRow.get(0).get(_resultAccessUsers).toString().replaceAll("%23A%23", ",")));
+            script.append(Js.select2("#" + _resultAccessUsers, ""));
 
             script.append(Js.setVal("#" + _creationDate, jjCalendar_IR.getViewFormat(formRow.get(0).get(_creationDate).toString())));
             script.append(Js.setVal("#" + _expireDate, jjCalendar_IR.getViewFormat(formRow.get(0).get(_expireDate).toString())));
@@ -286,9 +294,10 @@ public class Forms {
             script.append(Js.setVal("#" + _nextFormId, formRow.get(0).get(_nextFormId).toString()));
             script.append(Js.setVal("#" + _isAutoWiki, formRow.get(0).get(_isAutoWiki).toString()));
             script.append(Js.setVal("#" + _uniqueComplete, formRow.get(0).get(_uniqueComplete).toString()));
-            script.append(Js.setVal("#" + _showAllResultToQuestioner, formRow.get(0).get(_showAllResultToQuestioner).toString()));
-            script.append(Js.setVal("#" + _showResultToQuestioner, formRow.get(0).get(_showResultToQuestioner).toString()));
-            script.append(Js.setVal("#" + _hasAutoWikiInContent, formRow.get(0).get(_hasAutoWikiInContent).toString()));
+            script.append(Js.setVal("#" + _showAllResultToQuestioner, formRow.get(0).get(_showAllResultToQuestioner)));
+            script.append(Js.setVal("#" + _showCometePreAproveForm, formRow.get(0).get(_showCometePreAproveForm)));
+            script.append(Js.setVal("#" + _showResultToQuestioner, formRow.get(0).get(_showResultToQuestioner)));
+            script.append(Js.setVal("#" + _hasAutoWikiInContent, formRow.get(0).get(_hasAutoWikiInContent)));
             script.append(Js.setVal("#" + _css, formRow.get(0).get(_css).toString()));
             script.append(Js.setVal("#" + _javaScript, formRow.get(0).get(_javaScript).toString()));
             script.append(Js.setValSummerNote("#" + _htmlContent, formRow.get(0).get(_htmlContent).toString()));
@@ -330,8 +339,6 @@ public class Forms {
             map.put(_isActive, jjTools.getParameter(request, _isActive));
             map.put(_icon, jjTools.getParameter(request, _icon));
             map.put(_ownerId, jjTools.getSeassionUserId(request));
-            map.put(_resultAccessUsers, jjTools.getParameter(request, _resultAccessUsers));
-            map.put(_resultAccessRole, jjTools.getParameter(request, _resultAccessRole));
             //تعیین نقش ایجاد کننده یا مالک فرم            
             // ممکن است ادمین بخواهد برای سایرین فرم ها را ایجاد کند و باید این امکان را داشته باشد
             if (!jjNumber.isDigit(jjTools.getParameter(request, _accessessUsers))) {//اگر در ریکوئست مشخص نکرده بود
@@ -346,11 +353,14 @@ public class Forms {
             } else {
                 map.put(_ownerRole, jjTools.getSeassionUserRole(request));
             }
-            map.put(_accessessRoles, jjTools.getParameter(request, _accessessRoles));
+            map.put(_accessessUsers, jjTools.getParameter(request, _accessessUsers).replaceAll(",", "%23A%23"));
+            map.put(_accessessRoles, jjTools.getParameter(request, _accessessRoles).replaceAll(",", "%23A%23"));
+            map.put(_resultAccessUsers, jjTools.getParameter(request, _resultAccessUsers).replaceAll(",", "%23A%23"));
+            map.put(_resultAccessRole, jjTools.getParameter(request, _resultAccessRole).replaceAll(",", "%23A%23"));
             if ("".equals(jjTools.getParameter(request, _creationDate))) {// اگر تاریخ شروع اعتبار وارد نکرده بود
                 map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(null, true));
             } else {
-                map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _accessessRoles), true));
+                map.put(_creationDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _creationDate), true));
             }
             jjCalendar_IR date = new jjCalendar_IR();
             map.put(_creationTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _creationTime)));//ToDo تبدیل به عدد برای قرار گرفتن در دیتا بیس
@@ -361,12 +371,12 @@ public class Forms {
             map.put(_uniqueComplete, jjTools.getParameter(request, _uniqueComplete));
             map.put(_showResultToQuestioner, jjTools.getParameter(request, _showResultToQuestioner));
             map.put(_showAllResultToQuestioner, jjTools.getParameter(request, _showAllResultToQuestioner));
+            map.put(_showCometePreAproveForm, jjTools.getParameter(request, _showCometePreAproveForm));
             map.put(_hasAutoWikiInContent, jjTools.getParameter(request, _hasAutoWikiInContent));
             map.put(_css, jjTools.getParameter(request, _css));
             map.put(_javaScript, jjTools.getParameter(request, _javaScript));
             map.put(_htmlContent, jjTools.getParameter(request, _htmlContent));
             map.put(_description, jjTools.getParameter(request, _description));
-
             if (db.update(tableName, map, _id + "=" + id)) {
                 Server.outPrinter(request, response, Js.modal("ویرایش بدرستی انجام شد", "پیام سامانه"));
                 return "";
@@ -408,7 +418,5 @@ public class Forms {
             return "";
         }
     }
-
-   
 
 }
