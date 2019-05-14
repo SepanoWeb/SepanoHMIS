@@ -381,7 +381,6 @@ public class Approved {
             String id = jjTools.getParameter(request, _id);
             System.out.println("id=" + id);
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-//            List<Map<String, Object>> commettesRow = jjDatabase.separateRow(db.Select(Commettes.tableName,Commettes._id + "=" +row.get(0).get(_commetteId)));
 
             if (row.size() == 0) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
@@ -407,7 +406,7 @@ public class Approved {
             html.append(Js.setVal("#approvedPrevious_executorId", RolesExecutorIdRow.get(0).get(Role._title) + "-" + UserExecutorIdRow.get(0).get(Access_User._name) + " " + UserExecutorIdRow.get(0).get(Access_User._family)));
             html.append(Js.setVal("#approvedPrevious_endDate", jjCalendar_IR.getViewFormat(row.get(0).get(_endDate))));
             html.append(Js.setVal("#approvedPrevious_startDate", jjCalendar_IR.getViewFormat(row.get(0).get(_startDate))));
-            html.append(Js.setHtml("#approvedPrevious_statusLog", (row.get(0).get(_statusLog).toString()).replaceAll("#A#", "<br/>")));
+            html.append(Js.setVal("#approvedPrevious_statusLog", (row.get(0).get(_statusLog).toString()).replaceAll("#A#", "<br/>")));
             if (!row.get(0).get(_file).toString().equals("")) {
                 String[] File = (row.get(0).get(_file).toString().replaceAll("#A#", "%23A%23")).split("%23A%23");
                 html3.append("<div class='row col-lg-12'> "

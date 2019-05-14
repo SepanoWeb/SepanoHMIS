@@ -14,30 +14,13 @@ var hmisApproved = {
             $("#swApprovedForm").load("formHMIS/05approved.html", null, function () {
                 new jj('#sendFilesApproved').jjAjaxFileUpload4('attachFileApproved', '#approved_fileOfResponsible', '#inputFileApprovedDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
 
-                $("#cancel_Approved").button().click(function (e) {
+                $("#cancel_Approved").click(function (e) {
                     hmisApproved.m_clean();
                     hmisApproved.m_show_tbl();
                 });
 
 
-
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
                 hmisApproved.m_refresh();
-//                $('#newCommetteForm').show();
-//                $('#formInvitation').hide();
 
 
             });

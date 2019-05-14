@@ -877,14 +877,12 @@ public class Sessions {
      */
     public static String sendToTrackerAndExecutor(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
-            String id = jjTools.getParameter(request, _id);
+            String id = jjTools.getParameter(request, _id);//  ای دی جلسات
             String script = "";
             String result = changeStatus(db, id, status_communicated);
             if (result.isEmpty()) {//اگر خطایی نبود
                 String errorMessageing = "ابلاغ انجام شد";
                 script += Js.modal(errorMessageing, "پیام سامانه");
-//                script += "hmisSessions.m_refresh();";
-//                script += "hmisSessions.m_show_tbl();";
                 script += Js.jjSessions.select(id);
             } else {
                 String errorMessageing = "ابلاغ انجام نشد";
