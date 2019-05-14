@@ -668,7 +668,6 @@ public class Approved {
             return "vaziat_ersalShodeBeModireFani";// این کلاس در فایل های سی اس اس تعریف میشود و در قسمت های مختلف جدول نشان داده می شود
         }
         return "";
-    }
-   
+    }   
 
 }

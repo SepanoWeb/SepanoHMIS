@@ -135,6 +135,7 @@ var hmisSessions = {
     m_select: function (id) {
         $('#newCommetteForm').show();
         $('#formInvitation').hide();
+        $('#approvedPreviousDiv').hide();
         var param = "";
         param += "do=" + hmisSessions.tableName + ".select";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
