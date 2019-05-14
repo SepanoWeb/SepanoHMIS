@@ -72,7 +72,7 @@ public class Js {
     }
 
     public static String setHtml(String selector, String value) {
-        return "$('" + (selector.startsWith("#") ? selector : "#" + selector) + "').html(\"" + replacor(value).replace("\"", "'") + "\");\n"; //EDITED BY RASHIDI
+        return "$('" + selector + "').html(\"" + replacor(value).replace("\"", "'") + "\");\n"; //EDITED BY RASHIDI
 //        return "$('" + selector + "').html(\"" + replacor(value).replace("\"", "'") + "\");\n";
     }
 
@@ -119,6 +119,16 @@ public class Js {
     }
     public static String setValSummerNote(String selector, Object value) {
         return "$('"+selector+"').summernote('code', '"+value.toString()+"');\n";
+    }
+/**
+ * 
+ * @param selector
+ * @param parameters {width:100% or width: 'resolve',tag:true, or ...}
+ * @return 
+ * @Example Js.select2("#newForms .userOption" , "widht:100%,tags:true");
+ */
+    public static String select2(String selector, String parameters) {
+        return "$('" +selector+ "').select2({" + replacor(parameters) + "});\n";
     }
 
     public static String setVal(String selector, String value) {
@@ -1500,9 +1510,9 @@ public class Js {
             return hmis + ".m_show_tbl();\n";
         }
     }
-    public static class jjFormAnswers {
+    public static class jjFormAnswerSet {
 
-        static String hmis = "hmisFormAnswers";
+        static String hmis = "hmisFormAnswerSets";
 
         /**
          * برای ایجاد یک رکورد پاسخ از فرم با آی دی داده شده

@@ -3,15 +3,13 @@
  jj("do=Factor.insertFactor&").jjAjax2(true);
 new jj("do=Factor.insertFactor&").jjAjax2(true);
 <!---------------------------------------------------------->
-
 برای درک صحیح عملکرد سیستم جدید 
 Forms.showMyForms()
 را نگاه کنید
 <!---------------------------------------------------------->
 برای فایل آپلود کد زیر را استفاده کنید
-
 <div class="col-xs-3 col-sm-3 col-lg-3">
-    <input id="formQuestionOptions_icon" name="formQuestionOptions_icon" type="hidden">
+    <input id="formQuestionOptions_icon" name="formQuestionOptions_icon" type="hidden" >
     تصویر برای نمایش این گزینه
     <div>
         <img id="formQuestionOptions_Preview" class="img-thumbnail" src="img/preview.jpg" style="max-width:80;height: 36px ;">
@@ -21,14 +19,13 @@ Forms.showMyForms()
         <!--<span class="form-control"></span>-->
     </div>
 </div>
-
 <!--script-->
  new jj('#send_formQuestionOptions_icon').jjAjaxFileUpload2('formQuestionOptions_icon_file', '#formQuestionOptions_icon', '#formQuestionOptions_Preview');
-<!---------------------------------------------------------->
+<!-- ------------------------------------------------------ -->
 ممکن است یک کاربر چند نقش داشته باشد بنابر ایننقش هایی که دارد در سشن با 
-%A%
+%23A%23
 از هم جدا میشوند
-<!---------------------------------------------------------->
+<!-- ------------------------------------------------------ -->
 برای قسمت هایی که یک کاربر میخواهد چیزی ایجاد کند میتوانیم نقش هایی که او دارد را نشانش بدهیم تا با هر کدام خواست آنرا ایجاد کند
 گاهی میتواند هیچ کدام را انتخاب نکند یعنی نقش را تهی بگذارد در این صورت هیچ نقشی به آن دسترسی ندارند و فقط افرادی که ایجاد کرده اند یا مشخص شده اند دسترسی دارند
 
@@ -37,3 +34,49 @@ all
 بگذارد
 <!---------------------------------------------------------->
 در اچ تی ام ال همه ی سامرنوت هایی که میخواهیم سریال شوند کلاس سامرنوت  را باید داشته باشند
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+در ست کردن پنل از این به بعد بجای اینکه آی دی در نظر بگیریم سلکتور در نظر بگیرید
+
+select2 با ویژگی های جالبش استفاده بشود
+
+<!------------------------------------------------------->
+خانم شیران 1 و 2 تغییرات دیتا بیس را بدهند 
+مثلا آپلود upload_logStatus
+
+
+مک آدرس را ست کنید و در جاهایی که نیاز است استفاده کنید
+
+در فرم های سمت کلاینت و بعد از ورود 
+ 
+ شرط برای نقش ها بصورت زیر خوب است که همه جا در صورت نیاز استفاده بشود
+            for (int i = 0; i < userRoles.length; i++) {
+                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "\\%23A\\%23%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
+            }
+            if (!jjTools.getSeassionUserRole(request).isEmpty()) {// اگر کاربر جاری نقشی در سیستم دارد
+                where += Forms._accessessRoles + " like " + "'%ALL%'" + " OR ";//فرم هایی که همه ی سمت ها دسترسی دارند
+            }
+            where += Forms._accessessUsers + " like " + "'%" + userId + "\\%23A\\%23%'" + " OR ";
+            where += Forms._accessessUsers + " like " + "'%ALL%'" + " OR ";
+            where += Forms._accessessUsers + " = " + "''" + " OR ";
+            where += Forms._accessessUsers + "='' ) AND  ";
+            where += Forms._isActive + "=1 ; ";
+            
+  //کلاس هاس سی اس اس زیر را استفاده کنید          
+            tr.green.odd{
+    background-color: #daffd9 !important;
+}
+tr.green.even{
+    background-color: #daffd0 !important;
+}
+tr.yellow.odd{
+    background-color: #ffffbd  !important;
+}
+tr.yellow.even{
+    background-color: #ffc8b0 !important;
+}
+tr.yellow.red{
+    background-color: #ffc8ba !important;
+}

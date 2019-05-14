@@ -27,7 +27,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
-import jj.jjCalendar_IR;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
@@ -44,13 +43,11 @@ public class Role {
     public static String _title = "role_title";
     public static String _date = "role_date";
     public static String _user_id = "role_user_id";//
-    public static String _condition = "role_condition";//
+    public static String _condition = "role_condition";//sh1: این برای چی هست ؟ کامنتش را بگذارید لطفا
 //    public static String _condition2 = "role_condition2";//
     public static String _comment = "role_comment";//
     public static String _discription = "role_discription";//
     public static String _name = "role_name";//
-    public static String _family = "role_family";//
-    public static String _email = "role_email";//
 
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
@@ -455,8 +452,6 @@ public class Role {
             map.put(_user_id, request.getParameter(_user_id));
             map.put(_discription, request.getParameter(_discription));
             map.put(_name, request.getParameter(_name));
-            map.put(_family, request.getParameter(_family));
-            map.put(_email, request.getParameter(_email));
 
 //          map.put(_date, new jjCalendar_IR().getDBFormat_8length());
             map.put(_date, jjTools.getParameter(request, _date));
@@ -522,6 +517,63 @@ public class Role {
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+        }
+    }
+
+    /**
+     * آی دی کاربر را می گیرد و نقش های او را بصورت آپشن های مورد نیاز در سلکت برمیگرداند
+     *این متد فقط سمت وب کاربرد دارد و در فایل های جی اس پی هم میشود استفاده کرد
+     * @param userId
+     * @param db
+     * @return
+     * @throws Exception
+     */
+    public static String getUeserRolesSelectOption(int userId, jjDatabaseWeb db) throws Exception {
+        StringBuilder optionHtml = new StringBuilder();
+        try {
+            List<Map<String, Object>> userRolesRows = jjDatabase.separateRow(db.Select(tableName, _id + "," + _title, "id=" + userId, _title));// بر اساس حروف الفبا مرتب باشد بهتر است
+            for (int i = 0; i < userRolesRows.size(); i++) {
+                if (i == 1) {
+                    optionHtml.append("<option  value='").append(userRolesRows.get(i).get(_id)).append("' selected='selected'>").append(userRolesRows.get(i).get(_title)).append("</option>");                    
+                } else {
+                    optionHtml.append("<option  value='").append(userRolesRows.get(i).get(_id)).append("'>").append(userRolesRows.get(i).get(_title)).append("</option>");
+                }
+            }
+            return optionHtml.toString();
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    /**
+     * این متد نقش ها را بصورت آپشن برای قرار گرفتن در سلکت بر می گرداند
+     *
+     * @param request panel سلکتور پنل است دقت شود ممکن است نامبر ساین نداشته
+     * باشد یا نخواهد
+     * @param response
+     * @param db
+     * @param needString
+     * @return بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در
+     * پنل معرفی شده
+     * @throws Exception
+     */
+    public static String getSelectOption(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        StringBuilder optionHtml = new StringBuilder();
+        try {
+            List<Map<String, Object>> rowAllActiveRols = jjDatabase.separateRow(db.Select(tableName, _id + "," + _title, "id>=0", _title));// بر اساس حروف الفبا مرتب باشد بهتر است
+                optionHtml.append("<option  value='ALL'>همه مسئولین سازمانی</option>");
+            for (int i = 0; i < rowAllActiveRols.size(); i++) {
+                optionHtml.append("<option  value='").append(rowAllActiveRols.get(i).get(_id)).append("'>").append(rowAllActiveRols.get(i).get(_title)).append("</option>");
+            }
+            String panel = jjTools.getParameter(request, "panel");
+            if (panel.isEmpty()) {
+                panel = ".roleSelectOption";
+            }
+            Server.outPrinter(request, response, Js.setHtml(panel, optionHtml));
+            return "";
+        } catch (Exception e) {
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
             return "";
         }
     }

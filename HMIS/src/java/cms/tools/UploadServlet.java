@@ -159,13 +159,13 @@ public class UploadServlet extends HttpServlet {
                         jjDatabaseWeb db = Server.db;
                         Class.forName("com.mysql.jdbc.Driver");
 //                       
-                        Map<String, Object> map = new HashMap<String, Object>();
+                        Map<String, Object> map = new HashMap();
                         map.put(_file_name, result);
 //                      
                         map.put(_date, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _date), true));
                        
                         map.put(_time, new jjCalendar_IR().getTimeFormat_8length());
-                        map.put(_loader, (jjTools.getSessionAttribute(request, "#USER_NAME").toString()+" " +jjTools.getSessionAttribute(request,"#USER_FAMILY").toString()));
+                        map.put(_loader, (jjTools.getSessionAttribute(request, "#USER_NAME")+" " +jjTools.getSessionAttribute(request,"#USER_FAMILY")));
                         map.put(_logStatus, (jjTools.getParameter(request, _logStatus)));
                     
                         ServerLog.Print("Write pic in: " + file + " size:" + file.length());

@@ -186,7 +186,7 @@ var jj = function (selector) {
      * برای اینکه در یک تکست فیلد کاربر فقط بتواند عدد وارد کند
      * @returns {undefined}
      */
-    this.jjDigitOnly = function () {
+    this.jjDigitOnly = function (max,min) {
         var selector = this.selector;
         $(this.selector).on("focusout", function () {
             var val = $(this).val();
@@ -194,7 +194,6 @@ var jj = function (selector) {
                 $(this).val(0);
             }
         });
-
     };
     //    this.jjVal = function  (value) {
     //        if(value==null){
@@ -355,7 +354,7 @@ var jj = function (selector) {
         }
         return (src);
     };
-    this.serialVaiable = "";
+    this.serialVaiable = "";    
     /**
      * return key=value from selector
      * selector is form component selector
@@ -1160,8 +1159,9 @@ var jj = function (selector) {
      * @param maxLength is int (default: 10) <br/>
      * @example jj("#TextFeildTagID").setTextFieldOnlyGetNumber();
      */
-    this.jjSetTextFieldOnlyGetNumber = function (maxLength) {
-        maxLength = maxLength == null ? 10 : maxLength - 1;
+    this.jjSetTextFieldOnlyGetNumber = function (max, min) {
+        max = max == null ? 1000000 : max - 1;
+        min = min == null ? 0 : min - 1;
         var selector = this.selector;
         $(this.selector).keypress(function (event) {
             var keynum;
@@ -1170,7 +1170,7 @@ var jj = function (selector) {
             } else if (event.which) { // Netscape/Firefox/Opera
                 keynum = event.which
             }
-            if (new jj(selector).jjVal().toString().length > maxLength) {
+            if (new jj(selector).jjVal() > max || new jj(selector).jjVal() < min) {
                 if (keynum == undefined) {
                     event.returnValue = true;
                     return true;
@@ -1184,13 +1184,19 @@ var jj = function (selector) {
                     }
                 }
             }
-            if (keynum < 48 || keynum > 57) {//|| keynum==8 || keynum!=undefined
+            if (keynum < 48 || keynum > 57 || keynum == '-') {//|| keynum==8 || keynum!=undefined
                 if (event.preventDefault && keynum != 8) {
                     event.preventDefault();
                 } else {
                     event.returnValue = false;
                 }
             }
+
+        });
+        $(this.selector).focusout(function () {
+            var val = $(this).val();
+            if (!(new jj(val).jjIsDigit())) {
+                $(this).val("");};
         });
     };
     /**
@@ -1261,7 +1267,7 @@ var jj = function (selector) {
         })
     };
     /**
-     * return true if selector is number<br/>
+     * اعداد صحیح مثبت و منفی<br/>
      * @param selector is string<br/>
      * @return return true if selector is number<br/>
      * @example jj("1234").jjIsDigit();  
@@ -1270,17 +1276,11 @@ var jj = function (selector) {
         if (this.selector.length < 1) {
             return false;
         }
-        var ValidChars = "0123456789";
-        var IsNumber = true;
-        for (i = 0; i < this.selector.length && IsNumber == true; i++) {
-            if (ValidChars.indexOf(this.selector.charAt(i)) == -1) {
-                return false;
-            }
-        }
-        return true;
+        var reg = /^-?\d*$/;
+        return reg.test(this.selector);
     }
     /**
-     * return true if selector is number<br/>
+     * اعداد اعشاری مثبت و منفی را چک می کند<br/>
      * @param selector is string<br/>
      * @return return true if selector is number<br/>
      * @example jj("1234.567").jjIsFloat();  
@@ -1289,14 +1289,8 @@ var jj = function (selector) {
         if (this.selector.length < 1) {
             return false;
         }
-        var ValidChars = ".0123456789";
-        var IsNumber = true;
-        for (i = 0; (i < this.selector.length) && (IsNumber == true); i++) {
-            if (ValidChars.indexOf(this.selector.charAt(i)) == -1) {
-                return false;
-            }
-        }
-        return true;
+        var reg = /^-?\d+\.?\d*$/;
+        return reg.test(this.selector);
     }
 
 
@@ -1657,7 +1651,9 @@ var jj = function (selector) {
                 '</div>' +
                 '<div class="modal-footer justify-content-center">' +
                 '<button type= "button" class="btn btn-secondary pd-x-20" data-dismiss="modal">بستن </button>' +
+
                 '<button type= "button" class="btn btn-success pd-x-20" data-dismiss="modal" onclick="' + yesFunction + '">موافقم </button>' +
+
                 '</div>' +
                 '</div>' +
                 '</div>' + //<!-- modal-dialog -->
@@ -1668,35 +1664,6 @@ var jj = function (selector) {
             $(this).remove();
         });
     };
-
-//    this.jjModal_Yes_No = function (myTitle,yesFunction) {
-//        var id = Math.floor((Math.random() * 1000000) + 1);
-//        var html = '<div id="' + id + '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
-//                '<div class="modal-dialog" role="document" >' +
-//                '<div class = "modal-content bd-0 tx-14" >' +
-//                '<div class = "modal-header pd-x-20" >' +
-//                '<h6 class = "tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" > ' + myTitle + ' </h6>' +
-//                '<button type="button" class="close" data-dismiss ="modal" aria-label = "Close" >' +
-//               
-//                '<span aria-hidden="true">&times;</span>' +
-//                '</button>' +
-//                '</div>' +
-//                '<div class = "modal-body pd-20" >' +
-//                '<p class="mg-b-5" >' + this.selector + '</p>' +
-//                '</div>' +
-//                '<div class="modal-footer justify-content-center">' +
-//                '<button type= "button" class="btn btn-secondary pd-x-20" data-dismiss="modal">بستن </button>' +
-//                '<button type= "button" class="btn btn-secondary pd-x-20" data-dismiss="modal" oncilck="'+yesFunction+'">موافقم </button>' +
-//                '</div>' +
-//                '</div>' +
-//                '</div>' + //<!-- modal-dialog -->
-//                '</div>';//<!-- modal -->
-//        $("body").append(html);
-//        $("#" + id).modal('show');
-//        $("#" + id).on('hidden.bs.modal', function () {
-//            $(this).remove();
-//        });
-//    };
     /**
      * This method show one modal dialog to user <br/>
      * @param selector is messege for show

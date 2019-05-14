@@ -270,16 +270,25 @@ var cmsUser = {
      
         var param = "";
         param += "do=" + cmsUser.tableName + ".removeFile";
-        
         param += "&upload_id=" +idUpload;
         param += "&access_user_id=" +idUser;
-        
-      
         new jj(param).jjAjax2(false);
         cmsUser.m_show_tbl();
         cmsUser.m_clean();
-    }
-}
+    },
+  /**
+ *  قراردادن نام کاربران فعال در سلکت آپشن ها
+ *  @param {type} selector میتوانیم کلاس بدهیم
+ * @returns {undefined}
+ * @Example: cmsUser.getSelectOption("#userform .usersSelectOption");
+ */
+    getSelectOption: function (selector) {
+        var param = "";
+        param += "panel=" + selector;
+        param += "&do=" + cmsUser.tableName + ".getSelectOption";
+        new jj(param).jjAjax2(false);
+    },  
+};
 function loginToCMS() {
     new jj("do=Access_User.login&" + (new jj("#swLoginForm").jjSerial())).jjAjax2();
 

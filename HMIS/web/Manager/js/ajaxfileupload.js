@@ -58,7 +58,6 @@ jQuery.extend({
 
         s = jQuery.extend({}, jQuery.ajaxSettings, s);
         var id = new Date().getTime()
-                              alert(11111111111)  ;
         var form = jQuery.createUploadForm(id, s.fileElementId, (typeof (s.data) == 'undefined' ? false : s.data));
         var io = jQuery.createUploadIframe(id, s.secureuri);
         var frameId = 'jUploadFrame' + id;
@@ -81,12 +80,12 @@ jQuery.extend({
             {
                 if (io.contentWindow)
                 {
-                    xml.responseText = io.contentWindow.document.body ? io.contentWindow.document.body.innerHTML : null;
+                    xml.responseText = io.contentWindow.document.body ? $(io.contentWindow.document.body.innerHTML).html() : null;
                     xml.responseXML = io.contentWindow.document.XMLDocument ? io.contentWindow.document.XMLDocument : io.contentWindow.document;
 
                 } else if (io.contentDocument)
                 {
-                    xml.responseText = io.contentDocument.document.body ? io.contentDocument.document.body.innerHTML : null;
+                    xml.responseText = io.contentDocument.document.body ? $(io.contentWindow.document.body.innerHTML).html() : null;
                     xml.responseXML = io.contentDocument.document.XMLDocument ? io.contentDocument.document.XMLDocument : io.contentDocument.document;
                 }
             } catch (e)
@@ -192,9 +191,6 @@ jQuery.extend({
         // If the type is "script", eval it in global context
         if (type == "script")
             jQuery.globalEval(data);
-        if (type == "JSON"){
-            eval("data = " + data);            
-        }
         // Get the JavaScript object, if JSON is used.
         if (type == "json")
             eval("data = " + data);

@@ -6,7 +6,6 @@ import cms.tools.*;
 import static cms.tools.UploadServlet._logStatus;
 import static cms.tools.UploadServlet._status;
 import static cms.tools.UploadServlet.status_deleted;
-import static cms.tools.UploadServlet.tableName;
 import java.io.IOException;
 import jj.*;
 import java.util.HashMap;
@@ -1516,6 +1515,36 @@ public class Access_User {
                     + "<br/>"
                     + "</div>"));
             Server.outPrinter(request, response, html.toString());
+            return "";
+        } catch (Exception e) {
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+        }
+    }
+        /**
+     * این متد کاربران فعال را بصورت آپشن برای قرار گرفتن در سلکت بر می گرداند
+     *
+     * @param request panel درون ریکوئست اگر با نقطه شروع نشود آی دی در نظر می
+     * گیرد و نامبر ساین اولش می گذارد
+     * @param response
+     * @param db
+     * @param needString
+     * @return بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در پنل معرفی شده
+     * @throws Exception
+     */
+    public static String getSelectOption(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        StringBuilder optionHtml = new StringBuilder();
+        try {
+            List<Map<String, Object>> rowAllActiveRols = jjDatabase.separateRow(db.Select(tableName, _id + "," + _name+ "," +_family , "id>0 AND "+_isActive+"=1", _family));// بر اساس حروف الفبا مرتب باشد بهتر است
+                optionHtml.append("<option  value='ALL'>تمام کاربران ثبت شده</option>");
+            for (int i = 0; i < rowAllActiveRols.size(); i++) {
+                optionHtml.append("<option  value='").append(rowAllActiveRols.get(i).get(_id)).append("'>").append(rowAllActiveRols.get(i).get(_family)+"-").append(rowAllActiveRols.get(i).get(_name)).append("</option>");
+            }
+            String panel = jjTools.getParameter(request, "panel");
+            if (panel.isEmpty()) {
+                panel = ".usersSelectOption";
+            }
+            Server.outPrinter(request, response,  Js.setHtml(panel, optionHtml));
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
