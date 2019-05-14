@@ -430,30 +430,14 @@ public class Approved {
 
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
-//            html2.append("<div class='row'>");
-//            if (accEdt) {
-//                html2.append("<div class=\"col-lg-6\">");
-//                List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + row.get(0).get(_sessionsId)));
-//                if (sessionsRow.get(0).get(Sessions._status).equals(Sessions.status_created)) {
-//                    html2.append("<button  id='edit_ApprovedPrevious' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjApproved.edit() + "' >" + lbl_edit + "</button>");
-//                }
-////                html.append(Js.buttonMouseClick("#edit_Approved", ));   
-//                html2.append("</div>");
-//            }
+
             html2.append("<div class='row'>");
             if (accEdt) {
                 html2.append("<div class=\"col-lg-6\">");
                 html2.append("<button  id='edit_ApprovedPrevious' class='btn btn-outline-warning btn-block mg-b-10' onclick='hmisApproved.editApprovedPrevious();' >" + lbl_edit + "</button>");
                 html2.append("</div>");
             }
-//            if (accDel) {
-//                html2.append("<div class=\"col-lg-6\">");
-//                List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + row.get(0).get(_sessionsId)));
-//                if (sessionsRow.get(0).get(Sessions._status).equals(Sessions.status_created)) {
-//                    html2.append("<button id='delete_ApprovedPrevious'  class='btn btn-outline-danger btn-block mg-b-10' onclick='hmisApproved.editInSessions();'>" + lbl_delete + "</button>");
-//                }
-//                html2.append("</div>");
-//            }
+
             html2.append("</div>");
             String script = "";
             script += Js.setHtml("ApprovedPrevious_button", html2);//دکمه های مربوط به مصوبات قبلی 
@@ -609,7 +593,6 @@ public class Approved {
             map.put(_endDate, jjTools.getParameter(request, _endDate).replaceAll("/", ""));
             map.put(_startDate, jjTools.getParameter(request, _startDate).replaceAll("/", ""));
             map.put(_file, approvedRow.get(0).get(_file) + jjTools.getParameter(request, _file));
-//            }
             map.put(_status, jjTools.getParameter(request, _status));
 
             if (!db.update(tableName, map, _id + "=" + id)) {

@@ -267,13 +267,9 @@ public class Commettes {
             html.append(Js.setVal("#" + _regulationFile, row.get(0).get(_regulationFile)));
             html.append(Js.setVal("#active", "1"));
             html.append(Js.setVal("#noActive", "0"));
-//            html.append(Js.setVal("#role_condition"  , ));
             if (row.get(0).get(_isActive).equals("1")) {
-//                html.append(Js.setVal("#active", row.get(0).get(_condition)));
                 html.append(Js.setAttr("#active", "checked", "checked"));
-//                html.append(Js.removeAttr("#noActive", "checked"));
             } else {
-//                html.append(Js.setVal("#noActive", row.get(0).get(_condition)));
                 html.append(Js.setAttr("#noActive", "checked", "checked"));
             }
             if (!row.get(0).get(_documnetsFile).toString().equals("")) {
@@ -282,7 +278,6 @@ public class Commettes {
                     html3.append("<input class='col-xs-12' value='" + documentFile[i] + "' >");
                 }
             }
-//            html.append(Js.setVal("#" + _regulationFile, ));
             html.append(Js.setAttr("#PicPreviewAttach", "src", "upload/" + row.get(0).get(_regulationFile) + ""));
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
@@ -380,13 +375,7 @@ public class Commettes {
             }
             String id = jjTools.getParameter(request, _id);
             System.out.println("id=" + id);
-//            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
-//            if (!errorMessageId.equals("")) {
-//                if (jjTools.isLangEn(request)) {
-//                    errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
-//                }
-//                Server.outPrinter(request, response, Js.modal(errorMessage,"پیام سامانه"));
-//            }
+
             if (!db.delete(tableName, _id + "=" + id)) {
                 String errorMessage = "عملیات حذف به درستی صورت نگرفت";
                 if (jjTools.isLangEn(request)) {

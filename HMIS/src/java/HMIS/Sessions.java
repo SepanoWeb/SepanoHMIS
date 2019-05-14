@@ -322,7 +322,6 @@ public class Sessions {
             if (!InviteesOutSideId.equals("")) {
                 String[] InviteeOutSideId = (InviteesOutSideId.replaceAll("#A#", "%23A%23")).split("%23A%23");
                 System.out.println("InviteeOutSideId.length=" + InviteeOutSideId.length);
-//                if (InviteeOutSideId.length >= 1) {
 
                 System.out.println("InviteeOutSideId=" + InviteeOutSideId.length);
                 for (int i = 0; i < InviteeOutSideId.length; i++) {
@@ -346,7 +345,6 @@ public class Sessions {
                         }
                     }
                 }
-//                }
             } else {
             }
             String InvitedsId = row.get(0).get(_Invitees).toString();
@@ -375,7 +373,6 @@ public class Sessions {
 
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
-//            html2.append("<div class=\"col-lg-12\">");
             if (row.get(0).get(_status).equals(status_created)) {
                 if (accEdt) {
                     html2.append("<div class=\"col-lg-6\">");
@@ -394,7 +391,6 @@ public class Sessions {
                 html2.append("</div>");
 
             }
-//            html2.append("</div>");
 //            if (accDel) {
 //                html2.append("<div class=\"col-lg-6\">");
 //                html2.append("<input type='button' id='delete_Sessions' value='" + lbl_delete + "' class='btn btn-success btn-block mg-b-10 tahoma10'  />");
@@ -589,7 +585,6 @@ public class Sessions {
             map.put(_ProposedSolution, jjTools.getParameter(request, _ProposedSolution));
             map.put(_audience, jjTools.getParameter(request, _audience).replaceAll("#A#", "%23A%23"));
             map.put(_audienceOutSide, jjTools.getParameter(request, _audienceOutSide).replaceAll("#A#", "%23A%23"));
-//            map.put(_file, jjTools.getParameter(request, _file));
             String audienceOutSides = jjTools.getParameter(request, _audienceOutSide).toString();
             String[] audienceOutSide = (audienceOutSides.replaceAll("#A#", "%23A%23")).split("%23A%23");//ایمیل افراد خارج از سازمان
             for (int i = 0; i < audienceOutSide.length; i++) {
@@ -659,8 +654,6 @@ public class Sessions {
             map.put(_timeReminder, jjTools.getParameter(request, _timeReminder));//ساعت یاد اوری
             map.put(_invitationDate, jjCalendar_IR.getDatabaseFormat_8length("", true));//تاریخ ارسال دعوتنامه
             map.put(_commetteId, commettesId);//ای دی کمیته
-//            db.update(tableName, map, _commetteId + "=" + commettesId);
-//            map.put(_audience, "");//
             map.put(_status, status_created);//ای دی کمیته
             map.put(_statusLog,
                     status_created
