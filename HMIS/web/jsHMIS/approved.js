@@ -222,25 +222,7 @@ var hmisApproved = {
         new jj(param).jjAjax2(false);
 //        hmisApproved.m_show_form();
     },
-    /**
-     * حذف فایل آپلود شده
-     */
-//     m_remove: function (idUpload,id) {
-//        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف","cmsUser.removeFile("+idUpload+","+id+");");
-//    },
-//  removeFile: function (idUpload,idUser) {
-//     
-//        var param = "";
-//        param += "do=" + hmisApproved.tableName + ".removeFile";
-//        
-//        param += "&upload_id=" +idUpload;
-//        param += "&access_user_id=" +idUser;
-//        
-//      
-//        new jj(param).jjAjax2(false);
-//        hmisApproved.m_show_tbl();
-//        hmisApproved.m_clean();
-//    },
+
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".add_EN";
@@ -308,80 +290,4 @@ var hmisApproved = {
     },
 
     /////////////////////shiran////////////
-//    showInvitationForm: function (commeteId) {
-//        hmisApproved.m_show_form();
-////        $('#hmis_commettes_id').val(commeteId);
-////        $('#newCommetteForm').hide();
-////        $('#formInvitation').show();
-//    },
-//    Invitees: function () {//مدعوین
-//
-//        var param = "";
-//        var temp = $('#InviteesDiv input:checkbox[class=checkBoxInvitees]:checked');
-//        var InviteesOutSide = $('#InviteesDiv input:text[class=InviteesOutSide]');
-//
-//        if (temp.size() == 0 && InviteesOutSide.size() == 0) {//اگر تیک عضوی را نزده بود
-//            alert("لطفا افراد را انتخاب کنید");
-//            return;
-//        }
-//        var temp1 = "";
-//        var temp2 = "";
-//        for (var i = 0; i < temp.size(); i++) {
-//            temp1 += $(temp[i]).attr('value') + "%23A%23"; //نام چک باکس عدد مورد نظر
-//        }
-//        for (var i = 0; i < InviteesOutSide.size(); i++) {
-//            if ($(InviteesOutSide[i]).val() !== "") {
-//                temp2 += $(InviteesOutSide[i]).val() + "%23A%23"; //نام چک باکس عدد مورد نظر
-//            }
-//        }
-//        alert(temp2);
-//        alert(temp1);
-//        param += "&sessions_Invitees=" + temp1;
-//        param += "&sessions_InviteesOutSide=" + temp2;
-//        param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal();//ای دی کمیته
-//        param += "&" + new jj('#formInvitation').jjSerial();
-//        param += "&do=Sessions.requestSendComment&jj=1";
-//        new jj(param).jjAjax2(false);
-//    },
-
-//    mainTabSetSize: function () {
-////        var aa = $("#swContent").children();
-////        var bb = 0;
-////        for(i=0; i < aa.length; i++){  
-////            if($(aa[i]).css("display")!='none'){
-////                bb+= new jj($(aa[i]).css("height")).jjConvertToInt() ;
-////            }
-////        }
-////        if(bb==0){
-////            $('#tabs').css('height',572);
-////        }else{
-////            $('#tabs').css('height',bb+44);
-////        }
-//    }
-
-};
-//============ BY RASHIDI ========> 
-//function selectSearchResult(selectedTagNo) {
-//    $("#tags_name").val($("#tagsResult_td" + selectedTagNo).html());
-//    $("#content_search_tags_result").hide();
-//}
-
-//function deleteContentTag(deletedTagNo) {
-//    new jj("آیا از حذف این برچسب اطمینان دارید؟").jjDialog_YesNo('afterDeleteContentTag(' + deletedTagNo + ');\n', true, "");
-//}
-//function afterDeleteContentTag(deletedTagNo) {
-//
-////    var myString = $("#" + cmsContent.f_tags).val();
-////    var oldWord = $("#contetn_tag_span" + deletedTagNo).html().toString();
-////    var reg = new RegExp(oldWord, "g");
-////    myString = myString.replace(reg, "");
-////    alert(myString);
-//
-//    var str = $("#" + cmsContent.f_tags).val();
-//    var tagName = $("#contetn_tag_span" + deletedTagNo).html().toString();
-//    var reg = new RegExp(tagName, "g");
-//    str = str.replace(reg, "");
-//    $("#" + cmsContent.f_tags).val(str);
-//    $("#contetn_tag_span" + deletedTagNo).remove();
-//}
-//<============ BY RASHIDI ========  
+    };

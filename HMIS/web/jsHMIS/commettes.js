@@ -202,14 +202,12 @@ var hmisCommettes = {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".searchTags";
         param += "&" + new jj('#swCommettesForm').jjSerial();
-//        param += "&panel=content_search_tags_result";
         new jj(param).jjAjax2(false);
     },
     m_insertTags: function () {
         var param = "";
         param += "do=" + hmisCommettes.tableName + ".insertTags";
         param += "&" + new jj('#swCommettesForm').jjSerial();
-//        param += "&panel=content_tags_div";
         new jj(param).jjAjax2(false);
     },
     //<============ BY RASHIDI ========    
@@ -232,27 +230,13 @@ var hmisCommettes = {
         param += "&jj=1";
         new jj(param).jjAjax2(false);
     },
-//    showUsersList: function () {
-//        var param = "";
-//        $("#usersListTable").show();
-//        var value = $(this).val().toLowerCase();
-//        $("#usersListTable tr").filter(function () {
-//            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-//        });
-////        param += "&do=" + hmisSessions.tableName + ".showUsersList";
-////        param += "&jj=1";
-////        jj(param).jjAjax2(false);
-//
-//    },
+
     Invitees: function () {//مدعوین
 
-//        var allowDo = $('#formInvitation input.required').length;
-//        if (allowDo = 0) {
             var param = "";
             var temp = $('#InviteesDiv input:checkbox[class=checkBoxInvitees]:checked'); //مدعوین سمت دار
             var InviteesOutSide = $('#InviteesDiv .invitedOutSide');
             var InviteesInSide = $('#sessions_InviteesInSide').val();
-//        alert(InviteesInSide);
             if (temp.size() == 0) {//اگر تیک عضوی را نزده بود
                 alert("لطفا افراد را انتخاب کنید");
                 return;
@@ -268,9 +252,7 @@ var hmisCommettes = {
             }
             /////////////////////////////مهمانان داخل سازمان
             for (var i = 0; i < InviteesInSide.length; i++) {
-//            if ($(InviteesInSide[i]).val() !== "") {
                 temp3 += InviteesInSide[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
-//            }
             }
 ///////////////////////////////////////مهمانان خارج از سازمان
             //این قسمت نام و نام خانوادگی فرد مهمان را میگیرد واگر خالی باشد چیزی ارسال نمی شود 
@@ -290,9 +272,7 @@ var hmisCommettes = {
             param += "&" + new jj('#formInvitation').jjSerial();
             param += "&do=Sessions.requestSendComment&jj=1";
             new jj(param).jjAjax2(false);
-//        } else {
-//            new jj('همه فیلدها را پر نمایید').jjModal('پیام سامانه');
-//        }
+
     },
     addMembers: function (i) {
         var temp1 = "";
@@ -302,7 +282,6 @@ var hmisCommettes = {
         } else if ($("#td" + i + " i").attr('class') === "icon ion-plus-circled") {
             var RoleId = $("#td" + i + " i").attr('id');
             $("#td" + i + " i").attr('class', 'icon ion-checkmark-circled').css("color", "green");
-//            alert(RoleId);
 
         }
         var temp = $("#tableRolesDiv #refreshRoles .ion-checkmark-circled");
@@ -310,20 +289,16 @@ var hmisCommettes = {
             temp1 += $(temp[i]).attr('id') + "%23A%23";
         }
         $('#commettes_members').val(temp1);
-//        alert(temp);
 
 
     },
     validateEmail: function (email) {
         var emailPathern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//    var re = /^.*$/;
         return emailPathern.test(email);
     },
     emailRegex: function (obj) {
         var email = $(obj).val();
-//        alert(email);
         if (!hmisCommettes.validateEmail(email)) {
-//            $(obj).css('box-shadow', '1px 2px 0px red');
             $(obj).css('border', '1px solid red');
             $(obj).addClass('require');
 
@@ -336,15 +311,11 @@ var hmisCommettes = {
     },
     validateDate: function (date) {
         var datePathern = /^$|^([1۱][۰-۹ 0-9]{3}[/\/]([0 ۰][۱-۶ 1-6])[/\/]([0 ۰][۱-۹ 1-9]|[۱۲12][۰-۹ 0-9]|[3۳][01۰۱])|[1۱][۰-۹ 0-9]{3}[/\/]([۰0][۷-۹ 7-9]|[1۱][۰۱۲012])[/\/]([۰0][1-9 ۱-۹]|[12۱۲][0-9 ۰-۹]|(30|۳۰)))$/;//تاریخ شمسی
-//        var datePathern =/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/;//تاریخ میلادی 
-//    var re = /^.*$/;
         return datePathern.test(date);
     },
     dateRegex: function (obj) {
         var date = $(obj).val();
-//        alert(email);
         if (!hmisCommettes.validateDate(date)) {
-//            $(obj).css('box-shadow', '1px 2px 0px red');
             $(obj).css('border', '1px solid red');
             $(obj).addClass('require');
 
@@ -361,9 +332,7 @@ var hmisCommettes = {
     },
     mobileRegex: function (obj) {
         var mobile = $(obj).val();
-//        alert(email);
         if (!hmisCommettes.validateMobile(mobile)) {
-//            $(obj).css('box-shadow', '1px 2px 0px red');
             $(obj).css('border', '1px solid red');
             $(obj).addClass('require');
         } else {
@@ -373,44 +342,4 @@ var hmisCommettes = {
         }
 
     },
-//    mainTabSetSize: function () {
-////        var aa = $("#swContent").children();
-////        var bb = 0;
-////        for(i=0; i < aa.length; i++){  
-////            if($(aa[i]).css("display")!='none'){
-////                bb+= new jj($(aa[i]).css("height")).jjConvertToInt() ;
-////            }
-////        }
-////        if(bb==0){
-////            $('#tabs').css('height',572);
-////        }else{
-////            $('#tabs').css('height',bb+44);
-////        }
-//    }
-
 };
-//============ BY RASHIDI ========> 
-//function selectSearchResult(selectedTagNo) {
-//    $("#tags_name").val($("#tagsResult_td" + selectedTagNo).html());
-//    $("#content_search_tags_result").hide();
-//}
-
-//function deleteContentTag(deletedTagNo) {
-//    new jj("آیا از حذف این برچسب اطمینان دارید؟").jjDialog_YesNo('afterDeleteContentTag(' + deletedTagNo + ');\n', true, "");
-//}
-//function afterDeleteContentTag(deletedTagNo) {
-//
-////    var myString = $("#" + cmsContent.f_tags).val();
-////    var oldWord = $("#contetn_tag_span" + deletedTagNo).html().toString();
-////    var reg = new RegExp(oldWord, "g");
-////    myString = myString.replace(reg, "");
-////    alert(myString);
-//
-//    var str = $("#" + cmsContent.f_tags).val();
-//    var tagName = $("#contetn_tag_span" + deletedTagNo).html().toString();
-//    var reg = new RegExp(tagName, "g");
-//    str = str.replace(reg, "");
-//    $("#" + cmsContent.f_tags).val(str);
-//    $("#contetn_tag_span" + deletedTagNo).remove();
-//}
-//<============ BY RASHIDI ========  

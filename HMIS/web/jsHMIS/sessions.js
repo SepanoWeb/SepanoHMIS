@@ -232,14 +232,12 @@ var hmisSessions = {
         var temp4 = "";
         for (var i = 0; i < temp.length; i++) {
             temp2 += $(temp[i]).attr('name') + "%23A%23"; //id user audience
-//            temp2 +=$(temp[i]).val()+"%23A%23";
         }
         for (var i = 0; i < temp3.length; i++) {
 //ایمیل مهمانان خارج از سازمان
             temp4 += $(temp3[i]).val() + "%23A%23";
         }
-//        alert(temp2);
-//        alert(temp4);
+
         var param = "";
         param += "&do=" + hmisSessions.tableName + ".confirmationFinalSessions";
         param += "&" + new jj('#swSessionsForm').jjSerial();
@@ -247,7 +245,6 @@ var hmisSessions = {
         param += "&sessions_audience=" + temp2;
         param += "&sessions_audienceOutSide=" + temp4;
         new jj(param).jjAjax2(false);
-//        hmisSessions.m_show_tbl();
         hmisSessions.m_clean();
     },
     /**
@@ -269,50 +266,9 @@ var hmisSessions = {
         param += "&id=" + id;
         param += "&do=" + hmisSessions.tableName + ".sendToTrackerAndExecutor";
         new jj(param).jjAjax2(false);
-//        hmisSessions.m_show_tbl();
         hmisSessions.m_clean();
     },
     
-//  
 
-//    mainTabSetSize: function () {
-////        var aa = $("#swContent").children();
-////        var bb = 0;
-////        for(i=0; i < aa.length; i++){  
-////            if($(aa[i]).css("display")!='none'){
-////                bb+= new jj($(aa[i]).css("height")).jjConvertToInt() ;
-////            }
-////        }
-////        if(bb==0){
-////            $('#tabs').css('height',572);
-////        }else{
-////            $('#tabs').css('height',bb+44);
-////        }
-//    }
 
 };
-//============ BY RASHIDI ========> 
-//function selectSearchResult(selectedTagNo) {
-//    $("#tags_name").val($("#tagsResult_td" + selectedTagNo).html());
-//    $("#content_search_tags_result").hide();
-//}
-
-//function deleteContentTag(deletedTagNo) {
-//    new jj("آیا از حذف این برچسب اطمینان دارید؟").jjDialog_YesNo('afterDeleteContentTag(' + deletedTagNo + ');\n', true, "");
-//}
-//function afterDeleteContentTag(deletedTagNo) {
-//
-////    var myString = $("#" + cmsContent.f_tags).val();
-////    var oldWord = $("#contetn_tag_span" + deletedTagNo).html().toString();
-////    var reg = new RegExp(oldWord, "g");
-////    myString = myString.replace(reg, "");
-////    alert(myString);
-//
-//    var str = $("#" + cmsContent.f_tags).val();
-//    var tagName = $("#contetn_tag_span" + deletedTagNo).html().toString();
-//    var reg = new RegExp(tagName, "g");
-//    str = str.replace(reg, "");
-//    $("#" + cmsContent.f_tags).val(str);
-//    $("#contetn_tag_span" + deletedTagNo).remove();
-//}
-//<============ BY RASHIDI ========  
