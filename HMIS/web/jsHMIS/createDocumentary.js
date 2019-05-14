@@ -46,6 +46,7 @@ var hmisCreateDocumentary = {
                     }
                 });
                 hmisCreateDocumentary.selectOptionUserSignture(".form-group");
+                $('.summernote').summernote();
 
 
             });
@@ -103,7 +104,7 @@ var hmisCreateDocumentary = {
 
         $('.form-group').val("null").trigger('change');
 
-//        $('.summernote').summernote();///برای تبدیل شدن به textEditor
+
         $("#Downloadfile2").hide();
         $("#Downloadfile3").hide();
         $("#Downloadfile1").hide();
@@ -113,12 +114,18 @@ var hmisCreateDocumentary = {
         hmisCreateDocumentary.m_clean();
 
 
-//        hmisCreateDocumentary.m_clean();
     },
     m_show_form: function () {
         $('#swCreateDocumentaryTbl').hide();
         $('#swCreateDocumentaryForm').show();
         new jj("#swCreateDocumentaryForm").jjFormClean();
+
+        hmisCreateDocumentary.tabSizeForm();
+    },
+    m_show_formCopy: function () {
+        $('#swCreateDocumentaryTbl').hide();
+        $('#swCreateDocumentaryForm').show();
+
 
         hmisCreateDocumentary.tabSizeForm();
     },
@@ -159,7 +166,6 @@ var hmisCreateDocumentary = {
         hmisCreateDocumentary.m_show_tbl();
         hmisCreateDocumentary.m_clean();
     },
-    
     m_edit: function () {
         var param = "";
         param += "do=" + hmisCreateDocumentary.tableName + ".edit";
@@ -195,6 +201,13 @@ var hmisCreateDocumentary = {
         hmisCreateDocumentary.m_show_form();
         hmisCreateDocumentary.m_clean();
 
+    },
+    copyDocumentary: function () {
+        alert("مستند مورد نظر کپی شد");
+        new jj("do=" + hmisCreateDocumentary.tableName + ".copyDocumentary").jjAjax2(false);
+        hmisCreateDocumentary.m_show_formCopy();
+        $("#signatorys").html('');
+        $("#signatorysAdd").html('');
     },
     m_getMenu: function () {
         var param = "";

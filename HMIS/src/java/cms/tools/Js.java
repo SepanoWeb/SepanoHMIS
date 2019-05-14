@@ -1438,6 +1438,37 @@ public class Js {
             return hmis + ".m_show_tbl();\n";
         }
     }
+    ///مدیریت سنجه ها
+     public static class jjManagementGauges {
+
+        static String hmis = "hmisManagementGauges";
+
+        public static String insert() {
+            return "hmisManagementGauges.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisManagementGauges.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
     //فرم ها
     public static class jjForms {
 

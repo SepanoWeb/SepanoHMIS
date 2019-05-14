@@ -32,10 +32,9 @@ public class Department {
 
     public static String tableName = "Department";
     public static String _id = "id";
-//    public static String _parent = "department_parent";
+
     public static String _title = "department_title";
-//    public static String _level = "department_level";
-//    public static String _subcategory = "department_subcategory";//زیر شاخه بخش
+
     public static String _publicContent = "department_publicContent";
     public static String _praivateContent = "department_praivateContent";
     public static String _organizationalCode = "department_organizationalCode";
@@ -105,7 +104,7 @@ public class Department {
                 height = "400";
             }
             if (panel.equals("")) {
-                panel = "swPartTbl";
+                panel = "swDepartmentTbl";
             }
             String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
             html2 += Js.table("#refreshParts", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست بخش ها");
@@ -230,7 +229,7 @@ public class Department {
                 Server.outPrinter(request, response, Js.dialog(errorMessage));
                 return "";
             }
-            Server.outPrinter(request, response, Js.jjPlans.refresh());
+            Server.outPrinter(request, response, Js.jjDepartment.refresh());
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));
@@ -268,7 +267,7 @@ public class Department {
             StringBuilder html2 = new StringBuilder();
 
             script.append(Js.setVal("#department_" + _id, row.get(0).get(_id)));
-
+              
             script.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             script.append(Js.setAttr("#IconDownload", "href", "upload/" + row.get(0).get(_icon)));
             script.append(Js.setVal("#" + _organizationalCode, row.get(0).get(_organizationalCode)));

@@ -5,17 +5,6 @@
  */
 package HMIS;
 
-import cms.access.Access_User;
-import static cms.access.Access_User.rul_ins;
-import cms.tools.Js;
-import cms.tools.Server;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.table.DefaultTableModel;
-import jj.jjDatabase;
-import jj.jjDatabaseWeb;
-import jj.jjNumber;
 
 //import static HMIS.Location._haspitalname;
 //import static HMIS.Location._id;
@@ -23,12 +12,8 @@ import jj.jjNumber;
 //import static HMIS.Location._parent;
 //import static HMIS.Location.tableName;
 import cms.access.Access_User;
-import cms.cms.Content;
-import static cms.cms.Product.rul_ins;
 import cms.tools.Js;
 import cms.tools.Server;
-import cms.tools.UploadServlet;
-import cms.tools.email;
 import cms.tools.jjTools;
 import cms.tools.jjValidation;
 import java.util.HashMap;
@@ -190,6 +175,7 @@ public class CreateDocumentary {
 //            }
             StringBuilder html = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
+//            StringBuilder script = new StringBuilder();
 
             DefaultTableModel dtm = db.Select(CreateDocumentary.tableName);
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
@@ -212,22 +198,25 @@ public class CreateDocumentary {
             for (int i = 0; i < row.size(); i++) {
                 html.append("<tr  onclick='hmisCreateDocumentary.m_select(" + row.get(i).get(_id) + ");' class='mousePointer' >");
                 html.append("<td class='tahoma10' style='text-align: center;'>" + (row.get(i).get(_id).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_title).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>");
+                html.append("<td class='r'>" + (row.get(i).get(_title).toString()) + "</td>");
+                html.append("<td class='c'>");
                 ///این forبرای این است که کسانی که امضا کردند تیک سبز میخورد
                 for (int j = 1; j <= 20; j++) {
-////                 
-                    if (row.get(i).get("createDocumentary_signatory_signature_" + j).equals("1")) {
-                        html.append("<img src='imgfeyz/tick.png' style='height:20px;'/>");
+                    if (!row.get(i).get("createDocumentary_signatory_user_" + j).equals("")) {
+                        if (row.get(i).get("createDocumentary_signatory_signature_" + j).equals("1")) {
+                            html.append("<img src='imgfeyz/tick.png' style='height:15px;'/>");
 //                    }
-                    } else 
-                     if(row.get(i).get("createDocumentary_signatory_signature_" + j).equals("0")){
-                        
-                         html.append("<img src='imgfeyz/remove.png' style='height:20px;'/>");
+                        } else if (row.get(i).get("createDocumentary_signatory_signature_" + j).equals("0")) {
+
+                            html.append("<img src='imgfeyz/remove.png' style='height:19px;'/>");
+                        } else if (row.get(i).get("createDocumentary_signatory_signature_" + j).equals("-1")) {
+
+                            html.append("<img src='imgfeyz/icons8-help-48.png' style='height:20px;'/>");
+                        }
                     }
                 }
                 html.append("</td >");
-                html.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'><a src='img/l.png' style='cursor: pointer;height:30px' onclick='hmisCreateDocumentary.m_select(" + row.get(i).get(_id) + ");' ></a></td>");
+                html.append("<td style='text-align: center;color:red;font-size: 26px;'  class='c icon ion-ios-gear-outline'><a src='img/l.png' style='cursor: pointer;height:30px' onclick='hmisCreateDocumentary.m_select(" + row.get(i).get(_id) + ");' ></a></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -243,7 +232,8 @@ public class CreateDocumentary {
             }
             String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
             html2 += Js.table("#refreshCreateDocumentary", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست مستندات");
-            Server.outPrinter(request, response, html2);
+            String script = "hmisSignDocumentary.m_refresh();";
+            Server.outPrinter(request, response, html2 + script);
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -316,17 +306,22 @@ public class CreateDocumentary {
                         html.append("<tr   class='mousePointer'>");
                         html.append("<td class='tahoma10' style='text-align: center;'>" + (row.get(i).get(_id).toString()) + "</td>");
 
-                        html.append("<td class='tahoma10' style='text-align: left;'>" + row.get(i).get(_title).toString() + "</td>");
+                        html.append("<td class='tahoma10' style='text-align: left;'>" + row.get(i).get(CreateDocumentary._title).toString() + "</td>");
                         html.append("<td class='tahoma10' style='text-align: left;'>");
                         ///این forبرای این است که کسانی که امضا کردند تیک سبز میخورد
 
 ////                 
-                        if (row.get(i).get("createDocumentary_signatory_signature_" + j).equals("1")) {
-                            html.append("<img src='imgfeyz/tick.png' style='height:20px;'/>");
+                        if (!row.get(i).get("createDocumentary_signatory_user_" + j).equals("")) {
+                            if (row.get(i).get("createDocumentary_signatory_signature_" + j).equals("1")) {
+                                html.append("<img src='imgfeyz/tick.png' style='height:15px;'/>");
 //                    }
-                        } else
-                        if(row.get(i).get("createDocumentary_signatory_signature_" + j).equals("0")){
-                           html.append("<img src='imgfeyz/remove.png' style='height:20px;'/>");
+                            } else if (row.get(i).get("createDocumentary_signatory_signature_" + j).equals("0")) {
+
+                                html.append("<img src='imgfeyz/remove.png' style='height:19px;'/>");
+                            } else if (row.get(i).get("createDocumentary_signatory_signature_" + j).equals("-1")) {
+
+                                html.append("<img src='imgfeyz/icons8-help-48.png' style='height:20px;'/>");
+                            }
                         }
 
                         html.append("</td >");
@@ -661,15 +656,15 @@ public class CreateDocumentary {
                                 + "<div class=\"col-lg-3\">\n"
                                 + "سمت امضا کننده\n"
                                 + "<input id='signatory_role_" + i + "' name='createDocumentary_signatory_role_" + i + "' class='form-control' disabled='disabled' value='" + row.get(0).get("createDocumentary_signatory_role_" + i).toString() + "'  />"
-                                + "</div>"
                                 + "</div>";
 
                         if (row.get(0).get("createDocumentary_signatory_signature_" + i).equals("0")) {
-                            html3 += "<div class='col-lg-3'><img src='imgfeyz/remove.png' style='height:30px; margin-top: -71px;'/></div>";
+                            html3 += "<div class='col-lg-3'><img src='imgfeyz/remove.png' style='height:34px;margin-top: 21px; '/></div>";
                         }
                         if (row.get(0).get("createDocumentary_signatory_signature_" + i).equals("1")) {
-                            html3 += "<div class='col-lg-3'><img src='imgfeyz/tick.png' style='height:30px;margin-top: -71px;'/></div>";
+                            html3 += "<div class='col-lg-3'><img src='imgfeyz/tick.png' style='height:30px;margin-top: 22px;'/></div>";
                         }
+                        html3 += "</div>";
 //                       
                     } else {
                         html3 += "<div class='row col-lg-12 ' id='row'>\n"
@@ -710,19 +705,163 @@ public class CreateDocumentary {
 
             script.append(Js.setValSummerNote("#createDocumentary_htmlContent", row.get(0).get(_htmlContent)));
 
-            String htmlBottons = "";
-            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
-            if (accEdit) {
-                htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.edit() + "' id='edit_CreateDocumentary'>" + lbl_edit + "</button></div>";
+            boolean flag = true;
+            //ویژگی : اگر یکی از امضا کنندگان مستند را رد بکند دیگر امکان یرایش مستند وجود ندارد ولی امکان حذف وجود دارد
+            for (int j = 1; j <= 20; j++) {
+                if (row.get(0).get("createDocumentary_signatory_signature_" + j).equals("0")) {
+                    flag = false;
+                }
 
             }
+            String htmlBottons = "";
+            if (flag == false) {
+                script1.append(Js.setHtml("#CreateDocumentary_button", ""));
+            } else {
+                boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
+
+                if (accEdit) {
+                    htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.edit() + "' id='edit_CreateDocumentary'>" + lbl_edit + "</button></div>";
+
+                }
+//                boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
+//                if (accDelete) {
+//                    htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.delete(id) + "' id='delete_CreateDocumentary'>" + lbl_delete + "</button></div>";
+//                }
+                script1.append(Js.setHtml("#CreateDocumentary_button", htmlBottons));
+            }
+//
+//                if (accEdit) {
+//                    htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.edit() + "' id='edit_CreateDocumentary'>" + lbl_edit + "</button></div>";
+//
+//                }
             boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
             if (accDelete) {
                 htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.delete(id) + "' id='delete_CreateDocumentary'>" + lbl_delete + "</button></div>";
             }
             script1.append(Js.setHtml("#CreateDocumentary_button", htmlBottons));
+//               Server.outPrinter(request, response,script1);    
+//
+//            } else if(flag==false) {
+//                System.out.println("////////////////////////no");
+//            }
 
-            Server.outPrinter(request, response, html.toString() + script + script1 + script2 + script3 + script4);
+//            }
+//            String htmlBottons = "";
+//            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
+            Server.outPrinter(request, response, html.toString() + script + script2 + script3 + script4 + script1);
+            return "";
+//
+//           
+        } catch (Exception e) {
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+        }
+    }
+//    public static String copyDocumentary(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+//        try {
+//            String id = jjTools.getParameter(request, _id);
+//            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
+//            if (!errorMessageId.equals("")) {
+//                if (jjTools.isLangEn(request)) {
+//                    errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
+//                }
+//                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+//                return "";
+//            }
+//            StringBuilder script = new StringBuilder();
+//            StringBuilder script1 = new StringBuilder();
+//
+//            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
+//
+//            StringBuilder html = new StringBuilder();
+//            StringBuilder html2 = new StringBuilder();
+//
+//            script.append(Js.setVal("#createDocumentary_" + _id, row.get(0).get(_id)));
+//
+//            script.append(Js.setVal("#" + _title, row.get(0).get(_title)));
+//            script.append(Js.setVal("#" + _titleFile1, row.get(0).get(_titleFile1)));
+//            script.append(Js.setVal("#" + _titleFile2, row.get(0).get(_titleFile2)));
+//            script.append(Js.setVal("#" + _titleFile3, row.get(0).get(_titleFile3)));
+//            script.append(Js.setAttr("#Downloadfile3", "href", "upload/" + row.get(0).get(_attachmentfile3)));
+//            script.append(Js.setAttr("#Downloadfile2", "href", "upload/" + row.get(0).get(_attachmentfile2)));
+//            script.append(Js.setAttr("#Downloadfile1", "href", "upload/" + row.get(0).get(_attachmentfile1)));
+//
+//            script.append(Js.setVal("#createDocumentary_attachmentfile3", row.get(0).get(_attachmentfile3)));
+//            script.append(Js.setVal("#createDocumentary_attachmentfile2", row.get(0).get(_attachmentfile2)));
+//            script.append(Js.setVal("#createDocumentary_attachmentfile1", row.get(0).get(_attachmentfile1)));
+////            script.append(Js.setVal("#createDocumentary_attachmentfile1", row.get(0).get(_attachmentfileTitle1)));
+////            script.append(Js.setVal("#title1", row.get(0).get(_attachmentfileTitle1)));
+//
+//            if (row.get(0).get(_attachmentfile1).equals("")) {
+//                script.append(Js.setAttr("#PicPreviewFile1", "src", "img/preview.jpg"));
+////                
+//            } else {
+//                script.append(Js.setAttr("#PicPreviewFile1", "src", "upload/" + row.get(0).get(_attachmentfile1).toString() + ""));
+//                script.append(Js.show("#Downloadfile1"));
+//            }
+//            if (row.get(0).get(_attachmentfile2).equals("")) {
+//                script.append(Js.setAttr("#PicPreviewFile2", "src", "img/preview.jpg"));
+//                script.append(Js.hide("#Downloadfile2"));
+//            } else {
+//                script.append(Js.setAttr("#PicPreviewFile1", "src", "upload/" + row.get(0).get(_attachmentfile2).toString() + ""));
+//                script.append(Js.show("#Downloadfile2"));
+//            }
+//            if (row.get(0).get(_attachmentfile3).equals("")) {
+//                script.append(Js.setAttr("#PicPreviewFile3", "src", "img/preview.jpg"));
+//                script.append(Js.hide("#Downloadfile3"));
+//            } else {
+//                script.append(Js.setAttr("#PicPreviewFile3", "src", "upload/" + row.get(0).get(_attachmentfile3).toString() + ""));
+//                script.append(Js.show("#Downloadfile3"));
+//            }
+//            StringBuilder script2 = new StringBuilder();
+//            StringBuilder script3 = new StringBuilder();
+//            StringBuilder script4 = new StringBuilder();
+//            String html3 = "";
+//            String html4 = "";
+//            String temp = "";
+//
+//
+//            script.append(Js.setVal("#" + _date, row.get(0).get(_date).toString()));
+//            script.append(Js.setVal("#" + _summary, row.get(0).get(_summary).toString()));
+//            script.append(Js.setVal("#" + _category, row.get(0).get(_category).toString()));
+//
+//            script.append(Js.setValSummerNote("#createDocumentary_htmlContent", row.get(0).get(_htmlContent)));
+//
+//            String htmlBottons = "";
+//            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
+////            if (accEdit) {
+////                htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.edit() + "' id='edit_CreateDocumentary'>" + lbl_edit + "</button></div>";
+////
+////            }
+////            boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
+////            if (accDelete) {
+////                htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.delete(id) + "' id='delete_CreateDocumentary'>" + lbl_delete + "</button></div>";
+////            }
+//            script1.append(Js.setHtml("#CreateDocumentary_button", htmlBottons));
+//
+//            Server.outPrinter(request, response, html.toString() + script + script1 + script2 + script3 + script4);
+//            return "";
+//        } catch (Exception e) {
+//            Server.outPrinter(request, response, Server.ErrorHandler(e));
+//            return "";
+//        }
+//    }
+//    *
+//    این تابع برای کپی کردن فایل یعنی اگر بخواهیم صفحه ای که داخلش هستیم را کپی کنیم ازاین تابع استفاده می کنیم
+//*/
+
+    public static String copyDocumentary(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        StringBuilder html = new StringBuilder();
+        StringBuilder script = new StringBuilder();
+        try {
+
+            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
+
+            if (accIns) {
+                script.append(Js.setHtml("#CreateDocumentary_button", "<div class='col-lg-6'><input type='button' id='insert_CreateDocumentary_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
+                script.append(Js.click("#insert_CreateDocumentary_new", Js.jjCreateDocumentary.insert()));
+            }
+            Server.outPrinter(request, response, html.toString() + script);
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -942,27 +1081,32 @@ public class CreateDocumentary {
             }
             Map<String, Object> map = new HashMap();
             String errorMessage = "";
+            boolean flag = true;
             for (int i = 1; i <= 20; i++) {
 
                 if (!row.get(0).get("createDocumentary_signatory_user_" + i).toString().isEmpty()) {
-     
+                    if(row.get(0).get("createDocumentary_signatory_signature_" + i).toString().equals("0")){
+                        flag=false;
+                    }
                     String userid = String.valueOf(jjTools.getSeassionUserId(request));
                     if (userid.equals(row.get(0).get("createDocumentary_signatory_user_" + i))) {
-       
                         errorMessage = "";
                         if ("0".equals(row.get(0).get("createDocumentary_signatory_signature_" + i)) || "1".equals(row.get(0).get("createDocumentary_signatory_signature_" + i))) {
-                          
+
                             errorMessage = "شما قبلا این مستند را ثبت کرده اید و اکنون مجاز به تغییر رای خود نیستید.";
                         } else {
                             map.put("createDocumentary_signatory_comment_" + i, jjTools.getParameter(request, "createDocumentary_signatory_comment_" + i));
                             map.put("createDocumentary_signatory_signature_" + i, jjTools.getParameter(request, "createDocumentary_signatory_signature_" + i));
                             errorMessage = "";
-                            i=21;//برای خروج از حلقه
+                            i = 21;//برای خروج از حلقه
                         }
                     } else {
                         errorMessage = "شما کاربر مجاز برای تایید یا رد این مستند نیستید.";
                     }
                 }
+            }
+            if(!flag){
+                 errorMessage = "این سند توسط یکی از امضا کنندگان رد و باطل شده است";
             }
             if (!errorMessage.isEmpty()) {
                 Server.outPrinter(request, response, Js.dialog(errorMessage));
@@ -977,7 +1121,26 @@ public class CreateDocumentary {
                 Server.outPrinter(request, response, Js.dialog(errorMessage));
                 return "";
             }
+            StringBuilder script = new StringBuilder();
+            StringBuilder script1 = new StringBuilder();
 
+            for (int j = 1; j < 20; j++) {
+
+                if (!row.get(0).get("createDocumentary_signatory_user_" + j).toString().equals("")) {
+                    String userid = String.valueOf(jjTools.getSeassionUserId(request));
+                    if (userid.equals(row.get(0).get("createDocumentary_signatory_user_" + j))) {
+                        if (jjTools.getParameter(request, "createDocumentary_signatory_signature_" + j).equals("0")) {
+                            script.append("alert('مستند مورد نظر  رد  و باطل شد')");
+                            Server.outPrinter(request, response, script);
+                        } else if (jjTools.getParameter(request, "createDocumentary_signatory_signature_" + j).equals("1")) {
+
+                            script1.append("alert('مستند مورد نظر شما تایید شد')");
+                            Server.outPrinter(request, response, script1);
+
+                        }
+                    }
+                }
+            }
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));
@@ -1012,7 +1175,7 @@ public class CreateDocumentary {
                 return "";
             }
 
-            Server.outPrinter(request, response, Js.jjDepartment.refresh());
+            Server.outPrinter(request, response, Js.jjCreateDocumentary.refresh());
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));

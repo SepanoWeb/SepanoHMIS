@@ -39,6 +39,7 @@ public class UploadServlet extends HttpServlet {
     public static String _time = "upload_time";
     public static String _loader = "upload_loader";
     public static String _status = "upload_status";
+    public static String _type = "upload_type";
     public static String _logStatus = "upload_logStatus";
      public static String status_deleted = "پاک شده توسط";
 //    public static String _loader_id = "upload_loader_id";
@@ -172,6 +173,7 @@ public class UploadServlet extends HttpServlet {
                         String extension2 = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length());
                         File file2 = new File(file.getParent() + "/" + name2 + "_small." + extension2);
 //                        map.put(_title, extension2);
+                         map.put(_type, extension2);
                          db.insert(UploadServlet.tableName, map);
                         if (extension2.toLowerCase().equals("jpg") 
                                 || extension2.toLowerCase().equals("png") 
