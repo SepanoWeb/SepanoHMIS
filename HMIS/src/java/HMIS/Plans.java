@@ -45,8 +45,8 @@ public class Plans {
     public static String _thePeriodAssess = "plans_thePeriodAssess";//دوره پایش
     public static String _domain = "plans_domain";//دامنه
     public static String _department = "plans_department";//بخش
-    public static String _vaziat = "plans_vaziat";//وضعیت
-    public static String _ravandeVaziat = "plans_ravandeVaziat";//روند وضعیت
+    public static String _status = "plans_status";//وضعیت
+    public static String _statusLog= "plans_statusLog";//روند وضعیت
     public static String _description = "plans_description";//توضیحات
     public static String _correction = "plans_correction";//اصلاحیه
     public static String _date = "plans_date";//تاریخ
@@ -111,7 +111,7 @@ public class Plans {
                 html.append("<td class='r'>" + (row.get(i).get(_title).toString()) + "</td>");
                 html.append("<td class='r'>" + (row.get(i).get(_typeOfProgram).toString()) + "</td>");
                 html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_date)) + "</td>");
-                html.append("<td class='r'>" + (row.get(i).get(_vaziat).toString()) + "</td>");
+                html.append("<td class='r'>" + (row.get(i).get(_status).toString()) + "</td>");
                 html.append("<td class='c'><i class='icon ion-ios-gear-outline'></i></td>");
                 html.append("</tr>");
             }
@@ -184,8 +184,8 @@ public class Plans {
             map.put(_thePeriodAssess, jjTools.getParameter(request, _thePeriodAssess));
             map.put(_typeOfProgram, jjTools.getParameter(request, _typeOfProgram));
             map.put(_titleOfTheProblem, jjTools.getParameter(request, _titleOfTheProblem));
-            map.put(_vaziat, jjTools.getParameter(request, _vaziat));
-            map.put(_ravandeVaziat, vaziat_sabteAvalie
+            map.put(_status, jjTools.getParameter(request, _status));
+            map.put(_statusLog, vaziat_sabteAvalie
                     + ":"
                     + "-"
                     + jjCalendar_IR.getViewFormat(jjCalendar_IR.getDatabaseFormat_8length("", true))
@@ -271,7 +271,7 @@ public class Plans {
             html.append(Js.setVal("#" + _minorGoal, row.get(0).get(_minorGoal)));
             html.append(Js.setVal("#" + _method, row.get(0).get(_method)));
             html.append(Js.setVal("#" + _domain, row.get(0).get(_domain)));
-            html.append(Js.setVal("#" + _vaziat, row.get(0).get(_vaziat)));
+            html.append(Js.setVal("#" + _status, row.get(0).get(_status)));
             html.append(Js.setVal("#" + _titleOfTheProblem, row.get(0).get(_titleOfTheProblem)));
             html.append(Js.setVal("#" + _responsible, row.get(0).get(_responsible)));
             html.append(Js.setVal("#" + _strategic, row.get(0).get(_strategic)));
@@ -283,7 +283,7 @@ public class Plans {
             html.append(Js.setHtml("#minorGoal", row.get(0).get(_minorGoal)));//هدف جزئی
             html.append(Js.setHtml("#responsible", row.get(0).get(_responsible)));//مسول پایش
             html.append(Js.setHtml("#range", row.get(0).get(_range)));//حیطه
-            if (row.get(0).get(_vaziat).equals(lbl_confirmBySuperWizar)) {
+            if (row.get(0).get(_status).equals(lbl_confirmBySuperWizar)) {
                 html4.append("<div></div>");
             } else {
                 html4.append("<button id='editPlansButton' style=\"display: none\" class=\"btn btn-success btn-block mg-b-10\" onclick=\"hmisPlans.m_edit();\">ثبت  تغییرات</button>\n");
@@ -301,7 +301,7 @@ public class Plans {
                 html.append(Js.buttonMouseClick("#confirmBySuperwizar_Plans", "hmisPlans.confirmBySuperwizar(" + id + ");"));
                 html3.append("</div>");
             }
-            if (row.get(0).get(_vaziat).equals(lbl_confirmBySuperWizar)) {
+            if (row.get(0).get(_status).equals(lbl_confirmBySuperWizar)) {
 
                 html.append("$('#btn_insertSteps').hide();");
                 html.append("$('#stepsForm1').hide();");
@@ -313,14 +313,14 @@ public class Plans {
 //                html.append("$('#correctionPlans_Plans').show();");
 //                html.append("$('#confirmBySuperwizar_Plans').show();");
 
-            } else if (row.get(0).get(_vaziat).equals(lbl_correctionPlans)) {
+            } else if (row.get(0).get(_status).equals(lbl_correctionPlans)) {
 
                 html.append("$('#btn_insertSteps').show();");
                 html.append("$('#stepsForm1').show();");
                 html.append("$('#correctionPlans_Plans').show();");
                 html.append("$('#confirmBySuperwizar_Plans').show();");
 
-            } else if (row.get(0).get(_vaziat).equals(vaziat_sabteAvalie)) {
+            } else if (row.get(0).get(_status).equals(vaziat_sabteAvalie)) {
                 html.append("$('#btn_insertSteps').show();");
                 html.append("$('#stepsForm1').show();");
                 html.append("$('#correctionPlans_Plans').show();");
@@ -394,11 +394,11 @@ public class Plans {
             if (!errorMessageId.equals("")) {
                 return Js.dialog(errorMessageId);
             }
-            String oldStatus = jjDatabaseWeb.separateRow(db.Select(tableName, _vaziat, _id + "=" + id)).get(0).get(_vaziat).toString();
+            String oldStatus = jjDatabaseWeb.separateRow(db.Select(tableName, _status, _id + "=" + id)).get(0).get(_status).toString();
 
             if (!oldStatus.equals(newSatus)) {
-                db.otherStatement("UPDATE " + tableName + " SET " + _ravandeVaziat
-                        + "=concat(ifnull(" + _ravandeVaziat + ",''),'"
+                db.otherStatement("UPDATE " + tableName + " SET " + _statusLog
+                        + "=concat(ifnull(" + _statusLog + ",''),'"
                         + newSatus
                         + "-"
                         + jjCalendar_IR.getViewFormat(new jjCalendar_IR().getDBFormat_8length())
@@ -406,7 +406,7 @@ public class Plans {
                         + new jjCalendar_IR().getTimeFormat_8length()
                         + "#A#"
                         + "') ,"
-                        + _vaziat + "='" + newSatus + "'  WHERE id=" + id + ";");
+                        + _status + "='" + newSatus + "'  WHERE id=" + id + ";");
             }
             return "";
         } catch (Exception ex) {

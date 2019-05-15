@@ -31,18 +31,17 @@ public class Approved {
     public static String tableName = "hmis_approved";
     public static String _id = "id";
     public static String _sessionsId = "approved_sessionsId";//ایدی جلسه
-//    public static String _commetteId = "approved_commettesId";//ایدی کمیته
     public static String _title = "approved_title";//عنوان مصوبه
     public static String _startDate = "approved_startDate";//تاریخ شروع 
     public static String _endDate = "approved_endDate";//تاریخ پایان
     public static String _trackerId = "approved_trackerId";//مسئول پیگیری
-    public static String _executorId = "approved_executorId";//مسئول اجرا
+    public static String _executorRoleId = "approved_executorRoleId";//مسئول اجراسمت
+    public static String _executorUserId = "approved_executorUserId";//مسئول اجرا
     public static String _status = "approved_status";//وضعیت
     public static String _statusLog = "approved_statusLog";//روند وضعیت
     public static String _description = "approved_description";//توضیحات
     public static String _file = "approved_file";//مستندات از طرف دبیر کمیته
     public static String _fileOfResponsible = "approved_fileOfResponsible";//مستندات مسئول اجرا یا مسئول پیگیری
-    public static String _fileCheckOut = "approved_fileCheckOut";//بررسی مصوبات توسط دبیر کمیته
 
     public static int rul_rfsAll = 0;
     public static int rul_rfs = 0;
@@ -59,12 +58,14 @@ public class Approved {
     public static String status_inDoing = "درحال انجام";
     public static String status_unDone = "غیر قابل انجام";
     public static String status_done = "انجام شده";
+    public static String status_initialRegistration = "ثبت اولیه";
 
     public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isFromClient) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
 //            boolean accRefAll = Access_User.hasAccess(request, db, rul_rfsAll);
 //            boolean accRef = Access_User.hasAccess(request, db, rul_rfs);
@@ -82,80 +83,30 @@ public class Approved {
             html.append("<th width='40%'>ویرایش</th>");
             html.append("</thead><tbody>");
 
-//            if (accRefAll) { //برای دسترسی مدیر
-            DefaultTableModel dtm = db.Select(Approved.tableName);
-            List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
-//                for (int i = 0; i < row.size(); i++) {
-//                    html.append("<tr onclick='hmisApproved.m_select(" + row.get(i).get(_id) + ")' class='mousePointer'>");
-//                    List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(i).get(Approved._trackerId)));
-//                    List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
-//                    List<Map<String, Object>> RolesExecutorIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(i).get(Approved._executorId)));
-//                    List<Map<String, Object>> UserExecutorIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesExecutorIdRow.get(0).get(Role._user_id)));
-//                    html.append("<td class='c'>" + row.get(i).get(Approved._id) + "</td>");
-//                    html.append("<td class='r'>" + row.get(i).get(Approved._title) + "</td>");
-//                    html.append("<td class='r'>" + RolesTrackerIdRow.get(0).get(Role._title) + "-" + UserTrackerIdRow.get(0).get(Access_User._name) + " " + UserTrackerIdRow.get(0).get(Access_User._family) + "</td>");
-//                    html.append("<td class='r'>" + RolesExecutorIdRow.get(0).get(Role._title) + "-" + UserExecutorIdRow.get(0).get(Access_User._name) + " " + UserExecutorIdRow.get(0).get(Access_User._family) + "</td>");
-////                html3.append("<td class='r'>" + approvedRow.get(i).get(Approved._responsibleForExecutionId) + "</td>");
-//                    html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(Approved._startDate)) + "</td>");
-//                    html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(Approved._endDate)) + "</td>");
-//                    html.append("<td class='r'>" + row.get(i).get(Approved._status) + "</td>");
-//                    html.append("<td class='r'><i class='icon ion-gear-a' style='color:#a02311'></i></td>");
-//                    html.append("</tr>");
-//                }
-//            }
-//            if (accRef) {// برای دسترسی مسئولین اجرایی وپیگیری
-//            List<Map<String, Object>> row = jjDatabase.separateRow(db.otherSelect("SELECT hmis_approved.id"
-//                    + " ,hmis_sessions.id"
-//                    + ",approved_trackerId,approved_executorId,approved_status,"
-//                    + "approved_sessionsId,hmis_sessions.sessions_status,approved_startDate,"
-//                    + "approved_endDate,approved_title "
-//                    + "FROM "
-//                    + "hmis_approved LEFT JOIN "
-//                    + "hmis_sessions ON approved_sessionsId=hmis_sessions.id "
-//                    + "WHERE sessions_status='ابلاغ شده'"
-//                    + " AND  "
-//                    + "approved_trackerId=" + jjTools.getSeassionUserId(request)
-//                    + " OR "
-//                    + "sessions_status='ابلاغ شده'"
-//                    + " AND "
-//                    + " approved_executorId=" + jjTools.getSeassionUserId(request) + ""));
-//            List<Map<String, Object>> row = jjDatabase.separateRow(db.JoinLeft(Approved.tableName, Sessions.tableName, "hmis_approved.id"
-//                    + ","
-//                    + Sessions._status
-//                    + ","
-//                    + "hmis_sessions.id"
-//                    + ","
-//                    + _trackerId
-//                    + ","
-//                    + Approved._executorId
-//                    + ","
-//                    + Approved._title
-//                    + ","
-//                    + Approved._status
-//                    + ","
-//                    + Approved._endDate
-//                    + ","
-//                    + Approved._startDate
-//                    + ","
-//                    + Approved._sessionsId,
-//                    Approved._sessionsId, Sessions._id,
-//                    " WHERE " + Sessions._status + "='" + Sessions.status_communicated + "' "
-//                    + "AND " + _executorId + "=" + jjTools.getSeassionUserId(request) + " "
-//                    + "OR " + Sessions._status + "='" + Sessions.status_communicated + "'"
-//                    + " AND " + _trackerId + "=" + jjTools.getSeassionUserId(request) + ""));
+            List<Map<String, Object>> row = jjDatabase.separateRow(db.otherSelect("SELECT hmis_approved.id,sessions_status\n"
+                    + ",approved_title,r1.role_title As t1,r2.role_title t2"
+                    + ",u1.user_name,u1.user_family,u2.user_name,u2.user_family,\n"
+                    + "approved_status,approved_endDate,approved_startDate\n"
+                    + " FROM hmis_approved\n"
+                    + " LEFT JOIN hmis_sessions ON approved_sessionsId=hmis_sessions.id\n"
+                    + " LEFT JOIN hmis_role r1 ON approved_executorRoleId=r1.id\n"
+                    + " LEFT JOIN hmis_role r2 ON approved_trackerId=r2.id\n"
+                    + "  LEFT JOIN access_user u1 ON r1.role_user_id=u1.id "
+                    + " LEFT JOIN access_user u2 ON r2.role_user_id=u2.id"
+                    + " WHERE sessions_status='" + Sessions.status_communicated + "'"
+                    + "  AND approved_executorRoleId=" + jjTools.getSeassionUserId(request) + "  "
+                    + "OR sessions_status='" + Sessions.status_communicated + "' "
+                    + "AND approved_trackerId=" + jjTools.getSeassionUserId(request) + ""
+            ));
+
             for (int i = 0; i < row.size(); i++) {
 //                List<Map<String ,Object>> SessiondsRow=jjDatabase.separateRow(db.Select(Sessions.tableName,Sessions._id+"="+row.get(i).get(_sessionsId)+" WHERE hmis_sessions.sessions_status='ابلاغ شده' AND  "+row.get(i).get(_executorId)+"="+jjTools.getSeassionUserId(request)+" OR hmis_sessions.sessions_status='ابلاغ شده' AND "+row.get(i).get(_trackerId)+"="+jjTools.getSeassionUserId(request)+"" ));
                 html.append("<tr onclick='hmisApproved.m_select(" + row.get(i).get(_id) + ")' class='mousePointer'>");
-                List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(i).get(Approved._trackerId)));
-                List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
-                List<Map<String, Object>> RolesExecutorIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(i).get(Approved._executorId)));
-                List<Map<String, Object>> UserExecutorIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesExecutorIdRow.get(0).get(Role._user_id)));
                 html.append("<td class='c'>" + row.get(i).get(_id) + "</td>");
                 System.out.println("" + row.get(i).get(_id));
                 html.append("<td class='r'>" + row.get(i).get(_title) + "</td>");
-                html.append("<td class='r'>" + RolesTrackerIdRow.get(0).get(Role._title) + "-" + UserTrackerIdRow.get(0).get(Access_User._name) + " " + UserTrackerIdRow.get(0).get(Access_User._family) + "</td>");
-                html.append("<td class='r'>" + RolesExecutorIdRow.get(0).get(Role._title) + "-" + UserExecutorIdRow.get(0).get(Access_User._name) + " " + UserExecutorIdRow.get(0).get(Access_User._family) + "</td>");
-//                html3.append("<td class='r'>" + approvedRow.get(i).get(Approved._responsibleForExecutionId) + "</td>");
+                html.append("<td class='r'>" + row.get(i).get(Role._title) + "-" + row.get(i).get(Access_User._name) + " " + row.get(i).get(Access_User._family) + "</td>");
+                html.append("<td class='r'>" + row.get(i).get(Role._title) + "-" + row.get(i).get(Access_User._name) + " " + row.get(i).get(Access_User._family) + "</td>");
                 html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_startDate)) + "</td>");
                 html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_endDate)) + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_status) + "</td>");
@@ -164,7 +115,6 @@ public class Approved {
             }
 //            }
             html.append("</tbody></table>");
-//            html.append("</div>");
             String height = jjTools.getParameter(request, "height");
             String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(height)) {
@@ -198,6 +148,7 @@ public class Approved {
             if (!hasAccess.equals("")) {
                 return hasAccess;
             }
+            System.out.println("_executorId=" + jjTools.getParameter(request, _executorRoleId));
             String sessionsId = jjTools.getParameter(request, "hmis_sessions_id");
             StringBuilder html = new StringBuilder();
             jjCalendar_IR ir = new jjCalendar_IR();
@@ -207,9 +158,10 @@ public class Approved {
             map.put(_startDate, jjTools.getParameter(request, _startDate).replaceAll("/", ""));
             map.put(_file, jjTools.getParameter(request, _file));
             map.put(_description, jjTools.getParameter(request, _description));
-            map.put(_executorId, jjTools.getParameter(request, _executorId));
+            map.put(_executorRoleId, (jjTools.getParameter(request, _executorRoleId).replaceAll("#A#", "%23A%23")));
+            map.put(_executorUserId, (jjTools.getParameter(request, _executorUserId).replaceAll("#A#", "%23A%23")));
             map.put(_trackerId, jjTools.getParameter(request, _trackerId));
-            map.put(_status, jjTools.getParameter(request, _status));
+            map.put(_status,status_initialRegistration);
             map.put(_sessionsId, sessionsId);
             map.put(_statusLog,
                     jjTools.getParameter(request, _status)
@@ -217,25 +169,18 @@ public class Approved {
                     + jjCalendar_IR.getViewFormat(jjCalendar_IR.getDatabaseFormat_8length("", true))
                     + " "
                     + new jjCalendar_IR().getTimeFormat_8length()
-                    + "#A#"
+                    + "%23A%23"
             );
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + sessionsId));
-//            if (!sessionsRow.get(0).get(Sessions._status).equals(Sessions.status_communicated)) {
             DefaultTableModel dtm = db.insert(tableName, map);
             if (dtm.getRowCount() == 0) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
                 return "";
             }
-//            } else {
-//
-//                Server.outPrinter(request, response, Js.modal("کاربر گرامی ثبت مصوبه جدید امکان پذیر نیست", "پیام سامانه"));
-//                return "";
-//
-//            }
 
             Server.outPrinter(request, response, Js.jjSessions.select(sessionsId));
             return "";
@@ -257,11 +202,13 @@ public class Approved {
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             StringBuffer html = new StringBuffer();
-
+            String sessionsId = jjTools.getParameter(request, "hmis_sessions_id");
+            List<Map<String, Object>> SessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + sessionsId));//اگر وضعیت جلسه ابلاغ شده است دیگر وصوبه ثبت نشود
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
-                html.append(Js.setHtml("#ApprovedInSessions_button", "<button  class=\"btn btn-outline-success  btn-block mg-b-10\" id=\"insert_Approved_new\" onclick='" + Js.jjApproved.insert() + "'>" + lbl_insert + "</button>"));
-//                html.append(Js.buttonMouseClick("#insert_Approved_new", Js.jjApproved.insert()));
+                if (!SessionsRow.get(0).get(Sessions._status).equals(Sessions.status_communicated)) {
+                    html.append(Js.setHtml("#ApprovedInSessions_button", "<button  class=\"btn btn-outline-success  btn-block mg-b-10\" id=\"insert_Approved_new\" onclick='" + Js.jjApproved.insert() + "'>" + lbl_insert + "</button>"));
+                }
             }
             Server.outPrinter(request, response, html.toString());
             return "";
@@ -285,28 +232,28 @@ public class Approved {
             String id = jjTools.getParameter(request, _id);
             System.out.println("id=" + id);
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-//            List<Map<String, Object>> commettesRow = jjDatabase.separateRow(db.Select(Commettes.tableName,Commettes._id + "=" +row.get(0).get(_commetteId)));
 
             if (row.size() == 0) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
             List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(0).get(Approved._trackerId)));
             List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
-            List<Map<String, Object>> RolesExecutorIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(0).get(Approved._executorId)));
-            List<Map<String, Object>> UserExecutorIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesExecutorIdRow.get(0).get(Role._user_id)));
+//            List<Map<String, Object>> RolesExecutorIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(0).get(Approved._executorId)));
+//            List<Map<String, Object>> UserExecutorIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesExecutorIdRow.get(0).get(Role._user_id)));
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _status, row.get(0).get(_status)));
             html.append(Js.setVal("#" + _description, row.get(0).get(_description)));
             html.append(Js.setVal("#trackerId", RolesTrackerIdRow.get(0).get(Role._title) + "-" + UserTrackerIdRow.get(0).get(Access_User._name) + " " + UserTrackerIdRow.get(0).get(Access_User._family)));
-            html.append(Js.setVal("#executorId", RolesExecutorIdRow.get(0).get(Role._title) + "-" + UserExecutorIdRow.get(0).get(Access_User._name) + " " + UserExecutorIdRow.get(0).get(Access_User._family)));
+//            html.append(Js.setVal("#executorId", RolesExecutorIdRow.get(0).get(Role._title) + "-" + UserExecutorIdRow.get(0).get(Access_User._name) + " " + UserExecutorIdRow.get(0).get(Access_User._family)));
             html.append(Js.setVal("#endDate", jjCalendar_IR.getViewFormat(row.get(0).get(_endDate))));
             html.append(Js.setVal("#startDate", jjCalendar_IR.getViewFormat(row.get(0).get(_startDate))));
             if (!row.get(0).get(_file).toString().equals("")) {
@@ -316,6 +263,7 @@ public class Approved {
                     html3.append("  <div class=\"col-lg-2\" ><a id='downloadFile_Approved'   href='upload/" + File[i] + "' class='btn btn-outline-success  btn-block mg-b-10'>دانلود فایل</a></div>");
                 }
             }
+
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
             html2.append("<div class='row'>");
@@ -361,26 +309,36 @@ public class Approved {
             String id = jjTools.getParameter(request, _id);
             System.out.println("id=" + id);
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-//            List<Map<String, Object>> commettesRow = jjDatabase.separateRow(db.Select(Commettes.tableName,Commettes._id + "=" +row.get(0).get(_commetteId)));
 
             if (row.size() == 0) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
-
+            String executorId = (row.get(0).get(_executorRoleId).toString()).replaceAll("%23A%23", ",");
+            executorId = executorId.substring(0, executorId.length() - 1);//کامای آخر را حذف میکند
+            System.out.println("executorId=" + executorId);
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _status, row.get(0).get(_status)));
             System.out.println("********************" + row.get(0).get(_statusLog));
             html.append(Js.setVal("#" + _description, row.get(0).get(_description)));
             html.append(Js.setVal("#" + _trackerId, row.get(0).get(_trackerId)));
-            html.append(Js.setVal("#" + _executorId, row.get(0).get(_executorId)));
+            String[] exeId = executorId.split(",");
+            String temp = "";
+            System.out.println("exeId" + exeId.length);
+            for (int i = 0; i < exeId.length; i++) {
+                temp += "'" + exeId[i] + "',";
+            }
+            html.append("$('#approved_executorRoleId').val([" + temp + "]);"
+                    + "$('#approved_executorRoleId').select2({minimumResultsForSearch: '', width: '100%'});");
+
             html.append(Js.setVal("#" + _endDate, jjCalendar_IR.getViewFormat(row.get(0).get(_endDate))));
             html.append(Js.setVal("#" + _startDate, jjCalendar_IR.getViewFormat(row.get(0).get(_startDate))));
             if (!row.get(0).get(_file).toString().equals("")) {
@@ -389,6 +347,7 @@ public class Approved {
                     html3.append("<input class='col-xs-12' value='" + File[i] + "' >");
                 }
             }
+
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
             html2.append("<div class='row'>");
@@ -396,18 +355,16 @@ public class Approved {
                 html2.append("<div class=\"col-lg-6\">");
                 List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + row.get(0).get(_sessionsId)));
                 if (sessionsRow.get(0).get(Sessions._status).equals(Sessions.status_created)) {
-                    html2.append("<button  id='edit_ApprovedInSessions' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjApproved.edit() + "' >" + lbl_edit + "</button>");
+                    html2.append("<button  id='edit_ApprovedInSessions' class='btn btn-outline-warning btn-block mg-b-10' onclick='hmisApproved.editInSessions();' >" + lbl_edit + "</button>");
                 }
-//                html.append(Js.buttonMouseClick("#edit_Approved", ));   
                 html2.append("</div>");
             }
             if (accDel) {
                 html2.append("<div class=\"col-lg-6\">");
                 List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + row.get(0).get(_sessionsId)));
                 if (sessionsRow.get(0).get(Sessions._status).equals(Sessions.status_created)) {
-                    html2.append("<button id='delete_ApprovedInSessions'  class='btn btn-outline-danger btn-block mg-b-10' onclick='hmisApproved.editInSessions();'>" + lbl_delete + "</button>");
+                    html2.append("<button id='delete_ApprovedInSessions'  class='btn btn-outline-danger btn-block mg-b-10' onclick='hmisApproved.m_delete(" + id + ");'>" + lbl_delete + "</button>");
                 }
-//                html.append(Js.buttonMouseClick("#delete_Approved", ));
                 html2.append("</div>");
             }
             html2.append("</div>");
@@ -438,69 +395,68 @@ public class Approved {
             String id = jjTools.getParameter(request, _id);
             System.out.println("id=" + id);
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-//            List<Map<String, Object>> commettesRow = jjDatabase.separateRow(db.Select(Commettes.tableName,Commettes._id + "=" +row.get(0).get(_commetteId)));
 
             if (row.size() == 0) {
                 String errorMessage = "رکوردی با این کد وجود ندارد.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
+            StringBuilder html4 = new StringBuilder();
             List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._user_id + "," + Role._id + "," + Role._title, Role._id + "=" + row.get(0).get(Approved._trackerId)));
             List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._name + "," + Access_User._family, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
-            List<Map<String, Object>> RolesExecutorIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._user_id + "," + Role._id + "," + Role._title, Role._id + "=" + row.get(0).get(Approved._executorId)));
+            List<Map<String, Object>> RolesExecutorIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._user_id + "," + Role._id + "," + Role._title, Role._id + "=" + row.get(0).get(Approved._executorRoleId)));
             List<Map<String, Object>> UserExecutorIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._name + "," + Access_User._family, Access_User._id + "=" + RolesExecutorIdRow.get(0).get(Role._user_id)));
             html.append(Js.setVal("#approvedPrevious_id", row.get(0).get(_id)));
             html.append(Js.setVal("#approvedPrevious_title", row.get(0).get(_title)));
             html.append(Js.setVal("#approvedPrevious_status", row.get(0).get(_status)));
-//            System.out.println("********************" + row.get(0).get(_statusLog));
             html.append(Js.setVal("#approvedPrevious_description", row.get(0).get(_description)));
             html.append(Js.setVal("#approvedPrevious_trackerId", RolesTrackerIdRow.get(0).get(Role._title) + "-" + UserTrackerIdRow.get(0).get(Access_User._name) + " " + UserTrackerIdRow.get(0).get(Access_User._family)));
             html.append(Js.setVal("#approvedPrevious_executorId", RolesExecutorIdRow.get(0).get(Role._title) + "-" + UserExecutorIdRow.get(0).get(Access_User._name) + " " + UserExecutorIdRow.get(0).get(Access_User._family)));
             html.append(Js.setVal("#approvedPrevious_endDate", jjCalendar_IR.getViewFormat(row.get(0).get(_endDate))));
             html.append(Js.setVal("#approvedPrevious_startDate", jjCalendar_IR.getViewFormat(row.get(0).get(_startDate))));
-            html.append(Js.setHtml("#approvedPrevious_statusLog", (row.get(0).get(_statusLog).toString()).replaceAll("#A#", "<br/>")));
+            html.append(Js.setVal("#approvedPrevious_statusLog", (row.get(0).get(_statusLog).toString()).replaceAll("#A#", "<br/>")));
             if (!row.get(0).get(_file).toString().equals("")) {
                 String[] File = (row.get(0).get(_file).toString().replaceAll("#A#", "%23A%23")).split("%23A%23");
+                html3.append("<div class='row col-lg-12'> "
+                        + "فایل های دبیر کمیته"
+                        + "</div>"
+                        + "");
                 for (int i = 0; i < File.length; i++) {
-                    html3.append("<input class='col-xs-12' value='" + File[i] + "' >");
+                    html3.append(" <div class='col-lg-2'><a id='downloadFile_ApprovedInSessions' title='دانلود فایل'  href='upload/" + File[i] + "' class='btn btn-outline-success  btn-block mg-b-10'><input value='" + File[i] + "' class='form-control is-valid hasDatepicker' /></a></div>");
                 }
             }
+            if (!row.get(0).get(_fileOfResponsible).toString().equals("")) {
+                String[] FileOfResponsible = (row.get(0).get(_fileOfResponsible).toString().replaceAll("#A#", "%23A%23")).split("%23A%23");
+                html4.append("<div class='row col-lg-12'>"
+                        + "فایل های مسئولین"
+                        + "</div>");
+                for (int i = 0; i < FileOfResponsible.length; i++) {
+                    html4.append(" <div class='col-lg-2'><a id='downloadFileOfResponsible_ApprovedInSessions' title='دانلود فایل'  href='upload/" + FileOfResponsible[i] + "' target='_blank' class='btn btn-outline-success  btn-block mg-b-10'><input value='" + FileOfResponsible[i] + "' class='form-control is-valid hasDatepicker' /></a></div>");
+                }
+            }
+
             boolean accEdt = Access_User.hasAccess(request, db, rul_edt);//
             boolean accDel = Access_User.hasAccess(request, db, rul_dlt);//
+
 //            html2.append("<div class='row'>");
-//            if (accEdt) {
-//                html2.append("<div class=\"col-lg-6\">");
-//                List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + row.get(0).get(_sessionsId)));
-//                if (sessionsRow.get(0).get(Sessions._status).equals(Sessions.status_created)) {
-//                    html2.append("<button  id='edit_ApprovedPrevious' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjApproved.edit() + "' >" + lbl_edit + "</button>");
-//                }
-////                html.append(Js.buttonMouseClick("#edit_Approved", ));   
-//                html2.append("</div>");
-//            }
-            html2.append("<div class='row'>");
             if (accEdt) {
-                html2.append("<div class=\"col-lg-6\">");
+                html2.append("<div class=\"col-lg-12\">");
                 html2.append("<button  id='edit_ApprovedPrevious' class='btn btn-outline-warning btn-block mg-b-10' onclick='hmisApproved.editApprovedPrevious();' >" + lbl_edit + "</button>");
                 html2.append("</div>");
             }
-//            if (accDel) {
-//                html2.append("<div class=\"col-lg-6\">");
-//                List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + row.get(0).get(_sessionsId)));
-//                if (sessionsRow.get(0).get(Sessions._status).equals(Sessions.status_created)) {
-//                    html2.append("<button id='delete_ApprovedPrevious'  class='btn btn-outline-danger btn-block mg-b-10' onclick='hmisApproved.editInSessions();'>" + lbl_delete + "</button>");
-//                }
-//                html2.append("</div>");
-//            }
-            html2.append("</div>");
+
+//            html2.append("</div>");
             String script = "";
             script += Js.setHtml("ApprovedPrevious_button", html2);//دکمه های مربوط به مصوبات قبلی 
+            script += Js.setHtml("ApprovedPrevious_FileApprovedInsessions", html3);//فایل های دبیر کمیته 
+            script += Js.setHtml("ApprovedPrevious_FileInsessions", html4);//فایل های مسئولین
             script += html.toString();
-//            script += Js.setHtml("#inputTextSelectorDiv", html2);
             Server.outPrinter(request, response, script);
             return "";
 
@@ -549,13 +505,14 @@ public class Approved {
     public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String id = jjTools.getParameter(request, "hmis_approved_id");
+            System.out.println("id=" + id);
             String script = "";
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
                 Server.outPrinter(request, response, hasAccess);
                 return "";
             }
-
+            List<Map<String, Object>> approvedRow = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
             Map<String, Object> map = new HashMap<>();
             map.put(_endDate, jjTools.getParameter(request, _endDate).replaceAll("/", ""));
             map.put(_startDate, jjTools.getParameter(request, _startDate).replaceAll("/", ""));
@@ -569,7 +526,8 @@ public class Approved {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             } else {
                 if (result.isEmpty()) {
                     script += "hmisApproved.m_refresh();";
@@ -601,7 +559,7 @@ public class Approved {
             map.put(_startDate, jjTools.getParameter(request, _startDate).replaceAll("/", ""));
             map.put(_file, jjTools.getParameter(request, _file));
             map.put(_description, jjTools.getParameter(request, _description));
-            map.put(_executorId, jjTools.getParameter(request, _executorId));
+            map.put(_executorRoleId, jjTools.getParameter(request, _executorRoleId));
             map.put(_trackerId, jjTools.getParameter(request, _trackerId));
             map.put(_status, jjTools.getParameter(request, _status));
 
@@ -610,7 +568,8 @@ public class Approved {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             String script = Js.jjSessions.select(sessionsId);
             script += "$('#insertApproved2').slideUp();";
@@ -642,15 +601,11 @@ public class Approved {
                 Server.outPrinter(request, response, hasAccess);
                 return "";
             }
-
+            List<Map<String, Object>> approvedRow = jjDatabaseWeb.separateRow(db.Select(tableName, _id + "=" + id));
             Map<String, Object> map = new HashMap<>();
-//            map.put(_title, jjTools.getParameter(request, _title));
             map.put(_endDate, jjTools.getParameter(request, _endDate).replaceAll("/", ""));
             map.put(_startDate, jjTools.getParameter(request, _startDate).replaceAll("/", ""));
-//            map.put(_file, jjTools.getParameter(request, _file));
-//            map.put(_description, jjTools.getParameter(request, _description));
-//            map.put(_executorId, jjTools.getParameter(request, _executorId));
-//            map.put(_trackerId, jjTools.getParameter(request, _trackerId));
+            map.put(_file, approvedRow.get(0).get(_file) + jjTools.getParameter(request, _file));
             map.put(_status, jjTools.getParameter(request, _status));
 
             if (!db.update(tableName, map, _id + "=" + id)) {
@@ -658,7 +613,8 @@ public class Approved {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             System.out.println("sessionsId=" + sessionsId);
             String script = Js.jjSessions.select(sessionsId);
@@ -704,7 +660,7 @@ public class Approved {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Delete Fail;";
                 }
-                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
                 return "";
             }
             String script = Js.jjSessions.select(sessionsId);
@@ -727,4 +683,5 @@ public class Approved {
         }
         return "";
     }
+
 }

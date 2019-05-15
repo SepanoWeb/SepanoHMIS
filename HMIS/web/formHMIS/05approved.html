@@ -4,72 +4,107 @@
             <nav class="breadcrumb">
                 <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
                 <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
-                <span class="breadcrumb-item active">میز هوشمند جلسه</span>
+                <span class="breadcrumb-item active">میز هوشمند مصوبات</span>
             </nav>
         </div><!-- sh-breadcrumb -->
-        <div class="sh-pagetitle">
-            <!--        <div class="input-group">
-                        <input type="search" class="form-control" placeholder="Search">
-                        <span class="input-group-btn">
-                            <button class="btn"><i class="fa fa-search"></i></button>
-                        </span> input-group-btn 
-                    </div> input-group -->
-            <div class="sh-pagetitle-left">
-                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
-                <div class="sh-pagetitle-title">
-                    <span>کمیته ها و جلسات</span>
-                    <h2>آرشیو مصوبات</h2>
-                </div><!-- sh-pagetitle-left-title -->
-            </div><!-- sh-pagetitle-left -->
-        </div><!-- sh-pagetitle -->
-        <div class="col-lg-12">
-            <div class="card bd-primary mg-t-20" id="newFormQuestion">
-                <div class="card-header bg-primary tx-white">آرشیو مصوبات کمیته ها و کارگروهای مختلف :</div>
-                <div class="card-body pd-sm-30">
-                    <table id="datatable1" class="table table-responsive table-wrapper">
-                        <thead>
-                            <tr>                    
-                                <td>کد</td>
-                                <td>کمیته</td><td>عنوان مصوبه</td>
-                                <td>مسئول اجرا</td>
-                                <td>مسئول پیگیری</td>
-                                <td>تاریخ شروع</td>
-                                <td>تاریخ پایان</td>
-                                <td>وضعیت</td>
-                                <td>مشاهده</td>
+        <div class="card-header btn-teal tx-white">
+            مصوبات جلسه
+        </div>
+        <div class="card-body pd-sm-30">
+            <div class="row">
+                <input type="hidden" id="hmis_approved_id" name="hmis_approved_id"/>
+                <div class="col-lg-12">
+                    عنوان مصوبه:
+                    <div class="form-group has-success mg-b-0">
+                        <input id="approved_title" disabled="disabled" class="form-control is-valid" placeholder="عنوان مصوبه  را وارد کنید" type="text" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-3">
+                    <div class="form-group has-warning mg-b-0">
+                        مسئول اجرا
+                        <input type="text" disabled="disabled" id="executorId" class="form-control is-valid" />
+                    </div><!-- form-group -->
+                </div><!-- col -->
+                <div class="col-lg-3">
+                    <div class="form-group has-warning mg-b-0">
+                        مسئول پیگیری
+                        <input type="text" id="trackerId" disabled="disabled"  class="form-control is-valid"/>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background-color: #fcffba" ><td><br></td><td>کمیته ی مدیریت اجرایی</td><td><span>درصد تحقق اهداف اختصصاصی تعیین گردد</span></td><td>مدیر مرکز</td><td><font color="#397b21">رئیس مرکز</font></td><td>97/3/20</td><td>97/5/20<br></td><td>در حال انجام</td><td><i class="icon ion-eye"></i></td></tr>
-                            <tr style="background-color: #ffbaba"><td><br></td><td>کمیته ی مدیریت اجرایی<br></td><td>بخش سی سی یو راه اندازی شود</td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/2/20<br></td><td>97/3/20</td><td>انجام نشد</td><td><i class="icon ion-eye"></i></td></tr>
-                            <tr style="background-color: #baffbc"><td><br></td><td>کمیته ی مدیریت اجرایی<br></td><td>برنامه بازدید های میدانی ایمنی بیمار سه ماهه اول ابلاغ گردد<br></td><td>مدیر مرکز</td><td>رئیس مرکز</td><td>97/3/20<br></td><td>97/5/20<br></td><td>انجام شد</td><td><i class="icon ion-eye"></i></td></tr>
-                            <tr style="background-color: #baffbc"><td><br></td><td>کمیته ی بهداشت محیط</td><td>بین های درب دار برای لندری تهیه گردد</td><td>مسئول بهداشت محیط</td><td>رییس امور عمومی</td><td>97/2/20</td><td><p>97/4/15</p></td><td>انجام شد</td><td><i class="icon ion-eye"></i></td></tr>
-                            <tr style="background-color: #ffbaba"><td><br></td><td>کمیته ی دارو-درمان</td><td>فارماکوپه مورد بازبینی و ابلاغ گردد</td><td>مسئول داروخانه</td><td>معاون درمان</td><td>97/2/15</td><td>97/4/15</td><td>انجام نشد</td><td><i class="icon ion-eye"></i></td></tr>
-                            <tr style="background-color: #fcffba"><td><br></td><td>کمیته ی مدیریت اجرایی<br></td><td>برآورد منابع انسانی انجام و گزارش آن ارایه گردد</td><td>مسئول نیروی انسانی</td><td>مدیر مرکز</td><td>97/2/30<br></td><td>97/3/15</td><td>در حال انجام</td><td><i class="icon ion-eye"></i></td></tr>
-                        </tbody></table>
-                </div>
+                    </div><!-- form-group -->
+                </div><!-- col -->
+                <div class="col-lg-3">
+                    تاریخ شروع:
+                    <div class="form-group has-success mg-b-0">
+                        <input id="startDate" name="approved_startDate" class="form-control is-valid" placeholder="تاریخ شروع" type="text">
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-3">
+                    تاریخ پایان:
+                    <div class="form-group has-success mg-b-0">
+                        <input id="endDate" name="approved_endDate" class="form-control is-valid" placeholder="تاریخ پایان" type="text">
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <br/>
+                <div class="col-lg-3">
+                    وضعیت:
+                    <select id="approved_status" name="approved_status" class="form-control" >
+                        <option value="در حال انجام">در حال انجام</option>
+                        <option value="غیر قابل انجام">غیر قابل انجام</option>
+                        <option value="انجام شده">انجام شده</option>
+                    </select>
+                </div><!-- col -->   
+                <div class="col-lg-9">
+                    توضیحات:
+                    <div class="form-group has-success mg-b-0">
+                        <input id="approved_description" name="approved_description" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا واردمی کند" type="text" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+
+                <div class="col-lg-3">
+                    بارگذاری مستندات:<br/>
+                    <input id="approved_fileOfResponsible" name="approved_fileOfResponsible" type="hidden" />
+                    <!--<img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>-->
+                    <div class="row">
+                        <input class="btn btn-primary" id="sendFilesApproved" type="submit" value="ارسال">
+                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                        <input id="attachFileApproved" name="attachFileApproved" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                        <span class="form-control col-lg"></span>
+                    </div>
+                </div><!-- col -->   
+
+                <!--                                    <a onclick="hmisDepartment.downloadIcon();"></a>-->
+                <!--</label>-->
+
+                <div  class="col-lg-3" id="inputFileApprovedDiv"></div>
+                <div class="col-lg-12 mg-t-20" id="inputTextSelectorDiv"></div>
+                
+
+                <div class="col-lg-6" id="Approved_button"></div>
+                <div class="col-lg-3">
+                    <a id="cancel_Approved" class="btn btn-outline-secondary mg-b-10  btn-block">
+                        لغو
+                    </a>   
+                </div><!-- col --> 
             </div><!-- card -->
         </div><!-- card-body -->
-    </div><!-- card -->
-</div><!-- card-body -->
+    </div>
+</div>
+        <script>
 
-<script>
-
-    $(function () {
-        'use strict';
-        $('#datatable1').DataTable({
-            responsive: true,
-            language: {
-                searchPlaceholder: 'جستجو...',
-                sSearch: '',
-                lengthMenu: '_MENU_ items/page',
-            }
-        });
+            $(function () {
+                'use strict';
+                $('#datatable1').DataTable({
+                    responsive: true,
+                    language: {
+                        searchPlaceholder: 'جستجو...',
+                        sSearch: '',
+                        lengthMenu: '_MENU_ items/page',
+                    }
+                });
 
 
-        // Select2
-        $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+                // Select2
+                $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
 
-    });
-</script>
+            });
+        </script>

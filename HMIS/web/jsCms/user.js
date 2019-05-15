@@ -102,6 +102,7 @@ var cmsUser = {
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? innerPanelHeight : tableHeight);
         param += "&jj=1";
+
        new jj(param).jjAjax2(false);
         cmsUser.tabSizeTbl();
     },
@@ -150,10 +151,12 @@ var cmsUser = {
         new jj("#" + cmsUser.f_parent).jjVal('');
     },
     m_add_new: function () {
+
        new jj("do=" + cmsUser.tableName + ".add_new").jjAjax2(false);
        $("#DownloadPicPersonal").hide();
        $("#DownloadPicPersonnelCard").hide();
        $("#DownloadPicSignature").hide();
+
         cmsUser.m_show_form();
         cmsUser.m_clean();
         cmsUser.m_getGroups();
@@ -196,9 +199,11 @@ var cmsUser = {
 //            flag = false;
 //        }
 //        if ((validatePass(pass) && new jj('#user_passUser').jjVal() != "") & (validateEmail(email) && new jj('#user_emailUser').jjVal() !== "")) {
+
             param += "&" +new jj('#AccessuserForm').jjSerial();
 //            param += "&" + jj('#AccessuserForm').jjSerial();
             new jj(param).jjAjax2(false);
+
 
             cmsUser.m_show_tbl();
             cmsUser.m_clean();
@@ -214,7 +219,9 @@ var cmsUser = {
         param += "&user_attachAxPersonnelCard=" + $('#user_attachPicPersonnelCard').val();
         param += "&user_attachAxSignature=" + $('#user_attachPicSignature').val();
         param += "&user_attachFile=" + $('#user_attachFile').val();
+
         param += "&" +new jj('#swUser').jjSerial(param);
+
 
 
         new jj(param).jjAjax2(false);
@@ -229,7 +236,9 @@ var cmsUser = {
         var param = "";
         param += "do=" + cmsUser.tableName + ".delete";
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
+
         new jj(param).jjAjax2(false);
+
         cmsUser.m_show_tbl();
         cmsUser.m_clean();
     },
@@ -237,8 +246,10 @@ var cmsUser = {
         var param = "";
         param += "do=" + cmsUser.tableName + ".select";
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
+
         new jj(param).jjAjax2(false);
          $("#user_pic4").html('');
+
         cmsUser.m_show_form();
         cmsUser.m_getGroups(id);
 
@@ -249,6 +260,7 @@ var cmsUser = {
         param += "do=" + cmsGroup.tableName + ".getCheckboxList";
         param += "&panel=group_checkbox_list";
         param += "&" + cmsUser.f_user_id + "=" + (id == null ? "" : id);
+
        new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {

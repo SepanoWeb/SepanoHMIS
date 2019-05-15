@@ -195,14 +195,25 @@
                                     hmisSessions.loadForm();" class="nav-link ShowOneDiv">میز هوشمند جلسات</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" onclick="$('.sh-mainpanel').load('05sessionsForPrint.html', null, function () {
-                                    });
-                                    return false;" class="nav-link ShowOneDiv">آرشیو صورت جلسات</a>
+                            <a href="#swMySessions" onclick="if ($('#swMySessionsTbl').html() == '') {
+                                        hmisMySessions.m_refresh();
+                                    }
+                                    ;
+                                    hmisMySessions.loadForm();" class="nav-link ShowOneDiv">صورت جلسات من</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" onclick="$('.sh-mainpanel').load('05approved.html', null, function () {
-                                    });
-                                    return false;"  class="nav-link ShowOneDiv">آرشیو مصوبات</a>
+                            <a href="#swArchivesSessions" onclick="if ($('#swArchivesSessionsTbl').html() == '') {
+                                        hmisSessions.archivesSessionsRefresh();
+                                    }
+                                    ;
+                                    hmisSessions.loadForm();" class="nav-link ShowOneDiv">آرشیو صورت جلسات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#swApproved" onclick="if ($('#swApprovedTbl').html() == '') {
+                                        hmisApproved.m_refresh();
+                                    }
+                                    ;
+                                    hmisApproved.loadForm();"  class="nav-link ShowOneDiv">آرشیو مصوبات</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" onclick="$('.sh-mainpanel').load('05assessmentForSessionCategory.html', null, function () {
@@ -570,7 +581,7 @@
                             <div class="Alldiv" id="swMyForms">
                                 <div id="swMyFormsTbl" style=""></div>
                                 <div id="swMyFormsForm" style="display: none;"></div>
-                            </div><!--swSession-->
+                            </div><!--swPlans-->
                             <div class="Alldiv" id="swPlans">
                                 <div id="swPlansTbl" style=""></div>
                                 <div id="swPlansForm" style="display: none;"></div>
@@ -595,26 +606,34 @@
                                 <div id="swSessionsTbl" style=""></div>
                                 <div id="swSessionsForm" style="display: none;"></div>
                             </div><!--swSession-->
+                            <div class="Alldiv" id="swArchivesSessions">
+                                <div id="swArchivesSessionsTbl" style=""></div>
+                                <div id="swArchivesSessionsForm" style="display: none;"></div>
+                            </div><!--swSession-->
+                            <div class="Alldiv" id="swMySessions">
+                                <div id="swMySessionsTbl" style=""></div>
+                                <div id="swMySessionsForm" style="display: none;"></div>
+                            </div><!--swMySession-->
                             <div class="Alldiv" id="swUser" style="">
                                 <div id="swUserTbl" ></div>
                                 <div id="swUserForm" style="display: none;"></div>
-                            </div>
+                            </div><!--swUser-->
                             <div class="Alldiv" id="swDepartment" style="">
                                 <div id="swDepartmentTbl" style=""></div>
                                 <div id="swDepartmentForm" style="display: none;"></div>
-                            </div>
+                            </div><!--swDepartement-->
                             <div class="Alldiv" id="swRole" style="">
                                 <div id="swRoleTbl" style=""></div>
                                 <div id="swRoleForm" style="display: none;"></div>
-                            </div>
+                            </div><!--swRole-->
                             <div class="Alldiv" id="swGroup" >
                                 <div id="swGroupTbl" ></div>
                                 <div id="swGroupForm" style="display: none;"></div>
-                            </div>
+                            </div><!--swGroup-->
                             <div class="Alldiv" id="swMessenger">
                                 <div id="swMessengerTbl" ></div>
                                 <div id="swMessengerForm" style="display: none;"></div>
-                            </div>
+                      </div>
                             <!--/////ایجاد مستند-->
                             <div class="Alldiv" id="swCreateDocumentary">
                                 <div id="swCreateDocumentaryTbl" ></div>
@@ -628,6 +647,7 @@
                                 <div id="swManagementGaugesTbl" ></div>
                                 <div id="swManagementGaugesForm" style="display: none;"></div>
                             </div>
+
                         </div>
 
                         <!--</div>-->
@@ -639,7 +659,6 @@
             </div><!--sh-pagebody-->
             <script src="js/jquery/jquery-1.10.2_1.js" type="text/javascript"></script>
             <script src="js/jquery/jquery-migrate-1.2.0.js" type="text/javascript"></script>
-
             <script src="Manager/popper.js"></script>
             <script src="Manager/bootstrap.js"></script>
             <link href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
@@ -689,6 +708,7 @@
             <script src="jsHMIS/plans.js" type="text/javascript"></script>
             <script src="jsHMIS/steps.js" type="text/javascript"></script>
             <script src="jsHMIS/sessions.js" type="text/javascript"></script>
+            <script src="jsHMIS/Mysessions.js" type="text/javascript"></script>
             <script src="jsHMIS/approved.js" type="text/javascript"></script>
             <script src="jsHMIS/reports.js" type="text/javascript"></script>
             <script src="jsHMIS/commettes.js" type="text/javascript"></script>
@@ -768,7 +788,8 @@
                 };
                 //        </script>
 
-      
+
+
 
 
     </body></html>

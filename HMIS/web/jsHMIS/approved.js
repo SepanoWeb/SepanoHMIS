@@ -14,30 +14,13 @@ var hmisApproved = {
             $("#swApprovedForm").load("formHMIS/05approved.html", null, function () {
                 new jj('#sendFilesApproved').jjAjaxFileUpload4('attachFileApproved', '#approved_fileOfResponsible', '#inputFileApprovedDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
 
-                $("#cancel_Approved").button().click(function (e) {
+                $("#cancel_Approved").click(function (e) {
                     hmisApproved.m_clean();
                     hmisApproved.m_show_tbl();
                 });
 
 
-
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
                 hmisApproved.m_refresh();
-//                $('#newCommetteForm').show();
-//                $('#formInvitation').hide();
 
 
             });
@@ -64,15 +47,18 @@ var hmisApproved = {
         new jj("#" + hmisApproved.f_parent).jjVal("0");
         new jj("#insertApproved2").jjFormClean();
         new jj("#approved_trackerId").jjVal("");
-        new jj("#approved_executorId").jjVal("");
+        new jj("#approved_executorUserId").jjVal("");
+        new jj("#approved_executorRoleId").jjVal("");
+        $("#inputTextSelectorDiv").html("");
 
     },
     m_add_new: function () {
-        $("#approved_status").val("در حال انجام");
-        $("#approved_status").attr("disabled", "disabled");
+        var param = "";
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
-        new jj("do=" + hmisApproved.tableName + ".add_new&jj=1").jjAjax2(false);
+        param += "&hmis_sessions_id=" + new jj("#hmis_sessions_id").jjVal();
+        param += "&do=" + hmisApproved.tableName + ".add_new&jj=1";
+        new jj(param).jjAjax2(false);
         hmisApproved.m_clean();
 //        hmisApproved.m_show_form();
 //                $('#newCommetteForm').show();
@@ -90,25 +76,21 @@ var hmisApproved = {
         hmisApproved.tabSizeTbl();
     },
     m_insert: function () {
-//        var valid =  hmisApproved.m_validation();
-//        if (valid == "") {
-        $("#inputTextSelectorDiv").html("");
+
+//        $("#inputTextSelectorDiv").html("");
+        var temp3 = "";
+        var execturesId = $('#approved_executorRoleId').val();
+        for (var i = 0; i < execturesId.length; i++) {
+            temp3 += execturesId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+        }
         var param = "";
         param += "&do=" + hmisApproved.tableName + ".insert";
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-        var temp = $("#inputTextSelectorDiv input");
-        var attachedFile = "";
-        for (var i = 0; i < temp.length; i++) {
-            attachedFile += $(temp[i]).val() + "%23A%23";
-        }
-        param += "&approved_file=" + attachedFile;
+        param += "&approved_executorRoleId=" + temp3;
         param += "&" + new jj('#insertApproved2').jjSerial();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
-        hmisApproved.m_clean();
-//        } else {
-//            new jj(valid).jjDialog();
-//        }
+//        hmisApproved.m_clean();
     },
     m_edit: function () {
         var param = "";
@@ -121,10 +103,16 @@ var hmisApproved = {
     editInSessions: function () {
 //        var valid = hmisPlan.m_validation();
 //        if (valid == "") {
+        var temp3 = "";
+        var execturesId = $('#approved_executorRoleId').val();
+        for (var i = 0; i < execturesId.length; i++) {
+            temp3 += execturesId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+        }
         var param = "";
         param += "&do=" + hmisApproved.tableName + ".editInSessions";
         param += "&" + new jj('#insertApproved2').jjSerial();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+        param += "&approved_executorRoleId=" + temp3;
 
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
@@ -141,10 +129,11 @@ var hmisApproved = {
         param += "&" + new jj('#approvedPreviousDiv').jjSerial();
         param += "&approvedId=" + new jj('#approvedPrevious_id').jjVal();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
+        $("#inputFileApprovedPreviousDiv").html("");
+
 //        } else {
 //            new jj(valid).jjDialog();
 //        }
@@ -160,10 +149,15 @@ var hmisApproved = {
      * @param {type} id
      * @returns {undefined}
      */
+
     m_delete: function (id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisApproved.m_delete_after_question(' + id + ');\n', true, "");
+//        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisApproved.m_delete_after_question(' + id + ');\n', true, "");
+        if (confirm("آیا از حذف این رکورد اطمینان دارید؟")) {
+            hmisApproved.confirmationFinalApproved_after_question(id);
+        } else {
+        }
     },
-    m_delete_after_question: function (id) {
+    confirmationFinalApproved_after_question: function (id) {
         var param = "";
 //        alert(new jj('#hmis_sessions_id').jjVal());
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
@@ -197,6 +191,8 @@ var hmisApproved = {
         param += "do=" + hmisApproved.tableName + ".selectApprovedPrevious";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
+        $("#inputFileApprovedPreviousDiv").html("");
+
 //        hmisApproved.m_show_form();
     },
     selectInSessions: function (id) {
@@ -211,6 +207,7 @@ var hmisApproved = {
         new jj(param).jjAjax2(false);
 //        hmisApproved.m_show_form();
     },
+
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".add_EN";
@@ -278,80 +275,4 @@ var hmisApproved = {
     },
 
     /////////////////////shiran////////////
-//    showInvitationForm: function (commeteId) {
-//        hmisApproved.m_show_form();
-////        $('#hmis_commettes_id').val(commeteId);
-////        $('#newCommetteForm').hide();
-////        $('#formInvitation').show();
-//    },
-//    Invitees: function () {//مدعوین
-//
-//        var param = "";
-//        var temp = $('#InviteesDiv input:checkbox[class=checkBoxInvitees]:checked');
-//        var InviteesOutSide = $('#InviteesDiv input:text[class=InviteesOutSide]');
-//
-//        if (temp.size() == 0 && InviteesOutSide.size() == 0) {//اگر تیک عضوی را نزده بود
-//            alert("لطفا افراد را انتخاب کنید");
-//            return;
-//        }
-//        var temp1 = "";
-//        var temp2 = "";
-//        for (var i = 0; i < temp.size(); i++) {
-//            temp1 += $(temp[i]).attr('value') + "%23A%23"; //نام چک باکس عدد مورد نظر
-//        }
-//        for (var i = 0; i < InviteesOutSide.size(); i++) {
-//            if ($(InviteesOutSide[i]).val() !== "") {
-//                temp2 += $(InviteesOutSide[i]).val() + "%23A%23"; //نام چک باکس عدد مورد نظر
-//            }
-//        }
-//        alert(temp2);
-//        alert(temp1);
-//        param += "&sessions_Invitees=" + temp1;
-//        param += "&sessions_InviteesOutSide=" + temp2;
-//        param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal();//ای دی کمیته
-//        param += "&" + new jj('#formInvitation').jjSerial();
-//        param += "&do=Sessions.requestSendComment&jj=1";
-//        new jj(param).jjAjax2(false);
-//    },
-
-//    mainTabSetSize: function () {
-////        var aa = $("#swContent").children();
-////        var bb = 0;
-////        for(i=0; i < aa.length; i++){  
-////            if($(aa[i]).css("display")!='none'){
-////                bb+= new jj($(aa[i]).css("height")).jjConvertToInt() ;
-////            }
-////        }
-////        if(bb==0){
-////            $('#tabs').css('height',572);
-////        }else{
-////            $('#tabs').css('height',bb+44);
-////        }
-//    }
-
 };
-//============ BY RASHIDI ========> 
-//function selectSearchResult(selectedTagNo) {
-//    $("#tags_name").val($("#tagsResult_td" + selectedTagNo).html());
-//    $("#content_search_tags_result").hide();
-//}
-
-//function deleteContentTag(deletedTagNo) {
-//    new jj("آیا از حذف این برچسب اطمینان دارید؟").jjDialog_YesNo('afterDeleteContentTag(' + deletedTagNo + ');\n', true, "");
-//}
-//function afterDeleteContentTag(deletedTagNo) {
-//
-////    var myString = $("#" + cmsContent.f_tags).val();
-////    var oldWord = $("#contetn_tag_span" + deletedTagNo).html().toString();
-////    var reg = new RegExp(oldWord, "g");
-////    myString = myString.replace(reg, "");
-////    alert(myString);
-//
-//    var str = $("#" + cmsContent.f_tags).val();
-//    var tagName = $("#contetn_tag_span" + deletedTagNo).html().toString();
-//    var reg = new RegExp(tagName, "g");
-//    str = str.replace(reg, "");
-//    $("#" + cmsContent.f_tags).val(str);
-//    $("#contetn_tag_span" + deletedTagNo).remove();
-//}
-//<============ BY RASHIDI ========  

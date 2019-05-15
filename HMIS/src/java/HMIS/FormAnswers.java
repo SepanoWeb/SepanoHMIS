@@ -111,11 +111,15 @@ public class FormAnswers {
                 System.out.println("(((((((((((((((((((((((((((((((((((((((((((((");
                 request.getRequestDispatcher("feiz/MyForms.jsp").forward(request, response);
             } else {// اگر این درخواست باید بصورت ایجکس پاسخ گفته شود
+                if(needString){
+                    return html.toString();
+                }
                 StringBuilder script = new StringBuilder();
                 script.append(Js.setHtml("#swMyFormsTbl", html));
                 script.append(Js.table("#refreshMyForms", "", 0, "", "لیست اخبار"));
                 Server.outPrinter(request, response, script);
             }
+            
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));

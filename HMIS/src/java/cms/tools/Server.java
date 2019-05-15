@@ -133,7 +133,7 @@ public class Server extends HttpServlet {
             clazzes.add(ManagementGauges.class);
 
             clazzes.add(Sessions.class);//صورت جلسه 13971212
-            clazzes.add(Approved.class);//صورت جلسه 13971212
+            clazzes.add(Approved.class);//مصوبات 13971212
         }
         return clazzes;
     }
