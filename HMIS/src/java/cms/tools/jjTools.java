@@ -80,7 +80,7 @@ public class jjTools {
 //                }
 //                .......................................
             } else if (jjTools.getSessionAttribute(request, "myLang").equals("")) {//اگر در ریکوئست نبود و در سشن هم نبود مقدار پیشفرض را بگذار در سشن
-                    jjTools.setSessionAttribute(request, "myLang", Server.defaultLang);                
+                jjTools.setSessionAttribute(request, "myLang", Server.defaultLang);
             }
 //            if (!jjTools.getSessionAttribute(request, "myLang").equals("")) {
 //                if (!jjTools.getSessionAttribute(request, "myLang").equals("2")) {
@@ -130,11 +130,14 @@ public class jjTools {
         return jjTools.getSessionAttribute(request, "myLang").equals("3");
     }
 //============ BY RASHIDI ========>
-/**
- * زبان را از سشن می خواند و یک عدد بر می گرداند که اگر ست نشده بود زبان پیشفرض را بر می گرداند
- * @param request
- * @return 
- */
+
+    /**
+     * زبان را از سشن می خواند و یک عدد بر می گرداند که اگر ست نشده بود زبان
+     * پیشفرض را بر می گرداند
+     *
+     * @param request
+     * @return
+     */
     public static String getLangNum(HttpServletRequest request) {
         return jjTools.getSessionAttribute(request, "myLang").equals("") ? Server.defaultLang : jjTools.getSessionAttribute(request, "myLang");
     }
@@ -159,13 +162,89 @@ public class jjTools {
     public static int getSeassionUserId(HttpServletRequest request) {
         return jjNumber.isDigit(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) ? Integer.parseInt(jjTools.getSessionAttribute(request, "#" + Access_User._id.toUpperCase())) : 0;
     }
+
     /**
-     * رشته ای را برمیگرداند که در آن نقش های کاربر با کاراکتر های خاص از هم جدا میشوند
+     * رشته ای را برمیگرداند که در آن نام و نام خانوادگی کاربر فعال در سشن را بی
+     * می گرداند اگر نال باشد رشته ی تهی بر میگرداند اگر نباشد بین نام و نام
+     * خانوادگی بک فاصله می گذارد
+     *
+     * @param request
+     * @return 5%A%21%A%55%A%
+     */
+    public static String getSeassionUserNameAndFamily(HttpServletRequest request) {
+        return jjTools.getSessionAttribute(request, "#USER_NAME") == null ? "" : (jjTools.getSessionAttribute(request, "#USER_NAME") + " ") + jjTools.getSessionAttribute(request, "#USER_FAMILY") == null ? "" : jjTools.getSessionAttribute(request, "#USER_FAMILY");
+    }
+
+    /**
+     * رشته ای را برمیگرداند که در آن نقش های کاربر با کاراکتر های خاص از هم جدا
+     * میشوند
+     *
      * @param request
      * @return 5%A%21%A%55%A%
      */
     public static String getSeassionUserRole(HttpServletRequest request) {
-        return jjTools.getSessionAttribute(request, "#ROLE_ID")==null ? "" : jjTools.getSessionAttribute(request, "#ROLE_ID");
+        return jjTools.getSessionAttribute(request, "#ROLE_ID") == null ? "" : jjTools.getSessionAttribute(request, "#ROLE_ID");
+    }
+
+    /**
+     * نام کوکی ست شده را میگیرد و مقدار آنرا برمیگرداند
+     *
+     * @param request
+     * @param key نام کوکی
+     * @return مقدار داخل کوکی
+     */
+    public static String getCookie(HttpServletRequest request, String key) {
+        Cookie[] cookies = request.getCookies();
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals(key)) {
+                return cookies[i].getValue();
+            }
+        }
+        return "";
+    }
+
+    /**
+     * آی پی سیستم کاربر را برمیگرداند
+     *
+     * @param request
+     * @return IPv4 or IPv6
+     */
+    public static String getuserIP(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("HTTP_X_FORWARDED");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("HTTP_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("HTTP_FORWARDED");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("HTTP_VIA");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getHeader("REMOTE_ADDR");
+        }
+        if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {
+            ip = request.getRemoteAddr();
+        }
+        return ip;
     }
 
     public static String getParameter(HttpServletRequest request, String name) {
@@ -174,7 +253,7 @@ public class jjTools {
             return "";
         } else {
 //                return mode.toString().equals("null") ? "" :(new String(request.getParameter(name).getBytes(), "UTF-8"));
-                return value;
+            return value;
         }
     }
 
@@ -183,7 +262,7 @@ public class jjTools {
         if (mode == null) {
             return "";
         } else {
-                return mode.toString().equals("null") ? "" : mode.toString();
+            return mode.toString().equals("null") ? "" : mode.toString();
         }
     }
 

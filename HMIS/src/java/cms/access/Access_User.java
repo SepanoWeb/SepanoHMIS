@@ -3,6 +3,9 @@ package cms.access;
 import HMIS.Role;
 import cms.cms.*;
 import cms.tools.*;
+import static cms.tools.UploadServlet._logStatus;
+import static cms.tools.UploadServlet._status;
+import static cms.tools.UploadServlet.status_deleted;
 import java.io.IOException;
 import jj.*;
 import java.util.HashMap;
@@ -39,6 +42,7 @@ public class Access_User {
     ////برای عکس امضا  
     ///توسط شیران1
     public static String _attachPicSignature = "user_attachPicSignature";
+
     public static String _address = "user_address";
     public static String _isActive = "user_is_active";
     public static String _registDate = "user_createDate";
@@ -95,7 +99,7 @@ public class Access_User {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                Server.outPrinter(request, response, hasAccess);
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
                 return "";
             }
             StringBuilder html = new StringBuilder();
@@ -148,16 +152,68 @@ public class Access_User {
             return "";
         }
     }
+           public static String changeStatus(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, String id, String newSatus) throws Exception {
+        try {
+            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
+            if (!errorMessageId.equals("")) {
+                return Js.dialog(errorMessageId);
+            }
+            db.otherStatement("UPDATE " + UploadServlet.tableName + " SET " + _logStatus
+                    + "=concat(ifnull(" + _logStatus + ",''),'"
+                    + newSatus
+                    + "-"
+                    + jjCalendar_IR.getViewFormat(new jjCalendar_IR().getDBFormat_8length())
+                    + " "
+                    + new jjCalendar_IR().getTimeFormat_8length()
+                    + "%23A%23"
+                    + "') ,"
+                    + _status + "='" + newSatus + "'  WHERE id=" + id + ";");
+
+            return "";
+        } catch (Exception ex) {
+            Server.ErrorHandler(ex);
+            String errorMessage = "عملیات تغییر وضعیت به درستی صورت نگرفت.Err114";
+            Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+            return "";
+
+        }
+    }
 
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         StringBuilder html = new StringBuilder();
         try {
+//            boolean accIns = Access_User.hasAccess(request, db, rul_ins);
+//            if (accIns) {
+//                html.append(Js.setHtml("#User_button", "<div class='row'><div class='col-lg-6'><input type=\"button\" id=\"insert_User_new\" value=\"" + lbl_insert + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div></div>"));
+//                html.append(Js.buttonMouseClick("#insert_User_new", Js.jjUser.insert()));
+//            }
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
-                html.append(Js.setHtml("#User_button", "<div class='row'><div class='col-lg-6'><input type=\"button\" id=\"insert_User_new\" value=\"" + lbl_insert + "\" class=\"tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget\"></div></div>"));
-                html.append(Js.buttonMouseClick("#insert_User_new", Js.jjUser.insert()));
+                html.append(Js.setHtml("#User_button", "<div class='col-lg-6'><input type='button' id='insert_User_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
+                html.append(Js.click("#insert_User_new", Js.jjUser.insert()));
+            } else {
+                html.append(Js.setHtml("#User_button", ""));
             }
-            Server.outPrinter(request, response, html.toString());
+
+            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName));
+            StringBuilder script2 = new StringBuilder();
+            if (row.get(0).get(Access_User._attachPicPersonal).equals("")) {
+                script2.append(Js.setAttr("#PicPreviewPersonal", "src", "img/preview.jpg"));
+            } else {
+                script2.append(Js.setAttr("#PicPreviewPersonal", "src", "upload/" + row.get(0).get(Access_User._attachPicPersonal).toString() + ""));
+            }
+            if (row.get(0).get(Access_User._attachPicPersonnelCard).equals("")) {
+                script2.append(Js.setAttr("#PicPreview", "src", "img/preview.jpg"));
+            } else {
+                script2.append(Js.setAttr("#PicPreview", "src", "upload/" + row.get(0).get(Access_User._attachPicPersonnelCard).toString() + ""));
+            }
+            if (row.get(0).get(Access_User._attachPicSignature).equals("")) {
+                script2.append(Js.setAttr("#PicPreviewSignature", "src", "img/preview.jpg"));
+            } else {
+                script2.append(Js.setAttr("#PicPreviewSignature", "src", "upload/" + row.get(0).get(Access_User._attachPicSignature).toString() + ""));
+            }
+
+            Server.outPrinter(request, response, html.toString() + script2);
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -188,7 +244,6 @@ public class Access_User {
 //            }
             Map<String, Object> map = new HashMap<String, Object>();
 
-            map.put(_attachFile, jjTools.getParameter(request, _attachFile));
             map.put(_attachPicPersonal, jjTools.getParameter(request, _attachPicPersonal));
             map.put(_attachPicPersonnelCard, jjTools.getParameter(request, _attachPicPersonnelCard));
             map.put(_attachPicSignature, jjTools.getParameter(request, _attachPicSignature));
@@ -319,7 +374,7 @@ public class Access_User {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                Server.outPrinter(request, response, hasAccess);
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
                 return "";
             }
 
@@ -329,7 +384,7 @@ public class Access_User {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
                 return "";
             }
 
@@ -345,6 +400,7 @@ public class Access_User {
             map.put(_attachPicPersonal, jjTools.getParameter(request, _attachPicPersonal));
             map.put(_attachPicPersonnelCard, jjTools.getParameter(request, _attachPicPersonnelCard));
             map.put(_attachPicSignature, jjTools.getParameter(request, _attachPicSignature));
+
             map.put(_AccountInformation, jjTools.getParameter(request, _AccountInformation));
             map.put(_grade, jjTools.getParameter(request, _grade));
             map.put(_passwordReminder, jjTools.getParameter(request, _passwordReminder));
@@ -352,7 +408,15 @@ public class Access_User {
             map.put(_codeMeli, jjTools.getParameter(request, _codeMeli));
             map.put(_shomareShenasname, jjTools.getParameter(request, _shomareShenasname));
             map.put(_address, jjTools.getParameter(request, _address));
+//             map.put(_file_personal, jjTools.getParameter(request, _file_personal));
+//            map.put(_file_Signature, jjTools.getParameter(request, _file_Signature));
+//            map.put(_upload_file, jjTools.getParameter(request, _upload_file));
+
+//            map.put(_file_personal, jjTools.getParameter(request, _));
+//            String parent = jjTools.getParameter(request, _parent);
+//            map.put(_parent, jjNumber.isDigit(parent) ? Integer.parseInt(parent) : 0);
             map.put(_pass, jjTools.getParameter(request, _pass).toLowerCase());
+//            map.put(_question, jjTools.getParameter(request, _question));
             map.put(_birthdate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _birthdate), false));
 
             if (id.equals("1")) {
@@ -444,7 +508,7 @@ public class Access_User {
      *
      * @param id
      */
-   public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -586,6 +650,107 @@ public class Access_User {
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
             return "";
+        }
+    }
+    ///////////////////این تابع برای پاک کردن فایل های پیوست
+    ////////////////////توسط شیران1
+//
+//    public static String removeFile(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+//        try {
+//
+//            String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
+//            if (!hasAccess.equals("")) {
+//                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+//                return "";
+//            }
+//            String idUpload = jjTools.getParameter(request, "upload_id");///
+//            String idUser = jjTools.getParameter(request, "access_user_id");
+//
+//            List<Map<String, Object>> rowUser = jjDatabase.separateRow(db.Select(tableName, _id + "=" + idUser));///برای در اوردن attachfile
+//            List<Map<String, Object>> rowupload = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._id + "=" + idUpload));////برای دراوردن اسم فایل
+//            String filename = rowupload.get(0).get(UploadServlet._file_name).toString() + "#A#";
+//            String attacheFiles = rowUser.get(0).get(_attachFile).toString();
+//            System.out.println(filename);
+//            System.out.println("____________________________________");
+//            System.out.println(attacheFiles);
+//            attacheFiles = attacheFiles.replace(filename, "");
+//            System.out.println(attacheFiles);
+//
+//            Map<String, Object> map = new HashMap<String, Object>();
+//            map.put(_attachFile, attacheFiles);
+//            System.out.println("____________________________________");
+//
+//            db.update(tableName, map, _id + "=" + idUser);
+//
+//            if (!db.delete(UploadServlet.tableName, UploadServlet._id + "=" + idUpload)) {
+//                String errorMessage = "عملیات حذف به درستی صورت نگرفت";
+//                if (jjTools.isLangEn(request)) {
+//                    errorMessage = "Delete Fail;";
+//                }
+//                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+//                return "";
+//
+//            }
+//            String error = "فایل مورد نظر حذف شد";
+//            Server.outPrinter(request, response, Js.modal(error, "پیام سامانه"));
+//            return "";
+////           
+//
+//        } catch (Exception e) {
+//            Server.outPrinter(request, response, Server.ErrorHandler(e));
+//            return "";
+//
+//        }
+//    }
+    ///////////////////این تابع برای پاک کردن فایل های پیوست
+    ////////////////////توسط شیران1
+    //////////بدون پاک کردن از دیتا بیس
+
+    public static String removeFile(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+        try {
+
+            String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
+            if (!hasAccess.equals("")) {
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
+            }
+            String idUpload = jjTools.getParameter(request, "upload_id");///
+            String idUser = jjTools.getParameter(request, "access_user_id");
+
+            List<Map<String, Object>> rowUser = jjDatabase.separateRow(db.Select(tableName, _id + "=" + idUser));///برای در اوردن attachfile
+            List<Map<String, Object>> rowupload = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._id + "=" + idUpload));////برای دراوردن اسم فایل
+            String filename = rowupload.get(0).get(UploadServlet._file_name).toString() + "#A#";
+            String attacheFiles = rowUser.get(0).get(_attachFile).toString();
+            System.out.println(filename);
+            System.out.println("____________________________________");
+            System.out.println(attacheFiles);
+            attacheFiles = attacheFiles.replace(filename, "");
+            System.out.println(attacheFiles);
+
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put(_attachFile, attacheFiles);
+            System.out.println("____________________________________");
+
+            db.update(tableName, map, _id + "=" + idUser);
+            changeStatus(request, response, db, idUpload,status_deleted+" "+jjTools.getSessionAttribute(request, "#USER_NAME")+" "+jjTools.getSessionAttribute(request, "#USER_FAMILY"));
+//            if (!db.delete(UploadServlet.tableName, UploadServlet._id + "=" + idUpload)) {
+//                String errorMessage = "عملیات حذف به درستی صورت نگرفت";
+//                if (jjTools.isLangEn(request)) {
+//                    errorMessage = "Delete Fail;";
+//                }
+//                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+//                return "";
+//
+//            }
+//            String error = "فایل مورد نظر حذف شد";
+//            Server.outPrinter(request, response, Js.modal(error, "پیام سامانه"));
+            return "";
+//           
+
+        } catch (Exception e) {
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+
         }
     }
 
@@ -1350,6 +1515,36 @@ public class Access_User {
                     + "<br/>"
                     + "</div>"));
             Server.outPrinter(request, response, html.toString());
+            return "";
+        } catch (Exception e) {
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+        }
+    }
+        /**
+     * این متد کاربران فعال را بصورت آپشن برای قرار گرفتن در سلکت بر می گرداند
+     *
+     * @param request panel درون ریکوئست اگر با نقطه شروع نشود آی دی در نظر می
+     * گیرد و نامبر ساین اولش می گذارد
+     * @param response
+     * @param db
+     * @param needString
+     * @return بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در پنل معرفی شده
+     * @throws Exception
+     */
+    public static String getSelectOption(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        StringBuilder optionHtml = new StringBuilder();
+        try {
+            List<Map<String, Object>> rowAllActiveRols = jjDatabase.separateRow(db.Select(tableName, _id + "," + _name+ "," +_family , "id>0 AND "+_isActive+"=1", _family));// بر اساس حروف الفبا مرتب باشد بهتر است
+                optionHtml.append("<option  value='ALL'>تمام کاربران ثبت شده</option>");
+            for (int i = 0; i < rowAllActiveRols.size(); i++) {
+                optionHtml.append("<option  value='").append(rowAllActiveRols.get(i).get(_id)).append("'>").append(rowAllActiveRols.get(i).get(_family)+"-").append(rowAllActiveRols.get(i).get(_name)).append("</option>");
+            }
+            String panel = jjTools.getParameter(request, "panel");
+            if (panel.isEmpty()) {
+                panel = ".usersSelectOption";
+            }
+            Server.outPrinter(request, response,  Js.setHtml(panel, optionHtml));
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));

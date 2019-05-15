@@ -5,14 +5,14 @@
  */
 
 
-var hmisFormAnswers = {
-    tableName: "FormAnswers",
+var hmisFormAnswerSets = {
+    tableName: "FormAnswerSet",
     f_id: "id",
     loadForm: function (id) {
 //        if ($("#swMyFormsForm").html() == '') {
         if (true) {
             $("#swMyFormsForm").load("formHMIS/02newFormAnswer.html", null, function () {
-                alert("hmisFormAnswers.loadForm();");
+                alert("hmisFormAnswerSets.loadForm();");
 //                $('.summernote').summernote({ height: 150});///برای تبدیل شدن به textEditor
 //                new jj("#forms_creationDate").jjCalendarWithYearSelector(1340, 1420);
 //                $('#forms_creationTime').wickedpicker({
@@ -36,7 +36,7 @@ var hmisFormAnswers = {
 //                    minimumResultsForSearch: '',
 //                    width: '100%'
 //                });
-                hmisFormAnswers.refreshMyAnswers(id,"swOneFormToCompleteTable");// وقتی فرم لود می شود جدول سوابق پاسخ ها را هم بیاورد
+                hmisFormAnswerSets.refreshMyAnswers(id,"swOneFormToCompleteTable");// وقتی فرم لود می شود جدول سوابق پاسخ ها را هم بیاورد
             });
         }
     },
@@ -48,16 +48,16 @@ var hmisFormAnswers = {
      */
     refreshMyAnswers: function (formId, containerId) {
         if ($("#swMyFormsForm").html() == '') {// برای اینکه اگر فرم قبلش لود نشده باشد نمی شود جدول را نشان بدهیم و برای جلوگیری از تکرار اضافی رفرش انسر های من
-            hmisFormAnswers.loadForm(formId);
+            hmisFormAnswerSets.loadForm(formId);
             return ;
         }
         var param = "";
-        param += "do=" + hmisFormAnswers.tableName + ".refreshMyAnswers";
+        param += "do=" + hmisFormAnswerSets.tableName + ".refreshMyAnswers";
         param += "&formAnswers_formId=" + formId;
         param += "&panel=" + (containerId == null ? "swOneFormToCompleteTable" : containerId);
         param += "&jj=1";
         new jj(param).jjAjax2(false);
-        hmisFormAnswers.m_show_form();
+        hmisFormAnswerSets.m_show_form();
     },    
         /**
      * این تابع جدولی از فرم هایی که تا کنون پر شده را می آورد و میتوانیم جدید یکی پر کنیم 
@@ -67,11 +67,11 @@ var hmisFormAnswers = {
      */
     showMyForms: function (containerId) {
         var param = "";
-        param += "do=" + hmisFormAnswers.tableName + ".showMyForms";
+        param += "do=" + hmisFormAnswerSets.tableName + ".showMyForms";
         param += "&panel=" + (containerId == null ? "swMyFormsTbl" : containerId);
         param += "&jj=1";
         new jj(param).jjAjax2(false);
-        hmisFormAnswers.m_show_tbl();
+        hmisFormAnswerSets.m_show_tbl();
     },
     m_show_form: function () {
         $('#swMyFormsTbl').slideUp('slow');
@@ -82,12 +82,12 @@ var hmisFormAnswers = {
     },
     m_add_new: function (formId) {
          var param = "";
-        param += "do=" + hmisFormAnswers.tableName + ".add_new&jj=1";
+        param += "do=" + hmisFormAnswerSets.tableName + ".add_new&jj=1";
         param += "&formAnswers_formId=" + formId;
         new jj(param).jjAjax2(false);
-        hmisFormAnswers.m_show_form();
+        hmisFormAnswerSets.m_show_form();
         $('#swOneFormToCompleteForm').slideDown();
-        hmisFormAnswers.m_clean();
+        hmisFormAnswerSets.m_clean();
     },
     m_show_tbl: function () {
         $('#swMyFormsTbl').show();
@@ -103,7 +103,7 @@ var hmisFormAnswers = {
     },
     m_edit: function (id) {
         var param = "";
-        param += "do=" + hmisFormAnswers.tableName + ".edit";
+        param += "do=" + hmisFormAnswerSets.tableName + ".edit";
         param += "&" + new jj('#swOneFormToCompleteForm #newForm').jjSerial();
         new jj(param).jjAjax2(false);
         this.m_show_tbl();
@@ -111,22 +111,22 @@ var hmisFormAnswers = {
     },
 
     m_delete: function (id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟با حذف این فرم سوال ها و  گزینه های زیر مجموعه ی آن هم حذف می شود").jjDialog_YesNo(' hmisFormAnswers.m_delete_after_question(' + id + ');\n', true, "");
+        new jj("آیا از حذف این رکورد اطمینان دارید؟با حذف این فرم سوال ها و  گزینه های زیر مجموعه ی آن هم حذف می شود").jjDialog_YesNo(' hmisFormAnswerSets.m_delete_after_question(' + id + ');\n', true, "");
     },
     m_delete_after_question: function (id) {
         var param = "";
-        param += "do=" + hmisFormAnswers.tableName + ".delete";
-        param += "&" + hmisFormAnswers.f_id + "=" + (id == null ? "" : id);
+        param += "do=" + hmisFormAnswerSets.tableName + ".delete";
+        param += "&" + hmisFormAnswerSets.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
-        hmisFormAnswers.m_show_tbl();
-        hmisFormAnswers.m_clean();
+        hmisFormAnswerSets.m_show_tbl();
+        hmisFormAnswerSets.m_clean();
     },
     m_select: function (id) {     
         var param = "";
-        param += "do=" + hmisFormAnswers.tableName + ".select";
-        param += "&" + hmisFormAnswers.f_id + "=" + (id == null ? "" : id);
+        param += "do=" + hmisFormAnswerSets.tableName + ".select";
+        param += "&" + hmisFormAnswerSets.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
-        hmisFormAnswers.m_show_form();
+        hmisFormAnswerSets.m_show_form();
         $("#formQuestions").show();// در سلکت فرم افزودن سوالات را نسان میدهیم چون وقتی فرم نداریم نباید بتوانیم سوالی را ایجاد کنیم
         hmisFormQuestions.m_refresh(id);//ّبرای نشان دادن گزینه های این فرم
     },

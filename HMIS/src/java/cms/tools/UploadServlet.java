@@ -4,6 +4,7 @@ package cms.tools;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+import cms.access.Access_User;
 import java.io.*;
 
 import java.util.*;
@@ -18,6 +19,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import jj.jjCalendar_IR;
+import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 
 //==================>shiri
@@ -36,6 +38,10 @@ public class UploadServlet extends HttpServlet {
     public static String _date = "upload_date";
     public static String _time = "upload_time";
     public static String _loader = "upload_loader";
+    public static String _status = "upload_status";
+    public static String _type = "upload_type";
+    public static String _logStatus = "upload_logStatus";
+     public static String status_deleted = "پاک شده توسط";
 //    public static String _loader_id = "upload_loader_id";
     
     //====================>shiri
@@ -45,8 +51,10 @@ public class UploadServlet extends HttpServlet {
 //    }
     //<================shiri
 //    private static String Save_Folder_Name = "/upload";
+     
     private static final String Save_Folder_Name = "upload" + File.separator;
     public static final String Save_Folder_Name2 = "upload" + File.separator;
+   
 
     Map<String, String> data = new HashMap<String, String>();
 
@@ -151,20 +159,21 @@ public class UploadServlet extends HttpServlet {
                         jjDatabaseWeb db = Server.db;
                         Class.forName("com.mysql.jdbc.Driver");
 //                       
-                        Map<String, Object> map = new HashMap<String, Object>();
+                        Map<String, Object> map = new HashMap();
                         map.put(_file_name, result);
 //                      
                         map.put(_date, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _date), true));
                        
                         map.put(_time, new jjCalendar_IR().getTimeFormat_8length());
-                        map.put(_loader, (jjTools.getSessionAttribute(request, "#USER_NAME").toString()+" " +jjTools.getSessionAttribute(request,"#USER_FAMILY").toString()));
-//                        map.put(_loader_id, (jjTools.getSessionAttribute(request, "#ID")));
+                        map.put(_loader, (jjTools.getSessionAttribute(request, "#USER_NAME")+" " +jjTools.getSessionAttribute(request,"#USER_FAMILY")));
+                        map.put(_logStatus, (jjTools.getParameter(request, _logStatus)));
                     
                         ServerLog.Print("Write pic in: " + file + " size:" + file.length());
                         String name2 = file.getName().substring(0, file.getName().lastIndexOf("."));
                         String extension2 = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length());
                         File file2 = new File(file.getParent() + "/" + name2 + "_small." + extension2);
-                        map.put(_title, extension2);
+//                        map.put(_title, extension2);
+                         map.put(_type, extension2);
                          db.insert(UploadServlet.tableName, map);
                         if (extension2.toLowerCase().equals("jpg") 
                                 || extension2.toLowerCase().equals("png") 
@@ -198,6 +207,7 @@ public class UploadServlet extends HttpServlet {
             throws ServletException, IOException {
         doPost(request, response);
     }
+
 
     public Map<String, String> getData() {
         return data;

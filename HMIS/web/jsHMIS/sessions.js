@@ -58,6 +58,7 @@ var hmisSessions = {
         new jj("#" + hmisSessions.f_title).jjVal("");
         new jj("#" + hmisSessions.f_lang).jjVal("1");
         new jj("#" + hmisSessions.f_parent).jjVal("0");
+        $('#inputTextSelectorSessionsDiv').html("");
     },
     m_add_new: function () {
         jj("do=" + hmisSessions.tableName + ".add_new&jj=1").jjAjax2(false);

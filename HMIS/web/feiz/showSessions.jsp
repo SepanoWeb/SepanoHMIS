@@ -99,6 +99,7 @@
                 <div class="row row-sm">
                     <div class="col-lg-12">  
                         <div class="card-body pd-sm-30">
+
                             تاریخ:<p id='sessions_sessionsDate'><%=jjCalendar_IR.getViewFormat(sessionRow.get(0).get(Sessions._date))%></p>
                             <div class="row">
                                 <div class="col-lg">
@@ -106,7 +107,9 @@
                                     <input class="form-control"  value="<%=sessionRow.get(0).get(Sessions._title)%>" type="text">
                                 </div>
                             </div><!-- row -->
+
                             <p><input  value="<%=jjCalendar_IR.getViewFormat(sessionRow.get(0).get(Sessions._invitationDate))%>"  type="text"  style="display: block;">: تاریخ ارسال دعوت نامه</p>
+
                             <div class="card-header btn-teal tx-white">
                                 دستور جلسه:
                             </div>

@@ -38,6 +38,9 @@ public class Js {
     public static String modal(String comment,String title) {
         return "new jj('"+comment+"').jjModal('"+title+"');\n";
     }
+    public static String modal_yes_no(String comment,String yesFunction) {
+        return "new jj('"+comment+"').jjModal_Yes_No('"+yesFunction+"');\n";
+    }
 
     public static String bootStarpWarning(String comment) {
         return "$('<div></div>').dialog({"
@@ -69,7 +72,7 @@ public class Js {
     }
 
     public static String setHtml(String selector, String value) {
-        return "$('" + (selector.startsWith("#") ? selector : "#" + selector) + "').html(\"" + replacor(value).replace("\"", "'") + "\");\n"; //EDITED BY RASHIDI
+        return "$('" + selector + "').html(\"" + replacor(value).replace("\"", "'") + "\");\n"; //EDITED BY RASHIDI
 //        return "$('" + selector + "').html(\"" + replacor(value).replace("\"", "'") + "\");\n";
     }
 
@@ -116,6 +119,16 @@ public class Js {
     }
     public static String setValSummerNote(String selector, Object value) {
         return "$('"+selector+"').summernote('code', '"+value.toString()+"');\n";
+    }
+/**
+ * 
+ * @param selector
+ * @param parameters {width:100% or width: 'resolve',tag:true, or ...}
+ * @return 
+ * @Example Js.select2("#newForms .userOption" , "widht:100%,tags:true");
+ */
+    public static String select2(String selector, String parameters) {
+        return "$('" +selector+ "').select2({" + replacor(parameters) + "});\n";
     }
 
     public static String setVal(String selector, String value) {
@@ -1404,6 +1417,68 @@ public class Js {
             return hmis + ".m_show_tbl();\n";
         }
     }
+ ////////////////ایجاد مستند
+    public static class jjCreateDocumentary {
+
+        static String hmis = "hmisCreateDocumentary";
+
+        public static String insert() {
+            return "hmisCreateDocumentary.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisCreateDocumentary.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+    ///مدیریت سنجه ها
+     public static class jjManagementGauges {
+
+        static String hmis = "hmisManagementGauges";
+
+        public static String insert() {
+            return "hmisManagementGauges.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisManagementGauges.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
     //فرم ها
     public static class jjForms {
 
@@ -1435,9 +1510,9 @@ public class Js {
             return hmis + ".m_show_tbl();\n";
         }
     }
-    public static class jjFormAnswers {
+    public static class jjFormAnswerSet {
 
-        static String hmis = "hmisFormAnswers";
+        static String hmis = "hmisFormAnswerSets";
 
         /**
          * برای ایجاد یک رکورد پاسخ از فرم با آی دی داده شده

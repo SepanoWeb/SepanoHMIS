@@ -48,6 +48,208 @@ var setting_pic_slider_delay = "6000";
 
 //
 var setting_login_exit_panel = "#jjLoginExitPanel";
+//################کد های ویژه ی سمت کلاینت کاربر نهایی مثل فرم ها و محتوا و غیره#############
+/**
+ * این تابع اطلاعات یک فرم را برای ذخیره ی موقت و اینسرت اولیه به سرور می فرسد.
+ * سوالات اجابری را چک نمی کند که تکمیل شده باشند
+ * برای ویرایش و ثبت نهایی شرایط فرق دارد
+ * @returns {undefined}
+ */
+function formAnswerSet_insert() {
+    var requireds = $("#swOneFormToCompleteForm input[required]:text,#swOneFormToCompleteForm input[required]:hidden");
+    var flag = true;
+    var firsnonAnswered;
+    for (var i = 0; i < requireds.length; i++) {
+        if ($(requireds[i]).val().trim() === "") {
+            $(requireds[i]).parent().parent().addClass('redBorder');
+            if (flag) {//فقط اولین عنصری که اجباری بوده و پر نشده این حالت دارد برای بعدی ها فلگ فالس می شود
+                firsnonAnswered = $(requireds[i]).parent().parent();
+            }
+            flag = false;
+        } else {
+            $(requireds[i]).parent().parent().removeClass('redBorder');
+        }
+    }
+    if (!flag) {
+        new jj(" در صورت تایید در فرصت های دیگر باید به سوالات پاسخ بدهید،<br/>ثبت موقت بشود؟").jjModal_Yes_No("شما به تعدادی از سوالات پاسخ نداده اید",
+                "new jj('do=FormAnswerSet.insert&'+new jj('#swOneFormToCompleteForm').jjSerial()).jjAjax2(false);");
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $(firsnonAnswered).offset().top
+        }, 500);
+        return;
+    } else {
+        var param = "";
+        param += "do=FormAnswerSet.insert";
+        param += "&" + new jj('#swOneFormToCompleteForm').jjSerial();
+        new jj(param).jjAjax2(false);
+        $("formAnserSetBtn").html("");
+        window.close();
+        
+    }
+}
+/**
+ * ویرایش پاسخ های داده شده که در وضعیت ثبت اولیه هستند
+ * سوالاتی که اجباری هستند را خطا نمیدهد
+ * @returns {undefined}
+ */
+function formAnswerSet_edit() {
+    var requireds = $("#swOneFormToCompleteForm input[required]:text,#swOneFormToCompleteForm input[required]:hidden");
+    var flag = true;
+    var firsnonAnswered;
+    for (var i = 0; i < requireds.length; i++) {
+        if ($(requireds[i]).val().trim() === "") {
+            $(requireds[i]).parent().parent().addClass('redBorder');
+            if (flag) {//فقط اولین عنصری که اجباری بوده و پر نشده این حالت دارد برای بعدی ها فلگ فالس می شود
+                firsnonAnswered = $(requireds[i]).parent().parent();
+            }
+            flag = false;
+        } else {
+            $(requireds[i]).parent().parent().removeClass('redBorder');
+        }
+    }
+    if (!flag) {
+        new jj(" در صورت تایید در فرصت های دیگر باید به سوالات پاسخ بدهید،<br/>ثبت موقت بشود؟").jjModal_Yes_No("شما به تعدادی از سوالات پاسخ نداده اید",
+                "new jj('do=FormAnswerSet.edit&'+new jj('#swOneFormToCompleteForm').jjSerial()).jjAjax2(false);");
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $(firsnonAnswered).offset().top
+        }, 500);
+        return;
+    } else {
+        var param = "";
+        param += "do=FormAnswerSet.edit";
+        param += "&" + new jj('#swOneFormToCompleteForm').jjSerial();
+        new jj(param).jjAjax2(false);
+        $("formAnserSetBtn").html("");
+        window.close();
+        
+    }
+}
+/**
+ *  ذخیره ی و ثبت نهایی فرم
+ *  به سرور می فرسد.
+ * سوالات اجباری را چک می کند که تکمیل شده باشند و در غیر اینصورت اسکرول می کند به آن سوال
+ * @returns {undefined}
+ */
+function formAnswerSet_editAndFinalForm () {
+    var requireds = $("#swOneFormToCompleteForm input[required]:text,#swOneFormToCompleteForm input[required]:hidden");
+    var flag = true;
+    var firsnonAnswered;
+    for (var i = 0; i < requireds.length; i++) {
+        if ($(requireds[i]).val().trim() === "") {
+            $(requireds[i]).parent().parent().addClass('redBorder');
+            if (flag) {//فقط اولین عنصری که اجباری بوده و پر نشده این حالت دارد برای بعدی ها فلگ فالس می شود
+                firsnonAnswered = $(requireds[i]).parent().parent();
+            }
+            flag = false;
+        } else {
+            $(requireds[i]).parent().parent().removeClass('redBorder');
+        }
+    }
+    if (!flag) {       
+        new jj("شما به تعدادی از سوالات پاسخ نداده اید").jjModal(" در صورت تایید نهایی دیگر اجازه ی ویرایش فرم را نخواهید داشت");
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $(firsnonAnswered).offset().top
+        }, 500);
+        return;
+    }
+    var param = "";
+    param += "do=FormAnswerSet.edit";
+    param += "&formAnswers_status=ثبت نهایی";
+    param += "&" + new jj('#swOneFormToCompleteForm').jjSerial();
+    new jj(" در صورت تایید فرم قابل تغییر نیست،<br/>ثبت نهایی بشود؟").jjModal_Yes_No("ثبت نهایی فرم",
+                "new jj('"+param+ "').jjAjax2(false);");
+    
+}
+/**
+ *  ذخیره ی و ثبت نهایی فرم
+ *  به سرور می فرسد.
+ * سوالات اجباری را چک می کند که تکمیل شده باشند و در غیر اینصورت اسکرول می کند به آن سوال
+ * @returns {undefined}
+ */
+function formAnswerSet_insertAndFinalForm() {
+    var requireds = $("#swOneFormToCompleteForm input[required]:text,#swOneFormToCompleteForm input[required]:hidden");
+    var flag = true;
+    var firsnonAnswered;
+    for (var i = 0; i < requireds.length; i++) {
+        if ($(requireds[i]).val().trim() === "") {
+            $(requireds[i]).parent().parent().addClass('redBorder');
+            if (flag) {//فقط اولین عنصری که اجباری بوده و پر نشده این حالت دارد برای بعدی ها فلگ فالس می شود
+                firsnonAnswered = $(requireds[i]).parent().parent();
+            }
+            flag = false;
+        } else {
+            $(requireds[i]).parent().parent().removeClass('redBorder');
+        }
+    }
+    if (!flag) {
+        new jj("شما به تعدادی از سوالات پاسخ نداده اید").jjModal(" در صورت تایید نهایی دیگر اجازه ی ویرایش فرم را نخواهید داشت");
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $(firsnonAnswered).offset().top
+        }, 500);
+        return;
+    }
+    var param = "";
+    param += "do=FormAnswerSet.insert";
+    param += "&formAnswers_status=ثبت نهایی";
+    param += "&" + new jj('#swOneFormToCompleteForm').jjSerial();
+    new jj(param).jjAjax2(false);
+}
+
+/**
+ * پاک کردن آی دی فرم هایی که فقط یکبار باید پر میشدند ولی الان وضعیت تغییر کرده
+ *  از کوکی
+ *  ممکن است تغییر وضعیت بخاطر تغییر تنظیمات فرم باشد
+ * @param {type} id
+ * @returns {undefined}
+ */
+function  removeFormIdFromCookie(id) {
+    var uniqueForms = Cookies.get('#UNIQUE_FORMS_Compleited');// فرم های که باید توسط هر کاربر یکبار تکمیل شوندبعد از تکمیل نهایی در این کوکی ذخیره میشوند
+    if (uniqueForms) {
+        var uniqueFormsId = uniqueForms.split(",");
+        var temp = "";
+        for (var i = 0; i < uniqueFormsId.length; i++) {
+            if (uniqueFormsId[i] == id || uniqueFormsId[i] == "") {// یعنی این فرم قبلا توسط این کاربر با موفقیت ثبت شده است و در کوکی ها ست شده
+                ;
+            } else {
+                temp += uniqueFormsId[i] + ",";
+            }
+        }
+        Cookies.set("#UNIQUE_FORMS_Compleited", temp.substring(0, (temp.length - 1)));//برای حذف کامای آخر
+    }
+    alert("set #removeFormIdFromCookie:" + uniqueForms);
+}
+;
+
+/**
+ * ست کردن آی دی فرم هایی که یکبار باید پر بشوند در کوکی
+ * @param {type} id
+ * @returns {undefined}
+ */
+function  addFormIdToCookie(id) {
+    var uniqueForms = Cookies.get('#UNIQUE_FORMS_Compleited');// فرم های که باید توسط هر کاربر یکبار تکمیل شوندبعد از تکمیل نهایی در این کوکی ذخیره میشوند    
+    if (uniqueForms) {
+        var uniqueFormsId = uniqueForms.split(",");
+        uniqueForms = "";
+        for (var i = 0; i < uniqueFormsId.length; i++) {
+            if (uniqueFormsId[i] == id) {// یعنی این فرم قبلا توسط این کاربر با موفقیت ثبت شده است و در کوکی ها ست شده
+                ;
+            } else {
+                uniqueForms += uniqueFormsId[i] + ",";
+            }
+        }
+        uniqueForms += id;
+        Cookies.set("#UNIQUE_FORMS_Compleited", uniqueForms);
+    } else {
+        Cookies.set("#UNIQUE_FORMS_Compleited", (id));// اگر ست نشده بود
+        uniqueForms = Cookies.get('#UNIQUE_FORMS_Compleited');
+    }
+    alert("set #UNIQUE_FORMS_Compleited:" + uniqueForms);
+}
+;
+
+
+
+//#####################################################################
 // -----------------------------------------------------------------
 function initCms(lang) {
     lang = lang == null ? "fa" : lang.toString().toLowerCase();
@@ -420,63 +622,7 @@ function showLoginForm() {
     });
     $("#loginRegistForm").dialog("open");
 }
-function showLoginFormPardakht() {
-    if ($('#pshowLoginFormDivPardakht').length == 0) {
-        $("body").append("<div id='pshowLoginFormDivPardakht'></div>");
-        $("#pshowLoginFormDivPardakht").load("formCms/public_pardakht.html", null, function () {
-            $('#loginBtnPardakht').button().click(function () {
-                signInPardakht();
-            });
-            $('#registBtnPardakht').button().click(function () {
-                registInSitePardakht();
-            });
 
-            jj("#user_pass_pardakht").jjAddEnterKeyListener("signInPardakht();");
-            jj("#user_email_pardakht").jjAddEnterKeyListener("signInPardakht();");
-            jj("#user_answer").jjAddEnterKeyListener("registInSitePardakht();");
-            jj("#user_birthdate_pardakht").jjCalendarWithYearSelector(1320, 1380);
-            $("#loginRegistFormPardakht").dialog({
-                autoOpen: false,
-                height: 450,
-                width: 790,
-                modal: true,
-                title: "ورود - ثبت نام",
-                buttons: {
-                    "لغو": function () {
-                        $(this).dialog("close");
-                    }
-                },
-                close: function () {
-                    $(this).dialog('destroy');
-                }
-            });
-            $("#loginRegistFormPardakht").dialog("open");
-            return false;
-        });
-    }
-    $("#loginRegistFormPardakht").dialog({
-        autoOpen: false,
-        height: 450,
-        width: 790,
-        modal: true,
-        title: "ورود - ثبت نام",
-        buttons: {
-            "لغو": function () {
-                $(this).dialog("close");
-            }
-        },
-        close: function () {
-            $(this).dialog('destroy');
-        }
-    });
-    $("#loginRegistFormPardakht").dialog("open");
-}
-function changeLang(lang) {
-    jj(lang).jjSetLanguage();
-    if (swArray.length > 0) {
-        sw(swArray[swArray.length - 1]);
-    }
-}
 var someStringInSw = "$comment,$login,$enrolment,$news,$forum,$gallery,$loginpardakht";
 function refreshLastSwParameter() {
     if (swArray.length > 2) {
@@ -671,19 +817,6 @@ function registInSite() {
     }
 
 
-//    var mobile = $("#user_mobile").val();
-//    if (validatePhone(mobile) && new jj('#user_mobile').jjVal() !== "") {
-//        $('#user_mobile').css("box-shadow", "2px 0px 10px 2px rgba(1,50, 60, 0.8)");
-////        validateflag = true;
-//        $("#errorRegistMessagePanel15").html('');
-//    } else {
-//        $("#user_mobile").css("box-shadow", "2px 0px 10px 2px rgba(100, 10, 20,1)");
-//        $("#errorRegistMessagePanel15").html('');
-//        $("#errorRegistMessagePanel15").append('لطفا موبایل خود راوارد کنید');
-//        flag = false;
-//    }
-
-//   
 
     if (!flag) {
         return;
@@ -1026,68 +1159,7 @@ function prePayment() {
         new jj(param).jjAjax2(true);//ثبت فاکتور در دیتابیس
     }
 }
-function nameDargah(name, factorSum) {
-    var param = "";
-//    param += amount + $("#finalPrice").html();
-    param += "&factorSum=" + factorSum;
-    param += "&do=" + name + ".doPayment";
-    jj(param).jjAjax2(false);
-}
 
-function payment(factorSum) {//عملیات پرداخت
-    var param = new jj("#sw").jjSerial();
-    new jj("do=Payment.payment&payment_amount=" + factorSum + "&" + param).jjAjax2(true);
-}
-;
-function loadOrderForm() {
-    $("#sw").load("formCms/order_form.html", null, function () {
-        $("#insert_order").click(function () {
-            if ($("#enrolment_val01").val() == "") {
-                $("#enrolment_val01").css("border", "0.5px red dashed");
-                new jj("لطفا تمام فیلدهای ضروری را پر کنید").jjDialog();
-            } else if ($("#enrolment_val02").val() == "") {
-                $("#enrolment_val01").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val02").css("border", "0.5px red dashed");
-                new jj("لطفا تمام فیلدهای ضروری را پر کنید").jjDialog();
-            } else if ($("#enrolment_val03").val() == "") {
-                $("#enrolment_val01").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val02").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val03").css("border", "0.5px red dashed");
-                new jj("لطفا تمام فیلدهای ضروری را پر کنید").jjDialog();
-
-            } else if ($("#enrolment_val04").val() == "") {
-                $("#enrolment_val01").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val02").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val03").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val04").css("border", "0.5px red dashed");
-                new jj("لطفا تمام فیلدهای ضروری را پر کنید").jjDialog();
-
-            } else if ($("#enrolment_val05").val() == "") {
-                $("#enrolment_val01").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val02").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val03").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val04").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val05").css("border", "0.5px red dashed");
-                new jj("لطفا تمام فیلدهای ضروری را پر کنید").jjDialog();
-
-            } else if ($("#enrolment_val06").val() == "") {
-                $("#enrolment_val01").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val02").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val03").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val04").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val05").css("border", "0.5px rgb(226, 227, 226) solid");
-                $("#enrolment_val06").css("border", "0.5px red dashed");
-                new jj("لطفا تمام فیلدهای ضروری را پر کنید").jjDialog();
-
-            } else {
-                new jj("do=Enrolment.insert&" + new jj("#orderForm").jjSerial()).jjAjax2(true);
-                new jj('productNums').jjCookieDelete();
-                new jj('productsId').jjCookieDelete();
-                $("#productNums").html(0);
-                sw(setting_default_sw);
-            }
-        });
-    });
 ////        if ($('#orderFormDiv').length == 0) {
 //        $("body").append("<div id='orderFormDiv'></div>");
 //        $("#orderFormDiv").load("order_form.html", null, function () {
@@ -1113,7 +1185,6 @@ function loadOrderForm() {
 //            return false;
 //        });
 ////    }
-}
 function Comment() {
     if ($('#comment_full_name').val() == '') {
         $('#comment_full_name').css("border", "red dashed");
@@ -1187,12 +1258,7 @@ function swNews2(newsId) {
 
     }
 }
-;
-function swForum(forumId) {
-    if (jj(forumId).jjIsDigit()) {
-        new jj("do=Forum.getList&id=" + forumId.toString() + "&panel=sw").jjAjax2(true);
-    }
-}
+
 ;
 function swPic(titleTextOrId) {
     var panelSelector = "sw";
@@ -1246,33 +1312,8 @@ function search(searchtxtSelector) {
         }
     })
 }
-function newsSlider2(panel) {//static fixed absolute inherit relative
-    var panelWidth = $(panel).css('width');
-    var panelHeight = $(panel).css('height');
-    if ($(panel).css('direction') != 'ltr') {
-        alert("div by id=" + panel + " must be direction:ltr ")
-    }
-    var param = "";
-    param += "do=News.getSlider2";
-    param += "&panel=" + panel.replace("#", "");
-    param += "&width=" + (panelWidth != null ? panelWidth : 600);
-    param += "&height=" + (panelHeight != null ? panelHeight : 300);
-    new jj(param).jjAjax2();
-}
+
 //============ BY RASHIDI ========>
-function productSlider2(panel) {//static fixed absolute inherit relative
-    var panelWidth = $(panel).css('width');
-    var panelHeight = $(panel).css('height');
-    if ($(panel).css('direction') != 'ltr') {
-        alert("div by id=" + panel + " must be direction:ltr ")
-    }
-    var param = "";
-    param += "do=Product.getSlider2";
-    param += "&panel=" + panel.replace("#", "");
-    param += "&width=" + (panelWidth != null ? panelWidth : 600);
-    param += "&height=" + (panelHeight != null ? panelHeight : 300);
-    new jj(param).jjAjax2();
-}
 //<============ BY RASHIDI ========
 function picSlider(panel, delay) {
     var panelWidth = $(panel).css('width');
@@ -1297,595 +1338,37 @@ function picSlipprySlider(panel, delay) {
     new jj(param).jjAjax2();
 }
 
-function swAddForumCategory() {
-    if (USER_NAME == '') {
-        //        new jj('جهت افزودن یک بحث جدید احتیاج به لاگین و یا ثبت نام می باشد. آیا مایل باشید؟').jjDialog_YesNo("sw('$login');", true, 'نیاز به لاگین')
-        sw('$login');
-    } else {
-        $("#sw").load("formCms/public_add_forum_cat.html", null, function () {
-            $('#insert_ForumCat').button().click(function () {
-                jj("do=Category_Forum.insertByUser&" + new jj("#swCategoryForumForm").jjSerial()).jjAjax2(false, 'Server');
-                sw('$forum');
-            });
-            $('#Cansel_ForumCat').button().click(function () {
-                sw('$forum');
-            });
-        });
-    }
-}
-var swAddForumCommentCounter = 0;
-function swAddForumComment(forum_cat_id) {
-    if (USER_NAME == '') {
-        //        new jj('جهت افزودن یک کامنت جدید احتیاج به لاگین و یا ثبت نام می باشد. آیا مایل باشید؟').jjDialog_YesNo("sw('$login');", true, 'نیاز به لاگین')
-        sw('$login');
-    } else {
-        swAddForumCommentCounter += 1;
-        $("#sw").load("formCms/public_add_forum_comment.html", null, function () {
-            $('#forum_url_file').button().click(function () {
-            });
-            $('#upload_Forum').button().click(function () {
-                if (new jj('#forum_url_file').jjVal() != '') {
-                    $('#upload_Forum').hide();
-                    $('#forum_url_file').hide();
-                    $('#forum_url').show();
-                }
-            });
-            $('#forum_url').button().click(function () {
-                $('#upload_Forum').show();
-                $('#forum_url_file').show();
-                $('#forum_url').hide()
-            });
-            //    
-            new jj("#upload_Forum").jjAjaxFileUpload2("#forum_url_file", "#forum_url");
-            $('#forum_content').attr('id', 'forum_content' + swAddForumCommentCounter);
-            forum_content_editor = new jj('#forum_content' + swAddForumCommentCounter).jjEditor();
-            new jj(forum_content_editor).jjEditorVal("");
-            $('#insert_Forum').button().click(function () {
-                new jj('do=Forum.insertByUser&forum_creator=' + USER_ID + '&' + new jj('#swForumForm').jjSerial()
-                        + '&forum_category_id=' + forum_cat_id).jjAjax2();
-            });
-            $('#cancel_Forum').button().click(function () {
-                swGetForum(forum_cat_id)
-            });
-        });
-        $("#swTitle").html("افزودن کامنت به انجمن");
-    }
-}
 
-function swGetForum(forum_cat_id) {
-    new jj("do=Forum.getList&id=" + forum_cat_id + "&panel=sw").jjAjax2(true);
-}
-function ForumForm_fa(forum_id) {
-    $("#sw").html(getForumForm_fa(forum_id));
-    $("#swTitle").html("افزودن کامنت");
-}
-function ForumCategoryForm_fa() {
-    $("#sw").html(getForumCategoryForm_fa());
-    $("#swTitle").html("افزودن انجمن (موضوع بحث)");
-}
-function swTab(tabId) {
-    tabId = tabId == null ? 0 : tabId;
-    for (var i = 0; i < 20; i++) {
-        if ($("#ll" + i).hasClass("active")) {
-            $("#ll" + i).removeClass("active")
-        }
-    }
-    $("#ll" + tabId).addClass("active");
-}
-function vote(vote_id, check_id) {
-    //    alert(vote_id +"-"+check_id);
-    //    document.write(vote_id +"-"+check_id);
-    if (new jj("#vote-" + vote_id + "-" + check_id).jjVal() == 1) {
-        $("#vote-" + vote_id + "-1").hide();
-        $("#vote-" + vote_id + "-2").hide();
-        $("#vote-" + vote_id + "-3").hide();
-        $("#vote-" + vote_id + "-4").hide();
-        $("#vote-" + vote_id + "-5").hide();
-        $("#vote-" + vote_id + "-6").hide();
-        new jj("do=Category_Poll.insert&category_poll_answer=" + check_id + "&category_poll_user_id=1&category_poll_which=" + vote_id).jjAjax2();
-    }
-    //    alert(new jj("#poll"+vote_id).jjSerial());
-    //    alert(new jj("#gr1").jjVal());
-    //    alert(new jj("#GroupRadio"+vote_id).jjSerial());
-    //    alert(new jj("#poll"+vote_id).jjSerial());
-    $('#vote-' + vote_id + '-1').hide();
-    $('#vote-' + vote_id + '-2').hide();
-    $('#vote-' + vote_id + '-3').hide();
-    $('#vote-' + vote_id + '-4').hide();
-    $('#vote-' + vote_id + '-5').hide();
-    $('#vote-' + vote_id + '-6').hide();
-    new jj("vote").jjCookieSave('#vote-' + vote_id + '-1___' + '#vote-' + vote_id + '-2___' + '#vote-' + vote_id + '-3___' + '#vote-' + vote_id + '-4___' + '#vote-' + vote_id + '-5___' + '#vote-' + vote_id + '-6___');
-}
-//
-/* Accordion Menu v2013.3.18. Copyright www.menucool.com */
-function toggleList(id) {
-    if ($("#uperNodeDiv" + id).hasClass("closedList")) {
-        $("#uperNodeDiv" + id).removeClass("closedList");
-        $("#uperNodeDiv" + id).addClass("openedList");
-    } else if ($("#uperNodeDiv" + id).hasClass("openedList")) {
-        $("#uperNodeDiv" + id).removeClass("openedList");
-        $("#uperNodeDiv" + id).addClass("closedList");
-    }
-    function makeSelected(id) {
-        $("#uperNodeDiv" + id).addClass("current");
-    }
+function autoLogin(email, pass) {
 
+    $("#login_user_email").val(email);
+    $("#login_user_pass").val(pass);
+    jj("do=Access_User.loginUserSafheAsli&panel=" + setting_login_exit_panel.replace("#", "") + "&" + new jj("#loginForm").jjSerial()).jjAjax2(false);
 }
-//############## Portal ########################################################
-function addNewPortalPost(portalId) {
-    portalPostLoadForm();
-    loadPortalPostforEdit(portalId);
-}
-function PortalUserLogin(portalId) {
-    if (new jj('#portal_user_UserName').jjVal() == '') {
-        $("#portal_user_UserName").css("border", "red dashed");
-        $("#loginMessagePanel").html("ایمیل یا رمز عبور نباید تهی باشد.");
-        return false;
-    } else if (new jj('#portal_user_pass').jjVal() == '') {
-        $("#portal_user_UserName").css("border", "none");
-        $("#portal_user_pass").css("border", "red dashed");
-        $("#loginMessagePanel").html("ایمیل یا رمز عبور نباید تهی باشد.");
-        return false;
-    }
-    $("#portal_user_UserName").css("border", "none");
-    $("#portal_user_pass").css("border", "none");
-    jj("do=Access_User.loginPortalUser&panel=" + setting_login_exit_panel.replace("#", "") + "&id=" + portalId + "&" + new jj("#loginForm").jjSerial()).jjAjax2(false);
-}
+function profileShakhsi() {
+    var param = "";
+    param += "do=Access_User.profileShakhsi";
 
-function loadPortalPostforEdit(portalId) {//load list of all posts whit edit btn
-    portalPostLoadForm();
-    new jj("do=Portal.loadPortalPostforEdit&id=" + portalId + "&panel=swLeft&jj=1").jjAjax2(true);
-}
-// Portal and portalUsers
-function swGetPortalPost(postId) {
-    alert("swGetPortalPost([postId])");
-    if (jj(postId).jjIsDigit()) {
-        new jj("do=Portal.getPortalPost&id=" + postId.toString() + "&panel=sw&jj=1").jjAjax2(true);
-        //        $('#sliderPanel').hide();
-        //        $('#bodyPanel').show();
-        //        $('#sw').show();
-        //        swTab(3);
-    }
-}
-
-function insertPostByUserPortal() {
-    var param = "";
-    param += "do=Portal.insertByPortalUser";
-    param += "&" + new jj("#newPostForm").jjSerial(); //#newPostForm is if post_form.html
-    jj(param).jjAjax2(false);
-    portalFormClean();
-}
-function editPostByUserPortal(postId) {
-    var param = "";
-    param += "do=Portal.editPostByUserPortal";
-    param += "&" + new jj("#newPostForm").jjSerial(); //#newPostForm is if post_form.html
-    jj(param).jjAjax2(false);
-    portalFormClose();
-}
-function deleteByPortalUser(postId) {
-    var param = "";
-    param += "do=Portal.deleteByPortalUser";
-    param += "&id=" + postId;
-    jj(param).jjAjax2(false);
-    $("#swForm").hide('slow', function () {
-        portalFormClean();
-    });
-}
-function selectPostforEdit(postId) {
-    portalPostLoadForm();
-    var param = "";
-    param += "do=Portal.selectPostforEdit";
-    param += "&id=" + postId;
     jj(param).jjAjax2(false);
 }
 
-function portalFormClose() {
-    $("#swForm").html("");
+
+function forget() {
+    $("#log_id").hide();
+    $("#login_user_pass").hide();
+    $("#regested_id").hide();
+//    $("#pass").hide();
+//        $("#user_pass").hide();
+    $("#forgetEmail").hide();
+    $("#BazgashtBaSafheWorod").show();
+    $("#sendEmail").show();
+
+
 }
-function portalFormClean() {
-    new jj("#newPostForm").jjFormClean();
-    $("#preview_portalPost_pic1").attr('src', "img/preview.jpg");
-    $("#preview_portalPost_pic2").attr('src', "img/preview.jpg");
-    $("#preview_portalPost_pic3").attr('src', "img/preview.jpg");
-    $("#preview_portalPost_pic4").attr('src', "img/preview.jpg");
-    $("#preview_portalPost_pic5").attr('src', "img/preview.jpg");
-//در اینجا می شود اگر عکسی آپلود کرده بود را پاک کرد
-//        new jj("#"+cmsPortal.f_gallery_id_select).jjVal('1');
-//        new jj("#"+cmsPortal.f_lang).jjVal('1');
-//        new jj("#"+cmsPortal.f_parent).jjVal('0');
-//        $("#pic_pic_name_preview").attr('src','img/preview.jpg');
-}
+function  sendEmail() {
+    var param = "";
+    param += "do=Access_User.sendEmail";
+    param += "&email1=" + new jj('#login_user_email').jjVal();
 
-function cleanFormAfterEdit(portalid) {
-    $("#swForm").html() != "";
-    portalPostLoadForm();
-    loadPortalPostforEdit(portalid);
-}
-function portalPostLoadForm() {
-    if (($("#swForm").html() != "")) {
-        $("#swForm").show();
-        portalFormClean();
-    } else {
-        $("#swForm").load("images_takrod/post_form.html", null, function () {
-            PortalFormGetValuesList();
-            portalFormClean();
-            $('#btnChangeValueComponent1').click(function () {
-                if ($('#portal_post_val11').css('display') == 'none') {
-                    $('#portal_post_val11').show();
-                    $('#portal_post_val11').attr('name', 'portal_post_val1');
-                    $('#portal_post_val1').hide();
-                    $('#portal_post_val1').attr('name', 'aaa');
-                    $('#btnChangeValueComponent1').val("*");
-                } else {
-                    $('#portal_post_val11').hide();
-                    $('#portal_post_val11').attr('name', 'aaa');
-                    $('#portal_post_val1').show();
-                    $('#portal_post_val1').attr('name', 'portal_post_val1');
-                    $('#btnChangeValueComponent1').val("+");
-                }
-            })
-
-            $('#btnChangeValueComponent2').click(function () {
-                if ($('#portal_post_val22').css('display') == 'none') {
-                    $('#portal_post_val22').show();
-                    $('#portal_post_val22').attr('name', 'portal_post_val2');
-                    $('#portal_post_val2').hide();
-                    $('#portal_post_val2').attr('name', 'aaa');
-                    $('#btnChangeValueComponent2').val("*");
-                } else {
-                    $('#portal_post_val22').hide();
-                    $('#portal_post_val22').attr('name', 'aaa');
-                    $('#portal_post_val2').show();
-                    $('#portal_post_val2').attr('name', 'portal_post_val2');
-                    $('#btnChangeValueComponent2').val("+");
-                }
-            })
-
-            $('#btnChangeValueComponent3').click(function () {
-                if ($('#portal_post_val33').css('display') == 'none') {
-                    $('#portal_post_val33').show();
-                    $('#portal_post_val33').attr('name', 'portal_post_val3');
-                    $('#portal_post_val3').hide();
-                    $('#portal_post_val3').attr('name', 'aaa');
-                    $('#btnChangeValueComponent3').val("*");
-                } else {
-                    $('#portal_post_val33').hide();
-                    $('#portal_post_val33').attr('name', 'aaa');
-                    $('#portal_post_val3').show();
-                    $('#portal_post_val3').attr('name', 'portal_post_val3');
-                    $('#btnChangeValueComponent3').val("+");
-                }
-            })
-
-            $('#btnChangeValueComponent4').click(function () {
-                if ($('#portal_post_val44').css('display') == 'none') {
-                    $('#portal_post_val44').show();
-                    $('#portal_post_val44').attr('name', 'portal_post_val4');
-                    $('#portal_post_val4').hide();
-                    $('#portal_post_val4').attr('name', 'aaa');
-                    $('#btnChangeValueComponent4').val("*");
-                } else {
-                    $('#portal_post_val44').hide();
-                    $('#portal_post_val44').attr('name', 'aaa');
-                    $('#portal_post_val4').show();
-                    $('#portal_post_val4').attr('name', 'portal_post_val4');
-                    $('#btnChangeValueComponent4').val("+");
-                }
-            })
-
-            $('#btnChangeValueComponent5').click(function () {
-                if ($('#portal_post_val55').css('display') == 'none') {
-                    $('#portal_post_val55').show();
-                    $('#portal_post_val55').attr('name', 'portal_post_val5');
-                    $('#portal_post_val5').hide();
-                    $('#portal_post_val5').attr('name', 'aaa');
-                    $('#btnChangeValueComponent5').val("*");
-                } else {
-                    $('#portal_post_val55').hide();
-                    $('#portal_post_val55').attr('name', 'aaa');
-                    $('#portal_post_val5').show();
-                    $('#portal_post_val5').attr('name', 'portal_post_val5');
-                    $('#btnChangeValueComponent5').val("+");
-                }
-            })
-
-            $('#btnChangeValueComponent6').click(function () {
-                if ($('#portal_post_val66').css('display') == 'none') {
-                    $('#portal_post_val66').show();
-                    $('#portal_post_val66').attr('name', 'portal_post_val6');
-                    $('#portal_post_val6').hide();
-                    $('#portal_post_val6').attr('name', 'aaa');
-                    $('#btnChangeValueComponent6').val("*");
-                } else {
-                    $('#portal_post_val66').hide();
-                    $('#portal_post_val6').attr('name', 'aaa');
-                    $('#portal_post_val6').show();
-                    $('#portal_post_val6').attr('name', 'portal_post_val6');
-                    $('#btnChangeValueComponent6').val("+");
-                }
-            })
-
-            $('#btnChangeValueComponent7').click(function () {
-                if ($('#portal_post_val77').css('display') == 'none') {
-                    $('#portal_post_val77').show();
-                    $('#portal_post_val77').attr('name', 'portal_post_val7');
-                    $('#portal_post_val7').hide();
-                    $('#portal_post_val7').attr('name', 'aaa');
-                    $('#btnChangeValueComponent7').val("*");
-                } else {
-                    $('#portal_post_val77').hide();
-                    $('#portal_post_val77').attr('name', 'aaa');
-                    $('#portal_post_val7').show();
-                    $('#portal_post_val7').attr('name', 'portal_post_val7');
-                    $('#btnChangeValueComponent7').val("+");
-                }
-            })
-            $('#btnChangeValueComponent8').click(function () {
-                if ($('#portal_post_val88').css('display') == 'none') {
-                    $('#portal_post_val88').show();
-                    $('#portal_post_val88').attr('name', 'portal_post_val8');
-                    $('#portal_post_val8').hide();
-                    $('#portal_post_val8').attr('name', 'aaa');
-                    $('#btnChangeValueComponent8').val("*");
-                } else {
-                    $('#portal_post_val88').hide();
-                    $('#portal_post_val88').attr('name', 'aaa');
-                    $('#portal_post_val8').show();
-                    $('#portal_post_val8').attr('name', 'portal_post_val8');
-                    $('#btnChangeValueComponent8').val("+");
-                }
-            })
-            $('#btnChangeValueComponent9').click(function () {
-                if ($('#portal_post_val99').css('display') == 'none') {
-                    $('#portal_post_val99').show();
-                    $('#portal_post_val99').attr('name', 'portal_post_val9');
-                    $('#portal_post_val9').hide();
-                    $('#portal_post_val9').attr('name', 'aaa');
-                    $('#btnChangeValueComponent9').val("*");
-                } else {
-                    $('#portal_post_val99').hide();
-                    $('#portal_post_val99').attr('name', 'aaa');
-                    $('#portal_post_val9').show();
-                    $('#portal_post_val9').attr('name', 'portal_post_val9');
-                    $('#btnChangeValueComponent9').val("+");
-                }
-            })
-            $('#btnChangeValueComponent10').click(function () {
-                if ($('#portal_post_val1010').css('display') == 'none') {
-                    $('#portal_post_val1010').show();
-                    $('#portal_post_val1010').attr('name', 'portal_post_val10');
-                    $('#portal_post_val10').hide();
-                    $('#portal_post_val10').attr('name', 'aaa');
-                    $('#btnChangeValueComponent10').val("*");
-                } else {
-                    $('#portal_post_val1010').hide();
-                    $('#portal_post_val1010').attr('name', 'aaa');
-                    $('#portal_post_val10').show();
-                    $('#portal_post_val10').attr('name', 'portal_post_val10');
-                    $('#btnChangeValueComponent10').val("+");
-                }
-            });
-//              <================= mirhaj-->
-            $('#btnChangeValueComponent01').click(function () {
-                if ($('#portal_post_prop11').css('display') == 'none') {
-                    $('#portal_post_prop11').show();
-                    $('#portal_post_prop11').attr('name', 'portal_post_prop1');
-                    $('#portal_post_prop1').hide();
-                    $('#portal_post_prop1').attr('name', 'aaa');
-                    $('#btnChangeValueComponent01').val("*");
-                } else {
-                    $('#portal_post_prop11').hide();
-                    $('#portal_post_prop11').attr('name', 'aaa');
-                    $('#portal_post_prop1').show();
-                    $('#portal_post_prop1').attr('name', 'portal_post_prop1');
-                    $('#btnChangeValueComponent01').val("+");
-                }
-            });
-            $('#btnChangeValueComponent02').click(function () {
-                if ($('#portal_post_prop22').css('display') == 'none') {
-                    $('#portal_post_prop22').show();
-                    $('#portal_post_prop22').attr('name', 'portal_post_prop2');
-                    $('#portal_post_prop2').hide();
-                    $('#portal_post_prop2').attr('name', 'aaa');
-                    $('#btnChangeValueComponent02').val("*");
-                } else {
-                    $('#portal_post_prop22').hide();
-                    $('#portal_post_prop22').attr('name', 'aaa');
-                    $('#portal_post_prop2').show();
-                    $('#portal_post_prop2').attr('name', 'portal_post_prop2');
-                    $('#btnChangeValueComponent02').val("+");
-                }
-            });
-            $('#btnChangeValueComponent03').click(function () {
-                if ($('#portal_post_prop33').css('display') == 'none') {
-                    $('#portal_post_prop33').show();
-                    $('#portal_post_prop33').attr('name', 'portal_post_prop3');
-                    $('#portal_post_prop3').hide();
-                    $('#portal_post_prop3').attr('name', 'aaa');
-                    $('#btnChangeValueComponent03').val("*");
-                } else {
-                    $('#portal_post_prop33').hide();
-                    $('#portal_post_prop33').attr('name', 'aaa');
-                    $('#portal_post_prop3').show();
-                    $('#portal_post_prop3').attr('name', 'portal_post_prop3');
-                    $('#btnChangeValueComponent03').val("+");
-                }
-            });
-            $('#btnChangeValueComponent04').click(function () {
-                if ($('#portal_post_prop44').css('display') == 'none') {
-                    $('#portal_post_prop44').show();
-                    $('#portal_post_prop44').attr('name', 'portal_post_prop4');
-                    $('#portal_post_prop4').hide();
-                    $('#portal_post_prop4').attr('name', 'aaa');
-                    $('#btnChangeValueComponent04').val("*");
-                } else {
-                    $('#portal_post_prop44').hide();
-                    $('#portal_post_prop44').attr('name', 'aaa');
-                    $('#portal_post_prop4').show();
-                    $('#portal_post_prop4').attr('name', 'portal_post_prop4');
-                    $('#btnChangeValueComponent04').val("+");
-                }
-            });
-            $('#btnChangeValueComponent05').click(function () {
-                if ($('#portal_post_prop55').css('display') == 'none') {
-                    $('#portal_post_prop55').show();
-                    $('#portal_post_prop55').attr('name', 'portal_post_prop5');
-                    $('#portal_post_prop5').hide();
-                    $('#portal_post_prop5').attr('name', 'aaa');
-                    $('#btnChangeValueComponent05').val("*");
-                } else {
-                    $('#portal_post_prop55').hide();
-                    $('#portal_post_prop55').attr('name', 'aaa');
-                    $('#portal_post_prop5').show();
-                    $('#portal_post_prop5').attr('name', 'portal_post_prop5');
-                    $('#btnChangeValueComponent05').val("+");
-                }
-            });
-//                =================> mirhaj-->
-            //Upload bottons ==>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            new jj('#upload_btn_portalPost_pic1').jjAjaxFileUpload('upload_portalPost_pic1', '#portal_post_pic1', '#preview_portalPost_pic1');
-            $('#portal_post_pic1').keyup(function () {
-                $('#preview_portalPost_pic1').attr('src', 'upload/' + $('#portal_post_pic1').val());
-                if ($('#portal_post_pic1').val() == '') {
-                    $('#preview_portalPost_pic1').attr('src', 'img/preview.jpg');
-                }
-            });
-            new jj('#upload_btn_portalPost_pic2').jjAjaxFileUpload('upload_portalPost_pic2', '#portal_post_pic2', '#preview_portalPost_pic2');
-            $('#portal_post_pic2').keyup(function () {
-                $('#preview_portalPost_pic2').attr('src', 'upload/' + $('#portal_post_pic2').val());
-                if ($('#portal_post_pic2').val() == '') {
-                    $('#preview_portalPost_pic2').attr('src', 'img/preview.jpg');
-                }
-            });
-            new jj('#upload_btn_portalPost_pic3').jjAjaxFileUpload('upload_portalPost_pic3', '#portal_post_pic3', '#preview_portalPost_pic3');
-            $('#portal_post_pic3').keyup(function () {
-                $('#preview_portalPost_pic3').attr('src', 'upload/' + $('#portal_post_pic3').val());
-                if ($('#portal_post_pic3').val() == '') {
-                    $('#preview_portalPost_pic3').attr('src', 'img/preview.jpg');
-                }
-            });
-            new jj('#upload_btn_portalPost_pic4').jjAjaxFileUpload('upload_portalPost_pic4', '#portal_post_pic4', '#preview_portalPost_pic4');
-            $('#portal_post_pic4').keyup(function () {
-                $('#preview_portalPost_pic4').attr('src', 'upload/' + $('#portal_post_pic4').val());
-                if ($('#portal_post_pic4').val() == '') {
-                    $('#preview_portalPost_pic4').attr('src', 'img/preview.jpg');
-                }
-            });
-            new jj('#upload_btn_portalPost_pic5').jjAjaxFileUpload('upload_portalPost_pic5', '#portal_post_pic5', '#preview_portalPost_pic5');
-            $('#portal_post_pic5').keyup(function () {
-                $('#preview_portalPost_pic5').attr('src', 'upload/' + $('#portal_post_pic5').val());
-                if ($('#portal_post_pic5').val() == '') {
-                    $('#preview_portalPost_pic5').attr('src', 'img/preview.jpg');
-                }
-            });
-            //Upload bottons <<<<<<<<<<<<<<<<<<<<<<=========
-            new jj("do=Portal.add_new_InPortal").jjAjax2(false);
-            //cancel btm===>>>>
-            $("#portalPost_cancelBtn").click(function () {
-                $("#swForm").hide('slow', function () {
-                    portalFormClean();
-                });
-            });
-        }
-        )
-    }
-    ;
-    function PortalFormGetValuesList(id) {
-        PortalFormGetVal1List(id);
-        PortalFormGetVal2List(id);
-        PortalFormGetVal3List(id);
-        PortalFormGetVal4List(id);
-        PortalFormGetVal5List(id);
-//       <================= mirhaj-->
-        PortalFormGetProp1List(id);
-        PortalFormGetProp2List(id);
-        PortalFormGetProp3List(id);
-        PortalFormGetProp4List(id);
-        PortalFormGetProp5List(id);
-//     =================> mirhaj-->
-    }
-    function PortalFormGetVal1List(id) {
-        var param = "";
-        param += "do=Portal.get_val1List";
-        param += "&panel=" + "portal_post_val1";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-    function PortalFormGetVal2List(id) {
-        var param = "";
-        param += "do=Portal.get_val2List";
-        param += "&panel=" + "portal_post_val2";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-    function PortalFormGetVal3List(id) {
-        var param = "";
-        param += "do=Portal.get_val3List";
-        param += "&panel=" + "portal_post_val3";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-    function PortalFormGetVal4List(id) {
-        var param = "";
-        param += "do=Portal.get_val4List";
-        param += "&panel=" + "portal_post_val4";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-    function PortalFormGetVal5List(id) {
-        var param = "";
-        param += "do=Portal.get_val5List";
-        param += "&panel=" + "portal_post_val5";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-//       <================= mirhaj-->
-    function PortalFormGetProp1List(id) {
-        var param = "";
-        param += "do=Portal.get_prop1List";
-        param += "&panel=" + "portal_post_prop1";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-    function PortalFormGetProp2List(id) {
-        var param = "";
-        param += "do=Portal.get_prop2List";
-        param += "&panel=" + "portal_post_prop2";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-
-    function PortalFormGetProp3List(id) {
-        var param = "";
-        param += "do=Portal.get_prop1List";
-        param += "&panel=" + "portal_post_prop3";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-    function PortalFormGetProp4List(id) {
-        var param = "";
-        param += "do=Portal.get_prop4List";
-        param += "&panel=" + "portal_post_prop4";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-    function PortalFormGetProp5List(id) {
-        var param = "";
-        param += "do=Portal.get_prop5List";
-        param += "&panel=" + "portal_post_prop5";
-        param += "&selected=" + (id == null ? "" : id);
-        jj(param).jjAjax2(false);
-    }
-//    =================> mirhaj-->
-}
-
-
-
-// 
-function tblMethod(tblCode) {
-
-    if (tblCode == "102") {
-
-        add_new();
-    }
+    jj(param).jjAjax2(false);
 }

@@ -47,14 +47,13 @@ var hmisApproved = {
         new jj("#" + hmisApproved.f_parent).jjVal("0");
         new jj("#insertApproved2").jjFormClean();
         new jj("#approved_trackerId").jjVal("");
-        new jj("#approved_executorId").jjVal("");
+        new jj("#approved_executorUserId").jjVal("");
+        new jj("#approved_executorRoleId").jjVal("");
         $("#inputTextSelectorDiv").html("");
 
     },
     m_add_new: function () {
         var param = "";
-        $("#approved_status").val("در حال انجام");
-        $("#approved_status").attr("disabled", "disabled");
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
         param += "&hmis_sessions_id=" + new jj("#hmis_sessions_id").jjVal();
@@ -77,25 +76,21 @@ var hmisApproved = {
         hmisApproved.tabSizeTbl();
     },
     m_insert: function () {
-//        var valid =  hmisApproved.m_validation();
-//        if (valid == "") {
-        $("#inputTextSelectorDiv").html("");
+
+//        $("#inputTextSelectorDiv").html("");
+        var temp3 = "";
+        var execturesId = $('#approved_executorRoleId').val();
+        for (var i = 0; i < execturesId.length; i++) {
+            temp3 += execturesId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+        }
         var param = "";
         param += "&do=" + hmisApproved.tableName + ".insert";
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-//        var temp = $("#inputTextSelectorDiv input");
-//        var attachedFile = "";
-//        for (var i = 0; i < temp.length; i++) {
-//            attachedFile += $(temp[i]).val() + "%23A%23";
-//        }
-//        param += "&approved_file=" + attachedFile;
+        param += "&approved_executorRoleId=" + temp3;
         param += "&" + new jj('#insertApproved2').jjSerial();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
-        hmisApproved.m_clean();
-//        } else {
-//            new jj(valid).jjDialog();
-//        }
+//        hmisApproved.m_clean();
     },
     m_edit: function () {
         var param = "";
@@ -108,10 +103,17 @@ var hmisApproved = {
     editInSessions: function () {
 //        var valid = hmisPlan.m_validation();
 //        if (valid == "") {
+        var temp3 = "";
+        var execturesId = $('#approved_executorRoleId').val();
+        for (var i = 0; i < execturesId.length; i++) {
+            temp3 += execturesId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+        }
         var param = "";
         param += "&do=" + hmisApproved.tableName + ".editInSessions";
         param += "&" + new jj('#insertApproved2').jjSerial();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+        param += "&approved_executorRoleId=" + temp3;
+
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
@@ -273,4 +275,4 @@ var hmisApproved = {
     },
 
     /////////////////////shiran////////////
-    };
+};

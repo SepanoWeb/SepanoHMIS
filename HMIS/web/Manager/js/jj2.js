@@ -186,7 +186,7 @@ var jj = function (selector) {
      * برای اینکه در یک تکست فیلد کاربر فقط بتواند عدد وارد کند
      * @returns {undefined}
      */
-    this.jjDigitOnly = function () {
+    this.jjDigitOnly = function (max,min) {
         var selector = this.selector;
         $(this.selector).on("focusout", function () {
             var val = $(this).val();
@@ -194,7 +194,6 @@ var jj = function (selector) {
                 $(this).val(0);
             }
         });
-
     };
     //    this.jjVal = function  (value) {
     //        if(value==null){
@@ -355,7 +354,7 @@ var jj = function (selector) {
         }
         return (src);
     };
-    this.serialVaiable = "";
+    this.serialVaiable = "";    
     /**
      * return key=value from selector
      * selector is form component selector
@@ -1160,8 +1159,9 @@ var jj = function (selector) {
      * @param maxLength is int (default: 10) <br/>
      * @example jj("#TextFeildTagID").setTextFieldOnlyGetNumber();
      */
-    this.jjSetTextFieldOnlyGetNumber = function (maxLength) {
-        maxLength = maxLength == null ? 10 : maxLength - 1;
+    this.jjSetTextFieldOnlyGetNumber = function (max, min) {
+        max = max == null ? 1000000 : max - 1;
+        min = min == null ? 0 : min - 1;
         var selector = this.selector;
         $(this.selector).keypress(function (event) {
             var keynum;
@@ -1170,7 +1170,7 @@ var jj = function (selector) {
             } else if (event.which) { // Netscape/Firefox/Opera
                 keynum = event.which
             }
-            if (new jj(selector).jjVal().toString().length > maxLength) {
+            if (new jj(selector).jjVal() > max || new jj(selector).jjVal() < min) {
                 if (keynum == undefined) {
                     event.returnValue = true;
                     return true;
@@ -1184,13 +1184,19 @@ var jj = function (selector) {
                     }
                 }
             }
-            if (keynum < 48 || keynum > 57) {//|| keynum==8 || keynum!=undefined
+            if (keynum < 48 || keynum > 57 || keynum == '-') {//|| keynum==8 || keynum!=undefined
                 if (event.preventDefault && keynum != 8) {
                     event.preventDefault();
                 } else {
                     event.returnValue = false;
                 }
             }
+
+        });
+        $(this.selector).focusout(function () {
+            var val = $(this).val();
+            if (!(new jj(val).jjIsDigit())) {
+                $(this).val("");};
         });
     };
     /**
@@ -1261,7 +1267,7 @@ var jj = function (selector) {
         })
     };
     /**
-     * return true if selector is number<br/>
+     * اعداد صحیح مثبت و منفی<br/>
      * @param selector is string<br/>
      * @return return true if selector is number<br/>
      * @example jj("1234").jjIsDigit();  
@@ -1270,17 +1276,11 @@ var jj = function (selector) {
         if (this.selector.length < 1) {
             return false;
         }
-        var ValidChars = "0123456789";
-        var IsNumber = true;
-        for (i = 0; i < this.selector.length && IsNumber == true; i++) {
-            if (ValidChars.indexOf(this.selector.charAt(i)) == -1) {
-                return false;
-            }
-        }
-        return true;
+        var reg = /^-?\d*$/;
+        return reg.test(this.selector);
     }
     /**
-     * return true if selector is number<br/>
+     * اعداد اعشاری مثبت و منفی را چک می کند<br/>
      * @param selector is string<br/>
      * @return return true if selector is number<br/>
      * @example jj("1234.567").jjIsFloat();  
@@ -1289,14 +1289,8 @@ var jj = function (selector) {
         if (this.selector.length < 1) {
             return false;
         }
-        var ValidChars = ".0123456789";
-        var IsNumber = true;
-        for (i = 0; (i < this.selector.length) && (IsNumber == true); i++) {
-            if (ValidChars.indexOf(this.selector.charAt(i)) == -1) {
-                return false;
-            }
-        }
-        return true;
+        var reg = /^-?\d+\.?\d*$/;
+        return reg.test(this.selector);
     }
 
 
@@ -1636,6 +1630,41 @@ var jj = function (selector) {
         });
     };
     /**
+     * 
+     * @param {type} myTitle
+     * @param {type} yesFunction تابع جاوا اسکریپت یا جی کوئری
+     * @returns {undefined}
+     */
+    this.jjModal_Yes_No = function (myTitle, yesFunction) {
+        var id = Math.floor((Math.random() * 1000000) + 1);
+        var html = '<div id="' + id + '" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+                '<div class="modal-dialog" role="document" >' +
+                '<div class = "modal-content bd-0 tx-14" >' +
+                '<div class = "modal-header pd-x-20" >' +
+                '<h6 class = "tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold" > ' + myTitle + ' </h6>' +
+                '<button type="button" class="close" data-dismiss ="modal" aria-label = "Close" >' +
+                '<span aria-hidden="true">&times;</span>' +
+                '</button>' +
+                '</div>' +
+                '<div class = "modal-body pd-20" >' +
+                '<p class="mg-b-5" >' + this.selector + '</p>' +
+                '</div>' +
+                '<div class="modal-footer justify-content-center">' +
+                '<button type= "button" class="btn btn-secondary pd-x-20" data-dismiss="modal">بستن </button>' +
+
+                '<button type= "button" class="btn btn-success pd-x-20" data-dismiss="modal" onclick="' + yesFunction + '">موافقم </button>' +
+
+                '</div>' +
+                '</div>' +
+                '</div>' + //<!-- modal-dialog -->
+                '</div>';//<!-- modal -->
+        $("body").append(html);
+        $("#" + id).modal('show');
+        $("#" + id).on('hidden.bs.modal', function () {
+            $(this).remove();
+        });
+    };
+    /**
      * This method show one modal dialog to user <br/>
      * @param selector is messege for show
      * @param statement is javaScript string for YES button onClick  
@@ -1833,141 +1862,10 @@ var jj = function (selector) {
             });
         });
     };
-    /**
-     * @param selector is button for send///این تابع برای عکس پرسنلی اضافه شده
-     * توسط شیران1
-     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
-     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
-     */
-    this.jjAjaxFileUploadPersonal = function (inputFileId, inputTextSelector, viewImgSelector) {
-        $(this.selector).click(function () {
-            if ($("#" + inputFileId.replace("#", "")).val() == "") {
-                alert("ابتدا  فایلی را انتخاب نمایید.");
-                return;
-            }
-            $.ajaxFileUpload({
-                url: 'UploadServlet',
-                secureuri: false,
-                fileElementId: inputFileId.replace("#", ""),
-                dataType: 'JSON',
-                cache: false,
-                success: function (data) {
-                    if (data != null) {
-                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
-                        data = data.replace("/", '').replace("/", '').replace("\\", '');
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                    $("#" + inputFileId.replace("#", "")).val('');
-                    if (data != "") {
-                        if (data != "big") {
-                            $(inputTextSelector).val(data);
-                            if (viewImgSelector != null) {
-                                $(viewImgSelector).attr('src', 'upload/' + data);
-                            }
-                        } else {
-                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
-                        }
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                }
-            });
-        });
-    };
-    /**
-     * @param selector is button for send///این تابع برای عکس کارت پرسنلی اضافه شده
-     * توسط شیران1
-     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
-     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
-     */
-    this.jjAjaxFileUploadPersonnelCard = function (inputFileId, inputTextSelector, viewImgSelector) {
-        $(this.selector).click(function () {
-            if ($("#" + inputFileId.replace("#", "")).val() == "") {
-                alert("ابتدا  فایلی را انتخاب نمایید.");
-                return;
-            }
-            $.ajaxFileUpload({
-                url: 'UploadServlet',
-                secureuri: false,
-                fileElementId: inputFileId.replace("#", ""),
-                dataType: 'JSON',
-                cache: false,
-                success: function (data) {
-                    if (data != null) {
-                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
-                        data = data.replace("/", '').replace("/", '').replace("\\", '');
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                    $("#" + inputFileId.replace("#", "")).val('');
-                    if (data != "") {
-                        if (data != "big") {
-                            $(inputTextSelector).val(data);
-                            if (viewImgSelector != null) {
-                                $(viewImgSelector).attr('src', 'upload/' + data);
-                            }
-                        } else {
-                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
-                        }
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                }
-            });
-        });
-    };
-    /**
-     * @param selector is button for send///این تابع برای عکس  امضا اضافه شده
-     * توسط شیران1
-     * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
-     * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
-     */
-    this.jjAjaxFileUploadAxSignature = function (inputFileId, inputTextSelector, viewImgSelector) {
-        $(this.selector).click(function () {
-            if ($("#" + inputFileId.replace("#", "")).val() == "") {
-                alert("ابتدا  فایلی را انتخاب نمایید.");
-                return;
-            }
-            $.ajaxFileUpload({
-                url: 'UploadServlet',
-                secureuri: false,
-                fileElementId: inputFileId.replace("#", ""),
-                dataType: 'JSON',
-                cache: false,
-                success: function (data) {
-                    if (data != null) {
-                        data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
-                        data = data.replace("/", '').replace("/", '').replace("\\", '');
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                    $("#" + inputFileId.replace("#", "")).val('');
-                    if (data != "") {
-                        if (data != "big") {
-                            $(inputTextSelector).val(data);
-                            if (viewImgSelector != null) {
-                                $(viewImgSelector).attr('src', 'upload/' + data);
-                            }
-                        } else {
-                            alert('حجم فایل شما بیش اندازه بزرگ می باشد.');
-                        }
-                                                return  new jj('ارسال شد').jjDialog();;
 
-                    } else {
-                        alert('فایل به درستی ارسال نشد.');
-                    }
-                }
-            });
-        });
-    };
-    /**
+
+    /**این تابع برای attach file 
+     * اضافه کردن چند فایل نوشته شده
      * @param selector is button for send
      * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
      * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
@@ -2015,7 +1913,8 @@ var jj = function (selector) {
             });
         });
     };
-    this.jjAjaxFileUpload4 = function (inputFileId, inputTextSelector, inputUploadSelector) {
+
+    this.jjAjaxFileUpload4 = function (inputFileId, inputTextSelector, divUploadSelector) {
         $(this.selector).click(function () {
             if ($("#" + inputFileId.replace("#", "")).val() == "") {
                 alert("ابتدا  فایلی را انتخاب نمایید.");
@@ -2043,7 +1942,7 @@ var jj = function (selector) {
 
                             var temp = $(inputTextSelector).val($(inputTextSelector).val() + data + "%23A%23");
                             for (var i = 0; i < temp.size(); i++) {
-                                $(inputUploadSelector).append("<input class='form-control is-valid hasWickedpicker col-xs-12 file' value='" + data + "'>  ");
+                                $(divUploadSelector).append("<input class='form-control is-valid hasWickedpicker col-xs-12 file' value='" + data + "'>  ");
                             }
 
                         } else {
@@ -2063,6 +1962,88 @@ var jj = function (selector) {
      * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
      * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
      */
+    /**
+     * 
+     * @param {type} inputFileId نام فایل
+     * @param {type} inputTextSelector فایل hidden
+     * @param {type} inputFiletitleگرفتن عنوان فایل
+     * @param {type} inputTitleSelector فایل hidden عنوان
+     * @param {type} viewImgSelector   عکس فاسل
+     * @returns {undefined}این تابع نام فایل وعنوان را میگیرد ودر دیتابیس upload قرار می دهد
+     */
+    this.jjAjaxFileUploadTitle = function (inputFileId, inputTextSelector, inputFiletitle,inputTilteSelector, viewImgSelector) {
+        var btn = this.selector;
+        $(btn).click(function () {
+            if ($("#" + inputFileId.replace("#", "")).val() == "") {
+                alert(".ابتدا فایلی را انتخاب نمایید");
+                return;
+            } else {
+                $(this).parent().parent().find('.form-control').html("");
+
+                $.ajaxFileUpload({
+                    url: 'UploadServlet',
+                    secureuri: false,
+                    fileElementId: inputFileId.replace("#", ""),
+                    fileElementTitle: inputFiletitle.replace("#", ""),
+                    dataType: 'JSON',
+                    cache: false,
+                    success: function (data) {
+                        alert(data);
+
+                        data = data == null ? "" : data;
+                        var param = "";
+                        param += "&title=" +  $("#" + inputFiletitle.replace("#", "")).val();
+                        param += "&filename=" + data;
+
+                        param += "&do=Upload.setTitle";
+
+                        new jj(param).jjAjax2(false);
+//                                                                data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
+//                                                                data = data.replace("/", '').replace("/", '').replace("\\", '');
+                        if ((data != "")) {
+                            $("#" + inputFileId.replace("#", "")).val('');
+                             $("#" + inputFiletitle.replace("#", "")).val('');
+                            if (data != "big") {
+                                $(inputTextSelector).val(data);
+                                $(inputTilteSelector).val($("#" + inputFiletitle.replace("#", "")).val());
+
+
+                                if (viewImgSelector != null) {
+                                    $(viewImgSelector).attr('src', 'upload/' + data);
+                                }
+                            } else {
+                                $(inputTextSelector).val('');
+                                $(inputTilteSelector).val('');
+
+                                $(inputTextSelector).hide();
+                                $(inputTilteSelector).hide();
+
+                                $(btn).show();
+                                $("#" + inputFileId.replace("#", "")).show();
+                                $("#" + inputFiletitle.replace("#", "")).show();
+
+                                alert('.حجم فایل شما بیش اندازه بزرگ می باشد');
+                            }
+                        } else {
+                            alert('.فایل به درستی ارسال نشد');
+                            $(inputTextSelector).val('');
+                            $(inputTilteSelector).val('');
+                            $(inputTextSelector).hide();
+                            $(inputTilteSelector).hide();
+
+                            $(btn).show();
+                            $("#" + inputFileId.replace("#", "")).show();
+                            $("#" + inputFiletitle.replace("#", "")).show();
+
+                            alert('.حجم فایل شما بیش اندازه بزرگ می باشد');
+                        }
+                    }
+
+//                 
+                });
+            }
+        });
+    };
     this.jjAjaxFileUpload2 = function (inputFileId, inputTextSelector, viewImgSelector) {
         var btn = this.selector;
         $(btn).click(function () {
@@ -2071,40 +2052,55 @@ var jj = function (selector) {
                 return;
             } else {
                 $(this).parent().parent().find('.form-control').html("");
+
                 $.ajaxFileUpload({
                     url: 'UploadServlet',
                     secureuri: false,
                     fileElementId: inputFileId.replace("#", ""),
+                   
                     dataType: 'JSON',
                     cache: false,
                     success: function (data) {
                         alert(data);
+
                         data = data == null ? "" : data;
+                       
 //                                                                data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
 //                                                                data = data.replace("/", '').replace("/", '').replace("\\", '');
-                        if (data != "") {
+                        if ((data != "")) {
                             $("#" + inputFileId.replace("#", "")).val('');
+                           
+
                             if (data != "big") {
                                 $(inputTextSelector).val(data);
+
+
                                 if (viewImgSelector != null) {
                                     $(viewImgSelector).attr('src', 'upload/' + data);
                                 }
                             } else {
                                 $(inputTextSelector).val('');
+
                                 $(inputTextSelector).hide();
+
                                 $(btn).show();
                                 $("#" + inputFileId.replace("#", "")).show();
+
                                 alert('.حجم فایل شما بیش اندازه بزرگ می باشد');
                             }
                         } else {
                             alert('.فایل به درستی ارسال نشد');
                             $(inputTextSelector).val('');
                             $(inputTextSelector).hide();
+
                             $(btn).show();
                             $("#" + inputFileId.replace("#", "")).show();
+
                             alert('.حجم فایل شما بیش اندازه بزرگ می باشد');
                         }
                     }
+
+//                 
                 });
             }
         });

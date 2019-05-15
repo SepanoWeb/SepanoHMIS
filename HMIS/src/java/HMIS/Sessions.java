@@ -279,6 +279,7 @@ public class Sessions {
             StringBuilder html3 = new StringBuilder();
             StringBuilder html4 = new StringBuilder();
             StringBuilder html5 = new StringBuilder();
+            StringBuilder html6 = new StringBuilder();
             String script = "";
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setHtml("#commettesTitle", commettesRow.get(0).get(Commettes._title) + "-جلسه" + row.get(0).get(_date)));
@@ -416,12 +417,11 @@ public class Sessions {
                 html3.append("<tr onclick='hmisApproved.selectInSessions(" + approvedRow.get(i).get(Approved._id) + ");' class='mousePointer'>");
                 List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(i).get(Approved._trackerId)));
                 List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
-                List<Map<String, Object>> RolesExecutorIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(i).get(Approved._executorId)));
-                List<Map<String, Object>> UserExecutorIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesExecutorIdRow.get(0).get(Role._user_id)));
+                
                 html3.append("<td class='c'>" + approvedRow.get(i).get(Approved._id) + "</td>");
                 html3.append("<td class='r'>" + approvedRow.get(i).get(Approved._title) + "</td>");
+                html3.append("<td class='r'>" +  (approvedRow.get(i).get(Approved._executorRoleId).toString()).replaceAll("%23A%23", ",")+ "</td>");
                 html3.append("<td class='r'>" + RolesTrackerIdRow.get(0).get(Role._title) + "-" + UserTrackerIdRow.get(0).get(Access_User._name) + " " + UserTrackerIdRow.get(0).get(Access_User._family) + "</td>");
-                html3.append("<td class='r'>" + RolesExecutorIdRow.get(0).get(Role._title) + "-" + UserExecutorIdRow.get(0).get(Access_User._name) + " " + UserExecutorIdRow.get(0).get(Access_User._family) + "</td>");
                 html3.append("<td class='r'>" + jjCalendar_IR.getViewFormat(approvedRow.get(i).get(Approved._startDate)) + "</td>");
                 html3.append("<td class='r'>" + jjCalendar_IR.getViewFormat(approvedRow.get(i).get(Approved._endDate)) + "</td>");
                 html3.append("<td class='r'>" + approvedRow.get(i).get(Approved._status) + "</td>");
@@ -434,9 +434,13 @@ public class Sessions {
             for (int i = 0; i < RolesRow.size(); i++) {
                 html5.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
             }
+            html6.append("<option>انتخاب کنید</option>");
+            List<Map<String, Object>> UserRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
+            for (int i = 0; i < RolesRow.size(); i++) {
+                html5.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
+            }
 
             //////////////////////نمایش جدول مصوبات در جلسات قبلی  
-//            db.otherSelect("SELECT approved_sessions FROM hmis_approved WHERE sessions_commetteId= ");
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.otherSelect("SELECT id,sessions_commettesId FROM hmis_sessions WHERE sessions_commettesId=" + commetteId + " AND id!=" + id + " "));//نمایش جلساتی که این کمیته تشکیل داده به غیر جلسه ای که داخلش هستیم
             html1.append("        <div class=\"table-wrapper\">\n");
             html1.append("<table id='refreshApprovedPreviousInSession' class='table display responsive' class='tahoma10' style='direction: rtl;width:982px'><thead>");
@@ -455,12 +459,11 @@ public class Sessions {
                     html1.append("<tr onclick='hmisApproved.selectApprovedPrevious(" + ApprovedPrevoiusRow.get(i).get(Approved._id) + ")' class='mousePointer'>");
                     List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + ApprovedPrevoiusRow.get(i).get(Approved._trackerId)));
                     List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
-                    List<Map<String, Object>> RolesExecutorIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + ApprovedPrevoiusRow.get(i).get(Approved._executorId)));
-                    List<Map<String, Object>> UserExecutorIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesExecutorIdRow.get(0).get(Role._user_id)));
                     html1.append("<td class='c'>" + ApprovedPrevoiusRow.get(i).get(Approved._id) + "</td>");
                     html1.append("<td class='r'>" + ApprovedPrevoiusRow.get(i).get(Approved._title) + "</td>");
+                    html1.append("<td class='r'>" + ApprovedPrevoiusRow.get(i).get(Approved._trackerId) + "</td>");
+                    html1.append("<td class='r'>" + ApprovedPrevoiusRow.get(i).get(Approved._executorRoleId) + "</td>");
                     html1.append("<td class='r'>" + RolesTrackerIdRow.get(0).get(Role._title) + "-" + UserTrackerIdRow.get(0).get(Access_User._name) + " " + UserTrackerIdRow.get(0).get(Access_User._family) + "</td>");
-                    html1.append("<td class='r'>" + RolesExecutorIdRow.get(0).get(Role._title) + "-" + UserExecutorIdRow.get(0).get(Access_User._name) + " " + UserExecutorIdRow.get(0).get(Access_User._family) + "</td>");
                     html1.append("<td class='r'>" + jjCalendar_IR.getViewFormat(ApprovedPrevoiusRow.get(i).get(Approved._startDate)) + "</td>");
                     html1.append("<td class='r'>" + jjCalendar_IR.getViewFormat(ApprovedPrevoiusRow.get(i).get(Approved._endDate)) + "</td>");
                     html1.append("<td class='r'>" + ApprovedPrevoiusRow.get(i).get(Approved._status) + "</td>");
@@ -476,7 +479,8 @@ public class Sessions {
             script += Js.setHtml("#approvedTbl", html3);
             script += Js.setHtml("#audience", html4);
             script += html.toString();
-            script += Js.setHtml("#approved_executorId", html5);
+            script += Js.setHtml("#approved_executorRoleId", html5);
+            script += Js.setHtml("#approved_executorUserId", html6);
             script += Js.setHtml("#approved_trackerId", html5);
             Server.outPrinter(request, response, script);
             return "";

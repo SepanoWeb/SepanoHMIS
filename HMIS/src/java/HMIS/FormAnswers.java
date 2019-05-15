@@ -9,7 +9,6 @@ import cms.access.Access_User;
 import cms.tools.Js;
 import cms.tools.Server;
 import cms.tools.jjTools;
-import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,24 +25,17 @@ import jj.jjNumber;
  */
 public class FormAnswers {
 
-    public static final String tableName = "hmis_formAnswers";
+    public static final String tableName = "hmis_formanswers";
     public static final String _id = "id";
-    public static final String _formId = "formAnswers_formId";
-    public static final String _userId = "formAnswers_userId";
-    public static final String _userName = "formAnswers_userName";
-    public static final String _userRole = "formAnswers_userRole";//نقش هایی که کاربر به واسطه ی انها به این فرم دسترسی داشته است
-    public static final String _date = "formAnswers_date";
-    public static final String _time = "formAnswers_time";//بخش یا بخش هایی که این فرم را باید ببینند
-    public static final String _status = "formAnswers_status";//سمت هایی که به این فرم دسترسی 
-    public static final String _answer = "formAnswers_answer";// اشخاصی که به این فرم دسترسی 
+    public static final String _answerSet_id = "formanswers_answerSet_id";
+    public static final String _questionId = "formanswers_questionId";
+    public static final String _answer = "formanswers_answer";
+    
 //   
     public static final String lbl_insert = "ثبت و افزودن سوال";
     public static final String lbl_delete = "حذف فرم";
     public static final String lbl_edit = "ویرایش";
-    public static final String lbl_add_en = "افزودن زبان انگلیسی";
-    public static final String lbl_edit_en = "ویرایش بخش انگلیسی";
-    public static final String lbl_add_ar = "افزودن زبان عربی";
-    public static final String lbl_edit_ar = "ویرایش بخش عربی";
+
 
     public static int rul_rfs = 0;//60;
     public static int rul_rfs_own = 0;// 61;//فقط امکان دیدن فرم های ایجاد شده ی توسط خود ایجاد کننده را دارد // بر روی سمت
@@ -58,14 +50,7 @@ public class FormAnswers {
     public static int rul_10 = 0;// 70;
 
 //    public static int rul_lng5 = 68;
-    public static final String lbl_add_ln2 = "برچسب";
-    public static final String lbl_edit_ln2 = "ویرایش بخش انگلیسی";
-    public static final String lbl_add_ln3 = "افزودن زبان عربی";
-    public static final String lbl_edit_ln3 = "ویرایش بخش عربی";
-    public static final String lbl_add_ln4 = "افزودن زبان آلمانی";
-    public static final String lbl_edit_ln4 = "ویرایش بخش آلمانی";
-    public static final String lbl_add_ln5 = "افزودن زبان چینی";
-    public static final String lbl_edit_ln5 = "ویرایش بخش چینی";
+
 
     /**
      *
@@ -88,14 +73,15 @@ public class FormAnswers {
             int userId = jjTools.getSeassionUserId(request);
             String userRoleInsession = jjTools.getSeassionUserRole(request);
             System.out.println(">>>>>>>>UserRoles is:" + userRoleInsession);
-            String where = " WHERE ";
+            String where = " WHERE (";
             String userRoles[] = userRoleInsession.split("%23A%23");
             for (int i = 0; i < userRoles.length; i++) {
                 where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "\\%23A\\%23%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
             }
             where += Forms._accessessUsers + " like " + "'%" + userId + "\\%23A\\%23%'" + " OR ";
             where += Forms._accessessUsers + " like " + "'%ALL%'" + " OR ";
-            where += Forms._accessessUsers + "='' ; ";
+            where += Forms._accessessUsers + "='' ) AND  ";
+            where += Forms._isActive + "=1 ; ";
 
             List<Map<String, Object>> formRows = jjDatabaseWeb.separateRow(db.otherSelect("SELECT * FROM " + Forms.tableName + where));
             StringBuilder html = new StringBuilder();
@@ -113,8 +99,8 @@ public class FormAnswers {
                 html.append("<tr>");
                 html.append("<td class='r'>" + formRows.get(i).get(Forms._code) + "</td>");
                 html.append("<td class='r'>" + formRows.get(i).get(Forms._title) + "</td>");
-                html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjFormAnswers.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
-                html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswers.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "'></i></td>");
+                html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
+                html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "'></i></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -150,7 +136,7 @@ public class FormAnswers {
             StringBuilder html = new StringBuilder();
             int userId = jjTools.getSeassionUserId(request);
 //            DefaultTableModel dtm = db.JoinLeft(tableName, Forms.tableName, tableName + ".*" + "," + Forms._title, _formId, Forms._id);//@ToDo فقط ستون هایی که لازم هست را بگیریم که در مصرف حاقظه رم سرفه جویی بشود
-            String formId = jjTools.getParameter(request, _formId);
+            String formId = jjTools.getParameter(request, _answerSet_id);
             List<Map<String, Object>> FormTitleRow = jjDatabaseWeb.separateRow(db.Select(Forms.tableName, Forms._title, Forms._id + "=" + formId));
             if (FormTitleRow.isEmpty()) {
                 Server.outPrinter(request, response, "کد صحیح نیست");
@@ -161,10 +147,10 @@ public class FormAnswers {
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             if (accIns) {
                 html.append("<br/>");
-                html.append("<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' href ='Server?do=FormAnswers.add_new&formAnswers_formId="+formId+"' target='_blank' >تکمیل یک نمونه فرم جدید</a>");
+                html.append("<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' href ='Server?do="+Js.jjFormAnswerSet.add_new(formId)+" target='_blank' >تکمیل یک نمونه فرم جدید</a>");
             }
             html.append("</p>");
-            DefaultTableModel dtm = db.Select(tableName, _formId + "=" + formId + " AND " + _userId + "=" + userId);
+            DefaultTableModel dtm = db.Select(tableName, _answerSet_id + "=" + formId + " AND " + _answer + "=" + userId);
             List<Map<String, Object>> row = jjDatabaseWeb.separateRow(dtm);
             html.append("<div class='table-wrapper'>");
             html.append("<table id='refreshAnswers' class='table display responsive' class='tahoma10' style='direction: rtl'><thead>");
@@ -178,10 +164,10 @@ public class FormAnswers {
             for (int i = 0; i < row.size(); i++) {
                 html.append("<tr  class='mousePointer'>");
                 html.append("<td class='r'>" + row.get(i).get(_id) + "</td>");
-                html.append("<td class='r'>" + row.get(i).get(_userName) + "</td>");
-                html.append("<td class='r'>" + row.get(i).get(_userRole) + "</td>");
-                html.append("<td class='r'>" + row.get(i).get(_date) + "</td>");
-                html.append("<td class='r'>" + row.get(i).get(_time) + "</td>");
+//                html.append("<td class='r'>" + row.get(i).get(_userName) + "</td>");
+//                html.append("<td class='r'>" + row.get(i).get(_userRole) + "</td>");
+//                html.append("<td class='r'>" + row.get(i).get(_date) + "</td>");
+//                html.append("<td class='r'>" + row.get(i).get(_time) + "</td>");
                 html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjForms.select(row.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
                 html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjForms.select(row.get(i).get(_id).toString()) + "'></i></td>");
                 html.append("</tr>");
@@ -213,7 +199,7 @@ public class FormAnswers {
                 Server.outPrinter(request, response, "شما اجازه ی ثبت این فرم را ندارید");
                 return "";
             }
-            String formId = jjTools.getParameter(request, _formId);
+            String formId = jjTools.getParameter(request, _answerSet_id);
             if (!jjNumber.isDigit(formId)) {
                 Server.outPrinter(request, response, "کد فرم باید عدد باشد");
                 return "";
@@ -237,6 +223,8 @@ public class FormAnswers {
         }
     }
 
+    
+
     /**
      *
      *
@@ -253,7 +241,8 @@ public class FormAnswers {
                 return Js.modal(hasAccess, "پیام سامانه");
             }
             jjCalendar_IR ir = new jjCalendar_IR();
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map = new HashMap();
+            //ToDo مقادیر پیشفرض در صورتیکه توسط کاربر خالی گذاشته شده باشند اینجا تومااتیک وارد می شوند
 //            map.put(_title, jjTools.getParameter(request, _title));
 //            map.put(_code, jjTools.getParameter(request, _code));
 //            map.put(_departments, jjTools.getParameter(request, _departments));

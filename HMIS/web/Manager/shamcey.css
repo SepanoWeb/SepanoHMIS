@@ -11029,6 +11029,7 @@ textarea.parsley-success:focus {
 /* ############### 4.15 Select2 ############### */
 /* -------------------------------------------- */
 .select2-results__option {
+    direction: rtl;
     border-radius: 0;
     margin-bottom: 1px;
     font-size: 1.3rem;
@@ -11110,7 +11111,7 @@ textarea.parsley-success:focus {
 .select2-container--default .select2-search--inline .select2-search__field {
     margin-top: 5px;
     line-height: 26px;
-    padding-left: 7px;
+    padding-right: 7px;
 }
 .select2-container--default.select2-container--disabled .select2-selection__choice {
     padding-left: 10px;
@@ -11137,7 +11138,7 @@ textarea.parsley-success:focus {
 
 .select2-dropdown {
     border-color: rgba(0, 0, 0, 0.15);
-    z-index: 200;
+    /*z-index: 200;*/
 }
 
 .select2-search--dropdown {

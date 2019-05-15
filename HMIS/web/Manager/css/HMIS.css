@@ -15,6 +15,25 @@
 .table img {
     max-width: 3em;
 }
+
+tr.green.odd{
+    background-color: #daffd9 !important;
+}
+tr.green.even{
+    background-color: #daffd0 !important;
+}
+tr.yellow.odd{
+    background-color: #ffffbd  !important;
+}
+tr.yellow.even{
+    background-color: #ffffb0 !important;
+}
+tr.red.even{
+    background-color: #ffcaba !important;
+}
+tr.red.odd{
+    background-color: #ffc0ba !important;
+}
 .commeteeTable td {
     text-align: center;
     border: thin solid;

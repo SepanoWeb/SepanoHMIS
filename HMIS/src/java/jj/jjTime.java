@@ -2,6 +2,7 @@ package jj;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.StringTokenizer;
 import jj.jjNumber;
 
@@ -26,16 +27,17 @@ public class jjTime {
 
     public static String getTime5lenth(String time4lenth) {
         if(time4lenth.length()!=4){
-            return "";
+            jjCalendar_IR myDate = new jjCalendar_IR();
+            return myDate.getTimeFormat_5length();
         }
         return time4lenth.substring(0, 2) + ":" + time4lenth.substring(2, 4);
     }
     public static String getTime4lenth(String time5lenth) {
         time5lenth=time5lenth.replaceAll(" ", "");
         if(time5lenth.length()!=5){
-            System.out.println("PPPPPPPPPPPPPPPPPP"+time5lenth);
-            return "";
-        }
+            jjCalendar_IR myDate = new jjCalendar_IR();
+            return myDate.getTimeFormat_4length();
+        }        
         return time5lenth.replace(":", "");
     }
 
