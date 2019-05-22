@@ -22,7 +22,7 @@
                 <div class="col-lg-3">
                     <div class="form-group has-warning mg-b-0">
                         مسئول اجرا
-                        <input type="text" disabled="disabled" id="executorId" class="form-control is-valid" />
+                        <input type="text" disabled="disabled" id="executorRoleId" class="form-control is-valid" />
                     </div><!-- form-group -->
                 </div><!-- col -->
                 <div class="col-lg-3">
@@ -54,9 +54,21 @@
                     </select>
                 </div><!-- col -->   
                 <div class="col-lg-9">
-                    توضیحات:
+                :توضیحات دبیر کمیته
                     <div class="form-group has-success mg-b-0">
-                        <input id="approved_description" name="approved_description" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا واردمی کند" type="text" >
+                        <input id="approved_description" name="approved_description" disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-9">
+                :توضیحات مسئول اجرا
+                    <div class="form-group has-success mg-b-0">
+                        <input id="approved_descriptionExecutor" name="approved_descriptionExecutor" disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-9">
+                 :توضیحات مسئول پیگیری  
+                    <div class="form-group has-success mg-b-0">
+                        <input id="approved_descriptionTracker" name="approved_descriptionTracker" disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
                     </div><!-- form-group -->
                 </div><!-- col -->   
 
@@ -65,9 +77,9 @@
                     <input id="approved_fileOfResponsible" name="approved_fileOfResponsible" type="hidden" />
                     <!--<img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>-->
                     <div class="row">
-                        <input class="btn btn-primary" id="sendFilesApproved" type="submit" value="ارسال">
+                        <input class="btn btn-primary" id="sendFilesApproved1" type="submit" value="ارسال">
                         <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                        <input id="attachFileApproved" name="attachFileApproved" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                        <input id="attachFileApproved1" name="attachFileApproved1" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                         <span class="form-control col-lg"></span>
                     </div>
                 </div><!-- col -->   
@@ -79,7 +91,7 @@
                 <div class="col-lg-12 mg-t-20" id="inputTextSelectorDiv"></div>
                 
 
-                <div class="col-lg-6" id="Approved_button"></div>
+                <div class="col-lg-3" id="Approved_button"></div>
                 <div class="col-lg-3">
                     <a id="cancel_Approved" class="btn btn-outline-secondary mg-b-10  btn-block">
                         لغو

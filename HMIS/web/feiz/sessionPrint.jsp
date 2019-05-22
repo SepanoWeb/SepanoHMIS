@@ -37,7 +37,7 @@
                 #btnPrint {
                     display: none;
                 }
-               
+
             }
         </style>
     </head>
@@ -62,6 +62,7 @@
                                     <th width='5%'>کد</th>
                                     <th width='10%'>عنوان مصوبه</th>
                                     <th width='15%'>مسئول اجرا</th>
+                                    <th width='15%'>مسئولین اجرا</th>
                                     <th width='20%'>مسئول پیگیری</th>
                                     <th width='15%'>تاریخ شروع </th>
                                     <th width='15%'>تاریخ پایان </th>
@@ -71,16 +72,38 @@
                                         <%
                                             for (int i = 0; i < approvedRow.size(); i++) {
                                                 List<Map<String, Object>> RoleTrackerId = jjDatabaseWeb.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(i).get(Approved._trackerId)));
-                                                List<Map<String, Object>> RoleExecutorId = jjDatabaseWeb.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(i).get(Approved._executorId)));
                                                 List<Map<String, Object>> userTrackerId = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RoleTrackerId.get(0).get(Role._user_id)));
-                                                List<Map<String, Object>> userExecutorId = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RoleExecutorId.get(0).get(Role._user_id)));
-
+//                                                List<Map<String, Object>> RoleExecutorId = jjDatabaseWeb.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(i).get(Approved._executorId)));
+//                                                List<Map<String, Object>> userExecutorId = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RoleExecutorId.get(0).get(Role._user_id)));
+                                                System.out.println("approvedRow.get(i).get(Approved._executorRoleId)"+approvedRow.get(i).get(Approved._executorRoleId));
+                                                System.out.println("approvedRow.get(i).get(Approved._executorUserId)"+approvedRow.get(i).get(Approved._executorUserId));
                                         %>
                                         <tr>
                                             <td><%=approvedRow.get(i).get(Approved._id)%></td>
                                             <td><%=approvedRow.get(i).get(Approved._title)%></td>
+                                            <%
+                                                if (approvedRow.get(i).get(Approved._executorRoleId).equals("")) {
+                                            %>
+                                            <td><div></div></td>
+                                            <%
+                                            } else {
+                                            %>
+                                            <td ><%=approvedRow.get(i).get(Approved._executorRoleId)%></td>
+                                            <%
+                                                }
+                                            %>
+                                            <%
+                                                if (approvedRow.get(i).get(Approved._executorUserId).equals("")) {
+                                            %>
+                                            <td><div></div></td>
+                                            <%
+                                            } else {
+                                            %>
+                                            <td ><%=approvedRow.get(i).get(Approved._executorUserId)%></td>
+                                            <%
+                                                }
+                                            %>
                                             <td ><%= userTrackerId.get(0).get(Access_User._name) + " " + userTrackerId.get(0).get(Access_User._family)%></td>
-                                            <td ><%= userExecutorId.get(0).get(Access_User._name) + " " + userExecutorId.get(0).get(Access_User._family)%></td>
                                             <td><%= jjCalendar_IR.getViewFormat(approvedRow.get(i).get(Approved._startDate))%></td>
                                             <td><%= jjCalendar_IR.getViewFormat(approvedRow.get(i).get(Approved._endDate))%></td>
                                             <td ><%= approvedRow.get(i).get(Approved._status)%></td>
@@ -90,7 +113,7 @@
                                         <%
                                             }
                                         %>
-                                        <tr>
+
                                     </tbody>
                                 </table>
                             </div>

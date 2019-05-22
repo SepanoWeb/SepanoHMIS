@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 import jj.jjCalendar_IR;
 import jj.jjDatabase;
@@ -46,7 +47,7 @@ public class Plans {
     public static String _domain = "plans_domain";//دامنه
     public static String _department = "plans_department";//بخش
     public static String _status = "plans_status";//وضعیت
-    public static String _statusLog= "plans_statusLog";//روند وضعیت
+    public static String _statusLog = "plans_statusLog";//روند وضعیت
     public static String _description = "plans_description";//توضیحات
     public static String _correction = "plans_correction";//اصلاحیه
     public static String _date = "plans_date";//تاریخ
@@ -65,18 +66,18 @@ public class Plans {
     public static int rul_lng3 = 0;
     public static int rul_lng4 = 0;
     public static int rul_lng5 = 0;
-    public static String vaziat_sabteAvalie = "ثبت اولیه";
-    public static String lbl_insert = "ذخیره";
-    public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
-    public static String lbl_repair = "اصلاح";
-    public static String lbl_confirmBySuperWizar = "تایید توسط مافوق";
-    public static String lbl_correctionPlans = "اصلاحیه";
+    public static String status_initialRegistration = "ثبت اولیه";
+    public static String status_insert = "ذخیره";
+    public static String status_delete = "حذف";
+    public static String status_edit = "ویرایش";
+    public static String status_repair = "اصلاح";
+    public static String status_confirmBySuperWizar = "تایید توسط مافوق";
+    public static String status_correctionPlans = "اصلاحیه";
 //    public static String lbl_FinalApproval = "تایید نهایی وارسال به کمیته مدیریت اجرایی";
 //    public static String lbl_RejectThePlans = "رد برنامه";
     public static String vaziat = "";
 
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isFromClient) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
@@ -86,6 +87,8 @@ public class Plans {
             boolean accRulRefAll = Access_User.hasAccess(request, db, rul_rfsAll);//تایید توسط مافوق
 
             StringBuilder html = new StringBuilder();
+            StringBuilder html1 = new StringBuilder();
+            StringBuilder html3 = new StringBuilder();
             DefaultTableModel dtm = db.Select(tableName);
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
 
@@ -118,6 +121,17 @@ public class Plans {
             html.append("</tbody></table>");
             html.append("</div>");
             html.append("</div>");
+            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
+            html1.append("<option>انتخاب کنید</option>");
+            for (int i = 0; i < RolesRow.size(); i++) {
+                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
+            }
+            List<Map<String, Object>> departementRow = jjDatabase.separateRow(db.Select(Department.tableName));
+            html3.append("<option>انتخاب کنید</option>");
+            for (int i = 0; i < departementRow.size(); i++) {
+                html3.append("<option id='" + departementRow.get(i).get(Department._id) + "' value='" + departementRow.get(i).get(Department._id) + "'>" + departementRow.get(i).get(Department._title) + "</option>");
+            }
+            
             String height = jjTools.getParameter(request, "height");
             String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(height)) {
@@ -128,13 +142,20 @@ public class Plans {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshPlans", "300", 0, "", "برنامه های عملیاتی");
-            return html2;
+            html2 += Js.setHtml("#plans_superwizarRol", html1);
+            html2 += Js.setHtml("#plans_department", html3);
+            html2 += Js.setHtml("#plans_domain", html3);
+            html2 +=Js.setHtml("#steps_executorId", html1);
+            html2 +=Js.setHtml("#steps_trackerId", html1);
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             StringBuilder html = new StringBuilder();
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
@@ -142,10 +163,12 @@ public class Plans {
 //                html.append(Js.setHtml("#", "<input type=\"button\" id=\"insert_Poll_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
 //                html.append(Js.buttonMouseClick("Poll_button#insert_Poll_new", Js.jjPoll.insert()));
 //            }
-            html.append(Js.setVal("#plans_vaziat", vaziat_sabteAvalie));
-            return html.toString();
+            html.append(Js.setVal("#plans_status", status_initialRegistration));
+            Server.outPrinter(request, response, html.toString());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
@@ -158,13 +181,14 @@ public class Plans {
      * @return
      * @throws Exception
      */
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
                 return hasAccess;
             }
             StringBuilder html = new StringBuilder();
+            StringBuilder html1 = new StringBuilder();
             jjCalendar_IR ir = new jjCalendar_IR();
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(_creatorId, jjTools.getSessionAttribute(request, "#ID"));
@@ -184,21 +208,23 @@ public class Plans {
             map.put(_thePeriodAssess, jjTools.getParameter(request, _thePeriodAssess));
             map.put(_typeOfProgram, jjTools.getParameter(request, _typeOfProgram));
             map.put(_titleOfTheProblem, jjTools.getParameter(request, _titleOfTheProblem));
-            map.put(_status, jjTools.getParameter(request, _status));
-            map.put(_statusLog, vaziat_sabteAvalie
+            map.put(_status, status_initialRegistration);
+            
+            map.put(_statusLog, status_initialRegistration
                     + ":"
                     + "-"
                     + jjCalendar_IR.getViewFormat(jjCalendar_IR.getDatabaseFormat_8length("", true))
                     + " "
                     + new jjCalendar_IR().getTimeFormat_8length()
-                    + "#A#");//            در زمان زدن دکمه ثبت وضعیت نمونه ثبت اولیه می شود ودر روند وضعیت ثبت اولیه با تاریخ وساعت ثبت می شود
+                    + "%23A%23");//            در زمان زدن دکمه ثبت وضعیت نمونه ثبت اولیه می شود ودر روند وضعیت ثبت اولیه با تاریخ وساعت ثبت می شود
             DefaultTableModel dtm = db.insert(tableName, map);
             if (dtm.getRowCount() == 0) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
             List<Map<String, Object>> PlansRow = jjDatabaseWeb.separateRow(dtm);
             html.append(Js.setHtml("#thePeriodAssess", PlansRow.get(0).get(_thePeriodAssess)));//دوره پایش
@@ -211,10 +237,13 @@ public class Plans {
             String script = "";
             script += html;
             script += Js.setVal("#hmis_plans_id", PlansRow.get(0).get(_id));//ایدی پلن
-            script += " $('#btn_addNewSteps').show();";//نمایش دکمه اد نیو برای جدول گام ها
-            return script;
+            script += " $('#btn_addNewSteps').slideDown();";//نمایش دکمه اد نیو برای جدول گام ها
+           
+            Server.outPrinter(request, response, script);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
@@ -227,7 +256,7 @@ public class Plans {
      * @return
      * @throws Exception
      */
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -235,7 +264,8 @@ public class Plans {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+                return "";
             }
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
             if (row.size() == 0) {
@@ -243,7 +273,7 @@ public class Plans {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
             }
 
             StringBuilder html = new StringBuilder();
@@ -256,9 +286,9 @@ public class Plans {
 
             html.append(Js.setVal("#" + _typeOfProgram, row.get(0).get(_typeOfProgram)));
             if (row.get(0).get(_typeOfProgram).equals("برنامه بهبود کیفیت")) {
-                html.append("$('#planBehboodDiv').show();");
+                html.append("$('#planImprovementDiv').slideDown();");
             } else {
-                html.append("$('#planBehboodDiv').hide();");
+                html.append("$('#planImprovementDiv').slideUp();");
             }
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             html.append(Js.setVal("#" + _department, row.get(0).get(_department)));
@@ -283,7 +313,7 @@ public class Plans {
             html.append(Js.setHtml("#minorGoal", row.get(0).get(_minorGoal)));//هدف جزئی
             html.append(Js.setHtml("#responsible", row.get(0).get(_responsible)));//مسول پایش
             html.append(Js.setHtml("#range", row.get(0).get(_range)));//حیطه
-            if (row.get(0).get(_status).equals(lbl_confirmBySuperWizar)) {
+            if (row.get(0).get(_status).equals(status_confirmBySuperWizar)) {
                 html4.append("<div></div>");
             } else {
                 html4.append("<button id='editPlansButton' style=\"display: none\" class=\"btn btn-success btn-block mg-b-10\" onclick=\"hmisPlans.m_edit();\">ثبت  تغییرات</button>\n");
@@ -297,45 +327,45 @@ public class Plans {
             if (accConfirmBySuperwizar) {
 
                 html3.append("<div class='col-lg-2'>");
-                html3.append("<button id=\"confirmBySuperwizar_Plans\" style='display:none' class=\"btn btn-success btn-block mg-b-10\">" + lbl_confirmBySuperWizar + "</button>");
-                html.append(Js.buttonMouseClick("#confirmBySuperwizar_Plans", "hmisPlans.confirmBySuperwizar(" + id + ");"));
+                html3.append("<button onclick='hmisPlans.confirmBySuperwizar(" + id + ");' id=\"confirmBySuperwizar_Plans\" style='display:none' class=\"btn btn-outline-success  btn-block mg-b-10\">" + status_confirmBySuperWizar + "</button>");
+//                html.append(Js.buttonMouseClick("#confirmBySuperwizar_Plans", ""));
                 html3.append("</div>");
             }
-            if (row.get(0).get(_status).equals(lbl_confirmBySuperWizar)) {
+            if (row.get(0).get(_status).equals(status_confirmBySuperWizar)) {
 
-                html.append("$('#btn_insertSteps').hide();");
-                html.append("$('#stepsForm1').hide();");
-                html.append("$('#correctionPlans_Plans').hide();");
-                html.append("$('#confirmBySuperwizar_Plans').hide();");
+                html.append("$('#btn_insertSteps').slideUp();");
+                html.append("$('#stepsForm1').slideUp();");
+                html.append("$('#correctionPlans_Plans').slideUp();");
+                html.append("$('#confirmBySuperwizar_Plans').slideUp();");
 //
 //                html.append("$('#btn_insertSteps').show();");
 //                html.append("$('#stepsForm1').show();");
 //                html.append("$('#correctionPlans_Plans').show();");
 //                html.append("$('#confirmBySuperwizar_Plans').show();");
 
-            } else if (row.get(0).get(_status).equals(lbl_correctionPlans)) {
+            } else if (row.get(0).get(_status).equals(status_correctionPlans)) {
 
-                html.append("$('#btn_insertSteps').show();");
-                html.append("$('#stepsForm1').show();");
-                html.append("$('#correctionPlans_Plans').show();");
-                html.append("$('#confirmBySuperwizar_Plans').show();");
+                html.append("$('#btn_insertSteps').slideDown();");
+                html.append("$('#stepsForm1').slideDown();");
+                html.append("$('#correctionPlans_Plans').slideDown();");
+                html.append("$('#confirmBySuperwizar_Plans').slideDown();");
 
-            } else if (row.get(0).get(_status).equals(vaziat_sabteAvalie)) {
-                html.append("$('#btn_insertSteps').show();");
-                html.append("$('#stepsForm1').show();");
-                html.append("$('#correctionPlans_Plans').show();");
-                html.append("$('#confirmBySuperwizar_Plans').show();");
+            } else if (row.get(0).get(_status).equals(status_initialRegistration)) {
+                html.append("$('#btn_insertSteps').slideDown();");
+                html.append("$('#stepsForm1').slideDown();");
+                html.append("$('#correctionPlans_Plans').slideDown();");
+                html.append("$('#confirmBySuperwizar_Plans').slideDown();");
             }
 
             if (accCorrectionPlans) {//اصلاحیه
                 html3.append("<div class='col-lg-2'>");
-                html3.append("<button  id=\"correctionPlans_Plans\" style='display:none' class=\"btn btn-success btn-block mg-b-10\">" + lbl_correctionPlans + "</button>");
-                html.append(Js.buttonMouseClick("#correctionPlans_Plans", "hmisPlans.correctionPlans();"));//
+                html3.append("<button onclick='hmisPlans.correctionPlans();'  id=\"correctionPlans_Plans\" style='display:none' class=\"btn btn-outline-warning btn-block mg-b-10\">" + status_correctionPlans + "</button>");
+//                html.append(Js.buttonMouseClick("#correctionPlans_Plans", ""));//
                 html3.append("</div>");
 
             }
 
-            script += "$('#recordPlans').hide();";//ثیت برنامه عملیاتی
+            script += "$('#recordPlans').slideUp();";//ثیت برنامه عملیاتی
             ////////////////////////////نمایش جدول گامها//////////////////
             List<Map<String, Object>> StepsRow = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._plansId + "=" + id));
 //            html2.append(" <div class=\"col-lg-12\">");
@@ -356,8 +386,8 @@ public class Plans {
                 html2.append("<tr  onclick='hmisPlans.selectStepsInPlans(" + StepsRow.get(i).get(Steps._id) + ")' class='mousePointer'>");
                 html2.append("<td class='c'>" + StepsRow.get(i).get(Steps._id) + "</td>");
                 html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._title).toString()) + "</td>");
-                html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._responsibleForRunning).toString()) + "</td>");
-                html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._responsibleForTrack).toString()) + "</td>");
+                html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._executorId).toString()) + "</td>");
+                html2.append("<td class='r'>" + (StepsRow.get(i).get(Steps._trackerId).toString()) + "</td>");
                 html2.append("<td class='r'>" + StepsRow.get(i).get(Steps._startDate).toString() + "</td>");
                 html2.append("<td class='r'>" + StepsRow.get(i).get(Steps._endDate).toString() + "</td>");
                 html2.append("<td class='r'>" + jjNumber.getFormattedNumber(StepsRow.get(i).get(Steps._cost).toString()) + "</td>");
@@ -373,10 +403,12 @@ public class Plans {
             script += Js.setHtml("#btns_plans", html3.toString());
             script2 += Js.table("#refreshTblSteps", "300", 0, "", "گام های اجرایی");
             script += html;
-            return script2 + script;
+            Server.outPrinter(request, response, script2 + script);
+            return "";
 
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
@@ -415,7 +447,7 @@ public class Plans {
         }
     }
 
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isFromClient) throws Exception {
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
@@ -437,24 +469,21 @@ public class Plans {
             map.put(_thePeriodAssess, jjTools.getParameter(request, _thePeriodAssess));
             map.put(_typeOfProgram, jjTools.getParameter(request, _typeOfProgram));
             map.put(_titleOfTheProblem, jjTools.getParameter(request, _titleOfTheProblem));
-//            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
-//            if (!errorMessageId.equals("")) {
-//                if (jjTools.isLangEn(request)) {
-//                    errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
-//                }
-//                return Js.dialog(errorMessageId);
-//            }
+
             if (!db.update(tableName, map, _id + "=" + jjTools.getParameter(request, _id))) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                return "";
             }
-            return Js.jjPlans.refresh();
+            Server.outPrinter(request, response, Js.jjPlans.refresh());
+            return "";
 
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
@@ -467,7 +496,7 @@ public class Plans {
      * @return
      * @throws Exception
      */
-    public static String confirmBySuperwizar(HttpServletRequest request, jjDatabaseWeb db, boolean isFromClient) throws Exception {
+    public static String confirmBySuperwizar(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
 //            String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
 //            if (!hasAccess.equals("")) {
@@ -477,12 +506,13 @@ public class Plans {
             String id = jjTools.getParameter(request, _id);
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
 
-            changeStatus(db, id, lbl_confirmBySuperWizar);
+            changeStatus(db, id, status_confirmBySuperWizar);
             //تایید توسط ما فوق
             String script = "";
             script += "alert('برنامه عملیاتی توسط مافوق" + row.get(0).get(_superwizarRol) + "تایید شد.');";
             script += "hmisPlans.m_select(" + id + ");";
-            return script;
+            Server.outPrinter(request, response, script);
+            return "";
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }
@@ -497,7 +527,7 @@ public class Plans {
      * @return
      * @throws Exception
      */
-    public static String selectStepsInPlans(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String selectStepsInPlans(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String stepsId = jjTools.getParameter(request, Steps._id);
             String errorMessageId = jjValidation.isDigitMessageFa(stepsId, "کد");
@@ -505,7 +535,8 @@ public class Plans {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(stepsId, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+                return "";
             }
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._id + "=" + stepsId));
             if (row.size() == 0) {
@@ -513,7 +544,8 @@ public class Plans {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
+                return "";
             }
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
@@ -524,25 +556,28 @@ public class Plans {
             html.append(Js.setVal("#" + Steps._title, row.get(0).get(Steps._title)));
             html.append(Js.setVal("#" + Steps._cost, row.get(0).get(Steps._cost)));
             html.append(Js.setVal("#" + Steps._otherIndicators, row.get(0).get(Steps._otherIndicators)));
-            html.append(Js.setVal("#" + Steps._responsibleForRunning, row.get(0).get(Steps._responsibleForRunning)));
-            html.append(Js.setVal("#" + Steps._responsibleForTrack, row.get(0).get(Steps._responsibleForTrack)));
+            html.append(Js.setVal("#" + Steps._executorId, row.get(0).get(Steps._executorId)));
+            html.append(Js.setVal("#" + Steps._trackerId, row.get(0).get(Steps._trackerId)));
             html.append(Js.setVal("#" + Steps._file1, row.get(0).get(Steps._file1)));
             html.append(Js.setVal("#" + Steps._file2, row.get(0).get(Steps._file2)));
             html.append(Js.setVal("#" + Steps._file3, row.get(0).get(Steps._file3)));
             html2.append(" <button id='btn_editSteps' class=\"btn btn-success btn-block mg-b-10\" onclick=\"hmisPlans.editStepsInPlans(" + row.get(0).get(Steps._id) + ");\">ثبت تغییرات گام</button>\n");
             String script = "";
-            script += "$('#btn_addNewSteps').show();";//دکمه جدید گام   
-            script += "$('#btn_insertSteps').hide();";//دکمه ثبت گام
-            script += "$('#btnEditDiv').show();";//دیو ثبت تغییرات گام
+            script += "$('#btn_addNewSteps').slideDown();";//دکمه جدید گام   
+            script += "$('#btn_insertSteps').slideUp();";//دکمه ثبت گام
+            script += "$('#btnEditDiv').slideDown();";//دیو ثبت تغییرات گام
             script += Js.setHtml("#btnEditDiv", html2);
             script += html.toString();
-            return script;
+
+            Server.outPrinter(request, response, script);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String editStepsInPlans(HttpServletRequest request, jjDatabaseWeb db, boolean isFromClient) throws Exception {
+    public static String editStepsInPlans(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
@@ -557,8 +592,8 @@ public class Plans {
 
             map.put(Steps._title, jjTools.getParameter(request, Steps._title));
             map.put(Steps._otherIndicators, jjTools.getParameter(request, Steps._otherIndicators));
-            map.put(Steps._responsibleForRunning, jjTools.getParameter(request, Steps._responsibleForRunning));
-            map.put(Steps._responsibleForTrack, jjTools.getParameter(request, Steps._responsibleForTrack));
+            map.put(Steps._executorId, jjTools.getParameter(request, Steps._executorId));
+            map.put(Steps._trackerId, jjTools.getParameter(request, Steps._trackerId));
             map.put(Steps._file1, jjTools.getParameter(request, Steps._file1));
             map.put(Steps._file2, jjTools.getParameter(request, Steps._file2));
             map.put(Steps._file3, jjTools.getParameter(request, Steps._file3));
@@ -574,13 +609,14 @@ public class Plans {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
             }
             List<Map<String, Object>> StepsRow = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._id + "=" + jjTools.getParameter(request, "hmis_steps_id")));
-            return "hmisPlans.m_select(" + StepsRow.get(0).get(Steps._plansId) + ")";
-
+            Server.outPrinter(request, response, "hmisPlans.m_select(" + StepsRow.get(0).get(Steps._plansId) + ")");
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
@@ -593,7 +629,7 @@ public class Plans {
      * @return
      * @throws Exception
      */
-    public static String referral(HttpServletRequest request, jjDatabaseWeb db, boolean isFromClient) throws Exception {
+    public static String referral(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
 //            String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
 //            if (!hasAccess.equals("")) {
@@ -604,11 +640,12 @@ public class Plans {
             Map<String, Object> map = new HashMap<>();
             map.put(_correction, jjTools.getParameter(request, _correction));
             db.update(tableName, map, _id + "=" + id);
-            changeStatus(db, id, lbl_correctionPlans);
-//            String script = "$('#correctionPlans_Plans').hide();";
-            return "اصلاحیه انجام شد";
+            changeStatus(db, id, status_correctionPlans);
+            Server.outPrinter(request, response, Js.modal("اصلاحیه انجام شد", "پیام سامانه"));
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 }

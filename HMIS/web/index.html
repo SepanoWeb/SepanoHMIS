@@ -42,7 +42,9 @@
 
 
         <title>MedYar مدیار </title>
-
+        
+        <!-- استایل گذاری روی جداول-->
+        <link href="Manager/css/publicStyle.css" rel="stylesheet" type="text/css"/>
         <!-- Vendor css -->
         <link href="./Manager/font-awesome.css" rel="stylesheet">
         <link href="./Manager/ionicons.css" rel="stylesheet">
@@ -52,7 +54,6 @@
         <!--DataTable-->
         <link href="Manager/dataTable/jquery.dataTables.css" rel="stylesheet"/>
         <link href="Manager/dataTable/select2.min.css" rel="stylesheet"/>
-
         <!--TextEditor-->
         <link href="Manager/textEditor/medium-editor.css" rel="stylesheet">
         <link href="Manager/textEditor/default.css" rel="stylesheet">
@@ -216,6 +217,13 @@
                                     hmisApproved.loadForm();"  class="nav-link ShowOneDiv">آرشیو مصوبات</a>
                         </li>
                         <li class="nav-item">
+                            <a href="#swCommunicatedSessions" onclick="if ($('#swCommunicatedSessionsTbl').html() == '') {
+                                        hmisCommunicatedSessions.m_refresh();
+                                    }
+                                    ;
+                                    hmisCommunicatedSessions.loadForm();"  class="nav-link ShowOneDiv">صورتجلسات ابلاغ شده</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#" onclick="$('.sh-mainpanel').load('05assessmentForSessionCategory.html', null, function () {
                                     });
                                     //فراخوانی جدول فرم ها از گروه ارزیابی کمیته ها که در قسمت گروه بندی فرم ها گذاشته ایم بردارد
@@ -254,7 +262,7 @@
                                 hmisManagementGauges.loadForm();
 
                                                 "> مدیریت سنجه ها</a></li>
-                     
+
                         <li class="nav-item"><a href="#" class="nav-link ShowOneDiv" onclick="$('.sh-mainpanel').load('07allStandards.html', null, function () {
                                 });
                                 return false;">گزارش همه مستندات </a></li>
@@ -267,7 +275,7 @@
 
                         <li class="nav-item"><a href="#swCreateDocumentary"  class="nav-link ShowOneDiv" onclick="
 //                                   
-                                    hmisCreateDocumentary.m_refresh();
+                                hmisCreateDocumentary.m_refresh();
 
                                 hmisCreateDocumentary.mainTabSetSize();
                                 hmisCreateDocumentary.loadForm();
@@ -275,9 +283,9 @@
                                                 "> ایجاد مستند</a></li>
                         <li  class="nav-item"><a href="#swSignDocumentary"  class="nav-link ShowOneDiv" onclick="
 
-                                    hmisSignDocumentary.m_refresh();
+                                hmisSignDocumentary.m_refresh();
 
-                                
+
 
                                 hmisSignDocumentary.mainTabSetSize();
 
@@ -332,14 +340,14 @@
                         <i class="icon ion-ios-list-outline"></i>
                         <span>برنامه استراتژیک</span>
                     </a>
- 
+
                 </li><!-- nav-item -->
                 <li class="nav-item">
                     <a  class="nav-link with-sub">
                         <i class="icon ion-ios-list-outline"></i>
                         <span>پرستاری</span>
                     </a>
-                
+
                 </li><!-- nav-item -->
                 <li class="nav-item">
                     <a href="index.html" class="nav-link with-sub">
@@ -605,14 +613,22 @@
                             <div class="Alldiv" id="swSessions">
                                 <div id="swSessionsTbl" style=""></div>
                                 <div id="swSessionsForm" style="display: none;"></div>
-                            </div><!--swSession-->
+                            </div><!--swArchiveSession-->
                             <div class="Alldiv" id="swArchivesSessions">
                                 <div id="swArchivesSessionsTbl" style=""></div>
                                 <div id="swArchivesSessionsForm" style="display: none;"></div>
+                            </div><!--swCommunicatedSession-->
+                            <div class="Alldiv" id="swCommunicatedSessions">
+                                <div id="swCommunicatedSessionsTbl" style=""></div>
+                                <div id="swCommunicatedSessionsForm" style="display: none;"></div>
                             </div><!--swSession-->
                             <div class="Alldiv" id="swMySessions">
                                 <div id="swMySessionsTbl" style=""></div>
                                 <div id="swMySessionsForm" style="display: none;"></div>
+                            </div><!--swMySession-->
+                            <div class="Alldiv" id="swApproved">
+                                <div id="swApprovedTbl" style=""></div>
+                                <div id="swApprovedForm" style="display: none;"></div>
                             </div><!--swMySession-->
                             <div class="Alldiv" id="swUser" style="">
                                 <div id="swUserTbl" ></div>
@@ -633,7 +649,7 @@
                             <div class="Alldiv" id="swMessenger">
                                 <div id="swMessengerTbl" ></div>
                                 <div id="swMessengerForm" style="display: none;"></div>
-                      </div>
+                            </div>
                             <!--/////ایجاد مستند-->
                             <div class="Alldiv" id="swCreateDocumentary">
                                 <div id="swCreateDocumentaryTbl" ></div>
@@ -712,6 +728,7 @@
             <script src="jsHMIS/approved.js" type="text/javascript"></script>
             <script src="jsHMIS/reports.js" type="text/javascript"></script>
             <script src="jsHMIS/commettes.js" type="text/javascript"></script>
+            <script src="jsHMIS/communicatedSessions.js" type="text/javascript"></script>
             <!--<script src="jsHMIS/part.js" type="text/javascript"></script>-->
             <script src="jsCms/user.js" type="text/javascript"></script>
             <script src="jsCms/group.js" type="text/javascript"></script>
@@ -726,8 +743,8 @@
 
             <!--////ایجاد مستند-->
             <script src="jsHMIS/createDocumentary.js" type="text/javascript"></script>
-            
-      
+
+
             <script src="Manager/bootstrap-filestyle.js" type="text/javascript"></script>
             <script src="Manager/bootstrap-filestyle.min.js" type="text/javascript"></script>
             <!--forms-->

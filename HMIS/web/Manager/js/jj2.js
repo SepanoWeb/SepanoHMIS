@@ -186,7 +186,7 @@ var jj = function (selector) {
      * برای اینکه در یک تکست فیلد کاربر فقط بتواند عدد وارد کند
      * @returns {undefined}
      */
-    this.jjDigitOnly = function (max,min) {
+    this.jjDigitOnly = function (max, min) {
         var selector = this.selector;
         $(this.selector).on("focusout", function () {
             var val = $(this).val();
@@ -354,7 +354,7 @@ var jj = function (selector) {
         }
         return (src);
     };
-    this.serialVaiable = "";    
+    this.serialVaiable = "";
     /**
      * return key=value from selector
      * selector is form component selector
@@ -1196,7 +1196,9 @@ var jj = function (selector) {
         $(this.selector).focusout(function () {
             var val = $(this).val();
             if (!(new jj(val).jjIsDigit())) {
-                $(this).val("");};
+                $(this).val("");
+            }
+            ;
         });
     };
     /**
@@ -1651,9 +1653,7 @@ var jj = function (selector) {
                 '</div>' +
                 '<div class="modal-footer justify-content-center">' +
                 '<button type= "button" class="btn btn-secondary pd-x-20" data-dismiss="modal">بستن </button>' +
-
                 '<button type= "button" class="btn btn-success pd-x-20" data-dismiss="modal" onclick="' + yesFunction + '">موافقم </button>' +
-
                 '</div>' +
                 '</div>' +
                 '</div>' + //<!-- modal-dialog -->
@@ -1813,7 +1813,7 @@ var jj = function (selector) {
                     } else {
                         alert('فایل به درستی ارسال نشد.');
                     }
-                    
+
                 }
             });
             return "alert('فایل مورد نظر آپلود شد')";
@@ -1928,6 +1928,7 @@ var jj = function (selector) {
                 cache: false,
                 success: function (data) {
                     if (data != null) {
+                        new jj("فایل مورد نظر ارسال شد").jjModal("پیام سامانه");
                         data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
                         data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
                         data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
@@ -1952,7 +1953,7 @@ var jj = function (selector) {
                         new jj('فایل به درستی ارسال نشد.').jjDialog();
                     }
                 }
-                
+
             });
 //            return "alert('فایل مورد نظر آپلود شد')";
         });
@@ -1971,7 +1972,7 @@ var jj = function (selector) {
      * @param {type} viewImgSelector   عکس فاسل
      * @returns {undefined}این تابع نام فایل وعنوان را میگیرد ودر دیتابیس upload قرار می دهد
      */
-    this.jjAjaxFileUploadTitle = function (inputFileId, inputTextSelector, inputFiletitle,inputTilteSelector, viewImgSelector) {
+    this.jjAjaxFileUploadTitle = function (inputFileId, inputTextSelector, inputFiletitle, inputTilteSelector, viewImgSelector) {
         var btn = this.selector;
         $(btn).click(function () {
             if ($("#" + inputFileId.replace("#", "")).val() == "") {
@@ -1992,7 +1993,7 @@ var jj = function (selector) {
 
                         data = data == null ? "" : data;
                         var param = "";
-                        param += "&title=" +  $("#" + inputFiletitle.replace("#", "")).val();
+                        param += "&title=" + $("#" + inputFiletitle.replace("#", "")).val();
                         param += "&filename=" + data;
 
                         param += "&do=Upload.setTitle";
@@ -2002,7 +2003,7 @@ var jj = function (selector) {
 //                                                                data = data.replace("/", '').replace("/", '').replace("\\", '');
                         if ((data != "")) {
                             $("#" + inputFileId.replace("#", "")).val('');
-                             $("#" + inputFiletitle.replace("#", "")).val('');
+                            $("#" + inputFiletitle.replace("#", "")).val('');
                             if (data != "big") {
                                 $(inputTextSelector).val(data);
                                 $(inputTilteSelector).val($("#" + inputFiletitle.replace("#", "")).val());
@@ -2057,19 +2058,19 @@ var jj = function (selector) {
                     url: 'UploadServlet',
                     secureuri: false,
                     fileElementId: inputFileId.replace("#", ""),
-                   
+
                     dataType: 'JSON',
                     cache: false,
                     success: function (data) {
                         alert(data);
 
                         data = data == null ? "" : data;
-                       
+
 //                                                                data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
 //                                                                data = data.replace("/", '').replace("/", '').replace("\\", '');
                         if ((data != "")) {
                             $("#" + inputFileId.replace("#", "")).val('');
-                           
+
 
                             if (data != "big") {
                                 $(inputTextSelector).val(data);

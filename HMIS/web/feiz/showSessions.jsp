@@ -64,16 +64,14 @@
                                         <%
                                             for (int i = 0; i < approvedRow.size(); i++) {
                                                 List<Map<String, Object>> RoleTrackerId = jjDatabaseWeb.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(i).get(Approved._trackerId)));
-                                                List<Map<String, Object>> RoleExecutorId = jjDatabaseWeb.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(i).get(Approved._executorId)));
                                                 List<Map<String, Object>> userTrackerId = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RoleTrackerId.get(0).get(Role._user_id)));
-                                                List<Map<String, Object>> userExecutorId = jjDatabaseWeb.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RoleExecutorId.get(0).get(Role._user_id)));
 
                                         %>
                                         <tr>
                                             <td><%=approvedRow.get(i).get(Approved._id)%></td>
                                             <td><%=approvedRow.get(i).get(Approved._title)%></td>
                                             <td ><%= userTrackerId.get(0).get(Access_User._name) + " " + userTrackerId.get(0).get(Access_User._family)%></td>
-                                            <td ><%= userExecutorId.get(0).get(Access_User._name) + " " + userExecutorId.get(0).get(Access_User._family)%></td>
+                                            <td ><%= approvedRow.get(i).get(Approved._executorRoleId)+""+approvedRow.get(i).get(Approved._executorUserId)%></td>
                                             <td><%= jjCalendar_IR.getViewFormat(approvedRow.get(i).get(Approved._startDate))%></td>
                                             <td><%= jjCalendar_IR.getViewFormat(approvedRow.get(i).get(Approved._endDate))%></td>
                                             <td ><%= approvedRow.get(i).get(Approved._status)%></td>
