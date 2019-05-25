@@ -11,7 +11,7 @@ var hmisSessions = {
     loadForm: function () {
         if ($("#swSessionsForm").html() == '') {
             $("#swSessionsForm").load("formHMIS/05OneSession.html", null, function () {
-                new jj('#sendFilesApproved').jjAjaxFileUpload3('attachFileApproved', '#approved_file', '');
+                new jj('#sendFilesApproved').jjAjaxFileUpload4('attachFileApproved', '#approved_file', '#inputApprovedFileDiv');
                 new jj('#sendFilesSessions').jjAjaxFileUpload4('attachFileSessions', '#sessions_file', '#inputTextSelectorSessionsDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
                 new jj('#sendFilesApprovedPrevious').jjAjaxFileUpload4('attachFileApprovedPrevious', '#approved_fileCheckOut', '#inputFileApprovedPreviousDiv');
                 new jj("#sessions_nextSessionDate").jjCalendarWithYearSelector(1397, 1420);
@@ -19,6 +19,7 @@ var hmisSessions = {
 //                    hmisSessions.m_clean();
 //                    hmisSessions.m_show_tbl();
 //                });
+                $('#sessions_agendaSessions').summernote();
                 hmisSessions.m_refresh();
             });
         }
@@ -49,16 +50,15 @@ var hmisSessions = {
         new jj(param).jjAjax2(false);
     },
     m_show_form: function () {
-        $('#swSessionsTbl').hide();
-        $('#swSessionsForm').show();
+        $('#swSessionsTbl').slideUp();
+        $('#swSessionsForm').slideDown();
         hmisSessions.tabSizeForm();
     },
     m_clean: function () {
-        new jj("#" + hmisSessions.f_content_id).jjVal("");
-        new jj("#" + hmisSessions.f_title).jjVal("");
-        new jj("#" + hmisSessions.f_lang).jjVal("1");
-        new jj("#" + hmisSessions.f_parent).jjVal("0");
+
         $('#inputTextSelectorSessionsDiv').html("");
+        $('#inputApprovedFileDiv').html("");
+        $('#filesDownloadDiv').html("");
     },
     m_add_new: function () {
         jj("do=" + hmisSessions.tableName + ".add_new&jj=1").jjAjax2(false);
@@ -66,8 +66,8 @@ var hmisSessions = {
         hmisSessions.m_clean();
     },
     m_show_tbl: function () {
-        $('#swSessionsTbl').show();
-        $('#swSessionsForm').hide();
+        $('#swSessionsTbl').slideDown();
+        $('#swSessionsForm').slideUp();
         if ($('#swSessionsTbl').html() == "") {
             hmisSessions.m_refresh();
         }
@@ -101,8 +101,8 @@ var hmisSessions = {
 //ایمیل مهمانان خارج از سازمان
             temp4 += $(temp3[i]).val() + "%23A%23";
         }
-        alert(temp2);
-        alert(temp4);
+//        alert(temp2);
+//        alert(temp4);
         var param = "";
         param += "do=" + hmisSessions.tableName + ".edit";
         param += "&" + new jj('#swSessionsForm').jjSerial();
@@ -134,9 +134,11 @@ var hmisSessions = {
         hmisSessions.m_clean();
     },
     m_select: function (id) {
-        $('#newCommetteForm').show();
-        $('#formInvitation').hide();
-        $('#approvedPreviousDiv').hide();
+//          $("#insertApproved2").show();
+        $("#addNewApproved").slideDown();
+        $('#newCommetteForm').slideDown();
+        $('#formInvitation').slideUp();
+        $('#approvedPreviousDiv').slideUp();
         var param = "";
         param += "do=" + hmisSessions.tableName + ".select";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
@@ -226,7 +228,6 @@ var hmisSessions = {
             }
         }
     },
-
     confirmationFinalSessions_after_question: function (id) {
         var temp = $('#audience input:checkbox[class=checkboxAudience]:checked'); //مدعوین سمت دار
         var temp3 = $('#audience input:checkbox[class=checkboxAudienceOutSide]:checked'); //مدعوین خارج از سازمان
@@ -255,22 +256,53 @@ var hmisSessions = {
      * @param {type} id
      * @returns {undefined}
      */
-    sendToTrackerAndExecutor: function (id) {
-
-        if (confirm("آیا مصوبات صورتجلسه به مسئولین ابلاغ شود؟")) {
-            hmisSessions.sendToTrackerAndExecutor_after_question(id);
-        } else {
+//    sendToTrackerAndExecutor: function (id) {
+//
+//        if (confirm("آیا مصوبات صورتجلسه به مسئولین ابلاغ شود؟")) {
+//            hmisSessions.sendToTrackerAndExecutor_after_question(id);
+//        } else {
+//        }
+//
+//    },
+//    sendToTrackerAndExecutor_after_question: function (id) {
+//        var param = "";
+//        param += "&id=" + id;
+//        param += "&do=" + hmisSessions.tableName + ".sendToTrackerAndExecutor";
+//        new jj(param).jjAjax2(false);
+//        hmisSessions.m_clean();
+//    },
+    executorAction: function (value) {
+//        alert($("input:radio[name=responsibleExecutor]:checked").val());
+        if (value == "سمت") {
+            $("#approved_executorUserId").attr("disabled", "disabled");
+            $("#approved_executorRoleId").removeAttr("disabled");
+            $("#approved_executorUserId").val("");
+            $("#approved_executorUserId").select2();
+//            $("#approved_executorUserId").slideUp();
+//            $("#approved_executorRoleId").slideDown();
+        } else if (value == "کاربران") {
+            $("#approved_executorRoleId").attr("disabled", "disabled");
+            $("#approved_executorUserId").removeAttr("disabled");
+            $("#approved_executorRoleId").select2();
+            $("#approved_executorRoleId").val("");
+//            $("#approved_executorRoleId").slideUp();
+//            $("#approved_executorUserId").slideDown();
         }
 
     },
-    sendToTrackerAndExecutor_after_question: function (id) {
-        var param = "";
-        param += "&id=" + id;
-        param += "&do=" + hmisSessions.tableName + ".sendToTrackerAndExecutor";
-        new jj(param).jjAjax2(false);
-        hmisSessions.m_clean();
-    },
-    
 
+    m_remove: function (idUpload, id) {
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف", "hmisSessions.removeFile(" + idUpload + "," + id + ");");
+    },
+    removeFile: function (idUpload, sessionsId) {
+
+        var param = "";
+        param += "do=" + hmisSessions.tableName + ".removeFile";
+        param += "&upload_id=" + idUpload;
+        param += "&hmis_sessions_id=" + sessionsId;
+        new jj(param).jjAjax2(false);
+//        hmisSessions.m_show_tbl();
+//        hmisSessions.m_clean();
+    },
 
 };

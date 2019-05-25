@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 import jj.jjCalendar_IR;
 import jj.jjDatabase;
@@ -29,8 +30,8 @@ public class Steps {
     public static String _id = "id";
     public static String _plansId = "steps_plansId";//ای دی برنامه ها
     public static String _title = "steps_title";//عنوان
-    public static String _responsibleForRunning = "steps_responsibleForRunning";//مسئول اجرا
-    public static String _responsibleForTrack = "steps_responsibleForTrack";//مسئول پیگیری
+    public static String _executorId = "steps_executorId";//مسئول اجرا
+    public static String _trackerId = "steps_trackerId";//مسئول پیگیری
     public static String _otherIndicators = "steps_otherIndicators";//سایر شاخص ها
     public static String _startDate = "steps_startDate";//مسئول اجرا
     public static String _endDate = "steps_endDate";//مسئول اجرا
@@ -52,7 +53,7 @@ public class Steps {
     public static String lbl_delete = "حذف";
     public static String lbl_edit = "ویرایش";
 
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isFromClient) throws Exception {
+    public static String refresh(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
@@ -101,7 +102,7 @@ public class Steps {
         }
     }
 
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request,HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
@@ -115,12 +116,10 @@ public class Steps {
             map.put(_endDate, jjTools.getParameter(request, _endDate));
             map.put(_startDate, jjTools.getParameter(request, _startDate));
             map.put(_cost,(jjTools.getParameter(request, _cost)));          
-
-         
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_otherIndicators, jjTools.getParameter(request, _otherIndicators));
-            map.put(_responsibleForRunning, jjTools.getParameter(request, _responsibleForRunning));
-            map.put(_responsibleForTrack, jjTools.getParameter(request, _responsibleForTrack));
+            map.put(_executorId, jjTools.getParameter(request, _executorId));
+            map.put(_trackerId, jjTools.getParameter(request, _trackerId));
             map.put(_file1, jjTools.getParameter(request, _file1));
             map.put(_file2, jjTools.getParameter(request, _file2));
             map.put(_file3, jjTools.getParameter(request, _file3));          
@@ -133,7 +132,8 @@ public class Steps {
             }
             String script="hmisPlans.m_select("+plansId+");";
             script +=Js.jjPlans.refresh();
-            return script;
+            Server.outPrinter(request, response,script);
+            return "";
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
         }

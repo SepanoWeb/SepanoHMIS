@@ -508,7 +508,7 @@ public class Access_User {
      *
      * @param id
      */
-    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+     public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -563,15 +563,15 @@ public class Access_User {
 //            html.append(Js.setHtml("#user_pic1", row.get(0).get(_attachAxPersonal)));
 //            html.append(Js.setHtml("#user_pic3", row.get(0).get(_attachAxPersonnelCard)));
 //            html.append(Js.setHtml("#user_pic2", row.get(0).get(_attachAxSignature)));
-            html.append(Js.setVal("#user_attachFile", row.get(0).get(_attachFile)));
-            String attachFiles = row.get(0).get(_attachFile).toString();
-
-            String[] attachFilesArray = attachFiles.split("#A#");
             String script1 = "";
             StringBuilder html3 = new StringBuilder();
             StringBuilder html4 = new StringBuilder();
             StringBuilder script = new StringBuilder();
             StringBuilder script2 = new StringBuilder();
+            html.append(Js.setVal("#user_attachFile", row.get(0).get(_attachFile)));
+            String attachFiles = row.get(0).get(_attachFile).toString();
+
+            String[] attachFilesArray = attachFiles.split("#A#");
 
 //      if (row.get(0).get(Access_User._attachFile).equals("")) {
 //      html4.append("$('#inputAfterSelect').hide()");}
@@ -582,7 +582,7 @@ public class Access_User {
                 if (!fileRow.isEmpty()) {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
 //                    html3.append("<div >" + "<input class='col-xs-12' disabled='disabled'  value='" + attachFilesArray[l] + "'/>"  + "</div>");
-                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" + "</div>");
+                    html3.append( "<input class='col-xs-11'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<span  class='col-xs-1' onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:56%' />" + "</span>" );
 //                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='"+Js.modal("hjgjhgkjgkjgk", id)+"'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" + "</div>");
                    
                 }

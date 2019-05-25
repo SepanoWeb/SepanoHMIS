@@ -11,12 +11,13 @@ var hmisPlans = {
     loadForm: function () {
         if ($("#swPlansForm").html() == '') {
             $("#swPlansForm").load("formHMIS/04newPlan.html", null, function () {
-                $("#cancel_Plans").button().click(function (e) {
+                $("#cancel_Plans").click(function (e) {
                     hmisPlans.m_clean();
                     hmisPlans.m_show_tbl();
                 });
-                new jj("#steps_startDate").jjCalendarWithYearSelector(1340, 1420);
-                new jj("#steps_endDate").jjCalendarWithYearSelector(1340, 1420);
+                new jj("#steps_startDate").jjCalendarWithYearSelector(1370, 1420);
+                new jj("#steps_endDate").jjCalendarWithYearSelector(1370, 1420);
+                $("#plans_description").summernote();
                 //////////////////////////////
 //                $("#sendFileTajhizat").button().click(function () {
 //                });
@@ -106,12 +107,9 @@ var hmisPlans = {
         $("#btn_addNewSteps").show(); //نمایش دکمه گام جدید
 
 
-//        new jj("#tags_name").jjVal("");
-//        new jj(content_content_editor).jjEditorVal("");
-//        $("#Content_Language_button").hide();
     },
     m_add_new: function () {
-        jj("do=" + hmisPlans.tableName + ".add_new&jj=1").jjAjax2(false);
+        new jj("do=" + hmisPlans.tableName + ".add_new&jj=1").jjAjax2(false);
         hmisPlans.m_show_form();
         $('#recordPlans').show(); //مخفی کردن دکمه ثبت 
         $('#newFormPlans').show(); //مخفی کردن فرم پلن 
@@ -134,7 +132,7 @@ var hmisPlans = {
     m_insert: function () {
 //        var valid = hmisPlans.m_validation();
 //        if (valid == "") {
-        var param = "";  
+        var param = "";
         param += "do=" + hmisPlans.tableName + ".insert";
         param += "&" + new jj('#swPlansForm').jjSerial();
         new jj(param).jjAjax2(false);
@@ -173,6 +171,7 @@ var hmisPlans = {
         param += "&" + new jj('#stepsForm').jjSerial();
         param += "&jj=1";
         new jj(param).jjAjax2(false);
+        $("#stepsForm").slideUp();
     },
 //    m_validation: function () {// mohamdad
 //        if (new jj("#content_title").jjVal().length < 1) {
@@ -240,7 +239,10 @@ var hmisPlans = {
         $('#correctionForm').show();
     },
     actionReferral: function () {
-        new jj("آیا از ارجاع اطمینان دارید؟").jjDialog_YesNo('hmisPlans.afterActionReferral();\n', true, "");
+          if (confirm("آیا از ارجاع اطمینان دارید؟")) {
+               hmisPlans.afterActionReferral();
+            } else {
+            }
 
     },
     /**

@@ -1,0 +1,40 @@
+
+/*//////////////////////////status//////////////////////////*/
+.status_communicated td{
+    background-color:  #beffbe !important;
+    color: #000 !important;
+}
+.status_created td{
+    background-color: #fff2be !important;
+    color: #000 !important;
+}
+.status_initalRegistetion  td{
+    background-color:  #fff2be !important;
+    color: #000 !important;
+}
+.status_inDoing td{
+    background-color:  #fff2be !important;
+    color: #000 !important;
+}
+.status_finished td{
+    background-color:  #42e842 !important;
+    color: #000 !important;
+}
+.status_unDone td{
+    background-color: #ffbebe !important;
+    color: #000 !important;
+}
+.status_done td{
+    background-color:  #beffbe !important;
+    color: #000 !important;
+}
+
+.status_confirmationFinal td{
+    background-color:#ddf9dd !important;
+    color: #000 !important;
+}
+.status_ignore td{
+    background-color:#ffbebe !important;
+    color: #000 !important;
+}
+/////////////////////////////////////////////////////////////

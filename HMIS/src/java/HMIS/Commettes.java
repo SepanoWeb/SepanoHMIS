@@ -106,7 +106,7 @@ public class Commettes {
             String html2 = Js.setHtml("#" + panel, html.toString());
 
             html2 += Js.table("#refreshCommettes", "300", 0, "", "کمیته ها");
-            ///////////////////////////////////////////
+            //////////////////////////////برای سلکت های موجود در فرم کمیتهها/////////////
             List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._condition + "='active'"));
             html3.append("<select class=\"form-control\" id=\"commettes_secretary\" name=\"commettes_secretary\" tabindex='-1'>");
             html3.append("<option value=''>انتخاب کنید</option>");
@@ -125,7 +125,6 @@ public class Commettes {
             ///////////////////////////////////////////////نمایش جدول نقش ها
 
             html5.append("        <div class=\"table-wrapper\">\n");
-;
             html5.append("<table id='refreshRoles' class='table display responsive' class='tahoma10' style='direction: rtl;'><thead>");
             html5.append("<th class='r' width='20%'>کد</th>");
             html5.append("<th class='r' width='20%'>سمت</th>");
@@ -259,6 +258,8 @@ public class Commettes {
 
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
+            html.append(Js.setVal("#" + _documnetsFile, row.get(0).get(_documnetsFile)));
+            html.append(Js.setVal("#" + _regulationFile, row.get(0).get(_regulationFile)));
             html.append(Js.setVal("#" + _dateOfHoldingMeeting, row.get(0).get(_dateOfHoldingMeeting)));
             html.append(Js.setVal("#" + _description, row.get(0).get(_description)));
             html.append(Js.setVal("#" + _members, row.get(0).get(_members)));
@@ -293,7 +294,7 @@ public class Commettes {
                 html2.append("</div>");
             }
             html2.append("</div>");
-            String script = Js.setHtml("Commette_button", html2);
+            String script = Js.setHtml("#Commette_button", html2);
             if (row.get(0).get(_members).toString().equals("")) {
 
             } else {
