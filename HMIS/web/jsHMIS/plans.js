@@ -19,68 +19,16 @@ var hmisPlans = {
                 new jj("#steps_endDate").jjCalendarWithYearSelector(1370, 1420);
                 $("#plans_description").summernote();
                 //////////////////////////////
-//                $("#sendFileTajhizat").button().click(function () {
-//                });
-//                $("#upload_tajhizat_file2").button().click(function () {
-//                });
-//                new jj('#sendFileTajhizat').jjAjaxFileUpload('#upload_tajhizat_file2', '#tajhizat_file', '#tajhizatFilePreview');
-//                $('#tajhizat_file').keyup(function () {
-//                    $('#tajhizatFilePreview').attr('src', 'upload/' + $('#tajhizat_file').val());
-//                    if ($('#tajhizat_file').val() == '') {
-//                        $('#tajhizatFilePreview').attr('src', 'img/preview.jpg');
-//                    }
-//                });
+           
+                new jj('#sendFilesPlans').jjAjaxFileUpload4('attachFilesPlans', '#plans_files', '#inputFilesPlansDiv');
 
 
 
-                /////////////////////////////
-                $("#sendFile1Steps").button().click(function () {
-                });
-                $("#upload_file1_steps").click(function () {
-                });
-                new jj('#sendFile1Steps').jjAjaxFileUpload('#upload_file1_steps', '#steps_file1', '#StepsPicPreview');
-                $('#steps_file1').keyup(function () {
-                    $('#StepsPicPreview').attr('src', 'upload/' + $('#steps_file1').val());
-                    if ($('#steps_file1').val() == '') {
-                        $('#StepsPicPreview').attr('src', 'img/preview.jpg');
-                    }
-                });
-//                $(function () {
-//                    'use strict';
-//                    $('#refreshPlans').DataTable({
-//                        responsive: true,
-//                        language: {
-//                            searchPlaceholder: 'جستجو...',
-//                            sSearch: '',
-//                            lengthMenu: '_MENU_ items/page',
-//                        }
-//                    });
-//
-//
-//                    // Select2
-//                    $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
-//
-//                });
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
+              
                 hmisPlans.m_refresh();
             });
         }
     },
-//    m_refresh: function () {
     m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".refresh";
@@ -89,7 +37,6 @@ var hmisPlans = {
         param += "&height=" + (tableHeight == null ? 800 : tableHeight);
         param += "&jj=1";
         new jj(param).jjAjax2(false);
-//        himsPlan.tabSizeTbl();
     },
     m_show_form: function () {
         $('#swPlansTbl').hide();
@@ -102,9 +49,9 @@ var hmisPlans = {
         new jj('#stepsForm').jjFormClean();
         new jj('#newFormPlans').jjFormClean();
         $('#refreshTblSteps').html("");
-        $("#btn_editSteps").hide(); //پنهان کردن دکمه ثبت تغییرات گام
-        $("#btn_insertSteps").show(); // نمایش دکمه ثبت گام
-        $("#btn_addNewSteps").show(); //نمایش دکمه گام جدید
+//        $("#btn_editSteps").hide(); //پنهان کردن دکمه ثبت تغییرات گام
+//        $("#btn_insertSteps").show(); // نمایش دکمه ثبت گام
+//        $("#btn_addNewSteps").show(); //نمایش دکمه گام جدید
 
 
     },
@@ -167,7 +114,7 @@ var hmisPlans = {
     editStepsInPlans: function () {
 
         var param = "";
-        param += "do=" + hmisPlans.tableName + ".editStepsInPlans";
+        param += "do=" + hmisSteps.tableName + ".editStepsInPlans";
         param += "&" + new jj('#stepsForm').jjSerial();
         param += "&jj=1";
         new jj(param).jjAjax2(false);
@@ -203,8 +150,8 @@ var hmisPlans = {
         hmisPlans.m_show_form();
         $('#formQuestions').show(); //نمایش گام ها 
         $('#newFormPlans').hide(); //نمایش گام ها 
-        $('#editPlansButton').show(); //نمایش دکمه تغییرات
-        $('#stepsForm').show(); //نمایش فرم گامها
+//        $('#editPlansButton').show(); //نمایش دکمه تغییرات
+        $('#stepsForm').hide(); //نمایش فرم گامها
         $('#correctionForm').hide(); // فرم اصلاحیه 
 
 
@@ -216,7 +163,7 @@ var hmisPlans = {
      */
     selectStepsInPlans: function (id) {
         var param = "";
-        param += "do=" + hmisPlans.tableName + ".selectStepsInPlans";
+        param += "do=" + hmisSteps.tableName + ".selectStepsInPlans";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
         hmisPlans.m_show_form();
@@ -334,43 +281,5 @@ var hmisPlans = {
     tabSizeForm: function () {
         $('#swPlans').css('height', 378);
     }
-//    mainTabSetSize: function () {
-////        var aa = $("#swContent").children();
-////        var bb = 0;
-////        for(i=0; i < aa.length; i++){  
-////            if($(aa[i]).css("display")!='none'){
-////                bb+= new jj($(aa[i]).css("height")).jjConvertToInt() ;
-////            }
-////        }
-////        if(bb==0){
-////            $('#tabs').css('height',572);
-////        }else{
-////            $('#tabs').css('height',bb+44);
-////        }
-//    }
-};
-//============ BY RASHIDI ========> 
-//function selectSearchResult(selectedTagNo) {
-//    $("#tags_name").val($("#tagsResult_td" + selectedTagNo).html());
-//    $("#content_search_tags_result").hide();
-//}
 
-//function deleteContentTag(deletedTagNo) {
-//    new jj("آیا از حذف این برچسب اطمینان دارید؟").jjDialog_YesNo('afterDeleteContentTag(' + deletedTagNo + ');\n', true, "");
-//}
-//function afterDeleteContentTag(deletedTagNo) {
-//
-////    var myString = $("#" + cmsContent.f_tags).val();
-////    var oldWord = $("#contetn_tag_span" + deletedTagNo).html().toString();
-////    var reg = new RegExp(oldWord, "g");
-////    myString = myString.replace(reg, "");
-////    alert(myString);
-//
-//    var str = $("#" + cmsContent.f_tags).val();
-//    var tagName = $("#contetn_tag_span" + deletedTagNo).html().toString();
-//    var reg = new RegExp(tagName, "g");
-//    str = str.replace(reg, "");
-//    $("#" + cmsContent.f_tags).val(str);
-//    $("#contetn_tag_span" + deletedTagNo).remove();
-//}
-//<============ BY RASHIDI ========  
+};

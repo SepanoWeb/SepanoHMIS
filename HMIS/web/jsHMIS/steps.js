@@ -13,27 +13,6 @@ var hmisSteps = {
         if ($("#swStepsForm").html() == '') {
             $("#swStepsForm").load("formHMIS/04Steps.html", null, function () {
 
-//             $("#cancel_Content").button().click(function (e) {
-//                    hmisSteps.m_clean();
-//                    hmisSteps.m_show_tbl();
-//                });
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
-                //<============ BY RASHIDI ========
-//                hmisSteps.m_refresh();
             });
         }
     },
@@ -61,7 +40,9 @@ var hmisSteps = {
 //        $("#Content_Language_button").hide();
     },
     m_add_new: function () {
-        jj("do=" + hmisSteps.tableName + ".add_new").jjAjax2(false);
+       new  jj("do=" + hmisSteps.tableName + ".add_new").jjAjax2(false);
+        $('#stepsForm').slideDown();
+        new jj('#stepsForm').jjFormClean();
         hmisSteps.m_show_form();
         hmisSteps.m_clean();
         //        oEditor.execCommand( 'bold');
@@ -85,7 +66,7 @@ var hmisSteps = {
         new jj(param).jjAjax2(false);
         hmisSteps.m_show_tbl();
         hmisSteps.m_clean();
-        $("html, body").delay(1000).animate({scrollTop: $('#tblSteps').offset().top}, 800);
+//        $("html, body").delay(1000).animate({scrollTop: $('#tblSteps').offset().top}, 800);
 
 //        } else {
 //            new jj(valid).jjDialog();
@@ -194,20 +175,7 @@ var hmisSteps = {
     tabSizeForm: function () {
         $('#swSteps').css('height', 378);
     }
-//    mainTabSetSize: function () {
-////        var aa = $("#swContent").children();
-////        var bb = 0;
-////        for(i=0; i < aa.length; i++){  
-////            if($(aa[i]).css("display")!='none'){
-////                bb+= new jj($(aa[i]).css("height")).jjConvertToInt() ;
-////            }
-////        }
-////        if(bb==0){
-////            $('#tabs').css('height',572);
-////        }else{
-////            $('#tabs').css('height',bb+44);
-////        }
-//    }
+
 };
 //============ BY RASHIDI ========> 
 function selectSearchResult(selectedTagNo) {
@@ -215,22 +183,3 @@ function selectSearchResult(selectedTagNo) {
     $("#content_search_tags_result").hide();
 }
 
-//function deleteContentTag(deletedTagNo) {
-//    new jj("آیا از حذف این برچسب اطمینان دارید؟").jjDialog_YesNo('afterDeleteContentTag(' + deletedTagNo + ');\n', true, "");
-//}
-//function afterDeleteContentTag(deletedTagNo) {
-//
-////    var myString = $("#" + cmsContent.f_tags).val();
-////    var oldWord = $("#contetn_tag_span" + deletedTagNo).html().toString();
-////    var reg = new RegExp(oldWord, "g");
-////    myString = myString.replace(reg, "");
-////    alert(myString);
-//
-//    var str = $("#" + cmsContent.f_tags).val();
-//    var tagName = $("#contetn_tag_span" + deletedTagNo).html().toString();
-//    var reg = new RegExp(tagName, "g");
-//    str = str.replace(reg, "");
-//    $("#" + cmsContent.f_tags).val(str);
-//    $("#contetn_tag_span" + deletedTagNo).remove();
-//}
-//<============ BY RASHIDI ========  

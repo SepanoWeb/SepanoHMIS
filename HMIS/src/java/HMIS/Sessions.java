@@ -305,7 +305,9 @@ public class Sessions {
             html.append(Js.setVal("#sessions_agendaSessions", row.get(0).get(_agenda)));
             html.append(Js.setVal("#sessions_titleSessions", row.get(0).get(_title)));
             html.append(Js.setVal("#" + _checkingAgenda, row.get(0).get(_checkingAgenda)));
-            html.append(Js.setVal("#" + _communicatorId, row.get(0).get(_communicatorId)));
+            html.append("$('#sessions_communicatorId').val([" + row.get(0).get(_communicatorId) + "]);$('#sessions_communicatorId').select2({ minimumResultsForSearch: '', width: '100%'});");
+
+//            html.append(Js.setVal("#" + _communicatorId, row.get(0).get(_communicatorId)));
             html.append(Js.setVal("#" + _titleIssue, row.get(0).get(_titleIssue)));
             html.append(Js.setVal("#" + _ProposedSolution, row.get(0).get(_ProposedSolution)));
             html.append(Js.setVal("#" + _weakPoint, row.get(0).get(_weakPoint)));
@@ -325,7 +327,7 @@ public class Sessions {
                     if (row.get(0).get(_status).equals(status_created)) {//اگر وضعیت ایجاد شده باشد دکمه حذف فایل نمایش داده می شود
                         List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + File[i] + "'"));
 
-                        html8.append("<span  class='col-xs-1' onclick='hmisSessions.m_remove(" + fileRow.get(0).get(UploadServlet._id) + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:20px' /></span>");
+                        html8.append("<span  class='col-xs-1' onclick='hmisSessions.m_remove(" + fileRow.get(0).get(UploadServlet._id) + "," + id + ");'>" + "<img  src='imgfeyz/delet.png' style='width:20px' /></span>");
                     }
                     html8.append("<a id='downloadFile_Sessions' title='دانلود فایل'  href='upload/" + File[i] + "' class='btn btn-outline-success  btn-block mg-b-10'><input value='" + File[i] + "' class='form-control is-valid hasDatepicker' /></a>");
                     html8.append("</div>");
@@ -414,20 +416,20 @@ public class Sessions {
             if (row.get(0).get(_status).equals(status_created)) {
                 if (accEdt) {
                     html2.append("<div class=\"col-lg-6\">");
-                    html2.append("<input type='button' id='edit_Sessions' value='ثبت موقت' class='btn btn-outline-warning active btn-block mg-b-10 tahoma10'>");
-                    html.append(Js.buttonMouseClick("#edit_Sessions", Js.jjSessions.edit()));
+                    html2.append("<button onclick='hmisSessions.m_edit();' id='edit_Sessions'  class='btn btn-outline-warning btn-block mg-b-10'>ثبت موقت</button>");
+//                    html.append(Js.buttonMouseClick("#edit_Sessions", ));
                     html2.append("</div>");
                 }
                 if (accEdt) {
                     html2.append("<div class=\"col-lg-6\">");
-                    html2.append("<input  type='button' id='Confirmation_Sessions' value='تایید نهایی وارسال به مسئول ابلاغ' class='btn btn-outline-success active btn-block mg-b-10'>");
-                    html.append(Js.buttonMouseClick("#Confirmation_Sessions", "hmisSessions.confirmationFinalSessions(" + id + ");"));
+                    html2.append("<button onclick='hmisSessions.confirmationFinalSessions(" + id + ");' id='Confirmation_Sessions'  class='btn btn-outline-success  btn-block mg-b-10'>تایید نهایی وارسال به مسئول ابلاغ</button>");
                     html2.append("</div>");
                 }
             }
             html2.append("<div class=\"col-lg-6\">");
-            html2.append("<a href='Server?do=Sessions.downloadSessions&id=" + id + "'  class='btn btn-outline-success active btn-block mg-b-10'>چاپ صورتجلسه</a>");
-//                    html.append(Js.buttonMouseClick("#Confirmation_Sessions", "hmisSessions.confirmationFinalSessions(" + id + ");"));
+            html2.append("<div class='sh-pagetitle-icon'>");
+            html2.append("<a href='Server?do=Sessions.downloadSessions&id=" + id + "' title='چاپ صورتجلسه' target='_blank'  class='active btn-block mg-l-10'><i class='fa fa-print mg-t-3'></i></a>");
+            html2.append("</div>");
             html2.append("</div>");
 //            else //دکمه ابلاغ برای مسئول ابلاغ
 //            if (row.get(0).get(_status).equals(status_confirmationFinal) && Integer.valueOf(jjTools.getSessionAttribute(request,"#ID"))==Integer.valueOf(row.get(0).get(_communicatorId).toString())) {
@@ -1027,8 +1029,8 @@ public class Sessions {
             html.append(Js.setVal("#sessions_agendaSessions", row.get(0).get(_agenda)));
             html.append(Js.setVal("#sessions_titleSessions", row.get(0).get(_title)));
             html.append(Js.setVal("#" + _checkingAgenda, row.get(0).get(_checkingAgenda)));
-//            html.append(Js.setVal("#" + _communicatorId, row.get(0).get(_communicatorId)));
-            html.append("$('#sessions_communicatorId').val([" + row.get(0).get(_communicatorId) + "]);$('#sessions_communicatorId).select2({ minimumResultsForSearch: '', width: '100%'});");
+            html.append(Js.setVal("#" + _communicatorId , row.get(0).get(_communicatorId)));
+//            html.append("$('#sessions_communicatorId').val([" + row.get(0).get(_communicatorId) + "]);$('#sessions_communicatorId).select2({ minimumResultsForSearch: '', width: '100%'});");
             html.append(Js.setVal("#" + _titleIssue, row.get(0).get(_titleIssue)));
             html.append(Js.setVal("#" + _ProposedSolution, row.get(0).get(_ProposedSolution)));
             html.append(Js.setVal("#" + _weakPoint, row.get(0).get(_weakPoint)));
@@ -1132,7 +1134,6 @@ public class Sessions {
             script += Js.setHtml("#approved_executorUserId", html6);
             script += Js.setHtml("#approved_trackerId", html5);
             script += Js.setHtml("#filesDownloadDiv", html8);
-
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {

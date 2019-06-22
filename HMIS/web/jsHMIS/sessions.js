@@ -50,8 +50,8 @@ var hmisSessions = {
         new jj(param).jjAjax2(false);
     },
     m_show_form: function () {
-        $('#swSessionsTbl').slideUp();
-        $('#swSessionsForm').slideDown();
+        $('#swSessionsTbl').hide();
+        $('#swSessionsForm').show();
         hmisSessions.tabSizeForm();
     },
     m_clean: function () {

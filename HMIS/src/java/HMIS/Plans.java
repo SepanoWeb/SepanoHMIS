@@ -51,6 +51,7 @@ public class Plans {
     public static String _description = "plans_description";//توضیحات
     public static String _correction = "plans_correction";//اصلاحیه
     public static String _date = "plans_date";//تاریخ
+//    public static String _files = "plans_files";//فایل
 
     public static int rul_rfs = 0;
     public static int rul_rfsAll = 0;
@@ -131,7 +132,7 @@ public class Plans {
             for (int i = 0; i < departementRow.size(); i++) {
                 html3.append("<option id='" + departementRow.get(i).get(Department._id) + "' value='" + departementRow.get(i).get(Department._id) + "'>" + departementRow.get(i).get(Department._title) + "</option>");
             }
-            
+
             String height = jjTools.getParameter(request, "height");
             String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(height)) {
@@ -145,8 +146,8 @@ public class Plans {
             html2 += Js.setHtml("#plans_superwizarRol", html1);
             html2 += Js.setHtml("#plans_department", html3);
             html2 += Js.setHtml("#plans_domain", html3);
-            html2 +=Js.setHtml("#steps_executorId", html1);
-            html2 +=Js.setHtml("#steps_trackerId", html1);
+            html2 += Js.setHtml("#steps_executorId", html1);
+            html2 += Js.setHtml("#steps_trackerId", html1);
             Server.outPrinter(request, response, html2);
             return "";
         } catch (Exception ex) {
@@ -209,7 +210,7 @@ public class Plans {
             map.put(_typeOfProgram, jjTools.getParameter(request, _typeOfProgram));
             map.put(_titleOfTheProblem, jjTools.getParameter(request, _titleOfTheProblem));
             map.put(_status, status_initialRegistration);
-            
+
             map.put(_statusLog, status_initialRegistration
                     + ":"
                     + "-"
@@ -238,7 +239,7 @@ public class Plans {
             script += html;
             script += Js.setVal("#hmis_plans_id", PlansRow.get(0).get(_id));//ایدی پلن
             script += " $('#btn_addNewSteps').slideDown();";//نمایش دکمه اد نیو برای جدول گام ها
-           
+
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {
@@ -280,6 +281,7 @@ public class Plans {
             StringBuilder html2 = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
             StringBuilder html4 = new StringBuilder();
+            StringBuilder html5 = new StringBuilder();
             String script = "";
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setValDate("#" + _date, row.get(0).get(_date)));
@@ -294,6 +296,7 @@ public class Plans {
             html.append(Js.setVal("#" + _department, row.get(0).get(_department)));
             html.append(Js.setVal("#" + _range, row.get(0).get(_range)));
 
+            
             html.append(Js.setVal("#" + _description, row.get(0).get(_description)));
             html.append(Js.setVal("#" + _superwizarRol, row.get(0).get(_superwizarRol)));
             html.append(Js.setVal("#" + _causeProblem, row.get(0).get(_causeProblem)));
@@ -306,69 +309,54 @@ public class Plans {
             html.append(Js.setVal("#" + _responsible, row.get(0).get(_responsible)));
             html.append(Js.setVal("#" + _strategic, row.get(0).get(_strategic)));
             html.append(Js.setVal("#" + _thePeriodAssess, row.get(0).get(_thePeriodAssess)));
-
+            html.append(Js.setHtml("#statusLog", (row.get(0).get(_statusLog).toString()).replaceAll("%23A%23", "<br/>")));
             html.append(Js.setHtml("#thePeriodAssess", row.get(0).get(_thePeriodAssess)));//دوره پایش
             html.append(Js.setHtml("#strategic", row.get(0).get(_strategic)));
             html.append(Js.setHtml("#hugeGoal", row.get(0).get(_hugeGoal)));//هدف کلان
             html.append(Js.setHtml("#minorGoal", row.get(0).get(_minorGoal)));//هدف جزئی
             html.append(Js.setHtml("#responsible", row.get(0).get(_responsible)));//مسول پایش
             html.append(Js.setHtml("#range", row.get(0).get(_range)));//حیطه
-            if (row.get(0).get(_status).equals(status_confirmBySuperWizar)) {
-                html4.append("<div></div>");
-            } else {
-                html4.append("<button id='editPlansButton' style=\"display: none\" class=\"btn btn-success btn-block mg-b-10\" onclick=\"hmisPlans.m_edit();\">ثبت  تغییرات</button>\n");
 
-            }
+
             boolean accConfirmBySuperwizar = Access_User.hasAccess(request, db, rul_confirmBysuperior);//تایید توسط مافوق
 //            boolean accFinalApproval = Access_User.hasAccess(request, db, rul_FinalApproval);//تایید نهایی و ارسال به کمیته مدیریت اجرایی 
 //            boolean accRejectThePlans = Access_User.hasAccess(request, db, rul_RejectThePlans);//رد برنامه
             boolean accCorrectionPlans = Access_User.hasAccess(request, db, rul_correctionPlans);//رد برنامه
 
-            if (accConfirmBySuperwizar) {
+            if (row.get(0).get(_status).equals(status_correctionPlans)) {
+                html4.append("<button id='editPlansButton'  class=\"btn btn-success btn-block mg-b-10\" onclick=\"hmisPlans.m_edit();\">ثبت  تغییرات</button>\n");
 
-                html3.append("<div class='col-lg-2'>");
-                html3.append("<button onclick='hmisPlans.confirmBySuperwizar(" + id + ");' id=\"confirmBySuperwizar_Plans\" style='display:none' class=\"btn btn-outline-success  btn-block mg-b-10\">" + status_confirmBySuperWizar + "</button>");
-//                html.append(Js.buttonMouseClick("#confirmBySuperwizar_Plans", ""));
-                html3.append("</div>");
-            }
-            if (row.get(0).get(_status).equals(status_confirmBySuperWizar)) {
-
-                html.append("$('#btn_insertSteps').slideUp();");
-                html.append("$('#stepsForm1').slideUp();");
-                html.append("$('#correctionPlans_Plans').slideUp();");
-                html.append("$('#confirmBySuperwizar_Plans').slideUp();");
-//
-//                html.append("$('#btn_insertSteps').show();");
-//                html.append("$('#stepsForm1').show();");
-//                html.append("$('#correctionPlans_Plans').show();");
-//                html.append("$('#confirmBySuperwizar_Plans').show();");
-
-            } else if (row.get(0).get(_status).equals(status_correctionPlans)) {
-
-                html.append("$('#btn_insertSteps').slideDown();");
+                if (accConfirmBySuperwizar) {
+                    html3.append("<div class='col-lg-2'>");
+                    html3.append("<button onclick='hmisPlans.confirmBySuperwizar(" + id + ");' id=\"confirmBySuperwizar_Plans\"  class=\"btn btn-outline-success  btn-block mg-b-10\">" + status_confirmBySuperWizar + "</button>");
+                    html3.append("</div>");
+                }
+                if (accCorrectionPlans) {//اصلاحیه
+                    html3.append("<div class='col-lg-2'>");
+                    html3.append("<button onclick='hmisPlans.correctionPlans();'  id=\"correctionPlans_Plans\"  class=\"btn btn-outline-warning btn-block mg-b-10\">" + status_correctionPlans + "</button>");
+                    html3.append("</div>");
+                }
                 html.append("$('#stepsForm1').slideDown();");
-                html.append("$('#correctionPlans_Plans').slideDown();");
-                html.append("$('#confirmBySuperwizar_Plans').slideDown();");
-
             } else if (row.get(0).get(_status).equals(status_initialRegistration)) {
-                html.append("$('#btn_insertSteps').slideDown();");
+                html4.append("<button id='editPlansButton'  class=\"btn btn-success btn-block mg-b-10\" onclick=\"hmisPlans.m_edit();\">ثبت  تغییرات</button>\n");
+
+                if (accConfirmBySuperwizar) {//تایید توسط مافوق
+                    html3.append("<div class='col-lg-2'>");
+                    html3.append("<button onclick='hmisPlans.confirmBySuperwizar(" + id + ");' id=\"confirmBySuperwizar_Plans\"  class=\"btn btn-outline-success  btn-block mg-b-10\">" + status_confirmBySuperWizar + "</button>");
+                    html3.append("</div>");
+                }
+                if (accCorrectionPlans) {//اصلاحیه
+                    html3.append("<div class='col-lg-2'>");
+                    html3.append("<button onclick='hmisPlans.correctionPlans();'  id=\"correctionPlans_Plans\"  class=\"btn btn-outline-warning btn-block mg-b-10\">" + status_correctionPlans + "</button>");
+                    html3.append("</div>");
+                }
                 html.append("$('#stepsForm1').slideDown();");
-                html.append("$('#correctionPlans_Plans').slideDown();");
-                html.append("$('#confirmBySuperwizar_Plans').slideDown();");
-            }
-
-            if (accCorrectionPlans) {//اصلاحیه
-                html3.append("<div class='col-lg-2'>");
-                html3.append("<button onclick='hmisPlans.correctionPlans();'  id=\"correctionPlans_Plans\" style='display:none' class=\"btn btn-outline-warning btn-block mg-b-10\">" + status_correctionPlans + "</button>");
-//                html.append(Js.buttonMouseClick("#correctionPlans_Plans", ""));//
-                html3.append("</div>");
-
             }
 
             script += "$('#recordPlans').slideUp();";//ثیت برنامه عملیاتی
             ////////////////////////////نمایش جدول گامها//////////////////
             List<Map<String, Object>> StepsRow = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._plansId + "=" + id));
-//            html2.append(" <div class=\"col-lg-12\">");
+            html2.append("<a id='btn_addNewSteps' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' style='color:#fff;' onclick='hmisSteps.m_add_new();' > گام جدید</a>");
             html2.append("<div class=\"table-wrapper\">\n");
             html2.append("<div align=\"right\">");
             html2.append("<table id='refreshTblSteps' class=\"table table-responsive\"><thead>");
@@ -412,6 +400,7 @@ public class Plans {
         }
     }
 
+    
     /**
      * تغییر وضعیت برنامه عملیاتی
      *
@@ -436,7 +425,7 @@ public class Plans {
                         + jjCalendar_IR.getViewFormat(new jjCalendar_IR().getDBFormat_8length())
                         + " "
                         + new jjCalendar_IR().getTimeFormat_8length()
-                        + "#A#"
+                        + "%23A%23"
                         + "') ,"
                         + _status + "='" + newSatus + "'  WHERE id=" + id + ";");
             }
@@ -515,108 +504,6 @@ public class Plans {
             return "";
         } catch (Exception ex) {
             return Server.ErrorHandler(ex);
-        }
-    }
-
-    /**
-     * با زدن دکمه عملیات در جدول گامها اطلاعات سلکت می شوند .
-     *
-     * @param request
-     * @param db
-     * @param isPost
-     * @return
-     * @throws Exception
-     */
-    public static String selectStepsInPlans(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
-        try {
-            String stepsId = jjTools.getParameter(request, Steps._id);
-            String errorMessageId = jjValidation.isDigitMessageFa(stepsId, "کد");
-            if (!errorMessageId.equals("")) {
-                if (jjTools.isLangEn(request)) {
-                    errorMessageId = jjValidation.isDigitMessageEn(stepsId, "ID");
-                }
-                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
-                return "";
-            }
-            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._id + "=" + stepsId));
-            if (row.size() == 0) {
-                String errorMessage = "رکوردی با این کد وجود ندارد.";
-                if (jjTools.isLangEn(request)) {
-                    errorMessage = "Select Fail;";
-                }
-                Server.outPrinter(request, response, Js.modal(errorMessageId, "پیام سامانه"));
-                return "";
-            }
-            StringBuilder html = new StringBuilder();
-            StringBuilder html2 = new StringBuilder();
-
-            html.append(Js.setVal("#" + Steps.tableName + "_" + _id, row.get(0).get(Steps._id)));
-            html.append(Js.setVal("#" + Steps._endDate, row.get(0).get(Steps._endDate)));
-            html.append(Js.setVal("#" + Steps._startDate, row.get(0).get(Steps._startDate)));
-            html.append(Js.setVal("#" + Steps._title, row.get(0).get(Steps._title)));
-            html.append(Js.setVal("#" + Steps._cost, row.get(0).get(Steps._cost)));
-            html.append(Js.setVal("#" + Steps._otherIndicators, row.get(0).get(Steps._otherIndicators)));
-            html.append(Js.setVal("#" + Steps._executorId, row.get(0).get(Steps._executorId)));
-            html.append(Js.setVal("#" + Steps._trackerId, row.get(0).get(Steps._trackerId)));
-            html.append(Js.setVal("#" + Steps._file1, row.get(0).get(Steps._file1)));
-            html.append(Js.setVal("#" + Steps._file2, row.get(0).get(Steps._file2)));
-            html.append(Js.setVal("#" + Steps._file3, row.get(0).get(Steps._file3)));
-            html2.append(" <button id='btn_editSteps' class=\"btn btn-success btn-block mg-b-10\" onclick=\"hmisPlans.editStepsInPlans(" + row.get(0).get(Steps._id) + ");\">ثبت تغییرات گام</button>\n");
-            String script = "";
-            script += "$('#btn_addNewSteps').slideDown();";//دکمه جدید گام   
-            script += "$('#btn_insertSteps').slideUp();";//دکمه ثبت گام
-            script += "$('#btnEditDiv').slideDown();";//دیو ثبت تغییرات گام
-            script += Js.setHtml("#btnEditDiv", html2);
-            script += html.toString();
-
-            Server.outPrinter(request, response, script);
-            return "";
-        } catch (Exception ex) {
-            Server.outPrinter(request, response, Server.ErrorHandler(ex));
-            return "";
-        }
-    }
-
-    public static String editStepsInPlans(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
-        try {
-            String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
-            if (!hasAccess.equals("")) {
-                return hasAccess;
-            }
-            System.out.println("steps_id=" + jjTools.getParameter(request, "hmis_steps_id"));
-            Map<String, Object> map = new HashMap<String, Object>();
-
-            map.put(Steps._endDate, jjTools.getParameter(request, Steps._endDate));
-            map.put(Steps._startDate, jjTools.getParameter(request, Steps._startDate));
-            map.put(Steps._cost, (jjTools.getParameter(request, Steps._cost)));
-
-            map.put(Steps._title, jjTools.getParameter(request, Steps._title));
-            map.put(Steps._otherIndicators, jjTools.getParameter(request, Steps._otherIndicators));
-            map.put(Steps._executorId, jjTools.getParameter(request, Steps._executorId));
-            map.put(Steps._trackerId, jjTools.getParameter(request, Steps._trackerId));
-            map.put(Steps._file1, jjTools.getParameter(request, Steps._file1));
-            map.put(Steps._file2, jjTools.getParameter(request, Steps._file2));
-            map.put(Steps._file3, jjTools.getParameter(request, Steps._file3));
-//            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
-//            if (!errorMessageId.equals("")) {
-//                if (jjTools.isLangEn(request)) {
-//                    errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
-//                }
-//                return Js.dialog(errorMessageId);     
-//            }
-            if (!db.update(Steps.tableName, map, Steps._id + "=" + jjTools.getParameter(request, "hmis_steps_id"))) {
-                String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
-                if (jjTools.isLangEn(request)) {
-                    errorMessage = "Edit Fail;";
-                }
-                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
-            }
-            List<Map<String, Object>> StepsRow = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._id + "=" + jjTools.getParameter(request, "hmis_steps_id")));
-            Server.outPrinter(request, response, "hmisPlans.m_select(" + StepsRow.get(0).get(Steps._plansId) + ")");
-            return "";
-        } catch (Exception ex) {
-            Server.outPrinter(request, response, Server.ErrorHandler(ex));
-            return "";
         }
     }
 

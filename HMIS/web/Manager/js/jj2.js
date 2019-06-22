@@ -1275,9 +1275,6 @@ var jj = function (selector) {
      * @example jj("1234").jjIsDigit();  
      */
     this.jjIsDigit = function () {
-        if (this.selector.length < 1) {
-            return false;
-        }
         var reg = /^-?\d*$/;
         return reg.test(this.selector);
     }
@@ -1288,9 +1285,6 @@ var jj = function (selector) {
      * @example jj("1234.567").jjIsFloat();  
      */
     this.jjIsFloat = function () {
-        if (this.selector.length < 1) {
-            return false;
-        }
         var reg = /^-?\d+\.?\d*$/;
         return reg.test(this.selector);
     }

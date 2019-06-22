@@ -42,7 +42,7 @@
 
 
         <title>MedYar مدیار </title>
-        
+
         <!-- استایل گذاری روی جداول-->
         <link href="Manager/css/publicStyle.css" rel="stylesheet" type="text/css"/>
         <!-- Vendor css -->
@@ -107,6 +107,26 @@
                 <li class="nav-item">
                     <a href="#" class="nav-link with-sub">                        
                         <i class="icon ion-ios-filing-outline"></i>
+                        <span>ماژول برنامه استراتژیک</span>
+                    </a>
+                    <ul class="nav-sub">
+                        <li class="nav-item"><a href="#swStrategic" onclick="if ($('#swStrategicTbl').html() == '') {
+                                    hmisStrategic.m_refresh();
+                                }
+                                ;
+                                hmisStrategic.loadForm();
+                                return false;" class="nav-link ShowOneDiv">برنامه استراتژیک </a></li>
+<!--                        <li class="nav-item"><a href="#swStrategicGuide" onclick="
+                                hmisStrategicGuide.loadForm();
+//                                hmisStrategicGuide.m_showForm();
+                                "
+                                class="nav-link ShowOneDiv">راهنما برنامه استراتژیک</a></li>-->
+
+                    </ul>
+                </li><!-- nav-item -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link with-sub">                        
+                        <i class="icon ion-ios-filing-outline"></i>
                         <span>ماژول فرم ساز</span>
                     </a>
                     <ul class="nav-sub">
@@ -121,6 +141,7 @@
                         <li class="nav-item"><a href="#swMyForms" target="_blank" onclick="hmisFormAnswerSets.showMyForms();return false;" class="nav-link ShowOneDiv">تکمیل فرم های من</a></li>
                     </ul>
                 </li><!-- nav-item -->
+
                 <li class="nav-item">
                     <a href="index.html" class="nav-link with-sub">                        
                         <i class="icon ion-ios-filing-outline"></i>
@@ -175,6 +196,7 @@
                     </ul>
 
                 </li><!-- nav-item -->
+
                 <li class="nav-item">
                     <a href="index.html" class="nav-link with-sub">                        
                         <i class="icon ion-ios-filing-outline"></i>
@@ -335,13 +357,7 @@
                                 return false;">FOCUS PDCAمدل بهبود کیفیت </a></li>                        
                     </ul>
                 </li><!-- nav-item -->                                
-                <li class="nav-item">
-                    <a  class="nav-link with-sub">
-                        <i class="icon ion-ios-list-outline"></i>
-                        <span>برنامه استراتژیک</span>
-                    </a>
 
-                </li><!-- nav-item -->
                 <li class="nav-item">
                     <a  class="nav-link with-sub">
                         <i class="icon ion-ios-list-outline"></i>
@@ -663,6 +679,16 @@
                                 <div id="swManagementGaugesTbl" ></div>
                                 <div id="swManagementGaugesForm" style="display: none;"></div>
                             </div>
+                            <!--strategic-->
+                            <div class="Alldiv" id="swStrategic">
+                                <div id="swStrategicTbl" ></div>
+                                <div id="swStrategicForm" style="display: none;"></div>
+                            </div>
+                            <!--StrategicGuide-->
+<!--                            <div class="Alldiv" id="swStrategicGuide">
+                                <div id="swStrategicTbl" ></div>
+                                <div id="swStrategicGuideForm" style="display: none;"></div>
+                            </div>-->
 
                         </div>
 
@@ -729,7 +755,7 @@
             <script src="jsHMIS/reports.js" type="text/javascript"></script>
             <script src="jsHMIS/commettes.js" type="text/javascript"></script>
             <script src="jsHMIS/communicatedSessions.js" type="text/javascript"></script>
-            <!--<script src="jsHMIS/part.js" type="text/javascript"></script>-->
+            <script src="jsHMIS/strategic.js" type="text/javascript"></script>
             <script src="jsCms/user.js" type="text/javascript"></script>
             <script src="jsCms/group.js" type="text/javascript"></script>
             <script src="jsHMIS/department.js" type="text/javascript"></script>

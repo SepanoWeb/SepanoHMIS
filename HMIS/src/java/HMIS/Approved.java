@@ -178,6 +178,7 @@ public class Approved {
                     + new jjCalendar_IR().getTimeFormat_8length()
                     + "%23A%23"
             );
+            
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + sessionsId));
             DefaultTableModel dtm = db.insert(tableName, map);
             if (dtm.getRowCount() == 0) {
