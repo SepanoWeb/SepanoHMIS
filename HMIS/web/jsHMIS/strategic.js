@@ -336,11 +336,8 @@ var hmisStrategic = {
             sumFinalVal += parseFloat($("#" + TableId + " td .finalVal" + (+i + 1)).val());
 
         }
-//        sumFinalVal += parseFloat($("#" + TableId + "   tr > td .finalVal").length());
         $("#" + TableId + " .sumFinalVal").val(Math.round((sumFinalVal / 100)));
-//        $('div#pointer').position().top + 'px';
-//       var x =parseFloat($('div#pointer').position().left)+parseFloat(isNaN($('#tableIFE .sumFinalVal').val()))+'px';
-//       var y=parseFloat($('div#pointer').position().top)+parseFloat(isNaN($('#tableEFE .sumFinalVal').val()))+'px';
+
 
         $('div#pointer').css({'transform': 'translate(' + $('#tableIFE .sumFinalVal').val()*10 + 'px' + ',' + $('#tableEFE .sumFinalVal').val()*-10 + 'px' + ')'});
     },
