@@ -875,7 +875,7 @@ public class Sessions {
             String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(height)) {
                 height = "400";
-            }
+        }
             if (panel.equals("")) {
                 panel = "swMySessionsTbl";
             }
