@@ -51,7 +51,7 @@ public class PlansForAssess {
                 return hasAccess;
             }
             StringBuilder html = new StringBuilder();
-            DefaultTableModel dtm1 = db.Select(Steps.tableName,Steps._executorId+"="+jjTools.getSessionAttribute(request,"#ID"));
+            DefaultTableModel dtm1 = db.Select(Steps.tableName,Steps._executorUserId+"="+jjTools.getSessionAttribute(request,"#ID"));
             List<Map<String, Object>> stepsRow = jjDatabase.separateRow(dtm1);
             DefaultTableModel dtm = db.Select(Plans.tableName,Plans._id+"="+stepsRow.get(0).get(Steps._plansId));
             

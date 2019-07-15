@@ -36,7 +36,13 @@ var hmisStrategic = {
     },
     m_clean: function () {
         new jj('#swStrategicForm').jjFormClean();
-        $('input.onkeyup').val("");
+        $('#tableIFE input.onkeyup').val("");
+        $('#tableEFE input.onkeyup').val("");
+        $('#tableIFE input.onclick').val("");
+        $('#tableEFE input.onclick').val("");
+        $('#tableIFE input.sumFinalVal').val("");
+        $('#tableEFE input.sumFinalVal').val("");
+
         $('input').removeClass('red');
         $('input').removeClass('green');
 //        
@@ -47,10 +53,9 @@ var hmisStrategic = {
         param += "&do=" + hmisStrategic.tableName + ".add_new&jj=1";
         new jj(param).jjAjax2(false);
         hmisStrategic.m_clean();
-//        hmisStrategic.m_show_form();
         $('#swStrategicForm').show();
         $('#swStrategicTbl').hide();
-        //        oEditor.execCommand( 'bold');
+        $('div#pointer').css({'transform': 'translate(0,0)'});
 
     },
     m_show_tbl: function () {
@@ -132,6 +137,9 @@ var hmisStrategic = {
         param += "&" + hmisStrategic.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
         hmisStrategic.m_show_form();
+
+
+
     },
     m_add_EN: function (id) {
         var param = "";
@@ -336,10 +344,10 @@ var hmisStrategic = {
             sumFinalVal += parseFloat($("#" + TableId + " td .finalVal" + (+i + 1)).val());
 
         }
-        $("#" + TableId + " .sumFinalVal").val(Math.round((sumFinalVal / 100)));
+        $("#" + TableId + " .sumFinalVal").attr('value', Math.round((sumFinalVal / 100)));
 
 
-        $('div#pointer').css({'transform': 'translate(' + $('#tableIFE .sumFinalVal').val()*10 + 'px' + ',' + $('#tableEFE .sumFinalVal').val()*-10 + 'px' + ')'});
+        $('div#pointer').css({'transform': 'translate(' + $('#tableIFE .sumFinalVal').val() * 55 + 'px' + ',' + $('#tableEFE .sumFinalVal').val() * (-57) + 'px' + ')'});
     },
     actionIconRemoveIFE: function (selector) {
         $(selector).parent().parent().find('input').addClass('red');

@@ -60,12 +60,6 @@ var hmisApproved = {
         param += "&do=" + hmisApproved.tableName + ".add_new&jj=1";
         new jj(param).jjAjax2(false);
         hmisApproved.m_clean();
-//        hmisApproved.m_show_form();
-//                $('#newCommetteForm').show();
-//                $('#formInvitation').hide();
-
-        //        oEditor.execCommand( 'bold');
-
     },
     m_show_tbl: function () {
         $('#swApprovedTbl').slideDown();
@@ -76,8 +70,6 @@ var hmisApproved = {
         hmisApproved.tabSizeTbl();
     },
     m_insert: function () {
-
-//        $("#inputTextSelectorDiv").html("");
         var temp1 = "";
         var temp2 = "";
         var execturesRoleId = $('#approved_executorRoleId').val();
@@ -103,7 +95,7 @@ var hmisApproved = {
         param += "&" + new jj('#insertApproved2').jjSerial();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
-//        hmisApproved.m_clean();
+
     },
     m_edit: function () {
         var param = "";
@@ -114,8 +106,7 @@ var hmisApproved = {
         hmisApproved.m_clean();
     },
     editInSessions: function () {
-//        var valid = hmisPlan.m_validation();
-//        if (valid == "") {
+
         var temp2 = "";
         var temp1 = "";
 
@@ -163,6 +154,8 @@ var hmisApproved = {
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
         $("#inputFileApprovedPreviousDiv").html("");
+       
+
 
 //        } else {
 //            new jj(valid).jjDialog();
@@ -228,8 +221,7 @@ var hmisApproved = {
     selectInSessions: function (id) {
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
-        $('#insertApproved2').slideDown();
-        $('#approvedTbl').slideUp();
+//        $('#insertApproved2').slideDown();
         $("html, body").delay(1000).animate({scrollTop: $('#insertApproved2').offset().top}, 800);
         var param = "";
         param += "do=" + hmisApproved.tableName + ".selectInSessions";
@@ -237,6 +229,23 @@ var hmisApproved = {
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
         new jj(param).jjAjax2(false);
         $("#approved_description").summernote();
+//        hmisApproved.m_show_form();
+    },
+    /**
+     * سلکت در جلسات ابلاغ شده من
+     * @param {type} id
+     * @returns {undefined}
+     */
+    selectInCommunicatedSessions: function (id) {
+        new jj("#communicatedApproved_startDate").jjCalendarWithYearSelector(1340, 1420);
+        new jj("#communicatedApproved_endDate").jjCalendarWithYearSelector(1340, 1420);
+        $("html, body").delay(1000).animate({scrollTop: $('#insertApprovedCommunicated').offset().top}, 800);
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".selectInCommunicatedSessions";
+        param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
+        param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+        new jj(param).jjAjax2(false);
+        $("#communicatedApproved_description").summernote();
 //        hmisApproved.m_show_form();
     },
     /**
@@ -335,6 +344,36 @@ var hmisApproved = {
         param += "do=" + hmisApproved.tableName + ".removeFile";
         param += "&upload_id=" + idUpload;
         param += "&hmis_approved_id=" + approvedId;
+        new jj(param).jjAjax2(false);
+
+    },
+    /**
+     * زمانی که پیشنهادی به دبیر کمیته داده می شود می تواند آن را رد کند یا اینکه آن را به عنوان مصوبه بپذیرد
+     * @param {type} id
+     * @param {type} sessionsId
+     * @returns {undefined}
+     */
+    actionIconAdd: function (id, sessionsId) {
+
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".addApproved";
+        param += "&hmis_approved_id=" + id;
+        param += "&sessionsId=" + sessionsId;
+        new jj(param).jjAjax2(false);
+
+    },
+    /**
+     * رد پیشنهاد برنامه عملیاتی
+     * @param {type} id
+     * @returns {undefined}
+     */
+    actionIconReject: function (id, sessionsId) {
+
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".rejectApproved";
+        param += "&hmis_approved_id=" + id;
+        param += "&sessionsId=" + sessionsId;
+
         new jj(param).jjAjax2(false);
 
     },

@@ -15,16 +15,19 @@ var hmisPlans = {
                     hmisPlans.m_clean();
                     hmisPlans.m_show_tbl();
                 });
+                $("#stepsInPlans_descriptionExecutor").hide();
+                $("#stepsInPlans_descriptionTracker").hide();
+                new jj('#sendFiles').jjAjaxFileUploadTitleUploadFiles('#attachFileSteps', '#steps_files', 'steps_titleFile1', '#steps_filesTitle', "#showFilesDiv");
                 new jj("#steps_startDate").jjCalendarWithYearSelector(1370, 1420);
                 new jj("#steps_endDate").jjCalendarWithYearSelector(1370, 1420);
                 $("#plans_description").summernote();
                 //////////////////////////////
-           
+
                 new jj('#sendFilesPlans').jjAjaxFileUpload4('attachFilesPlans', '#plans_files', '#inputFilesPlansDiv');
 
 
 
-              
+
                 hmisPlans.m_refresh();
             });
         }
@@ -107,6 +110,31 @@ var hmisPlans = {
 //        }
     },
     /**
+     *ارسال برنامه عملیاتی به مافوق 
+     *مافوق هم در برنامه عملیاتی من برنامه را یا تایید میکند یا رد میکند
+     *   
+     * @returns {undefined}  */
+    communicatingToSupervisor: function (id) {
+        if (!$("#plans_supervisorRolId").val() == "") {
+            if (confirm("برنامه عملیاتی را تایید می کنید؟")) {
+                hmisPlans.communicatingToSupervisor_after_question(id);
+            }
+        } else {
+            new jj(" مافوق را انتخاب کنید.").jjModal("پیام سامانه");
+        }
+    },
+    communicatingToSupervisor_after_question: function (id) {
+        var param = "";
+        param += "&do=" + hmisPlans.tableName + ".communicatingToSupervisor";
+        param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
+        param += "&" + new jj('#swPlansForm').jjSerial();
+        param += "&jj=1";
+        new jj(param).jjAjax2(false);
+        hmisPlans.m_show_tbl();
+        hmisPlans.m_clean();
+
+    },
+    /**
      * ویرایش اطلاعات گام ها در قسمت plans
      * 
      * @returns {undefined}
@@ -153,6 +181,9 @@ var hmisPlans = {
 //        $('#editPlansButton').show(); //نمایش دکمه تغییرات
         $('#stepsForm').hide(); //نمایش فرم گامها
         $('#correctionForm').hide(); // فرم اصلاحیه 
+        $('#correctionForm').hide(); // فرم اصلاحیه 
+        $('#stepsForm').slideUp();
+        $("#decriptionStepsDiv").hide();
 
 
     },
@@ -162,6 +193,7 @@ var hmisPlans = {
      * @returns {undefined}
      */
     selectStepsInPlans: function (id) {
+        $("#showFilesDiv").html("");
         var param = "";
         param += "do=" + hmisSteps.tableName + ".selectStepsInPlans";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
@@ -172,7 +204,9 @@ var hmisPlans = {
         $('#editPlansButton').show(); //نمایش دکمه تغییرات
         $('#stepsForm').show(); //
         $("html, body").delay(1000).animate({scrollTop: $('#stepsForm').offset().top}, 800);
+        $("#decriptionStepsDiv").hide();
     },
+
     /**
      * نمایش فرم اصلاحیه 
      * تاریخ ایجاد
@@ -186,10 +220,10 @@ var hmisPlans = {
         $('#correctionForm').show();
     },
     actionReferral: function () {
-          if (confirm("آیا از ارجاع اطمینان دارید؟")) {
-               hmisPlans.afterActionReferral();
-            } else {
-            }
+        if (confirm("آیا از ارجاع اطمینان دارید؟")) {
+            hmisPlans.afterActionReferral();
+        } else {
+        }
 
     },
     /**
@@ -219,11 +253,25 @@ var hmisPlans = {
      * @param {type} id
      * @returns {undefined}
      */
-    confirmBySuperwizar: function (id) {
+    confirmBySupervisor: function (id) {
         var param = "";
-        param += "do=" + hmisPlans.tableName + ".confirmBySuperwizar";
+        param += "do=" + hmisPlans.tableName + ".confirmBySupervisor";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
+    },
+    executorAction: function (value) {
+        if (value == "سمت") {
+            $("#steps_executorUserId").attr("disabled", "disabled");
+            $("#steps_executorRoleId").removeAttr("disabled");
+            $("#steps_executorUserId").val("");
+            $("#steps_executorUserId").select2();
+        } else if (value == "کاربران") {
+            $("#steps_executorRoleId").attr("disabled", "disabled");
+            $("#steps_executorUserId").removeAttr("disabled");
+            $("#steps_executorRoleId").select2();
+            $("#steps_executorRoleId").val("");
+        }
+
     },
     m_add_Ar: function (id) {
         var param = "";

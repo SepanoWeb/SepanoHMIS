@@ -28,6 +28,10 @@
     background-color:  #beffbe !important;
     color: #000 !important;
 }
+.status_reject td{
+    background-color:  #ff00006b !important;
+    color: #000 !important;
+}
 
 .status_confirmationFinal td{
     background-color:#ddf9dd !important;
@@ -35,6 +39,10 @@
 }
 .status_ignore td{
     background-color:#ffbebe !important;
+    color: #000 !important;
+}
+.status_offer td{
+    background-color:#eee !important;
     color: #000 !important;
 }
 /////////////////////////////////////////////////////////////

@@ -1780,7 +1780,38 @@ public class Js {
             return cms + ".m_add_EN(" + id + ");\n";
         }
     }
+    ///////////////////تنظیمات یادآوری
+    public static class jjSetting {
 
+        static String hmis = "hmisSetting";
+
+        public static String insert() {
+            return "hmisSetting.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisSetting.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+   
     public static class jjPic {
 
         static String cms = "cmsPic";

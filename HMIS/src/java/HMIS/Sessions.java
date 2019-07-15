@@ -34,24 +34,24 @@ public class Sessions {
     public static String _title = "sessions_title";//عنوان جلسه
     public static String _commetteId = "sessions_commettesId";//ایدی کمیته
     public static String _communicatorId = "sessions_communicatorId";//ابلاغ کننده
-    public static String _contextInvitation = "sessions_contextInvitation";//متن دعوتنامه  
-    public static String _invitationDate = "sessions_invitationDate";//تاریخ ارسال دعوتنامه  
+    public static String _contextInvitation = "sessions_contextInvitation";//متن دعوتنامه
+    public static String _invitationDate = "sessions_invitationDate";//تاریخ ارسال دعوتنامه
     public static String _agenda = "sessions_agenda";//دستور جلسه
     public static String _date = "sessions_date";//تاریخ جلسه
     public static String _time = "sessions_time";//تایم جلسه
     public static String _dateReminder = "sessions_dateReminder";//تاریخ یادآوری
-    public static String _timeReminder = "sessions_timeReminder";//ساعت یادآوری 
-    public static String _Invitees = "sessions_Invitees";//مدعوین داخل سازمان
-    public static String _InviteesInSide = "sessions_InviteesInSide";//مهمانان داخل سازمان
+    public static String _timeReminder = "sessions_timeReminder";//ساعت یادآوری
+    public static String _Invitees = "sessions_Invitees";//مدعوین داخل سازمان نقش ها
+    public static String _InviteesInSide = "sessions_InviteesInSide";//مهمانان داخل سازمان یوزرها
     public static String _InviteesOutSide = "sessions_InviteesOutSide";//مدعوین خارج از سازمان
     public static String _status = "sessions_status";//وضعیت
     public static String _statusLog = "sessions_statusLog";//روند وضعیت
     public static String _nextDate = "sessions_nextSessionDate";//تاریخ جلسه بعد
-    public static String _strengths = "sessions_strengths";//نقاط قوت 
-    public static String _weakPoint = "sessions_weakPoint";//نقاط ضعف 
+    public static String _strengths = "sessions_strengths";//نقاط قوت
+    public static String _weakPoint = "sessions_weakPoint";//نقاط ضعف
     public static String _titleIssue = "sessions_titleIssue";//عنوان مسئله
-    public static String _ProposedSolution = "sessions_proposedSolution";//راهکار پیشنهادی   
-    public static String _checkingAgenda = "sessions_checkingAgenda";//بررسی دستور جلسه 
+    public static String _ProposedSolution = "sessions_proposedSolution";//راهکار پیشنهادی
+    public static String _checkingAgenda = "sessions_checkingAgenda";//بررسی دستور جلسه
     public static String _file = "sessions_file";// فایل های بارگذاری شده
     public static String _InviteesFile = "sessions_InviteesFile";//فایل برای مدعوین
     public static String _sessionDescription = "sessions_sessionDescription";//شرح جلسه
@@ -87,7 +87,6 @@ public class Sessions {
             StringBuilder html1 = new StringBuilder();
 
             DefaultTableModel dtm = db.Select(tableName);
-//            List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
             List<Map<String, Object>> row = jjDatabase.separateRow(db.otherSelect("SELECT S.sessions_time,S.sessions_title,S.sessions_audience,S.sessions_signers,S.sessions_date,S.sessions_status,S.id,C.commettes_title,A.user_name,A.user_family "
                     + "FROM hmis_sessions S"
                     + " LEFT JOIN hmis_commettes C ON S.sessions_commettesId=C.id"
@@ -145,7 +144,7 @@ public class Sessions {
             html.append("</tbody></table>");
             html.append("</div>");
             List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            html1.append("<option>انتخاب کنید</option>");
+            html1.append("<option value=''>انتخاب کنید</option>");
             for (int i = 0; i < RolesRow.size(); i++) {
                 html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
             }
@@ -368,7 +367,7 @@ public class Sessions {
                     String temp = InviteeOutSideId[i];
                     String Email = "";
                     String[] InviteeOutSideDetail = InviteeOutSideId[i].split(",");
-                    Email = InviteeOutSideDetail[2];//در آوردن ایمیل فرد 
+                    Email = InviteeOutSideDetail[2];//در آوردن ایمیل فرد
 
                     html4.append("<div class=\"form-group has-danger mg-b-0\">\n"
                             + "<label class=\"ckbox\">\n"
@@ -433,7 +432,7 @@ public class Sessions {
             html2.append("</div>");
 //            else //دکمه ابلاغ برای مسئول ابلاغ
 //            if (row.get(0).get(_status).equals(status_confirmationFinal) && Integer.valueOf(jjTools.getSessionAttribute(request,"#ID"))==Integer.valueOf(row.get(0).get(_communicatorId).toString())) {
-//                
+//
 //                System.out.println("jjTools.getSeassionUserId(request)=" + jjTools.getSeassionUserId(request) + "row.get(0).get(_communicatorId)" + row.get(0).get(_communicatorId));
 //                html2.append("<div class=\"col-lg-6\">");
 //                html2.append("<input type='button' id='sendToCommunicator_sessions' value='ابلاغ' class='btn btn-outline-success active btn-block mg-b-10'>");
@@ -441,7 +440,7 @@ public class Sessions {
 //                html2.append("</div>");
 //            }
 
-//          دکمه ارسال جهت امضا  
+//          دکمه ارسال جهت امضا
 //            html2.append("<div class=\"col-lg-6\">");
 //            html2.append("<input type='button' id='Confirmation_Sessions' value='تایید نهایی و ارسال جهت امضا' class='btn btn-outline-success active btn-block mg-b-10'>");
 //            html.append(Js.buttonMouseClick("#Confirmation_Sessions", "hmisSessions.confirmationFinalSessions(" + id + ");"));
@@ -454,8 +453,17 @@ public class Sessions {
 //            }
 //            html2.append("</div>");
             DefaultTableModel dtm = db.Select(Approved.tableName, Approved._sessionsId + "=" + id);
-            List<Map<String, Object>> approvedRow = jjDatabase.separateRow(dtm);
+            DefaultTableModel dtm1 = db.Select(Approved.tableName, Approved._commettesId + "=" + row.get(0).get(_commetteId) + " AND " + Approved._status + "='" + Approved.status_offer + "'");
 
+//            DefaultTableModel dtm = db.otherSelect("SELECT * FROM hmis_approved A LEFT JOIN hmis_plans P ON A.approved_commettesId=P.plans_commettesId"
+//                    + " LEFT JOIN hmis_sessions S ON A.approved_sessionsId= " + id + ""
+//            );
+//            DefaultTableModel dtm = db.otherSelect("SELECT * FROM hmis_approved A LEFT JOIN hmis_plans P ON A.approved_commettesId=P.plans_commettesId"
+//                    + " LEFT JOIN hmis_sessions S ON A.approved_sessionsId= " + id + ""
+//            );
+            List<Map<String, Object>> approvedRow = jjDatabase.separateRow(dtm);
+            List<Map<String, Object>> approveOffererRow = jjDatabase.separateRow(dtm1);//نمایش جدول پیشنهاد ها
+///////////////////////////////////////////////////مصوبات مربوط به آن جلسه
             html3.append("<div class=\"table-wrapper\">\n");
             html3.append("<table id='refreshApprovedInSession' class='table display responsive' class='tahoma10' style='direction: rtl;'><thead>");
             html3.append("<th width='5%'>کد</th>");
@@ -469,17 +477,34 @@ public class Sessions {
             html3.append("<th width='40%'>ویرایش</th>");
             html3.append("</thead><tbody>");
 
-            for (int i = 0; i < approvedRow.size(); i++) {
-                html3.append("<tr onclick='hmisApproved.selectInSessions(" + approvedRow.get(i).get(Approved._id) + ");' class='mousePointer " + getClassCssForVaziat(approvedRow.get(i).get(Approved._status).toString()) + "'>");
-                List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(i).get(Approved._trackerId)));
-                List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
-                html3.append("<td class='c'>" + approvedRow.get(i).get(Approved._id) + "</td>");
-                html3.append("<td class='r'>" + approvedRow.get(i).get(Approved._title) + "</td>");
-                html3.append("<td class='r'>" + (approvedRow.get(i).get(Approved._executorRoleId).toString()) + "" + (approvedRow.get(i).get(Approved._executorUserId).toString()) + "</td>");
-                html3.append("<td class='r'>" + RolesTrackerIdRow.get(0).get(Role._title) + "-" + UserTrackerIdRow.get(0).get(Access_User._name) + " " + UserTrackerIdRow.get(0).get(Access_User._family) + "</td>");
-                html3.append("<td class='r'>" + jjCalendar_IR.getViewFormat(approvedRow.get(i).get(Approved._startDate)) + "</td>");
-                html3.append("<td class='r'>" + jjCalendar_IR.getViewFormat(approvedRow.get(i).get(Approved._endDate)) + "</td>");
-                html3.append("<td class='r'>" + approvedRow.get(i).get(Approved._status) + "</td>");
+            for (int i = 0; i < approveOffererRow.size(); i++) {//پیشنهادات  برنامه عملیاتی  در جدول مصوبات که کمیته می تواند ان را رد کند یا بپذیرد
+                html3.append("<tr style='background-color:#eee' class='mousePointer " + getClassCssForVaziat(approveOffererRow.get(i).get(Approved._status).toString()) + "'>");
+                html3.append("<td class='c'>" + approveOffererRow.get(i).get(Approved._id) + "</td>");
+                html3.append("<td class='r'>" + approveOffererRow.get(i).get(Approved._title) + "</td>");
+                html3.append("<td class='r'><div></div></td>");
+                html3.append("<td class='r'><div></div></td>");
+                html3.append("<td class='r'>" + jjCalendar_IR.getViewFormat(approveOffererRow.get(i).get(Approved._startDate)) + "</td>");
+                html3.append("<td class='r'>" + jjCalendar_IR.getViewFormat(approveOffererRow.get(i).get(Approved._endDate)) + "</td>");
+                html3.append("<td class='r' >" + approveOffererRow.get(i).get(Approved._status) + "</td>");
+                html3.append("<td class='r'><span><i class=\"ion-android-add actionIconAdd\" style=\"color:green;margin:2px 2px;cursor: pointer\" onclick=\"hmisApproved.actionIconAdd(" + approveOffererRow.get(i).get(Approved._id) + "," + id + ");\"></i><i class=\"ion-android-remove actionIconRemove\" style=\"margin:2px 2px;cursor: pointer\" onclick=\"hmisApproved.actionIconReject(" + approveOffererRow.get(i).get(Approved._id) + "," + id + " );\"></i></span></td>");
+                html3.append("</tr>");
+            }
+            for (int j = 0; j < approvedRow.size(); j++) {
+                List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + approvedRow.get(j).get(Approved._trackerId)));
+
+                html3.append("<tr onclick='hmisApproved.selectInSessions(" + approvedRow.get(j).get(Approved._id) + ");' class='mousePointer " + getClassCssForVaziat(approvedRow.get(j).get(Approved._status).toString()) + "'>");
+                html3.append("<td class='c'>" + approvedRow.get(j).get(Approved._id) + "</td>");
+                html3.append("<td class='r'>" + approvedRow.get(j).get(Approved._title) + "</td>");
+                html3.append("<td class='r'>" + (approvedRow.get(j).get(Approved._executorRoleId).toString()) + "" + (approvedRow.get(j).get(Approved._executorUserId).toString()) + "</td>");
+                if (RolesTrackerIdRow.size() > 0) {
+                    List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
+                    html3.append("<td class='r'>" + RolesTrackerIdRow.get(0).get(Role._title) + "-" + UserTrackerIdRow.get(0).get(Access_User._name) + " " + UserTrackerIdRow.get(0).get(Access_User._family) + "</td>");
+                } else {
+                    html3.append("<td class='r'><div></div></td>");
+                }
+                html3.append("<td class='r'>" + jjCalendar_IR.getViewFormat(approvedRow.get(j).get(Approved._startDate)) + "</td>");
+                html3.append("<td class='r'>" + jjCalendar_IR.getViewFormat(approvedRow.get(j).get(Approved._endDate)) + "</td>");
+                html3.append("<td class='r'>" + approvedRow.get(j).get(Approved._status) + "</td>");
                 html3.append("<td class='r'><i class='icon ion-gear-a' style='color:#a02311'></i></td>");
                 html3.append("</tr>");
             }
@@ -496,7 +521,7 @@ public class Sessions {
                 html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
             }
 
-            //////////////////////نمایش جدول مصوبات در جلسات قبلی  
+            //////////////////////نمایش جدول مصوبات در جلسات قبلی
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.otherSelect("SELECT id,sessions_commettesId FROM hmis_sessions WHERE sessions_commettesId=" + commetteId + " AND id!=" + id + " "));//نمایش جلساتی که این کمیته تشکیل داده به غیر جلسه ای که داخلش هستیم
             html1.append("        <div class=\"table-wrapper\">\n");
             html1.append("<table id='refreshApprovedPreviousInSession' class='table display responsive' class='tahoma10' style='direction: rtl;'><thead>");
@@ -511,7 +536,7 @@ public class Sessions {
             html1.append("<th width='40%'>ویرایش</th>");
             html1.append("</thead><tbody>");
             for (int j = 0; j < sessionsRow.size(); j++) {
-                List<Map<String, Object>> ApprovedPrevoiusRow = jjDatabase.separateRow(db.otherSelect("SELECT * FROM hmis_approved WHERE hmis_approved.approved_sessionsid=" + sessionsRow.get(j).get(_id) + " "));//نمایش جلساتی که این کمیته تشکیل داده به غیر جلسه ای که داخلش هستیم
+                List<Map<String, Object>> ApprovedPrevoiusRow = jjDatabase.separateRow(db.otherSelect("SELECT * FROM hmis_approved WHERE hmis_approved.approved_sessionsid=" + sessionsRow.get(j).get(_id) + " AND " + Approved._status + "!='" + Approved.status_reject + "' AND " + Approved._sessionsId + "=" + sessionsRow.get(j).get(_id) + " AND " + Approved._status + "!='" + Approved.status_offer + "' "));//نمایش جلساتی که این کمیته تشکیل داده به غیر جلسه ای که داخلش هستیم
                 for (int i = 0; i < ApprovedPrevoiusRow.size(); i++) {
                     html1.append("<tr onclick='hmisApproved.selectApprovedPrevious(" + ApprovedPrevoiusRow.get(i).get(Approved._id) + ")' class='mousePointer " + getClassCssForVaziat(ApprovedPrevoiusRow.get(i).get(Approved._status).toString()) + "'>");
                     List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + ApprovedPrevoiusRow.get(i).get(Approved._trackerId)));
@@ -575,7 +600,7 @@ public class Sessions {
                 return "";
             }
             List<Map<String, Object>> Row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-
+            String script = "";
             Map<String, Object> map = new HashMap<String, Object>();
             if (jjTools.getParameter(request, _communicatorId).equals("null")) {
                 Server.outPrinter(request, response, Js.modal("لطفا ابلاغ کننده را انتخاب نمایید", "پیام سامانه"));
@@ -601,8 +626,12 @@ public class Sessions {
                     }
                     Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
                     return "";
+                } else {
+                    script += Js.jjSessions.refresh();
+                    script += Js.jjSessions.select(id);
+                    script += Js.modal("تغییرات انجام شد", "پیام سامانه");
                 }
-                Server.outPrinter(request, response, Js.jjSessions.refresh());
+                Server.outPrinter(request, response, script);
                 return "";
             }
         } catch (Exception ex) {
@@ -614,6 +643,7 @@ public class Sessions {
     /**
      *
      * تایید نهایی و ارسال به مسئولین اجرا ارسال ایمیل به مهمانان خارج از سازمان
+     * توسط دبیر کمیته
      *
      * @param request
      * @param response
@@ -670,11 +700,12 @@ public class Sessions {
                 }
                 String result = changeStatus(db, id, status_confirmationFinal);
                 if (result.isEmpty()) {
-                    script += Js.modal("تایید نهایی انجام شد", "پیام سامانه");
+                    script += Js.modal("ابلاغ انجام شد", "پیام سامانه");
                     script += Js.jjSessions.select(id);
+                    script += Js.jjSessions.refresh();
 
                 } else {
-                    script += Js.modal(".تغییر وضعیت انجام نشد", "پیام سامانه");
+                    script += Js.modal(".ابلاغ انجام نشد", "پیام سامانه");
                 }
 
             } else {//در این خط کد اگر حضار را انتخاب نکرده باشد نمیتوان تایید نهایی انجام شود
@@ -724,7 +755,7 @@ public class Sessions {
             map.put(_timeReminder, jjTools.getParameter(request, _timeReminder));//ساعت یاد اوری
             map.put(_invitationDate, jjCalendar_IR.getDatabaseFormat_8length("", true));//تاریخ ارسال دعوتنامه
             map.put(_commetteId, commettesId);//ای دی کمیته
-            map.put(_status, status_created);//ای دی کمیته
+            map.put(_status, status_created);//
             map.put(_statusLog,
                     status_created
                     + "-"
@@ -742,16 +773,15 @@ public class Sessions {
                     if (jjTools.isLangEn(request)) {
                         errorMessage = "Edit Fail;";
                     }
-                    Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
+                    script += Js.modal(errorMessage, "پیام سامانه");
                 }
-                System.out.println("@To Do send Comment");
+//                System.out.println("@To Do send Comment");
                 script += "hmisSessions.m_refresh();";
-                script += "sendcomment(" + text + "," + inviteesId + "," + inviteesOutSideId + "," + inviteesInSideId + ");";
+                script += "hmisCommettes.sendComment('" + text + "','" + inviteesId + "','" + inviteesOutSideId + "','" + inviteesInSideId + "');";
 
             } else if (ComemttesRow.get(0).get(Commettes._isActive).equals("0")) {
                 String errorMessage = "کمیته مورد نظر فعال نمی باشد .";
-                Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
-
+                script += Js.modal(errorMessage, "پیام سامانه");
             }
             Server.outPrinter(request, response, script);
             return "";
@@ -789,7 +819,8 @@ public class Sessions {
     }
 
     /**
-     * جدول جلسات من
+     * جدول جلسات من در این جدول جلساتی که برگزار شده است برای امضا وتایید سمت
+     * حضار می اید وحضار آن را تایید می کنند
      *
      * @param request
      * @param response
@@ -820,7 +851,7 @@ public class Sessions {
             html.append("</thead><tbody>");
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.otherSelect("SELECT * FROM hmis_sessions WHERE "
                     + "sessions_audience LIKE '%" + sessionUserId + "\\%23A\\%23%' "
-                    + " AND sessions_status='" + Sessions.status_communicated + "' OR sessions_creatorId=" + sessionUserId + " AND sessions_status='" + Sessions.status_communicated + "'"));
+                    + " AND sessions_status='" + Sessions.status_confirmationFinal + "' OR sessions_creatorId=" + sessionUserId + " AND sessions_status='" + Sessions.status_communicated + "'"));
             //در جدول جلسات  در فیلد حضار داخل سازمان ای دی فردی که وارد شد شبیه یکی از این فیلد ها بود پیدا کن اگر جز ایجاد کننده ها بود  نمایش داده شود اگر وضعیت تایید نهایی هم بود نمایش داده شود
             for (int i = 0; i < sessionsRow.size(); i++) {
                 List<Map<String, Object>> commettedRow = jjDatabase.separateRow(db.Select(Commettes.tableName, Commettes._id + "=" + sessionsRow.get(i).get(Sessions._commetteId)));
@@ -861,7 +892,8 @@ public class Sessions {
     }
 
     /**
-     * جلسات ابلاغ شده
+     * جلسات ابلاغ شده جلساتی که وضعیت آنها تایید نهایی هسند برای ابلاغ مصوبات
+     * توسط ابلاغ کننده در این جدول می آیند
      *
      * @param request
      * @param response
@@ -900,7 +932,7 @@ public class Sessions {
                     + " LEFT JOIN  hmis_commettes C      ON   S.sessions_commettesId=C.id"
                     + " LEFT JOIN  hmis_role      R      ON   C.commettes_secretary=R.id"
                     + " LEFT JOIN  access_user    A      ON   R.role_user_id=A.id"
-                    + " WHERE  S.sessions_status='" + status_communicated + "'"
+                    + " WHERE  S.sessions_status!='" + status_created + "'"
             //                    + " WHERE S.sessions_communicatorId LIKE '%" + jjTools.getSessionAttribute(request, "#ROLE_ID") +"%'"
             //                    + "  AND "
             //                    + " S.sessions_status='" + status_confirmationFinal + "'"
@@ -908,7 +940,6 @@ public class Sessions {
             //                    + " S.sessions_communicatorId LIKE '%" + jjTools.getSessionAttribute(request, "#ROLE_ID") +"%'"
             //                    + " AND S.sessions_status='" + status_communicated + "'"
             ));
-            //در جدول جلسات  در فیلد حضار داخل سازمان ای دی فردی که وارد شد شبیه یکی از این فیلد ها بود پیدا کن اگر جز ایجاد کننده ها بود  نمایش داده شود اگر وضعیت تایید نهایی هم بود نمایش داده شود
             for (int i = 0; i < row.size(); i++) {
                 html.append("<tr>");
                 html.append("<td class='c'>" + row.get(i).get(Sessions._id) + "</td>");
@@ -940,7 +971,7 @@ public class Sessions {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshCommunicatedSessions", "300", 0, "", "جلسات");
-            html2 += Js.setHtml("#sessions_communicatorId", html1);
+            html2 += Js.setHtml("#communicatedSessions_communicatorId", html1);
 
             Server.outPrinter(request, response, html2);
             return "";
@@ -963,7 +994,7 @@ public class Sessions {
      */
     public static String downloadSessions(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
-            String id = jjTools.getParameter(request, Sessions._id);// ای دی جلسه    
+            String id = jjTools.getParameter(request, Sessions._id);// ای دی جلسه
 
             request.setAttribute("db", db);
             request.getRequestDispatcher("feiz/sessionPrint.jsp").forward(request, response);
@@ -977,7 +1008,7 @@ public class Sessions {
 
     public static String selectMySessions(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
-            String id = jjTools.getParameter(request, Sessions._id);// ای دی جلسه    
+            String id = jjTools.getParameter(request, Sessions._id);// ای دی جلسه
 
             request.setAttribute("db", db);
             request.getRequestDispatcher("feiz/showSessions.jsp").forward(request, response);
@@ -1024,20 +1055,20 @@ public class Sessions {
             StringBuilder html8 = new StringBuilder();
             String script = "";
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
-            html.append(Js.setHtml("#commettesTitle", commettesRow.get(0).get(Commettes._title) + "-جلسه" + row.get(0).get(_date)));
-            html.append(Js.setHtml("#sessions_sessionsDate", jjCalendar_IR.getViewFormat(row.get(0).get(_date))));
-            html.append(Js.setVal("#sessions_agendaSessions", row.get(0).get(_agenda)));
-            html.append(Js.setVal("#sessions_titleSessions", row.get(0).get(_title)));
-            html.append(Js.setVal("#" + _checkingAgenda, row.get(0).get(_checkingAgenda)));
-            html.append(Js.setVal("#" + _communicatorId , row.get(0).get(_communicatorId)));
+            html.append(Js.setHtml("#commettesTitleCommunicatedSessions", commettesRow.get(0).get(Commettes._title) + "-جلسه" + row.get(0).get(_date)));
+            html.append(Js.setHtml("#communicatedSessions_sessionsDate", jjCalendar_IR.getViewFormat(row.get(0).get(_date))));
+            html.append(Js.setVal("#communicatedSessions_agendaSessions", row.get(0).get(_agenda)));
+            html.append(Js.setVal("#communicatedSessions_titleSessions", row.get(0).get(_title)));
+            html.append(Js.setVal("#communicatedSessions_checkingAgenda", row.get(0).get(_checkingAgenda)));
+            html.append(Js.setVal("#communicatedSessions_communicatorId", row.get(0).get(_communicatorId)));
 //            html.append("$('#sessions_communicatorId').val([" + row.get(0).get(_communicatorId) + "]);$('#sessions_communicatorId).select2({ minimumResultsForSearch: '', width: '100%'});");
-            html.append(Js.setVal("#" + _titleIssue, row.get(0).get(_titleIssue)));
-            html.append(Js.setVal("#" + _ProposedSolution, row.get(0).get(_ProposedSolution)));
-            html.append(Js.setVal("#" + _weakPoint, row.get(0).get(_weakPoint)));
-            html.append(Js.setVal("#" + _strengths, row.get(0).get(_strengths)));
-            html.append(Js.setVal("#" + _sessionDescription, row.get(0).get(_sessionDescription)));
-            html.append(Js.setVal("#" + _invitationDate, jjCalendar_IR.getViewFormat(row.get(0).get(_invitationDate))));
-            html.append(Js.setVal("#" + _nextDate, jjCalendar_IR.getViewFormat(row.get(0).get(_nextDate))));
+            html.append(Js.setVal("#communicatedSessions_titleIssue", row.get(0).get(_titleIssue)));
+            html.append(Js.setVal("#communicatedSessions_ProposedSolution", row.get(0).get(_ProposedSolution)));
+            html.append(Js.setVal("#communicatedSessions_weakPoint", row.get(0).get(_weakPoint)));
+            html.append(Js.setVal("#communicatedSessions_strengths", row.get(0).get(_strengths)));
+            html.append(Js.setVal("#communicatedSessions_sessionDescription", row.get(0).get(_sessionDescription)));
+            html.append(Js.setVal("#communicatedSessions_invitationDate", jjCalendar_IR.getViewFormat(row.get(0).get(_invitationDate))));
+            html.append(Js.setVal("#communicatedSessions_nextDate", jjCalendar_IR.getViewFormat(row.get(0).get(_nextDate))));
             html.append(Js.setVal("#" + _file, row.get(0).get(_file)));
             if (!row.get(0).get(_file).toString().equals("")) {
                 String[] File = (row.get(0).get(_file).toString().replaceAll("#A#", "%23A%23")).split("%23A%23");
@@ -1046,7 +1077,7 @@ public class Sessions {
                         + "</div>"
                         + "");
                 for (int i = 0; i < File.length; i++) {
-                    html8.append(" <div class='col-lg-3'><a id='downloadFile_Sessions' title='دانلود فایل'  href='upload/" + File[i] + "' class='btn btn-outline-success  btn-block mg-b-10'><input value='" + File[i] + "' class='form-control is-valid hasDatepicker' /></a><span  class='col-xs-1' onclick='hmisSessions.m_remove(" + File[i] + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:56%' /></span></div>");
+                    html8.append(" <div class='col-lg-3'><a id='downloadFile_communicatedSessions' title='دانلود فایل'  href='upload/" + File[i] + "' class='btn btn-outline-success  btn-block mg-b-10'><input value='" + File[i] + "' class='form-control is-valid hasDatepicker' /></a><span  class='col-xs-1' onclick='hmisSessions.m_remove(" + File[i] + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:56%' /></span></div>");
                 }
             }
             //دکمه ابلاغ برای مسئول ابلاغ
@@ -1055,17 +1086,15 @@ public class Sessions {
 
                 System.out.println("jjTools.getSeassionUserId(request)=" + jjTools.getSeassionUserId(request) + "row.get(0).get(_communicatorId)" + row.get(0).get(_communicatorId));
                 html2.append("<div class=\"col-lg-6\">");
-                html2.append("<button  id='sendToCommunicator_sessions' class='btn btn-outline-success  btn-block mg-b-10'  onclick='hmisCommunicatedSessions.sendToCommunicator(" + id + ");' >ابلاغ صورتجلسه</button>");
-//                html.append(Js.buttonMouseClick("#sendToCommunicator_sessions", "hmisCommunicatedSessions.sendToCommunicator(" + id + ");"));
+                html2.append("<button  id='sendToCommunicator_communicatedSessions' class='btn btn-outline-success  btn-block mg-b-10'  onclick='hmisCommunicatedSessions.sendToCommunicator(" + id + ");' >ابلاغ صورتجلسه</button>");
                 html2.append("</div>");
 
                 html2.append("<div class=\"col-lg-6\">");
-                html2.append("<button id='ignore_sessions' class='btn btn-outline-warning btn-block mg-b-10'  onclick='\"hmisCommunicatedSessions.ignore(" + id + ");' >رد صورتجلسه</button>");
-//                html.append(Js.buttonMouseClick("#ignore_sessions","hmisCommunicatedSessions.ignore(" + id + "); "));
+                html2.append("<button id='ignore_communicatedSessions' class='btn btn-outline-warning btn-block mg-b-10'  onclick='\"hmisCommunicatedSessions.ignore(" + id + ");' >رد صورتجلسه</button>");
                 html2.append("</div>");
             }
 
-//          دکمه ارسال جهت امضا  
+//          دکمه ارسال جهت امضا
 //            html2.append("<div class=\"col-lg-6\">");
 //            html2.append("<input type='button' id='Confirmation_Sessions' value='تایید نهایی و ارسال جهت امضا' class='btn btn-outline-success active btn-block mg-b-10'>");
 //            html.append(Js.buttonMouseClick("#Confirmation_Sessions", "hmisSessions.confirmationFinalSessions(" + id + ");"));
@@ -1077,11 +1106,13 @@ public class Sessions {
 //                html2.append("</div>");
 //            }
 //            html2.append("</div>");
-            DefaultTableModel dtm = db.Select(Approved.tableName, Approved._sessionsId + "=" + id);
+//دراین سلکت گفته شده که دو وضعیت ردپیشنهااد و پیشنهاد نمایش داده نشود
+            DefaultTableModel dtm = db.otherSelect("SELECT * FROM hmis_approved WHERE " + Approved._sessionsId + "=" + id + " AND " + Approved._status + "!='" + Approved.status_reject + "'  AND " + Approved._status + "!='" + Approved.status_offer + "'");
+
             List<Map<String, Object>> approvedRow = jjDatabase.separateRow(dtm);
 
             html3.append("<div class=\"table-wrapper\">\n");
-            html3.append("<table id='refreshApprovedInSession' class='table display responsive' class='tahoma10' style='direction: rtl;width:982px'><thead>");
+            html3.append("<table id='refreshApprovedIncommunicatedSessions' class='table display responsive' class='tahoma10' style='direction: rtl;'><thead>");
             html3.append("<th width='5%'>کد</th>");
             html3.append("<th width='10%'>عنوان مصوبه</th>");
             html3.append("<th width='15%'>مسئول اجرا</th>");
@@ -1111,7 +1142,7 @@ public class Sessions {
                 } else {
                     html3.append("<td class='r'><div></div></td>");
                 }
-                html3.append("<td class='r' onclick='hmisApproved.selectInSessions(" + approvedRow.get(i).get(Approved._id) + ");' ><i class='icon ion-gear-a' style='color:#a02311'></i></td>");
+                html3.append("<td class='r' onclick='hmisApproved.selectInCommunicatedSessions(" + approvedRow.get(i).get(Approved._id) + ");' ><i class='icon ion-gear-a' style='color:#a02311'></i></td>");
                 html3.append("</tr>");
             }
             html3.append("</tbody></table>");
@@ -1126,20 +1157,21 @@ public class Sessions {
                 html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
             }
             //////////////////////////////////////////////////////////////
-            script += Js.setHtml("#Sessions_button", html2);
-            script += Js.table("#refreshApprovedInSession", "300", 0, "", "جلسات");
-            script += Js.setHtml("#approvedTbl", html3);
+            script += Js.setHtml("#communicatedSessions_button", html2);
+            script += Js.table("#refreshApprovedIncommunicatedSessions", "300", 0, "", "مصوبات");
+            script += Js.setHtml("#communicatedApprovedTbl", html3);
             script += html.toString();
-            script += Js.setHtml("#approved_executorRoleId", html5);
-            script += Js.setHtml("#approved_executorUserId", html6);
-            script += Js.setHtml("#approved_trackerId", html5);
-            script += Js.setHtml("#filesDownloadDiv", html8);
+            script += Js.setHtml("#communicatedApproved_executorRoleId", html5);
+            script += Js.setHtml("#communicatedApproved_executorUserId", html6);
+            script += Js.setHtml("#communicatedApproved_trackerId", html5);
+            script += Js.setHtml("#filesDownloadDivCommunicated", html8);
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));
             return "";
         }
+
     }
 
     /**
@@ -1154,7 +1186,7 @@ public class Sessions {
      */
     public static String actionSigners(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
-            String id = jjTools.getParameter(request, Sessions._id);// ای دی جلسه    
+            String id = jjTools.getParameter(request, Sessions._id);// ای دی جلسه
             String SignerId = jjTools.getParameter(request, "userId");// ایدی یوزر
 
             List<Map<String, Object>> sessionsRow = jjDatabaseWeb.separateRow(db.otherSelect("SELECT  *  FROM hmis_sessions WHERE sessions_signers  Like '%" + SignerId + "\\%23A\\%23%' AND id=" + id + ""));
@@ -1213,7 +1245,7 @@ public class Sessions {
     }
 
     /**
-     * ابلاغ صورتجلسه توسط ابلاغ کننده
+     * ابلاغ صورتجلسه توسط ابلاغ کننده یا مدیر
      *
      * @param request
      * @param response
@@ -1230,7 +1262,7 @@ public class Sessions {
             if (result.isEmpty()) {//اگر خطایی نبود
                 String errorMessageing = "ابلاغ انجام شد";
                 script += Js.modal(errorMessageing, "پیام سامانه");
-                script += "hmisCommunicatedSessions.m_select(" + id + ")";
+                script += "hmisCommunicatedSessions.m_select(" + id + ");";
             } else {
                 String errorMessageing = "ابلاغ انجام نشد";
                 script += Js.modal(errorMessageing, "پیام سامانه");
@@ -1314,7 +1346,7 @@ public class Sessions {
 
             Server.outPrinter(request, response, Js.jjSessions.select(id));
             return "";
-//           
+//
 
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -1323,25 +1355,36 @@ public class Sessions {
         }
     }
 
-    public static String getClassCssForVaziat(String satus) {
-        if (satus.equals(status_communicated)) {
+    public static String getClassCssForVaziat(String status) {
+        if (status.equals(status_communicated)) {
             return "status_communicated";
-        } else if (satus.equals(status_confirmationFinal)) {
+        } else if (status.equals(status_confirmationFinal)) {
             return "status_confirmationFinal";
-        } else if (satus.equals(status_created)) {
+        } else if (status.equals(status_created)) {
             return "status_created";// این کلاس در فایل های سی اس اس تعریف میشود و در قسمت های مختلف جدول نشان داده می شود
-        } else if (satus.equals(status_ignore)) {
+        } else if (status.equals(status_ignore)) {
             return "status_ignore";// این کلاس در فایل های سی اس اس تعریف میشود و در قسمت های مختلف جدول نشان داده می شود
-        } else if (satus.equals(Approved.status_done)) {
+        } else if (status.equals(Approved.status_done)) {
             return "status_done";// این کلاس در فایل های سی اس اس تعریف میشود و در قسمت های مختلف جدول نشان داده می شود
-        } else if (satus.equals(Approved.status_inDoing)) {
+        } else if (status.equals(Approved.status_inDoing)) {
             return "status_inDoing";
-        } else if (satus.equals(Approved.status_initialRegistration)) {
+        } else if (status.equals(Approved.status_initialRegistration)) {
             return "status_initialRegistration";
-        } else if (satus.equals(Approved.status_unDone)) {
+        } else if (status.equals(Approved.status_unDone)) {
             return "status_unDone";
-//        } else if (satus.equals(Approved.status_finished)) {
-//            return "status_finished";
+        } else if (status.equals(Approved.status_reject)) {
+            return "status_reject";
+        } else if (status.equals(Approved.status_offer)) {
+            return "status_offer";
+
+        } else if (status.equals(Steps.status_done)) {
+            return "status_done";
+        } else if (status.equals(Steps.status_inDoing)) {
+            return "status_inDoing";
+        } else if (status.equals(Steps.status_initialRegistration)) {
+            return "status_initialRegistration";
+        } else if (status.equals(Steps.status_unDone)) {
+            return "status_unDone";
         }
         return "";
     }

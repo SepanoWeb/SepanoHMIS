@@ -12,18 +12,28 @@ var hmisSteps = {
     loadForm: function () {
         if ($("#swStepsForm").html() == '') {
             $("#swStepsForm").load("formHMIS/04Steps.html", null, function () {
+//                                new jj('#sendFilesSteps1').jjAjaxFileUpload4('attachFileSteps1', '#Steps_fileOfResponsible', '#inputFileStepsDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
+                new jj("#startDate").jjCalendarWithYearSelector(1370, 1420);
+                new jj("#endDate").jjCalendarWithYearSelector(1370, 1420);
+                new jj('#sendFiles').jjAjaxFileUploadTitleUploadFiles('#attachFileDocumentary', '#documentary_attachFileDocumentary', 'documentary_titleFile1', '#documentary_attachFileTitle1',"#");
+
+                $("#cancel_Steps").click(function (e) {
+                    hmisSteps.m_clean();
+                    hmisSteps.m_show_tbl();
+                });
+
 
             });
         }
     },
-    m_refresh: function () {
+    m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".refresh";
-//        param += "&panel=" + (containerId == null ? "swContentTbl" : containerId);
-//        param += "&sort=" + (sortField == null ? "0" : sortField);
-//        param += "&height=" + (tableHeight == null ? PanelHeight : tableHeight);
+        param += "&panel=" + (containerId == null ? "swStepsTbl" : containerId);
+        param += "&sort=" + (sortField == null ? "0" : sortField);
+        param += "&height=" + (tableHeight == null ? 800 : tableHeight);
+        param += "&jj=1";
         new jj(param).jjAjax2(false);
-//        himsPlansForAssess.tabSizeTbl();
     },
     m_show_form: function () {
         $('#swStepsTbl').hide();
@@ -31,21 +41,15 @@ var hmisSteps = {
         hmisSteps.tabSizeForm();
     },
     m_clean: function () {
-        new jj("#" + hmisSteps.f_content_id).jjVal("");
-        new jj("#" + hmisSteps.f_title).jjVal("");
-        new jj("#" + hmisSteps.f_lang).jjVal("1");
-        new jj("#" + hmisSteps.f_parent).jjVal("0");
-        new jj("#tags_name").jjVal("");
-//        new jj(content_content_editor).jjEditorVal("");
-//        $("#Content_Language_button").hide();
+
+        $("#showFilesDiv").html("");
+        $("#filesDownloadStepsDiv").html("");
     },
     m_add_new: function () {
-       new  jj("do=" + hmisSteps.tableName + ".add_new").jjAjax2(false);
+        new jj("&do=" + hmisSteps.tableName + ".add_new").jjAjax2(false);
         $('#stepsForm').slideDown();
-        new jj('#stepsForm').jjFormClean();
         hmisSteps.m_show_form();
         hmisSteps.m_clean();
-        //        oEditor.execCommand( 'bold');
 
     },
     m_show_tbl: function () {
@@ -57,8 +61,7 @@ var hmisSteps = {
         hmisSteps.tabSizeTbl();
     },
     m_insert: function () {
-//        var valid = hmisSteps.m_validation();
-//        if (valid == "") {
+
         var param = "";
         param += "do=" + hmisSteps.tableName + ".insert";
         param += "&" + new jj('#stepsForm').jjSerial();
@@ -68,32 +71,34 @@ var hmisSteps = {
         hmisSteps.m_clean();
 //        $("html, body").delay(1000).animate({scrollTop: $('#tblSteps').offset().top}, 800);
 
-//        } else {
-//            new jj(valid).jjDialog();
-//        }
 
     },
     m_edit: function () {
-//        var valid = hmisSteps.m_validation();
-//        if (valid == "") {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".edit";
         param += "&" + new jj('#swStepsForm').jjSerial();
         new jj(param).jjAjax2(false);
         hmisSteps.m_show_tbl();
         hmisSteps.m_clean();
-//        } else {
-//            new jj(valid).jjDialog();
-//        }
     },
-//    m_validation: function () {// mohamdad
-//        if (new jj("#content_title").jjVal().length < 1) {
-//            return "فیلد عنوان نباید کوچکتر از دو کاراکتر باشد";
-//        }
-//        return "";
-//    },
+    /**
+     * ای دی گام 
+     * مرحله ابلاغ گام توسط مدیر
+     * @param {type} id
+     * @returns {undefined}
+     */
+    communicatedSteps: function (id) {
+        var param = "";
+        param += "do=" + hmisSteps.tableName + ".communicatedSteps";
+        param += "&" + hmisSteps.f_id + "=" + (id == null ? "" : id);
+        new jj(param).jjAjax2(false);
+    },
+
     m_delete: function (id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo('hmisSteps.m_delete_after_question(' + id + ');\n', true, "");
+    if (confirm("آیا از حذف این رکورد اطمینان دارید؟")) {
+           hmisSteps.m_delete_after_question(id);
+        } else {
+        }
     },
     m_delete_after_question: function (id) {
         var param = "";
@@ -119,6 +124,42 @@ var hmisSteps = {
         new jj("#" + hmisSteps.f_lang).jjVal("2");
         hmisSteps.m_show_form();
     },
+    //////////////////////////////////
+
+
+    ////////////////////////////////////////////////
+    /**
+     * حذف فایل آپلود شده
+     * @param {type} idUpload
+     * @param {type} id
+     * @returns {undefined}
+     */
+ m_remove: function (idUpload, id) {
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف", "hmisSteps.removeFile(" + idUpload + "," + id + ");");
+    },
+    removeFile: function (idUpload, stepsId) {
+
+        var param = "";
+        param += "do=" + hmisSteps.tableName + ".removeFile";
+        param += "&upload_id=" + idUpload;
+        param += "&hmis_steps_id=" + stepsId;
+        new jj(param).jjAjax2(false);
+//        hmisSessions.m_show_tbl();
+//        hmisSessions.m_clean();
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
     m_add_Ar: function (id) {
         var param = "";
         param += "do=" + hmisSteps.tableName + ".add_Ar";
@@ -177,6 +218,7 @@ var hmisSteps = {
     }
 
 };
+
 //============ BY RASHIDI ========> 
 function selectSearchResult(selectedTagNo) {
     $("#tags_name").val($("#tagsResult_td" + selectedTagNo).html());

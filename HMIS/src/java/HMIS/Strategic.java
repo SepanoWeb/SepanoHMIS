@@ -20,7 +20,6 @@ import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
 
-
 /**
  *
  * @author shohreh.shiran Date 1397.11.1
@@ -57,14 +56,12 @@ public class Strategic {
     public static String _targetGO2_5 = "strategic_targetGO2_5";//هدف اختصاصی o2
     public static String _prioritized = "strategic_prioritized";//اولویت بندی شده
 
-    public static int rul_rfs = 0;
-    public static int rul_ins = 0;
-    public static int rul_edt = 0;
-    public static int rul_dlt = 0;
-    public static int rul_lng2 = 0;
-    public static int rul_lng3 = 0;
-    public static int rul_lng4 = 0;
-    public static int rul_lng5 = 0;
+    public static int rul_rfsAll = 21;
+    public static int rul_rfs = 22;
+    public static int rul_ins = 23;
+    public static int rul_edt = 24;
+    public static int rul_dlt = 25;
+
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
     public static String lbl_edit = "ویرایش";
@@ -76,6 +73,8 @@ public class Strategic {
                 Server.outPrinter(request, response, hasAccess);
                 return "";
             }
+//               boolean accRefAll = Access_User.hasAccess(request, db, rul_rfsAll);
+//               boolean accRef= Access_User.hasAccess(request, db, rul_rfs);
             StringBuilder html = new StringBuilder();
 
             DefaultTableModel dtm = db.Select(tableName);
@@ -196,7 +195,6 @@ public class Strategic {
      * @return
      * @throws Exception
      */
-    
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             StringBuilder html = new StringBuilder();
@@ -258,8 +256,7 @@ public class Strategic {
 //                html.append(Js.setVal("#strategic_targetGO1_" + i , row.get(0).get("#strategic_targetGO1_" + i )));
 //                html.append(Js.setVal("#strategic_targetGO2_" + i , row.get(0).get("#strategic_targetGO2_" + i)));
 //            }
-            
-            
+
             html.append(Js.setVal("#" + _targetGO2_1, row.get(0).get(_targetGO2_1)));
             html.append(Js.setVal("#" + _targetG_2, row.get(0).get(_targetG_2)));
             html.append(Js.setVal("#" + _targetGO1_2, row.get(0).get(_targetGO1_2)));
@@ -292,7 +289,7 @@ public class Strategic {
             String script = Js.setHtml("#Strategic_button", html2);
 
             script += html.toString();
-
+            script += "        $('div#pointer').css({'transform': 'translate(' + $('#tableIFE td .sumFinalVal').val() * 50 + 'px' + ',' + $('#tableEFE td .sumFinalVal').val() * -57 + 'px' + ')'});\n";
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {

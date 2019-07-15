@@ -1,0 +1,191 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">میز هوشمند مصوبات</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="card-header btn-teal tx-white">
+            پیشرفت گام
+        </div>
+        <div class="card-body pd-sm-30">
+            <div class="row">
+                <input type="hidden" id="hmis_steps_id" name="hmis_steps_id"/>
+                <div class="col-lg-6">
+                    عنوان گام
+                    <div class="form-group has-success mg-b-0">
+                        <input id="MySteps_title" disabled="disabled" class="form-control is-valid" placeholder="عنوان گام  را وارد کنید" type="text" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-6">
+                    درصد گام
+                    <div class="form-group has-success mg-b-0">
+                        <input id="MySteps_percent" disabled="disabled" min="0" max="100" class="form-control is-valid" placeholder="درصد گام  را وارد کنید" type="number" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-6">
+                    درصد پیشرفت گام
+                    <div class="form-group has-success mg-b-0">
+                        <input id="MySteps_progressPercent" name="steps_progressPercent"  min="0" max="100"  class="form-control is-valid" placeholder="درصد پیشرفت گام  را وارد کنید" type="number" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-3">
+                    <div class="form-group has-warning mg-b-0">
+                        مسئول اجرا
+                        <input type="text" disabled="disabled" id="MySteps_executorRoleId" class="form-control is-valid" />
+                    </div><!-- form-group -->
+                </div><!-- col -->
+                <div class="col-lg-3">
+                    <div class="form-group has-warning mg-b-0">
+                        مسئول پیگیری
+                        <input type="text" id="MySteps_trackerId" disabled="disabled"  class="form-control is-valid"/>
+
+                    </div><!-- form-group -->
+                </div><!-- col -->
+                <div class="col-lg-3">
+                    تاریخ شروع:
+                    <div class="form-group has-success mg-b-0">
+                        <input id="MySteps_startDate" disabled="disabled" class="form-control is-valid" placeholder="تاریخ شروع" type="text">
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-3">
+                    تاریخ پایان:
+                    <div class="form-group has-success mg-b-0">
+                        <input  id="MySteps_endDate"  disabled="disabled" class="form-control is-valid" placeholder="تاریخ پایان" type="text">
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <br/>
+                <div class="col-lg-3">
+                    وضعیت:
+                    <select id="MySteps_status" name="steps_status" class="form-control" >
+                        <option value="در حال انجام">در حال انجام</option>
+                        <option value="غیر قابل انجام">غیر قابل انجام</option>
+                        <option value="انجام شده">انجام شده</option>
+                    </select>
+                </div><!-- col -->  
+                <div class="col-lg-3" style="float: left">
+                    روند وضعیت:
+                    <br/>
+                    <a href="#" class="btn btn-outline-dark btn-icon mg-r-5"><div style="font-size: 18px"><i class="icon ion-loop" onclick="$('#statusLogMySteps').show();"></i></div></a>
+                    <div id="statusLogMySteps"  class="form-control is-valid" style="display:none;height: 100%"></div>
+                </div>
+                <div class="col-lg-9">
+                    :توضیحات مسئول اجرا
+                    <div class="form-group has-success mg-b-0">
+                        <input id="MySteps_descriptionExecutor" name="steps_descriptionExecutor" disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+                <div class="col-lg-9">
+                    :توضیحات مسئول پیگیری 
+                    <div class="form-group has-success mg-b-0">
+                        <input id="MySteps_descriptionTracker" name="steps_descriptionTracker" disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
+                    </div><!-- form-group -->
+                </div><!-- col -->   
+
+                <div class="row col-lg-12" id="trackerFileDiv"  style="display:none">
+                    <!--<div class="">-->
+
+                        <input id="MySteps_trackerFiles" name="steps_trackerFiles" type="hidden">
+                        <input id="MySteps_trackerFilesTitle" name="steps_filesTitle" type="hidden">
+                        <div id="inputAfterSelectGauge1" ></div>
+                        <div  id="inputTextSelectorDiv1" ></div>
+                        <div  id="inputTitleSelectorDiv1" ></div>
+                        <div  id="showFilesMySteps1Div" ></div>
+
+                        <div class="input-group">
+
+                            <input class="btn btn-primary" id="sendTrackerFilesMySteps" type="submit" value="ارسال">
+                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                            <input id="attachTrackerFilesMySteps" name="attachFileSteps" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                            <!--<span class="form-control"></span>-->
+                        </div>
+                        عنوان فایل
+                        <input id="MySteps_trackerTitleFile1" name="steps_titleFile1"  style="display: block;
+                               width: 100%;
+                               padding: 0.65rem 0.75rem;
+                               font-size: 1.3rem;
+                               line-height: 1.25;
+                               color: #495057;
+                               background-color: #fff;
+                               background-image: none;
+                               background-clip: padding-box;
+                               border: 1px solid rgba(0, 0, 0, 0.15);
+                               border-radius: 3px;
+                               transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                        <span id="user_pic" class="form-control"></span>
+                    </div>
+                    </div>
+                        <div class="row" id="filesDownloadMySteps1Div"></div>
+                    
+                    <div class="row" id="executorFileDiv"  style="display:none">
+                        <div class="col-lg-12">
+
+                            <input id="MySteps_executorFiles" name="steps_executorFiles" type="hidden">
+                            <input id="MySteps_executorFilesTitle" name="steps_filesTitle" type="hidden">
+                            <div id="inputAfterSelectGauge2" ></div>
+                            <div  id="inputTextSelectorDiv2" ></div>
+                            <div  id="inputTitleSelectorDiv2" ></div>
+                            <div  id="showFilesMySteps2Div" ></div>
+
+                            <div class="input-group">
+
+                                <input class="btn btn-primary" id="sendExecutorFilesMySteps" type="submit" value="ارسال">
+                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                <input id="attachExecutorFilesMySteps" name="attachFileSteps" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                <!--<span class="form-control"></span>-->
+                            </div>
+                            عنوان فایل
+                            <input id="MySteps_executorTitleFile1" name="steps_titleFile1"  style="display: block;
+                                   width: 100%;
+                                   padding: 0.65rem 0.75rem;
+                                   font-size: 1.3rem;
+                                   line-height: 1.25;
+                                   color: #495057;
+                                   background-color: #fff;
+                                   background-image: none;
+                                   background-clip: padding-box;
+                                   border: 1px solid rgba(0, 0, 0, 0.15);
+                                   border-radius: 3px;
+                                   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                            <span id="user_pic" class="form-control"></span>
+                        </div>
+                        </div>
+                            <div class="row" id="filesDownloadMySteps2Div"></div>
+
+
+
+                        <div  class="col-lg-3" id="inputFileStepsDiv"></div>
+                        <div class="col-lg-12 mg-t-20" id="inputTextSelectorDiv"></div>
+                        <div class="col-lg-12 mg-t-20" id="FilesStepsDiv"></div>
+
+
+                        <div class="col-lg-3" id="MySteps_button"></div>
+                        <div class="col-lg-3">
+                            <a id="cancel_MySteps" class="btn btn-outline-secondary mg-b-10  btn-block">
+                                بازگشت
+                            </a>   
+                        </div><!-- col --> 
+                </div><!-- card-body -->
+            </div>
+        </div>
+        <script>
+
+            $(function () {
+                'use strict';
+                $('#datatable1').DataTable({
+                    responsive: true,
+                    language: {
+                        searchPlaceholder: 'جستجو...',
+                        sSearch: '',
+                        lengthMenu: '_MENU_ items/page',
+                    }
+                });
+
+
+                // Select2
+                $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+            });
+        </script>

@@ -21,6 +21,7 @@ import HMIS.Messenger;
 import HMIS.Sessions;
 import HMIS.Reports;
 import HMIS.Role;
+import HMIS.Setting;
 import HMIS.Steps;
 import HMIS.Strategic;
 import java.io.*;
@@ -137,6 +138,7 @@ public class Server extends HttpServlet {
             clazzes.add(Approved.class);//مصوبات 13971212
             ///////////////////////////    shiran2      ماژول استراتژیک
             clazzes.add(Strategic.class);//برنامه استراتژیک
+            clazzes.add(Setting.class);//تنظیمات یادآوری
         }
         return clazzes;
     }
