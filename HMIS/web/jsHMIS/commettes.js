@@ -12,39 +12,18 @@ var hmisCommettes = {
         if ($("#swCommettesForm").html() == '') {
             $("#swCommettesForm").load("formHMIS/05newCommette.html", null, function () {
                 $('#sessions_time').wickedpicker();
-                $('#sessions_timeReminder').wickedpicker();
+//                $('#sessions_timeReminder').wickedpicker();
                 new jj("#sessions_date").jjCalendarWithYearSelector(1397, 1420);
                 new jj("#sessions_dateReminder").jjCalendarWithYearSelector(1397, 1420);
-                new jj('#sendPicFilesCommettes').jjAjaxFileUpload2('attachFileCommettes', '#commettes_regulationFile', '#PicPreviewAttach');
-                new jj('#sendDocumentCommettes').jjAjaxFileUpload3('attachDocumentCommettes', '#commettes_documentsFile', '');
-                new jj('#sendFilesInvitees').jjAjaxFileUpload4('attachFileInvitees', '#sessions_InviteesFile', '#inputTextSelectorInviteesDiv');
+                new jj('#sendDocumentCommettes').jjAjaxFileUploadTitleUploadFiles('#attachDocumentCommettes', '#commettes_documentsFile', 'commettes_titleFile1', '#commettes_files1Title', "#showFiles1Div");
+                new jj('#sendPicFilesCommettes').jjAjaxFileUploadTitleUploadFiles('#attachFileCommettes', '#commettes_regulationFile', 'commettes_titleFile2', '#commettes_files2Title', "#showFiles2Div");
+                new jj('#sendFilesInvitees').jjAjaxFileUploadTitleUploadFiles('#attachFileInvitees', '#sessions_InviteesFile', 'sessions_titleFile1', '#commettes_filesTitle', "#showFilesDiv");
+//                new jj('#sendFilesInvitees').jjAjaxFileUpload4('attachFileInvitees', '#sessions_InviteesFile', '#inputTextSelectorInviteesDiv');
                 $("#commettes_secretary").select2({
                     minimumResultsForSearch: '',
                     width: '100%'
                 });
-//                $("#cancel_Commettes").click(function (e) {
-//                    hmisCommettes.m_clean();
-//                    hmisCommettes.m_show_tbl();
-//                });
 
-
-//                new jj("#steps_startDate").jjCalendarWithYearSelector(1340, 1420);
-
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
                 hmisCommettes.m_refresh();
                 $('#newCommetteForm').show();
                 $('#formInvitation').hide();
@@ -97,20 +76,51 @@ var hmisCommettes = {
         for (var i = 0; i < temp.length; i++) {
             temp2 += $(temp[i]).val() + "%23A%23";
         }
+        var flag = true;
+        if ($("#commettes_superwizar option:selected").val() == "") {
+            $("#commettes_superwizar").addClass("required");
+            flag = false;
 
-        param += "&do=" + hmisCommettes.tableName + ".insert";
-        param += "&commettes_documentsFile=" + temp2;
-        param += "&" + new jj('#newCommetteForm').jjSerial();
-        new jj(param).jjAjax2(false);
-        hmisCommettes.m_show_tbl();
-        hmisCommettes.m_clean();
-//        } else {
-//            new jj(valid).jjDialog();
-//        }
+
+        } else {
+            $("#commettes_superwizar").removeClass('required');
+        }
+        if ($("#commettes_title").val() == "") {
+            $("#commettes_title ").addClass("required");
+            flag = false;
+        } else {
+            $("#commettes_title").removeClass('required');
+        }
+        if ($("#commettes_secretary option:selected").val() == "") {
+            $("#commettes_secretary").addClass("required");
+
+            flag = false;
+        } else {
+            $("#commettes_secretary").removeClass("required");
+        }
+        if ($("#commettes_members").val() == "") {
+            $("#refreshRoles").addClass("required");
+//                                $("html, body").delay(1000).animate({scrollTop: $('#refreshRoles').offset().top}, 800);
+
+            flag = false;
+        } else {
+            $("#refreshRoles").removeClass("required");
+        }
+        if (flag == true) {
+            param += "&do=" + hmisCommettes.tableName + ".insert";
+            param += "&commettes_documentsFile=" + temp2;
+            param += "&" + new jj('#newCommetteForm').jjSerial();
+            new jj(param).jjAjax2(false);
+            hmisCommettes.m_show_tbl();
+            hmisCommettes.m_clean();
+
+        }
+        $("html, body").delay(1000).animate({scrollTop: $('#newCommetteForm').offset().top}, 800);
+
     },
     m_edit: function () {
 //        var valid = hmisPlan.m_validation();
-//        if (valid == "") {
+        //        if (valid == "") {
         var temp2 = "";
         var param = "";
         param += "&do=" + hmisCommettes.tableName + ".edit";
@@ -126,14 +136,14 @@ var hmisCommettes = {
         hmisCommettes.m_clean();
 //        } else {
 //            new jj(valid).jjDialog();
-//        }
+        //        }
     },
 //    m_validation: function () {// mohamdad
 //        if (new jj("#content_title").jjVal().length < 1) {
 //            return "فیلد عنوان نباید کوچکتر از دو کاراکتر باشد";
 //        }
 //        return "";
-//    },
+    //    },
     m_delete: function (id) {
         new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisCommettes.m_delete_after_question(' + id + ');\n', true, "");
     },
@@ -146,6 +156,14 @@ var hmisCommettes = {
         hmisCommettes.m_clean();
     },
     m_select: function (id) {
+        $('#swCommettesForm  select').removeClass("required");
+        $('#swCommettesForm  input').removeClass("required");
+        $('#swCommettesForm  #refreshRoles').removeClass("required");
+        $('#inputTextSelectorDiv1').val("");
+        $('#inputTextSelectorDiv2').val("");
+        $('#commettes_documentsFile').val("");
+        $('#commettes_regulationFile').val("");
+
         $('#newCommetteForm').show();
         $('#formInvitation').hide();
         var param = "";
@@ -181,7 +199,7 @@ var hmisCommettes = {
         new jj(param).jjAjax2(false);
         new jj("#" + hmisCommettes.f_parent).jjVal(id);
         new jj("#" + hmisCommettes.f_lang).jjVal(langId);
-//        alert(id+"&&&&&"+langId);
+        //        alert(id+"&&&&&"+langId);
         hmisCommettes.m_show_form();
     },
     //<============ BY RASHIDI ========
@@ -233,45 +251,45 @@ var hmisCommettes = {
 
     Invitees: function () {//مدعوین
 
-            var param = "";
-            var temp = $('#InviteesDiv input:checkbox[class=checkBoxInvitees]:checked'); //مدعوین سمت دار
-            var InviteesOutSide = $('#InviteesDiv .invitedOutSide');
-            var InviteesInSide = $('#sessions_InviteesInSide').val();
-            if (temp.size() == 0) {//اگر تیک عضوی را نزده بود
-                alert("لطفا افراد را انتخاب کنید");
-                return;
+        var param = "";
+        var temp = $('#InviteesDiv input:checkbox[class=checkBoxInvitees]:checked'); //مدعوین سمت دار
+        var InviteesOutSide = $('#InviteesDiv .invitedOutSide');
+        var InviteesInSide = $('#sessions_InviteesInSide').val();
+        if (temp.size() == 0) {//اگر تیک عضوی را نزده بود
+            alert("لطفا افراد را انتخاب کنید");
+            return;
+        }
+        var temp1 = "";
+        var temp2 = "";
+        var temp3 = "";
+        var temp4 = "";
+        var temp5 = "";
+        ///////////////////////مدعوین سمت دار
+        for (var i = 0; i < temp.size(); i++) {
+            temp1 += $(temp[i]).attr('value') + "%23A%23"; //نام چک باکس عدد مورد نظر
+        }
+        /////////////////////////////مهمانان داخل سازمان
+        for (var i = 0; i < InviteesInSide.length; i++) {
+            temp3 += InviteesInSide[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+        }
+        ///////////////////////////////////////مهمانان خارج از سازمان
+        //این قسمت نام و نام خانوادگی فرد مهمان را میگیرد واگر خالی باشد چیزی ارسال نمی شود 
+        // اول دیو کلی را می گیرد  بعد اینپوت هایی که داخل دیو ها هستند را در می آورد
+        for (var i = 1; i < InviteesOutSide.length; i++) {
+            var InputInviteesOutSide = $("#InviteesDiv #invitedOutSide_" + [i] + " input");
+            if ($("#InviteesDiv #invitedOutSide_" + [i] + " .name").val() !== "" && +$("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() !== "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() !== "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() !== "") {
+                temp4 += $("#InviteesDiv #invitedOutSide_" + [i] + " .name").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() + "%23A%23";
+            } else {
             }
-            var temp1 = "";
-            var temp2 = "";
-            var temp3 = "";
-            var temp4 = "";
-            var temp5 = "";
-            ///////////////////////مدعوین سمت دار
-            for (var i = 0; i < temp.size(); i++) {
-                temp1 += $(temp[i]).attr('value') + "%23A%23"; //نام چک باکس عدد مورد نظر
-            }
-            /////////////////////////////مهمانان داخل سازمان
-            for (var i = 0; i < InviteesInSide.length; i++) {
-                temp3 += InviteesInSide[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
-            }
-///////////////////////////////////////مهمانان خارج از سازمان
-            //این قسمت نام و نام خانوادگی فرد مهمان را میگیرد واگر خالی باشد چیزی ارسال نمی شود 
-            // اول دیو کلی را می گیرد  بعد اینپوت هایی که داخل دیو ها هستند را در می آورد
-            for (var i = 1; i < InviteesOutSide.length; i++) {
-                var InputInviteesOutSide = $("#InviteesDiv #invitedOutSide_" + [i] + " input");
-                if ($("#InviteesDiv #invitedOutSide_" + [i] + " .name").val() !== "" && +$("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() !== "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() !== "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() !== "") {
-                    temp4 += $("#InviteesDiv #invitedOutSide_" + [i] + " .name").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() + "%23A%23";
-                } else {
-                }
-            }
-/////////////////////////////////////////////////////////////////
-            param += "&sessions_Invitees=" + temp1;
-            param += "&sessions_InviteesInSide=" + temp3; //مهمان داخل  سازمان
-            param += "&sessions_InviteesOutSide=" + temp4; //مهمان خارج از  سازمان
-            param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal(); //ای دی کمیته
-            param += "&" + new jj('#formInvitation').jjSerial();
-            param += "&do=Sessions.requestSendComment&jj=1";
-            new jj(param).jjAjax2(false);
+        }
+        /////////////////////////////////////////////////////////////////
+        param += "&sessions_Invitees=" + temp1;
+        param += "&sessions_InviteesInSide=" + temp3; //مهمان داخل  سازمان
+        param += "&sessions_InviteesOutSide=" + temp4; //مهمان خارج از  سازمان
+        param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal(); //ای دی کمیته
+        param += "&" + new jj('#formInvitation').jjSerial();
+        param += "&do=Sessions.requestSendComment&jj=1";
+        new jj(param).jjAjax2(false);
 
     },
     addMembers: function (i) {
@@ -341,5 +359,20 @@ var hmisCommettes = {
 
         }
 
+    },
+    /**
+     * ارسال پیام و
+     *  دعوت  همه افراد انتخاب شده
+     *   برای برگزاری جلسه توسط کمیته
+     * @returns {undefined}
+     */
+    sendComment: function (text, inviteesId, inviteesOutSideId, inviteesInSideId) {
+        var param = "";
+        param += "&textComment=" + text;
+        param += "&inviteesIdComment=" + inviteesId;
+        param += "&inviteesOutSideIdComment=" + inviteesOutSideId;
+        param += "&inviteesInSideIdComment=" + inviteesInSideId;
+        param += "&do=" + hmisCommettes.tableName + ".sendComment" + "&jj=1";
+        new jj(param).jjAjax2(false);
     },
 };

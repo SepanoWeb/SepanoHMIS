@@ -50,8 +50,8 @@ var hmisSessions = {
         new jj(param).jjAjax2(false);
     },
     m_show_form: function () {
-        $('#swSessionsTbl').slideUp();
-        $('#swSessionsForm').slideDown();
+        $('#swSessionsTbl').hide();
+        $('#swSessionsForm').show();
         hmisSessions.tabSizeForm();
     },
     m_clean: function () {
@@ -66,12 +66,12 @@ var hmisSessions = {
         hmisSessions.m_clean();
     },
     m_show_tbl: function () {
-        $('#swSessionsTbl').slideDown();
-        $('#swSessionsForm').slideUp();
+        $('#swSessionsForm').hide();
+        $('#swSessionsTbl').show();
         if ($('#swSessionsTbl').html() == "") {
             hmisSessions.m_refresh();
         }
-        hmisSessions.tabSizeTbl();
+//        hmisSessions.tabSizeTbl();
     },
     m_insert: function () {
 //        var valid =  hmisSessions.m_validation();
@@ -217,6 +217,7 @@ var hmisSessions = {
      * @returns {undefined}
      */
     confirmationFinalSessions: function (id) {
+        if(!$('#sessions_communicatorId').val()==""){
         var temp = $('#audience input:checkbox[class=checkboxAudience]:checked'); //مدعوین سمت دار
         var temp3 = $('#audience input:checkbox[class=checkboxAudienceOutSide]:checked'); //مدعوین خارج از سازمان
         if (temp.size() == 0) {
@@ -227,6 +228,7 @@ var hmisSessions = {
             } else {
             }
         }
+    }
     },
     confirmationFinalSessions_after_question: function (id) {
         var temp = $('#audience input:checkbox[class=checkboxAudience]:checked'); //مدعوین سمت دار

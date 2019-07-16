@@ -10,9 +10,9 @@ var hmisCommunicatedSessions = {
     f_id: "id",
     loadForm: function () {
         if ($("#swCommunicatedSessionsForm").html() == '') {
-            $("#swCommunicatedSessionsForm").load("formHMIS/05OneSession.html", null, function () {
+            $("#swCommunicatedSessionsForm").load("formHMIS/05SessionCommunicated.html", null, function () {
 
-                $("#cancel_Sessions").click(function (e) {
+                $("#cancel_CommunicatedSessions").click(function (e) {
                     hmisCommunicatedSessions.m_clean();
                     hmisCommunicatedSessions.m_show_tbl();
                 });
@@ -68,7 +68,6 @@ var hmisCommunicatedSessions = {
      * @returns {undefined}
      */
     sendToCommunicator: function (id) {
-
         if (confirm("آیا  صورتجلسه به ابلاغ کننده موردنظر ابلاغ شود؟")) {
             hmisCommunicatedSessions.sendToCommunicator_after_question(id);
         } else {

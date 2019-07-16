@@ -42,7 +42,7 @@
 
 
         <title>MedYar مدیار </title>
-        
+
         <!-- استایل گذاری روی جداول-->
         <link href="Manager/css/publicStyle.css" rel="stylesheet" type="text/css"/>
         <!-- Vendor css -->
@@ -104,6 +104,26 @@
                     </ul>
 
                 </li><!-- nav-item -->
+                <li id='StrategicTab' class="nav-item">
+                    <a href="#" class="nav-link with-sub">                        
+                        <i class="icon ion-ios-filing-outline"></i>
+                        <span>ماژول برنامه استراتژیک</span>
+                    </a>
+                    <ul class="nav-sub">
+                        <li class="nav-item"><a href="#swStrategic" onclick="if ($('#swStrategicTbl').html() == '') {
+                                    hmisStrategic.m_refresh();
+                                }
+                                ;
+                                hmisStrategic.loadForm();
+                                return false;" class="nav-link ShowOneDiv">برنامه استراتژیک </a></li>
+<!--                        <li class="nav-item"><a href="#swStrategicGuide" onclick="
+                                hmisStrategicGuide.loadForm();
+//                                hmisStrategicGuide.m_showForm();
+                                "
+                                class="nav-link ShowOneDiv">راهنما برنامه استراتژیک</a></li>-->
+
+                    </ul>
+                </li><!-- nav-item -->
                 <li class="nav-item">
                     <a href="#" class="nav-link with-sub">                        
                         <i class="icon ion-ios-filing-outline"></i>
@@ -121,6 +141,7 @@
                         <li class="nav-item"><a href="#swMyForms" target="_blank" onclick="hmisFormAnswerSets.showMyForms();return false;" class="nav-link ShowOneDiv">تکمیل فرم های من</a></li>
                     </ul>
                 </li><!-- nav-item -->
+
                 <li class="nav-item">
                     <a href="index.html" class="nav-link with-sub">                        
                         <i class="icon ion-ios-filing-outline"></i>
@@ -150,9 +171,20 @@
                                     hmisPlans.m_refresh();
                                 }
                                 ;
-//            
                                 hmisPlans.loadForm();
                                                 " class="nav-link ShowOneDiv">برنامه های عملیاتی و بهبود کیفیت</a></li>
+                        <li class="nav-item"><a href="#swMyPlans" onclick="if ($('#swMyPlansTbl').html() == '') {
+                                    hmisMyPlans.m_refresh();
+                                }
+                                ;
+                                hmisMyPlans.loadForm();
+                                                " class="nav-link ShowOneDiv">برنامه های عملیاتی من</a></li>
+                        <li class="nav-item"><a href="#swManagerPlans" onclick="if ($('#swManagerPlansTbl').html() == '') {
+                                    hmisManagerPlans.m_refresh();
+                                }
+                                ;
+                                hmisManagerPlans.loadForm();
+                                                " class="nav-link ShowOneDiv">برنامه های عملیاتی مدیر</a></li>
                         <li class="nav-item"><a href="#swPlansForAssess" onclick="if ($('#swPlansForAssessTbl').html() == '') {
                                     hmisPlansForAssess.m_refresh();
                                 }
@@ -164,6 +196,12 @@
                                     }
                                     ;
                                     hmisSteps.loadForm();"  class="nav-link ShowOneDiv">گام های اجرایی</a></li>
+                        <li class="nav-item">
+                            <a href="#swMySteps"  onclick="if ($('#swMyStepsTbl').html() == '') {
+                                        hmisMySteps.m_refresh();
+                                    }
+                                    ;
+                                    hmisMySteps.loadForm();"  class="nav-link ShowOneDiv">گام های اجرایی من</a></li>
                         <li class="nav-item"><a href="#swReports"
                                                 onclick="
 //    if ($('#swReportsTbl').html() == '') {
@@ -175,6 +213,7 @@
                     </ul>
 
                 </li><!-- nav-item -->
+
                 <li class="nav-item">
                     <a href="index.html" class="nav-link with-sub">                        
                         <i class="icon ion-ios-filing-outline"></i>
@@ -261,7 +300,7 @@
                                 hmisManagementGauges.mainTabSetSize();
                                 hmisManagementGauges.loadForm();
 
-                                                "> مدیریت سنجه ها</a></li>
+                                                ">مدیریت سنجه ها</a></li>
 
                         <li class="nav-item"><a href="#" class="nav-link ShowOneDiv" onclick="$('.sh-mainpanel').load('07allStandards.html', null, function () {
                                 });
@@ -335,13 +374,7 @@
                                 return false;">FOCUS PDCAمدل بهبود کیفیت </a></li>                        
                     </ul>
                 </li><!-- nav-item -->                                
-                <li class="nav-item">
-                    <a  class="nav-link with-sub">
-                        <i class="icon ion-ios-list-outline"></i>
-                        <span>برنامه استراتژیک</span>
-                    </a>
 
-                </li><!-- nav-item -->
                 <li class="nav-item">
                     <a  class="nav-link with-sub">
                         <i class="icon ion-ios-list-outline"></i>
@@ -398,6 +431,28 @@
                                                  ">جدول گروه های کاربری</a></li>
                     </ul>
                 </li><!-- nav-item -->
+                
+                
+                
+                
+                
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link with-sub">                        
+                        <i class="icon ion-ios-filing-outline"></i>
+                        <span>ماژول تنظیمات</span>
+                    </a>
+                    <ul class="nav-sub">
+                        <li class="nav-item">
+                            <a href="#swSetting" onclick="if ($('#swSettingTbl').html() == '') {
+                                        hmisSetting.m_refresh();
+                                    }
+                                    ;
+                                    hmisSetting.loadForm();" class="nav-link ShowOneDiv">تنظیمات یادآوری پیام</a>
+                        </li>
+
+                    </ul>
+                </li><!-- nav-item -->
+                
                 <!--                <li class="nav-item">
                                     <a href="index.html" class="nav-link with-sub">
                                         <i class="icon ion-ios-list-outline"></i>
@@ -597,11 +652,23 @@
                             <div class="Alldiv" id="swPlansForAssess">
                                 <div id="swPlansForAssessTbl" style=""></div>
                                 <div id="swPlansForAssessForm" style="display: none;"></div>
+                            </div><!--swMyPlans-->
+                            <div class="Alldiv" id="swMyPlans">
+                                <div id="swMyPlansTbl" style=""></div>
+                                <div id="swMyPlansForm" style="display: none;"></div>
                             </div><!--swPlansForAssess-->
+                            <div class="Alldiv" id="swManagerPlans">
+                                <div id="swManagerPlansTbl" ></div>
+                                <div id="swManagerPlansForm" style="display: none;"></div>
+                            </div><!--swManegerPlans-->
                             <div class="Alldiv" id="swSteps">
                                 <div id="swStepsTbl" style=""></div>
                                 <div id="swStepsForm" style="display: none;"></div>
                             </div><!--swSteps-->
+                            <div class="Alldiv" id="swMySteps">
+                                <div id="swMyStepsTbl" style=""></div>
+                                <div id="swMyStepsForm" style="display: none;"></div>
+                            </div><!--swMySteps-->
                             <div class="Alldiv" id="swReports">
                                 <div id="swReportsTbl" style=""></div>
                                 <div id="swReportsForm" style="display: none;"></div>
@@ -663,6 +730,20 @@
                                 <div id="swManagementGaugesTbl" ></div>
                                 <div id="swManagementGaugesForm" style="display: none;"></div>
                             </div>
+                            <!--strategic-->
+                            <div class="Alldiv" id="swStrategic">
+                                <div id="swStrategicTbl" ></div>
+                                <div id="swStrategicForm" style="display: none;"></div>
+                            </div>
+                            <div class="Alldiv" id="swSetting">
+                                <div id="swSettingTbl" ></div>
+                                <div id="swSettingForm" style="display: none;"></div>
+                            </div>
+                            <!--StrategicGuide-->
+<!--                            <div class="Alldiv" id="swStrategicGuide">
+                                <div id="swStrategicTbl" ></div>
+                                <div id="swStrategicGuideForm" style="display: none;"></div>
+                            </div>-->
 
                         </div>
 
@@ -720,20 +801,22 @@
             <script src="jsHMIS/formQuestions.js" type="text/javascript"></script>
             <script src="jsHMIS/formQuestionOptions.js" type="text/javascript"></script>
             <script src="jsHMIS/formAnswers.js" type="text/javascript"></script>
-            <script src="jsHMIS/plansForAssess.js" type="text/javascript"></script>
+            <script src="jsHMIS/plansForAssess.js" type="text/javascript"></script><!--پایش برنامه ها-->
             <script src="jsHMIS/plans.js" type="text/javascript"></script>
+            <script src="jsHMIS/MyPlans.js" type="text/javascript"></script>
+            <script src="jsHMIS/ManagerPlans.js" type="text/javascript"></script>
             <script src="jsHMIS/steps.js" type="text/javascript"></script>
+            <script src="jsHMIS/mySteps.js" type="text/javascript"></script>
             <script src="jsHMIS/sessions.js" type="text/javascript"></script>
             <script src="jsHMIS/Mysessions.js" type="text/javascript"></script>
             <script src="jsHMIS/approved.js" type="text/javascript"></script>
             <script src="jsHMIS/reports.js" type="text/javascript"></script>
             <script src="jsHMIS/commettes.js" type="text/javascript"></script>
             <script src="jsHMIS/communicatedSessions.js" type="text/javascript"></script>
-            <!--<script src="jsHMIS/part.js" type="text/javascript"></script>-->
+            <script src="jsHMIS/strategic.js" type="text/javascript"></script>
             <script src="jsCms/user.js" type="text/javascript"></script>
             <script src="jsCms/group.js" type="text/javascript"></script>
             <script src="jsHMIS/department.js" type="text/javascript"></script>
-
             <script src="jsHMIS/messenger.js" type="text/javascript"></script>
 
             <script src="jsHMIS/role.js" type="text/javascript"></script>
@@ -743,6 +826,9 @@
 
             <!--////ایجاد مستند-->
             <script src="jsHMIS/createDocumentary.js" type="text/javascript"></script>
+            
+            <!--////تنظیمات-->
+            <script src="jsHMIS/setting.js" type="text/javascript"></script>
 
 
             <script src="Manager/bootstrap-filestyle.js" type="text/javascript"></script>

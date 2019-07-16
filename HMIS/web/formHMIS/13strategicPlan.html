@@ -1,0 +1,897 @@
+<div  class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">برنامه عملیاتی هوشمند</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="sh-pagetitle">
+
+            <div class="sh-pagetitle-left">
+                <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
+                <div class="sh-pagetitle-title">
+                    <span>ماژول کمک یار تدوین برنامه استراتژیک</span>
+                    <h2>برنامه استراتژیک</h2>
+                </div><!-- sh-pagetitle-left-title -->
+            </div><!-- sh-pagetitle-left -->
+        </div><!-- sh-pagetitle -->
+        <div class="card bd-primary mg-t-20" id="newFormQuestion">
+            <input id="hmis_strategic_id" type="hidden"/>
+            <div class="card-header mg-t-3 bg-indigo  tx-white c">
+                <div class=" r col-lg mg-t-20 mg-lg-t-0">
+                    <h4>
+                        مقدمه و تاریخچه
+                    </h4>
+                </div>
+            </div>
+            <br>
+            <textarea placeholder="مقدمه و تاریخچه" style="" id="strategic_introduction" name="strategic_introduction" rows="7"></textarea>
+        </div>
+        <div class="card bd-primary mg-t-20" id="newFormQuestion">
+
+            <div class="card-header mg-t-3 bg-pink  tx-white c">
+                <div class=" r col-lg mg-t-20 mg-lg-t-0">
+                    <h4>
+                        رسالت
+                    </h4>
+                </div>
+            </div>
+
+            <br>
+            <textarea placeholder="رسالت" style="" id="strategic_prophecy" name="strategic_prophecy" rows="7"></textarea>
+        </div>
+        <div class="card bd-primary mg-t-20" id="newFormQuestion">
+
+            <div class="card-header mg-t-3 bg-info tx-white c">
+                <div class=" r col-lg mg-t-20 mg-lg-t-0">
+                    <h4>
+                        دورنما و چشم انداز
+                    </h4>
+                </div>
+            </div>
+
+            <br>
+            <textarea placeholder="دورنما و چشم انداز" style="" id="strategic_prospect" name="strategic_prospect" rows="7"></textarea>
+        </div>
+
+
+
+        <div class="card bd-primary mg-t-20"  id="newFormQuestion" >
+            <div class="card-header mg-t-3 bg-teal tx-white c" >
+                <h4>
+                    جدول ذی نفعان 
+                </h4>
+            </div>
+            <div class="row" id="beneficiaries">
+                <div class="col-6">
+                    <div class="r mg-t-10 mg-lg-t-0" >
+                        <div class="card-header mg-t-3 bg-teal tx-white c">
+                            ذی نفعان داخلی
+                        </div>
+                        <input type="text" class="onkeyup"  placeholder="ذی نفعان داخلی" style="width:684px" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="r mg-t-10 mg-lg-t-0">
+                        <div class="card-header mg-t-3 bg-teal tx-white c">
+                            ذی نفعان خارجی
+                        </div>
+                        <input  placeholder="ذی نفعان خارجی" type="text"  class="onkeyup" style="width:684px" />
+                    </div>
+                </div>
+                <script>
+                    $('#beneficiaries input.onkeyup').keyup(function () {
+                        $(this).attr('value', $(this).val());
+                    });
+
+
+                </script>
+            </div>
+        </div>
+        <div  id="tableIFEDiv" class="col-lg-12">
+            <div class="card bd-primary mg-t-20" id="newFormQuestion">
+                <div class="card-header bg-danger tx-white c">
+                    جداول نقاط قوت - ضعف و فرصت ها - تهدید ها
+                </div>
+                <div class="card-body pd-sm-30">
+                    <p class="mg-b-20 mg-sm-b-30"></p>
+                    <div class="col-lg-12">
+                        <div class="form-group has-success mg-b-0">
+
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+
+                    <div align="right">
+                        <div class="card-header bg-primary tx-white c">ارزیابی داخلی (IFE)</div>
+                        <style type="text/css">
+                            #tableIFE input,#tableEFE input,#tableEFE td{
+                                padding:0;
+
+                            }
+                            .green{border:1px solid green}
+                            .red{border:1px solid red}
+                        </style>
+                        <div id="tableIFE" >
+                            <table id="IFETbl"   class="table display responsive">
+                                <thead>
+                                    <tr>
+                                        <th id="thIFE" class="c">نقاط قوت/ضعف</th>
+                                        <td class="c thTdIFE">وزن 1</td>
+                                        <td class="c thTdIFE">رتبه1</td>
+                                        <td class="c">وزن 2</td>
+                                        <td class="c">رتبه2</td>
+                                        <td class="c">وزن 3</td>
+                                        <td class="c">رتبه3</td>
+                                        <td class="c">وزن 4</td>
+                                        <td class="c">رتبه4</td>
+                                        <td class="c">وزن 5</td>
+                                        <td class="c">رتبه5</td>
+                                        <td class="c">وزن 6</td>
+                                        <td class="c">رتبه6</td>
+                                        <td class="c">وزن 7</td>
+                                        <td class="c">رتبه7</td>
+                                        <td class="c">وزن 8</td>
+                                        <td class="c">رتبه8</td>
+                                        <td class="c">وزن 9</td>
+                                        <td class="c">رتبه9</td>
+                                        <td class="c">وزن   10</td>
+                                        <td class="c"> رتبه 10</td>
+                                        <td class="c"> میانگین وزن ها</td>
+                                        <td class="c"> میانگین امتیاز</td>
+                                        <td class="c"> امتیاز نهایی</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr  class="rowIFE">
+                                        <td><input class="form-control onkeyup"  placeholder="" style="height: 40px"  /><span><i class="ion-android-add actionIconAdd" style="color:green;margin:2px 2px;cursor: pointer"   onclick="hmisStrategic.actionIconAddIFE($(this));"  ></i><i class="ion-android-remove actionIconRemove" style="margin:2px 2px;cursor: pointer"     onclick="hmisStrategic.actionIconRemoveIFE($(this));"  ></i></span></td>
+                                        <td class="weith"><input  type="text"  class="form-control is-valid onkeyup" value="10"   /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class="weith"><input class="form-control is-valid onkeyup"    type="text" value="10"  /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"  type="number" value="" /></td>
+                                        <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="20" /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class="weith"><input class="form-control is-valid onkeyup"    type="text" value=""  /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class="weith"><input class="form-control is-valid onkeyup"   type="text" value="" /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class="weith"><input class="form-control is-valid onkeyup"   type="text" value=""  /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class="weith"><input class="form-control is-valid onkeyup"   type="text" value=""  /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class="weith"><input class="form-control is-valid onkeyup"   type="text" value=""  /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class="weith"><input  class="form-control is-valid onkeyup"   type="text" value=""  /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class="weith"><input  class="form-control is-valid onkeyup"   type="text" value="" /></td>
+                                        <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value="" /></td>
+                                        <td class=""><input  class="form-control is-valid avgWeith1 onkeyup"   type="text" value=""  /></td>
+                                        <td class=""><input  class="form-control is-valid avgVals1 onkeyup"  type="text" value=""  /></td>
+                                        <td class=""><input  class="finalVal form-control is-valid finalVal1 onkeyup"   type="text" value=""  /></td>
+                                    </tr>
+                                    <!--                                    <tr  class="rowIFE">
+                                                                            <td><input  class="form-control onkeyup" placeholder="" style="height: 40px"   /><span><i class="ion-android-add actionIconAdd" style="color:green;margin:2px 2px;cursor: pointer"   onclick="hmisStrategic.actionIconAddIFE($(this));" ></i><i class="ion-android-remove actionIconRemove" style="margin:2px 2px;cursor: pointer"    onclick="hmisStrategic.actionIconRemoveIFE($(this));"   ></i></span></td>
+                                                                            <td class="weith"><input class="form-control is-valid  onkeyup"    type="text" value="30"    /></td>
+                                                                            <td class="value"><input class="form-control is-valid    onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input class="form-control is-valid  onkeyup"    type="text" value="15"    /></td>
+                                                                            <td class="value"><input class="form-control is-valid    onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input class="form-control is-valid  onkeyup" type="text" value="20"    /></td>
+                                                                            <td class="value"><input class="form-control is-valid    onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input class="form-control is-valid onkeyup"    type="text" value=""    /></td>
+                                                                            <td class="value"><input class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input class="form-control is-valid  onkeyup"   type="text" value=""    /></td>
+                                                                            <td class="value"><input class="form-control is-valid    onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input class="form-control is-valid onkeyup"   type="text" value=""    /></td>
+                                                                            <td class="value"><input class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input class="form-control is-valid onkeyup"    type="text" value=""    /></td>
+                                                                            <td class="value"><input class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input class="form-control is-valid onkeyup"   type="text" value=""    /></td>
+                                                                            <td class="value"><input class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input  class="form-control is-valid onkeyup"    type="text" value=""    /></td>
+                                                                            <td class="value"><input  class="form-control is-valid   onclick" min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class="weith"><input  class="form-control is-valid onkeyup"   type="text" value=""    /></td>
+                                                                            <td class="value"><input  class="form-control is-valid   onclick"  min="-4" max="4"   type="number" value=""   /></td>
+                                                                            <td class=""><input  class="form-control is-valid avgWeith2 onkeyup"    type="text" value=""    /></td>
+                                                                            <td class=""><input  class="form-control is-valid avgVals2 onkeyup"   type="text" value=""    /></td>
+                                                                            <td class=""><input  class="form-control is-valid  finalVal2 onkeyup"  type="text" value=""    /></td>
+                                                                        </tr>-->
+
+
+
+                                    <tr class="button" >
+                                        <td><button type="button" id="addRowIFE" onclick="hmisStrategic.addRowIFE();">افزودن سطر</button></td>
+                                        <td><button type="button" id="removeRowIFE" onclick="hmisStrategic.removeRowIFE();">حذف</button></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <!--                                    <tr class="button" >
+                                                                            <td><button type="button" id="addColIFE" onclick="hmisStrategic.addColIFE();">افزودن ستون</button></td>
+                                                                            <td><button type="button" id="removeColIFE" onclick="hmisStrategic.removeColIFE();">حذف</button></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                        </tr>-->
+                                    <tr  class='bg-teal'>
+                                        <td><input type="button" class="" value="محاسبه و نرمال کردن"  id="calculeteIFE"/></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="bg-teal">
+                                        <td style="vertical-align: central;text-align: left;color: white">جمع وزن ها</td>
+                                        <td><input  class="form-control is-valid sumWeiths1" type="text" value="" /></td>
+                                        <td> </td>
+                                        <td><input  class="form-control is-valid sumWeiths2" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths3" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths4" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths5" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths6" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths7" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths8" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths9" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths10" type="text" value="" /></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="color: white">نمره ارزیابی داخلی</td>
+
+                                        <td><input   class="form-control is-valid sumFinalVal"  type="text" value="" /></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <script type="text/javascript">
+//                                $("#tableIFE").summernote();
+//                                $('#tableIFE').summernote();
+
+                                $('#IFETbl  tr td input.onkeyup').keyup(function () {
+                                    $(this).attr('value', $(this).val());
+                                });
+                                $('#IFETbl td input.onclick').click(function () {
+                                    $(this).attr('value', $(this).val());
+                                });
+                                $('#IFETbl #calculeteIFE').click(function () {
+                                    hmisStrategic.normalizeTable('tableIFE');
+                                });
+
+                            </script>
+                        </div>
+                        <div class="card-header bg-primary tx-white c">ارزیابی خارحی (EFE)</div>
+                        <div id="tableEFE">
+                            <table id="EFETbl" class="table display responsive">
+                                <thead>
+                                    <tr>
+                                        <th class="c">نقاط قوت/ضعف</th>
+                                        <td class="c">وزن1</td>
+                                        <td class="c">رتبه1</td>
+                                        <td class="c">وزن2</td>
+                                        <td class="c">رتبه2</td>
+                                        <td class="c">وزن3</td>
+                                        <td class="c">رتبه3</td>
+                                        <td class="c">وزن4</td>
+                                        <td class="c">رتبه4</td>
+                                        <td class="c">وزن5</td>
+                                        <td class="c">رتبه5</td>
+                                        <td class="c">وزن6</td>
+                                        <td class="c">رتبه6</td>
+                                        <td class="c">وزن7</td>
+                                        <td class="c">رتبه7</td>
+                                        <td class="c">وزن8</td>
+                                        <td class="c">رتبه8</td>
+                                        <td class="c">وزن9</td>
+                                        <td class="c">رتبه9</td>
+                                        <td class="c">وزن   10</td>
+                                        <td class="c"> رتبه 10</td>
+                                        <td class="c"> میانگین وزن ها</td>
+                                        <td class="c"> میانگین امتیاز</td>
+                                        <td class="c"> امتیاز نهایی</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class='rowEFE'>
+                                        <td><input class="form-control onkeyup" placeholder="" style="height: 40px"   /><span><i class="ion-android-add actionIconAdd" style="color:green;margin:2px 2px;cursor: pointer"   onclick="hmisStrategic.actionIconAddEFE($(this));"  ></i><i class="ion-android-remove actionIconRemove" style="margin:2px 2px;cursor: pointer"    onclick="hmisStrategic.actionIconRemoveEFE($(this));"   ></i></span></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input  class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input  class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td><input  class=" form-control is-valid onkeyup avgWeith1 "  type="text" value=""   /></td>
+                                        <td><input  class=" form-control is-valid onkeyup avgVals1 "  type="text" value=""   /></td>
+                                        <td><input  class="finalVal form-control is-valid onkeyup finalVal1 "  type="text" value=""   /></td>
+                                    </tr>
+                                    <tr class='rowEFE'>
+                                        <td><input class="form-control onkeyup" placeholder="" style="height: 40px"    /><span><i class="ion-android-add  actionIconAdd" style="color:green;margin:2px 2px;cursor: pointer"   onclick="hmisStrategic.actionIconAddEFE($(this));" ></i><i class="ion-android-remove actionIconRemove" style="margin:2px 2px;cursor: pointer"    onclick="hmisStrategic.actionIconRemoveEFE($(this));"  ></i></span></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input  class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td class="weith"><input  class=" form-control is-valid onkeyup"  type="text" value=""   /></td>
+                                        <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                                        <td><input  class=" form-control is-valid onkeyup avgWeith2 "  type="text" value=""   /></td>
+                                        <td><input  class=" form-control is-valid onkeyup avgVals2 "  type="text" value=""   /></td>
+                                        <td><input  class="finalVal form-control is-valid onkeyup finalVal2 "  type="text" value=""   /></td>
+                                    </tr>
+
+
+
+                                    <!--                                    <tr class="button">
+                                                                            <td><button type="button" id="addRowEFE" onclick="hmisStrategic.addRowEFE();">افزودن سطر</button></td>
+                                                                            <td><button type="button" id="removeRowEFE" onclick="hmisStrategic.removeRowEFE();">حذف</button></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                            <td></td>
+                                                                        </tr>-->
+                                    <tr class="bg-teal">
+                                        <td><input type="button" id="calculeteEFE" class="" value="محاسبه و نرمال کردن" ></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr class="bg-teal">
+                                        <td style="vertical-align: central;text-align: left;color: white">جمع وزن ها</td>
+                                        <td><input  class="form-control is-valid sumWeiths1" type="text" value="" /></td>
+                                        <td> </td>
+                                        <td><input  class="form-control is-valid sumWeiths2" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths3" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths4" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths5" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths6" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths7" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths8" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths9" type="text" value="" /></td>
+                                        <td></td>
+                                        <td><input  class="form-control is-valid sumWeiths10" type="text" value="" /></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="color: white">نمره ارزیابی  خارجی</td>
+
+                                        <td><input  class="form-control is-valid sumFinalVal"  type="text" value="" /></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <script>
+
+                                $('#EFETbl  td input.onkeyup').keyup(function () {
+                                    $(this).attr('value', $(this).val());
+
+                                });
+                                $('#EFETbl  td input.onclick').click(function () {
+                                    $(this).attr('value', $(this).val());
+                                });
+
+                                $('#EFETbl #calculeteEFE').click(function () {
+                                    hmisStrategic.normalizeTable('tableEFE');
+                                });
+
+                            </script>
+                        </div>
+                        <div  class="card-header bg-primary tx-white c">جدول ارزیابی محیط داخلی و خارجی</div>
+                        <style type="text/css">
+                            .swotTable {
+                                margin-top: 30px;
+                            }
+                            .swotTable {
+                                width: 50%;
+                                min-width: 300px;
+                                margin: 10px auto;
+                                color: black;
+                                font-weight:normal;
+                            }
+                            .swotTable tr:first-child td:after,.swotTable tr:first-child td:before{
+                                margin: 1em;
+                                background-color: red;
+                            }
+                            .swotTable tr td{
+                                border: thin #064d95 solid;
+                                vertical-align: middle;
+                                text-align: center;
+                            }
+
+                            .swotTable td:after {
+                                content: '';
+                                display: block;
+                                margin-bottom: 50%;
+                                margin-top: 50%;
+                            }
+                            .swotTable td:before {
+                                content: '';
+                                display: block;
+                                margin-bottom: 50%;
+                                margin-top: 50%;
+                                background-color: red;
+                            }
+                            .swotTable td .content {
+                                position: absolute;
+                                top: 0;
+                                bottom: 0;
+                                left: 0;
+                                right: 0;
+                                background: gold;
+                            }
+                        </style>
+                        <table id="IFEandEFE"  class="table display responsive" border="1">
+                            <tbody>
+                                <tr class="bg-success"> 
+                                    <td class="c" style=" color: #fff !important;font-size: 2em">IFE/EFE</td>
+                                    <td class="c" style=" color: #fff !important;">نقاط قوت/فرصت ها</td>
+                                    <td class="c" style=" color: #fff !important;">نقاط ضعف/تهدید ها</td>
+                                </tr>
+                                <tr >
+                                    <td class="bg-info" style=" color: #fff !important;">محیط داخلی سازمان</td>
+                                    <td class="alert alert-info">
+                                        <input type="text" class="form-control is-valid onkeyup chanceIFE" placeholder="نقاط قوت"  />
+                                    </td>
+                                    <td class="alert alert-info" >
+                                        <input type="text" class="form-control is-valid onkeyup weaknessIFE" placeholder="نقاط ضعف" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-info" style=" color: #fff !important;">محیط خارجی سازمان</td>
+                                    <td class="alert alert-info">
+                                        <input type="text" class="form-control is-valid onkeyup chanceEFE" placeholder="فرصت ها"/>
+                                    </td>
+                                    <td class="alert alert-info">
+                                        <input type="text" class="form-control is-valid onkeyup weaknessEFE" placeholder="تهدید ها" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>   
+
+                        <div class="card-header bg-primary tx-white c">ماتریس SWOT</div>
+                        <style>
+
+                            /*                            #SWOTMatrixTable {   
+                                                            background-image:url("Manager/pin.png");
+                                                            background-position: 50px 50px;
+                                                            background-size: 20% 20%;
+                            
+                            
+                                                        }*/
+                            #pointer{
+                                background-color: red;
+                                border-radius: 50%;
+                                width:20px;
+                                height:20px;
+                                float: left;
+                                left:559px;
+                                top:340px;
+                                position: relative;
+                                text-align: center;
+                                z-index: 100;
+
+                            }
+                        </style>
+                        <!--///  onclick="hmisStrategic.pointerMove();"-->
+
+                        <div  style="position:relative;">
+                            <div id="pointer" >+</div>
+                            <table id="SWOTMatrixTable"   class="swotTable table display responsive"
+                                   style="background-image:url('Manager/swot.png');background-repeat:no-repeat;background-size: 100% 100%;z-index:200">
+
+                                <tbody>
+                                    <tr class="bg-success"> 
+                                        <td style=" color: #fff !important;font-size: 2em" >SWOT</td>
+                                        <td style=" color: #fff !important;">نقاط قوت</td>
+                                        <td style=" color: #fff !important;">نقاط ضعف</td>
+                                    </tr>
+                                    <tr >
+                                        <td class="bg-info" style=" color: #fff !important;background-color:rgba(171,255,169,0.5)">فرصت ها</td>
+                                        <td class="alert alert-info" style='background-color: rgba(171,255,169,0.5);'>
+                                            استراتژی های SO
+                                        </td>
+                                        <td class="alert alert-info"  style="background-color: rgba(169, 176, 255, 0.5);">
+                                            استراتژی های  WO
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-info" style=" color: #fff !important;" >تهدید ها</td>
+                                        <td class="alert alert-info" style='background-color: rgba(169, 176, 255, 0.5);' >
+                                            استراتژی های ST
+                                        </td>
+                                        <td class="alert alert-info" id="zeroPoint"  style="background-color: rgba(255, 169, 196,0.5);" >
+                                            استراتژی های WT
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <script>
+//                                $('div#pointer').css({'transform': 'translate(' + $('#tableIFE td .sumFinalVal').val() * 50 + 'px' + ',' + $('#tableEFE td .sumFinalVal').val() * -57 + 'px' + ')'});
+
+                            </script>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-header bg-primary tx-white c">مسائل استراتژیک</div>
+            <textarea rows="3" cols="70" id="strategic_issuesStrategic" name="strategic_issuesStrategic" class="form-control is-valid" placeholder="مسائل استراتژیک"></textarea>
+            <div class="card bd-primary mg-t-20" >
+                <div class="card-header bg-primary tx-white c">اهداف</div>
+                اهداف از ماژول اهداف اینجا بارگذاری میشود
+                اهداف:
+                <br>
+                <div id="rows5" style="display:none">
+                    <div class='col-lg-12 addTarget' id='row'>
+                        <div class="card">
+                            هدف کلی  G :<input type="text" id="strategic_targetG_x" name="strategic_targetG_x" class="form-control" />
+                            <br>هدف اختصاصی O1 :<input type="text" id="strategic_targetGO1_x" name="strategic_targetGO1_x" class="form-control" />
+                            <br>هدف اختصاصی O2 :<input type="text" id="strategic_targetGO2_x" name="strategic_targetGO1_x" class="form-control" />
+                        </div>
+
+                        <div class="col-lg-3">
+                            <button class="btn btn-outline-danger btn-block mg-t-20 mg-b-20  buttonRemove">حذف</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="targetAdd"></div>
+
+                <div class='col-lg-12'>
+                    <button class="btn btn-outline-success  btn-block mg-b-10" id="addBTN"  ><img  style="width: 2%;" src="imgfeyz/add_1.png" />افزودن</button>
+                </div>
+            </div>
+            <br>
+            <div class="card-header bg-primary tx-white c">جدول استراتژی های SWOT</div>
+
+            <table id="StartegiesTableOnSWOT"  class="table display responsive" border="1">
+                <tbody>
+                    <tr class="bg-success"> 
+                        <td class="c" style=" color: #fff !important;font-size: 2em">SWOT</td>
+                        <td class="c" style=" color: #fff !important;">نقاط قوت</td>
+                        <td class="c" style=" color: #fff !important;">نقاط ضعف</td>
+                    </tr>
+                    <tr >
+                        <td class="bg-info" style=" color: #fff !important;">فرصت ها</td>
+                        <td class="alert alert-info">
+                            <textarea rows="5" class="form-control is-valid" placeholder="استراتژی های SO" ></textarea>
+                        </td>
+                        <td class="alert alert-info" >
+                            <textarea rows="5" class="form-control is-valid" placeholder="استراتژی های  WO"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="bg-info" style=" color: #fff !important;">تهدید ها</td>
+                        <td class="alert alert-info">
+                            <textarea rows="5" class="form-control is-valid" placeholder="استراتژی های ST"></textarea>
+                        </td>
+                        <td class="alert alert-info">
+                            <textarea rows="5" class="form-control is-valid" placeholder="استراتژی های WT"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card bd-primary mg-t-20">
+                <div class="card-header bg-primary tx-white c">ماتریس  QSPM </div>
+                <style>
+                    #tableQSPM input.onclick{
+                        width:46px;
+                    }
+                </style>
+                <table id="tableQSPM"  class="table display responsive">
+                    <thead>
+                        <tr>
+                            <td class="c">نقاط قوت/ضعف</td>
+                            <td class="c">وزن</td>
+                            <td class="c">SO1 AS</td>
+                            <td class="c">SO1 TAS</td>
+                            <td class="c">SO2 AS</td>
+                            <td class="c">SO2 TAS</td>
+                            <td class="c">WO1 AS</td>
+                            <td class="c">WO1 TAS</td>
+                            <td class="c">WO2 AS</td>
+                            <td class="c">WO2 TAS</td>
+                            <td class="c">ST1 AS</td>
+                            <td class="c">ST1 TAS</td>
+                            <td class="c">ST2 AS</td>
+                            <td class="c">ST2 TAS</td>
+                            <td class="c">WT1 AS</td>
+                            <td class="c">WT1 TAS</td>
+                            <td class="c">WT2 AS</td>
+                            <td class="c">WT2 TAS</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control onkeyup" placeholder="" style="height: 40px"/><span><i class="ion-android-add  actionIconAdd" style="color:green;margin:2px 2px;cursor: pointer"   onclick="hmisStrategic.actionIconAddQSPM($(this));" ></i><i class="ion-android-remove actionIconRemove" style="margin:2px 2px;cursor: pointer"    onclick="hmisStrategic.actionIconRemoveQSPM($(this));"  ></i></span></td>
+                            <td class="weith" style="width: 120px"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+
+                        </tr>
+                        <tr>
+                            <td><input class="form-control onkeyup" placeholder="" style="height: 40px"   /><span><i class="ion-android-add actionIconAdd" style="color:green;margin:2px 2px;cursor: pointer"    onclick="hmisStrategic.actionIconAddQSPM($(this));"></i><i class="ion-android-remove  actionIconRemove" style="margin:2px 2px;cursor: pointer"   onclick="hmisStrategic.actionIconRemoveQSPM($(this));" ></i></span></td>
+                            <td class="weith" style="width: 120px"><input class="form-control is-valid"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="weith"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+                            <td class="value"><input class="form-control is-valid onclick"  min="-4" max="4" type="number" value=""  /></td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div>
+                    <i  class="ion-android-add actionIconAdd" onclick="hmisStrategic.addRowTableQSPM();"  style="height: 40px ;color:green;cursor: pointer" >افزودن سطر</i></div>
+                <div><i class="ion-android-remove  actionIconRemove"  onclick="hmisStrategic.removeRowTableQSPM();" style="height: 40px;color:red;cursor: pointer" >حذف سطر</i></div>
+                <script type="text/javascript">
+
+                    $('#tableQSPM  tr td input.onkeyup').keyup(function () {
+                        $(this).attr('value', $(this).val());
+
+                    });
+                    $('#tableQSPM table td input.onclick').click(function () {
+                        $(this).attr('value', $(this).val());
+                    });
+
+
+                </script>
+            </div>
+            <div class="card bd-primary mg-t-20">
+
+                <div class="card-header bg-primary tx-white c">جدول استراتژی های اولویت بندی شده</div>
+
+                <table id="tablePrioritized" class="table display responsive">
+                    <thead>
+                        <tr>
+                            <td class="c">استراتژی</td>
+                            <td class="c">مجموع امتیازات</td>                       
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="form-control is-valid  onkeyup" placeholder="" style="height: 40px" ></td>
+                            <td class="weith" style="width: 120px"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>                        
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="form-control is-valid  onkeyup" placeholder="" style="height: 40px" ></td>
+                            <td class="weith" style="width: 120px"><input class="form-control is-valid onkeyup"  type="text" value="" /></td>                        
+                        </tr>
+
+                    </tbody>
+
+                </table>
+                <div>
+                    <i  class="ion-android-add actionIconAdd" onclick="hmisStrategic.addRowTablePrioritized();"  style="height: 40px ;color:green" >افزودن سطر</i></div>
+                <div><i class="ion-android-remove  actionIconRemove"  onclick="hmisStrategic.removeRowTablePrioritized();" style="height: 40px;color:red" >حذف سطر</i></div>
+                <script type="text/javascript">
+
+                    $('#tablePrioritized  tr td input.onkeyup').keyup(function () {
+                        $(this).attr('value', $(this).val());
+
+                    });
+                    //                   
+
+                </script>
+            </div>
+            <div class="row l">
+                <!--                <div class="col-lg-2">
+                                    .
+                                    <button class="btn btn-success btn-block mg-b-10" onclick="printDiv('FMEATableTow');">چاپ</button>
+                                </div> col -->
+                <div class="col-lg-6" id="Strategic_button" >
+                </div><!-- col -->
+                <div class="col-lg-2">
+                    .
+                    <button class="btn btn-outline-secondary mg-b-10  btn-block" id="cancel_Strategic">
+                        لغو
+                    </button>
+                </div><!-- col -->
+                <div class="col-lg-6"> 
+                    <div class="sh-pagetitle-icon"> 
+                        <a href="" title="چاپ استراتژیک" target="_blank" class="active btn-block mg-l-10"><i class="fa fa-print mg-t-3"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- card -->
+<script>
+
+    $('#addBTN').click(function () {
+        var i = 1;
+        var available = $(".targetDiv");
+        for (var j = 0; j < 5; j++) {
+            var k = (j + 1);
+
+            if ($("#strategic_targetG_" + k).length == 0) {
+                i = j + 1;
+                j = 5;
+            }
+        }
+        if (i > 5) {
+
+            return;
+        }
+        new jj("افزودن هدف شماره ی " + i).jjModal("تعریف هدف");
+        var temp = $('#rows5').html().replace(/_x/igm, ("_" + i));
+        //            var temp = $('#rows20').html().replace(/_x/igm, ("_" + i));
+
+        $("#targetAdd").append(temp);
+        //            $("#signatorysAdd .signerDivTemp").addClass("signerDiv");
+        //            $("#signatorysAdd .signerDivTemp").removeClass("signerDivTemp");
+        //            $('#rows20').show();
+        //            $("#createDocumentary_signatory_user_" + (i)).select2({width: '100%'});
+    });
+
+    $(document).on('click', '.buttonRemove', function () {
+        $(this).parent().parent().remove();
+
+// var position= $("#zeroPoint").position(); 
+//        var x = position.left + 'px';
+//      var y = position.top + 'px';
+//        alert(y+","+x);
+//
+//        $('#SWOTMatrixTable div#pointer').css({'transform' : 'translate(' + x +', ' + y + ')'});
+//        $('#pointer').css({'transform' : 'translate(' + $('#tableIFE .sumFinalVal').val()+ 'px' +', ' + $('#tableEFE .sumFinalVal').val() + 'px' + ')'});
+    });
+</script>

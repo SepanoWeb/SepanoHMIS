@@ -108,13 +108,13 @@ public class Commettes {
             html2 += Js.table("#refreshCommettes", "300", 0, "", "کمیته ها");
             //////////////////////////////برای سلکت های موجود در فرم کمیتهها/////////////
             List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._condition + "='active'"));
-            html3.append("<select class=\"form-control\" id=\"commettes_secretary\" name=\"commettes_secretary\" tabindex='-1'>");
+            html3.append("<select required class=\"form-control\" id=\"commettes_secretary\" name=\"commettes_secretary\" tabindex='-1'>");
             html3.append("<option value=''>انتخاب کنید</option>");
             for (int i = 0; i < roleRow.size(); i++) {
                 html3.append("<option value='" + roleRow.get(i).get(Role._id) + "'>" + roleRow.get(i).get(Role._title) + "</option>");
             }
             html3.append("</select>");
-            html4.append("<select class=\"form-control\" id=\"commettes_superwizar\" name=\"commettes_superwizar\" tabindex='-1'>");
+            html4.append("<select required class=\"form-control\" id=\"commettes_superwizar\" name=\"commettes_superwizar\" tabindex='-1'>");
             html4.append("<option value=''>انتخاب کنید</option>");
             for (int i = 0; i < roleRow.size(); i++) {
                 html4.append("<option value='" + roleRow.get(i).get(Role._id) + "'>" + roleRow.get(i).get(Role._title) + "</option>");
@@ -125,7 +125,7 @@ public class Commettes {
             ///////////////////////////////////////////////نمایش جدول نقش ها
 
             html5.append("        <div class=\"table-wrapper\">\n");
-            html5.append("<table id='refreshRoles' class='table display responsive' class='tahoma10' style='direction: rtl;'><thead>");
+            html5.append("<table required id='refreshRoles' class='table display responsive' class='tahoma10' style='direction: rtl;'><thead>");
             html5.append("<th class='r' width='20%'>کد</th>");
             html5.append("<th class='r' width='20%'>سمت</th>");
             html5.append("<th class='r' width='40%'>نام و نام خانوادگی</th>");
@@ -185,8 +185,8 @@ public class Commettes {
             map.put(_isActive, jjTools.getParameter(request, _isActive));
 
             DefaultTableModel dtm = db.insert(tableName, map);
-            if (dtm.getRowCount() == 0) { 
-                
+            if (dtm.getRowCount() == 0) {
+
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Edit Fail;";
@@ -255,6 +255,7 @@ public class Commettes {
             StringBuilder html = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
+            StringBuilder html4 = new StringBuilder();
 
             html.append(Js.setVal("#" + tableName + "_" + _id, row.get(0).get(_id)));
             html.append(Js.setVal("#" + _title, row.get(0).get(_title)));
@@ -274,9 +275,19 @@ public class Commettes {
                 html.append(Js.setAttr("#noActive", "checked", "checked"));
             }
             if (!row.get(0).get(_documnetsFile).toString().equals("")) {
-                String[] documentFile = (row.get(0).get(_documnetsFile).toString().replaceAll("#A#","%23A%23")).split("%23A%23");
+                String[] documentFile = (row.get(0).get(_documnetsFile).toString().replaceAll("#A#", "%23A%23")).split("%23A%23");
                 for (int i = 0; i < documentFile.length; i++) {
-                    html3.append("<input class='col-xs-12' value='" + documentFile[i] + "' >");
+                    html3.append("<div class='col-lg-3'>");
+                    html3.append("<a id='downloadFiledocument_commettes' title='دانلود فایل'  href='upload/" + documentFile[i] + "' class='btn btn-outline-success  btn-block mg-b-10'><input value='" + documentFile[i] + "' class='form-control is-valid hasDatepicker' /></a>");
+                    html3.append("</div>");
+                }
+            }
+            if (!row.get(0).get(_regulationFile).toString().equals("")) {
+                String[] regulationFile = (row.get(0).get(_regulationFile).toString().replaceAll("#A#", "%23A%23")).split("%23A%23");
+                for (int i = 0; i < regulationFile.length; i++) {
+                    html4.append("<div class='col-lg-3'>");
+                    html4.append("<a id='downloadRegulationFile_commettes' title='دانلود فایل'  href='upload/" + regulationFile[i] + "' class='btn btn-outline-success  btn-block mg-b-10'><input value='" + regulationFile[i] + "' class='form-control is-valid hasDatepicker' /></a>");
+                    html4.append("</div>");
                 }
             }
             html.append(Js.setAttr("#PicPreviewAttach", "src", "upload/" + row.get(0).get(_regulationFile) + ""));
@@ -293,20 +304,23 @@ public class Commettes {
                 html2.append("<button id='delete_Commettes' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjCommettes.delete(id) + "' >" + lbl_delete + " </button>");
                 html2.append("</div>");
             }
+
             html2.append("</div>");
             String script = Js.setHtml("#Commette_button", html2);
             if (row.get(0).get(_members).toString().equals("")) {
 
             } else {
                 String membersId = row.get(0).get(_members).toString();
-                String[] memberId = (membersId.replaceAll("#A#","%23A%23")).split("%23A%23");
+                String[] memberId = (membersId.replaceAll("#A#", "%23A%23")).split("%23A%23");
                 for (int i = 0; i < memberId.length; i++) {
                     script += ("$('#tableRolesDiv #refreshRoles #" + memberId[i] + "').attr('class','icon ion-checkmark-circled').css('color','green');");
 
                 }
             }
+
             script += html.toString();
-            script += Js.setHtml("#inputTextSelectorDiv", html3);
+            script += Js.setHtml("#inputTextSelectorDiv1", html3);
+            script += Js.setHtml("#inputTextSelectorDiv2", html4);
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {
@@ -414,7 +428,7 @@ public class Commettes {
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + commettesId));
             html.append("<label class='ckbox'>");
             String memberId = commettesRow.get(0).get(Commettes._members).toString();
-            String[] membersId = (memberId.replaceAll("#A#","%23A%23")).split("%23A%23");
+            String[] membersId = (memberId.replaceAll("#A#", "%23A%23")).split("%23A%23");
             for (int i = 0; i < membersId.length; i++) {
                 List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + membersId[i]));
                 List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + roleRow.get(0).get(Role._user_id)));
@@ -437,6 +451,49 @@ public class Commettes {
             String script = "";
             script += Js.setHtml("#sessions_InviteesInSide", html2);
             script += Js.setHtml("#invitessDiv", html);
+            Server.outPrinter(request, response, script);
+            return "";
+        } catch (Exception ex) {
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+        }
+    }
+
+    /**
+     * ارسال پیام برای مدعوین داخل و خارج از سازمان و کاربرانی که در سیستم ثبت
+     * نام نکرده اند در اکسس یوزر ثبت می شوند
+     *
+     * @param request
+     * @param response
+     * @param db
+     * @param isPost
+     * @return
+     * @throws Exception
+     */
+    public static String sendComment(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+        try {
+            StringBuilder html = new StringBuilder();
+            String Email = "";
+            String nameAndFamily = "";
+            String phone = "";
+            String role = "";
+
+            String script = "";
+            String textComment = jjTools.getParameter(request, "textComment");//متن پیام
+            String inviteesIdComment = jjTools.getParameter(request, "inviteesIdComment");//ای دی مدعوین 
+            String inviteesOutSideIdComment = jjTools.getParameter(request, "inviteesOutSideIdComment");//ای دی مدعوین مهمان
+            String inviteesInSideIdComment = jjTools.getParameter(request, "inviteesInSideIdComment");//ای دی مدعوین داخل سازمان
+            String[] inviteesOutSideId = (inviteesInSideIdComment.replaceAll("#A#", "%23A%23")).split("%23A%23");
+
+            for (int i = 0; i < inviteesOutSideId.length; i++) {
+                String[] userInformation = inviteesOutSideId[i].split(",");
+                nameAndFamily = userInformation[0];
+                phone = userInformation[1];
+                Email = userInformation[2];
+                role = userInformation[3];
+Server.sendEmail("", Email, "دعوتنامه"+textComment+ "", "", isPost, request);
+            }
+            
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {

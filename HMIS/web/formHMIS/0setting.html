@@ -1,0 +1,60 @@
+<div class="card bd-primary mg-t-20">
+    <div class="card bd-primary">
+        <div class="sh-breadcrumb">
+            <nav class="breadcrumb">
+                <a class="breadcrumb-item" href="http://medyarweb.ir">مدیار</a>
+                <a class="breadcrumb-item" href="http://medyarweb.ir">MedYar</a>
+                <span class="breadcrumb-item active">تنظیمات یادآوری</span>
+            </nav>
+        </div><!-- sh-breadcrumb -->
+        <div class="card-header btn-teal tx-white">
+            تنظیمات
+        </div>
+        <div class="card-body pd-sm-30">
+            <div class="row">
+                <input type="hidden" id="hmis_setting_id" name="id"/>
+                <div class="col-lg-6">
+                    عنوان تنظیمات
+                    <div class="form-group has-success mg-b-0">
+                        <input id="setting_name" name="setting_name" class="form-control is-valid" placeholder="عنوان یادآوری را وارد کنید"  type="text" >
+                    </div> <!--form-group -->
+                </div> <!--col    -->
+                <div class="col-lg-6">
+                    تعداد روز برای یادآوری قبل از انجام فرصت گام:
+                    <div class="form-group has-success mg-b-0">
+                        <input id="setting_value" name="setting_value"  class="form-control is-valid" placeholder="عدد وارد نمایید" type="number" >
+                    </div> <!--form-group -->
+                </div> <!--col    -->
+
+            </div>
+                <div class="row mg-t-20">
+                 
+                    <div class="col-lg-6" id="Setting_button">
+                    </div>
+                    <div class="col-lg-3">
+                        <a id="cancel_setting" class="btn btn-outline-secondary mg-b-10  btn-block">
+                            بازگشت
+                        </a>   
+                    </div><!-- col -->
+                    </div>
+                </div><!-- card-body -->
+        </div>
+        <script>
+
+            $(function () {
+                'use strict';
+                $('#datatable1').DataTable({
+                    responsive: true,
+                    language: {
+                        searchPlaceholder: 'جستجو...',
+                        sSearch: '',
+                        lengthMenu: '_MENU_ items/page',
+                    }
+                });
+
+
+                // Select2
+                $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
+
+            });
+        </script>
