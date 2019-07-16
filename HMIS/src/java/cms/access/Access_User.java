@@ -1,6 +1,7 @@
 package cms.access;
 
 import HMIS.Role;
+import HMIS.Strategic;
 import cms.cms.*;
 import cms.tools.*;
 import static cms.tools.UploadServlet._logStatus;
@@ -508,7 +509,7 @@ public class Access_User {
      *
      * @param id
      */
-    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+     public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -583,6 +584,7 @@ public class Access_User {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
 //                    html3.append("<div >" + "<input class='col-xs-12' disabled='disabled'  value='" + attachFilesArray[l] + "'/>"  + "</div>");
                     html3.append( "<input style='text-align: center;' class='col-lg-11' disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" );
+
 //                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='"+Js.modal("hjgjhgkjgkjgk", id)+"'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" + "</div>");
          
                 }
@@ -862,7 +864,7 @@ public class Access_User {
             if (roleRow.size() > 0) {// نقش هایی که این کاربر دارد
                 String rolesStr = "";
                 for (int i = 0; i < roleRow.size(); i++) {
-                    rolesStr += roleRow.get(i).get(Role._id).toString() + "%23A%23";
+                    rolesStr += roleRow.get(i).get(Role._id).toString() + ",";
                 }
                 jjTools.setSessionAttribute(request, "#ROLE_ID", rolesStr);// آی دی نقش میرود درسشن
             }
@@ -902,6 +904,17 @@ public class Access_User {
 
             boolean show = true;
 
+            //////////////برنامه استراتژیک////////////////
+            if (Access_User.getAccessDialog(request, db, Strategic.rul_rfs).equals("")) {
+                html.append("$( '#StrategicTab' ).show();\n");
+                if (show) {
+                    html.append("$( '#tabs' ).tabs({selected:0});\n");
+                    html.append("hmisStrategic.m_refresh();\n");
+                    html.append("hmisStrategic.loadForm();\n");
+                }
+                show = false;
+            }
+            ///////////////////////////////////////////////
             if (Access_User.getAccessDialog(request, db, Comment.rul_rfs).equals("")) {
                 html.append("$( '#CommentTab' ).show();\n");
                 if (show) {
@@ -1248,22 +1261,13 @@ public class Access_User {
             //ایمیل یا شماره موبایل تکراری نباشد
             List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(tableName, _email + "='" + email + "'"));
             if (userRow.isEmpty()) {
-                //<============ BY RASHIDI ========
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put(_email, email);
-//                map.put(_mobile, mobile);
                 map.put(_name, jjTools.getParameter(request, _name).toLowerCase());
                 map.put(_family, jjTools.getParameter(request, _family).toLowerCase());
                 map.put(_isActive, true);
-//            map.put(_no1, jjTools.getParameter(request, _no1));
-//            map.put(_no2, jjTools.getParameter(request, _no2));
-//            String parent = jjTools.getParameter(request, _parent);
-//            map.put(_parent, jjNumber.isDigit(parent) ? Integer.parseInt(parent) : 0);
                 map.put(_pass, jjTools.getParameter(request, _pass));
-//            map.put(_question, jjTools.getParameter(request, _question));
                 map.put(_passHint, jjTools.getParameter(request, _passHint));
-//            map.put(_registDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _registDate), true));
-//            map.put(_birthdate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _birthdate), false));
                 List<Map<String, Object>> row = jjDatabase.separateRow(db.insert(tableName, map));
                 if (row.isEmpty()) {
                     String errorMessage = "عملیات درج به درستی صورت نگرفت.";
@@ -1284,7 +1288,6 @@ public class Access_User {
                     Server.outPrinter(request, response, afterUserLoginOrRegist(request, db, needString, row.get(0)));
                     return "";
                 }
-                //============ BY RASHIDI ========>
             } else {
                 String mes = "ایمیل تکراری است.";
                 if (jjTools.isLangEn(request)) {

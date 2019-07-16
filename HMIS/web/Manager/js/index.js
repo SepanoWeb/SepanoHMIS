@@ -817,6 +817,7 @@ function registInSite() {
     }
 
 
+
     if (!flag) {
         return;
     }
@@ -1158,6 +1159,7 @@ function prePayment() {
         new jj(param).jjAjax2(true);//ثبت فاکتور در دیتابیس
     }
 }
+
 ////        if ($('#orderFormDiv').length == 0) {
 //        $("body").append("<div id='orderFormDiv'></div>");
 //        $("#orderFormDiv").load("order_form.html", null, function () {
@@ -1369,6 +1371,4 @@ function  sendEmail() {
     param += "&email1=" + new jj('#login_user_email').jjVal();
 
     jj(param).jjAjax2(false);
-
-
 }

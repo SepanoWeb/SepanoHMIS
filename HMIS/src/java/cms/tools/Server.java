@@ -24,7 +24,9 @@ import HMIS.Messenger;
 import HMIS.Sessions;
 import HMIS.Reports;
 import HMIS.Role;
+import HMIS.Setting;
 import HMIS.Steps;
+import HMIS.Strategic;
 import java.io.*;
 import java.lang.reflect.*;
 import java.util.*;
@@ -121,15 +123,15 @@ public class Server extends HttpServlet {
             clazzes.add(HMIS.Forms.class);   //فرم ساز
             clazzes.add(HMIS.FormQuestions.class);   //فرم ساز
             clazzes.add(HMIS.FormQuestionOptions.class);   //فرم ساز
+            /////////////////////shiran2         ////////////////////  برنامه عملیاتی
             clazzes.add(HMIS.FormAnswerSet.class);   //فرم ساز
             clazzes.add(HMIS.Plans.class);   //برنامه های عملیاتی
             clazzes.add(PlansForAssess.class);//برنامه پایش
             clazzes.add(Steps.class);//گام های اجرایی
             clazzes.add(Reports.class);//گزارش های برنامه 
-            clazzes.add(Commettes.class);//کمیته ها
-            ////////////shirn1 بخش ها
+            ////////////shiran1 بخش ها
             clazzes.add(Department.class);
-            ////////////shirn1 نقشها
+            ////////////shiran1 نقشها
             clazzes.add(Role.class);
             clazzes.add(CreateDocumentary.class);
             ////////////shirn1 پیام     
@@ -142,7 +144,11 @@ public class Server extends HttpServlet {
             clazzes.add(Positions.class);///////////جایگاه ها
 
             clazzes.add(Sessions.class);//صورت جلسه 13971212
-            clazzes.add(Approved.class);//صورت جلسه 13971212
+            clazzes.add(Commettes.class);//کمیته ها
+            clazzes.add(Approved.class);//مصوبات 13971212
+            ///////////////////////////    shiran2      ماژول استراتژیک
+            clazzes.add(Strategic.class);//برنامه استراتژیک
+            clazzes.add(Setting.class);//تنظیمات یادآوری
         }
         return clazzes;
     }

@@ -6,7 +6,7 @@
 
 
 var hmisPlansForAssess = {
-    tableName: "PlansForAssess",
+    tableName: "",
     f_id: "id",
 
     loadForm: function () {
@@ -40,7 +40,7 @@ var hmisPlansForAssess = {
     },
     m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
-        param += "do=" + hmisPlansForAssess.tableName + ".refresh";
+        param += "do=" + hmisPlans.tableName + ".refreshPlansForAssess";
         param += "&panel=" + (containerId == null ? "swPlansForAssessTbl" : containerId);
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? 435 : tableHeight);
@@ -63,7 +63,7 @@ var hmisPlansForAssess = {
 //        $("#Content_Language_button").hide();
     },
     m_add_new: function () {
-        jj("do=" + hmisPlansForAssess.tableName + ".add_new").jjAjax2(false);
+       new jj("do=" + hmisPlansForAssess.tableName + ".add_new").jjAjax2(false);
         hmisPlansForAssess.m_show_form();
         hmisPlansForAssess.m_clean();
         //        oEditor.execCommand( 'bold');

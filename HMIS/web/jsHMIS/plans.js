@@ -11,75 +11,27 @@ var hmisPlans = {
     loadForm: function () {
         if ($("#swPlansForm").html() == '') {
             $("#swPlansForm").load("formHMIS/04newPlan.html", null, function () {
-                $("#cancel_Plans").button().click(function (e) {
+                $("#cancel_Plans").click(function (e) {
                     hmisPlans.m_clean();
                     hmisPlans.m_show_tbl();
                 });
-                new jj("#steps_startDate").jjCalendarWithYearSelector(1340, 1420);
-                new jj("#steps_endDate").jjCalendarWithYearSelector(1340, 1420);
+                $("#stepsInPlans_descriptionExecutor").hide();
+                $("#stepsInPlans_descriptionTracker").hide();
+                new jj('#sendFiles').jjAjaxFileUploadTitleUploadFiles('#attachFileSteps', '#steps_files', 'steps_titleFile1', '#steps_filesTitle', "#showFilesDiv");
+                new jj("#steps_startDate").jjCalendarWithYearSelector(1370, 1420);
+                new jj("#steps_endDate").jjCalendarWithYearSelector(1370, 1420);
+                $("#plans_description").summernote();
                 //////////////////////////////
-//                $("#sendFileTajhizat").button().click(function () {
-//                });
-//                $("#upload_tajhizat_file2").button().click(function () {
-//                });
-//                new jj('#sendFileTajhizat').jjAjaxFileUpload('#upload_tajhizat_file2', '#tajhizat_file', '#tajhizatFilePreview');
-//                $('#tajhizat_file').keyup(function () {
-//                    $('#tajhizatFilePreview').attr('src', 'upload/' + $('#tajhizat_file').val());
-//                    if ($('#tajhizat_file').val() == '') {
-//                        $('#tajhizatFilePreview').attr('src', 'img/preview.jpg');
-//                    }
-//                });
+
+                new jj('#sendFilesPlans').jjAjaxFileUpload4('attachFilesPlans', '#plans_files', '#inputFilesPlansDiv');
 
 
 
-                /////////////////////////////
-                $("#sendFile1Steps").button().click(function () {
-                });
-                $("#upload_file1_steps").click(function () {
-                });
-                new jj('#sendFile1Steps').jjAjaxFileUpload('#upload_file1_steps', '#steps_file1', '#StepsPicPreview');
-                $('#steps_file1').keyup(function () {
-                    $('#StepsPicPreview').attr('src', 'upload/' + $('#steps_file1').val());
-                    if ($('#steps_file1').val() == '') {
-                        $('#StepsPicPreview').attr('src', 'img/preview.jpg');
-                    }
-                });
-//                $(function () {
-//                    'use strict';
-//                    $('#refreshPlans').DataTable({
-//                        responsive: true,
-//                        language: {
-//                            searchPlaceholder: 'جستجو...',
-//                            sSearch: '',
-//                            lengthMenu: '_MENU_ items/page',
-//                        }
-//                    });
-//
-//
-//                    // Select2
-//                    $('.dataTables_length select').select2({minimumResultsForSearch: Infinity});
-//
-//                });
-//                new jj("#upload_Content").jjAjaxFileUploadEditor('#upload_Content_file', content_content_editor);
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
+
                 hmisPlans.m_refresh();
             });
         }
     },
-//    m_refresh: function () {
     m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
         param += "do=" + hmisPlans.tableName + ".refresh";
@@ -88,7 +40,6 @@ var hmisPlans = {
         param += "&height=" + (tableHeight == null ? 800 : tableHeight);
         param += "&jj=1";
         new jj(param).jjAjax2(false);
-//        himsPlan.tabSizeTbl();
     },
     m_show_form: function () {
         $('#swPlansTbl').hide();
@@ -101,17 +52,14 @@ var hmisPlans = {
         new jj('#stepsForm').jjFormClean();
         new jj('#newFormPlans').jjFormClean();
         $('#refreshTblSteps').html("");
-        $("#btn_editSteps").hide(); //پنهان کردن دکمه ثبت تغییرات گام
-        $("#btn_insertSteps").show(); // نمایش دکمه ثبت گام
-        $("#btn_addNewSteps").show(); //نمایش دکمه گام جدید
+//        $("#btn_editSteps").hide(); //پنهان کردن دکمه ثبت تغییرات گام
+//        $("#btn_insertSteps").show(); // نمایش دکمه ثبت گام
+//        $("#btn_addNewSteps").show(); //نمایش دکمه گام جدید
 
 
-//        new jj("#tags_name").jjVal("");
-//        new jj(content_content_editor).jjEditorVal("");
-//        $("#Content_Language_button").hide();
     },
     m_add_new: function () {
-        jj("do=" + hmisPlans.tableName + ".add_new&jj=1").jjAjax2(false);
+        new jj("do=" + hmisPlans.tableName + ".add_new&jj=1").jjAjax2(false);
         hmisPlans.m_show_form();
         $('#recordPlans').show(); //مخفی کردن دکمه ثبت 
         $('#newFormPlans').show(); //مخفی کردن فرم پلن 
@@ -134,7 +82,7 @@ var hmisPlans = {
     m_insert: function () {
 //        var valid = hmisPlans.m_validation();
 //        if (valid == "") {
-        var param = "";  
+        var param = "";
         param += "do=" + hmisPlans.tableName + ".insert";
         param += "&" + new jj('#swPlansForm').jjSerial();
         new jj(param).jjAjax2(false);
@@ -162,6 +110,31 @@ var hmisPlans = {
 //        }
     },
     /**
+     *ارسال برنامه عملیاتی به مافوق 
+     *مافوق هم در برنامه عملیاتی من برنامه را یا تایید میکند یا رد میکند
+     *   
+     * @returns {undefined}  */
+    communicatingToSupervisor: function (id) {
+        if (!$("#plans_supervisorRolId").val() == "") {
+            if (confirm("برنامه عملیاتی را تایید می کنید؟")) {
+                hmisPlans.communicatingToSupervisor_after_question(id);
+            }
+        } else {
+            new jj(" مافوق را انتخاب کنید.").jjModal("پیام سامانه");
+        }
+    },
+    communicatingToSupervisor_after_question: function (id) {
+        var param = "";
+        param += "&do=" + hmisPlans.tableName + ".communicatingToSupervisor";
+        param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
+        param += "&" + new jj('#swPlansForm').jjSerial();
+        param += "&jj=1";
+        new jj(param).jjAjax2(false);
+        hmisPlans.m_show_tbl();
+        hmisPlans.m_clean();
+
+    },
+    /**
      * ویرایش اطلاعات گام ها در قسمت plans
      * 
      * @returns {undefined}
@@ -169,10 +142,11 @@ var hmisPlans = {
     editStepsInPlans: function () {
 
         var param = "";
-        param += "do=" + hmisPlans.tableName + ".editStepsInPlans";
+        param += "do=" + hmisSteps.tableName + ".editStepsInPlans";
         param += "&" + new jj('#stepsForm').jjSerial();
         param += "&jj=1";
         new jj(param).jjAjax2(false);
+        $("#stepsForm").slideUp();
     },
 //    m_validation: function () {// mohamdad
 //        if (new jj("#content_title").jjVal().length < 1) {
@@ -204,9 +178,12 @@ var hmisPlans = {
         hmisPlans.m_show_form();
         $('#formQuestions').show(); //نمایش گام ها 
         $('#newFormPlans').hide(); //نمایش گام ها 
-        $('#editPlansButton').show(); //نمایش دکمه تغییرات
-        $('#stepsForm').show(); //نمایش فرم گامها
+//        $('#editPlansButton').show(); //نمایش دکمه تغییرات
+        $('#stepsForm').hide(); //نمایش فرم گامها
         $('#correctionForm').hide(); // فرم اصلاحیه 
+        $('#correctionForm').hide(); // فرم اصلاحیه 
+        $('#stepsForm').slideUp();
+        $("#decriptionStepsDiv").hide();
 
 
     },
@@ -216,8 +193,9 @@ var hmisPlans = {
      * @returns {undefined}
      */
     selectStepsInPlans: function (id) {
+        $("#showFilesDiv").html("");
         var param = "";
-        param += "do=" + hmisPlans.tableName + ".selectStepsInPlans";
+        param += "do=" + hmisSteps.tableName + ".selectStepsInPlans";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
         hmisPlans.m_show_form();
@@ -226,7 +204,9 @@ var hmisPlans = {
         $('#editPlansButton').show(); //نمایش دکمه تغییرات
         $('#stepsForm').show(); //
         $("html, body").delay(1000).animate({scrollTop: $('#stepsForm').offset().top}, 800);
+        $("#decriptionStepsDiv").hide();
     },
+
     /**
      * نمایش فرم اصلاحیه 
      * تاریخ ایجاد
@@ -240,7 +220,10 @@ var hmisPlans = {
         $('#correctionForm').show();
     },
     actionReferral: function () {
-        new jj("آیا از ارجاع اطمینان دارید؟").jjDialog_YesNo('hmisPlans.afterActionReferral();\n', true, "");
+        if (confirm("آیا از ارجاع اطمینان دارید؟")) {
+            hmisPlans.afterActionReferral();
+        } else {
+        }
 
     },
     /**
@@ -270,11 +253,25 @@ var hmisPlans = {
      * @param {type} id
      * @returns {undefined}
      */
-    confirmBySuperwizar: function (id) {
+    confirmBySupervisor: function (id) {
         var param = "";
-        param += "do=" + hmisPlans.tableName + ".confirmBySuperwizar";
+        param += "do=" + hmisPlans.tableName + ".confirmBySupervisor";
         param += "&" + hmisPlans.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
+    },
+    executorAction: function (value) {
+        if (value == "سمت") {
+            $("#steps_executorUserId").attr("disabled", "disabled");
+            $("#steps_executorRoleId").removeAttr("disabled");
+            $("#steps_executorUserId").val("");
+            $("#steps_executorUserId").select2();
+        } else if (value == "کاربران") {
+            $("#steps_executorRoleId").attr("disabled", "disabled");
+            $("#steps_executorUserId").removeAttr("disabled");
+            $("#steps_executorRoleId").select2();
+            $("#steps_executorRoleId").val("");
+        }
+
     },
     m_add_Ar: function (id) {
         var param = "";
@@ -332,43 +329,5 @@ var hmisPlans = {
     tabSizeForm: function () {
         $('#swPlans').css('height', 378);
     }
-//    mainTabSetSize: function () {
-////        var aa = $("#swContent").children();
-////        var bb = 0;
-////        for(i=0; i < aa.length; i++){  
-////            if($(aa[i]).css("display")!='none'){
-////                bb+= new jj($(aa[i]).css("height")).jjConvertToInt() ;
-////            }
-////        }
-////        if(bb==0){
-////            $('#tabs').css('height',572);
-////        }else{
-////            $('#tabs').css('height',bb+44);
-////        }
-//    }
-};
-//============ BY RASHIDI ========> 
-//function selectSearchResult(selectedTagNo) {
-//    $("#tags_name").val($("#tagsResult_td" + selectedTagNo).html());
-//    $("#content_search_tags_result").hide();
-//}
 
-//function deleteContentTag(deletedTagNo) {
-//    new jj("آیا از حذف این برچسب اطمینان دارید؟").jjDialog_YesNo('afterDeleteContentTag(' + deletedTagNo + ');\n', true, "");
-//}
-//function afterDeleteContentTag(deletedTagNo) {
-//
-////    var myString = $("#" + cmsContent.f_tags).val();
-////    var oldWord = $("#contetn_tag_span" + deletedTagNo).html().toString();
-////    var reg = new RegExp(oldWord, "g");
-////    myString = myString.replace(reg, "");
-////    alert(myString);
-//
-//    var str = $("#" + cmsContent.f_tags).val();
-//    var tagName = $("#contetn_tag_span" + deletedTagNo).html().toString();
-//    var reg = new RegExp(tagName, "g");
-//    str = str.replace(reg, "");
-//    $("#" + cmsContent.f_tags).val(str);
-//    $("#contetn_tag_span" + deletedTagNo).remove();
-//}
-//<============ BY RASHIDI ========  
+};

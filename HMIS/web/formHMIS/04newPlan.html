@@ -24,9 +24,9 @@
 
 <div class="card bd-primary">
     <div onclick=" if ($('#newFormPlans').css('display') == 'none') {
-                $('#newFormPlans').slideToggle();
+                $('#newFormPlans').slideDown();
             } else {
-                $('#newFormPlans').hide();
+                $('#newFormPlans').slideUp();
             }"
          class="slideToggle card-header bg-primary tx-white">عنوان و توضیحات برنامه عملیاتی/بهبود کیفیت</div>
     <div  id="newFormPlans" >
@@ -40,7 +40,8 @@
                 <input type="hidden" id='hmis_plans_id' name='id'>
                 <div class="col-lg-4">
                     مافوق
-                    <select class="form-control" id="plans_superwizarRol" name="plans_superwizarRol">
+
+                    <select class="form-control" id="plans_supervisorRolId" name="plans_supervisorRolId">
                         <option value="" selected disabled hidden>مافوق را انتخاب کنید</option>
                         <option value="مترون">مترون</option>
                         <option value="رئیس امور عمومی">رئیس امور عمومی</option>
@@ -52,9 +53,9 @@
                     نوع برنامه
                     <!--فرم بهبود کمی با فرم عملیات اصلاحی تفاوت دارد-->
                     <select class="form-control" id='plans_typeOfProgram' name='plans_typeOfProgram' onchange="if ($(this).val() == 'برنامه بهبود کیفیت') {
-                                $('#planBehboodDiv').show();
+                                $('#planImprovementDiv').slideDown();
                             } else {
-                                $('#planBehboodDiv').hide();
+                                $('#planImprovementDiv').slideUp();
                             }
                             ">
                         <option value="برنامه عملیاتی">برنامه عملیاتی</option>
@@ -65,17 +66,11 @@
                     بخش/واحد
                     <!--آپسن ها را از جدول بخش ها بیاورد-->
                     <select class="form-control"  name='plans_department' id='plans_department'>
-                        <option value="">واحد را انتخاب کنید</option>
-                        <option value="1">بخش اطفال</option>
-                        <option value="2">جراحی</option>
-                        <option value="3">اتاق عمل</option>
-                        <option value="4">زنان</option>
-                        <option value="5">اورژانس</option>
                     </select>
                 </div>
                 <div class="col-lg-4" style="float: left">
                     وضعیت
-                    <select name="plans_vaziat"  id='plans_vaziat' class="form-control" disabled="disabled">
+                    <select name="plans_status"  id='plans_status' class="form-control" disabled="disabled">
                         <option value="ثبت اولیه">ثبت اولیه</option>
                         <option value="تایید">تایید</option>
                         <option value="ارسال به کمیته مدیریت اجرایی">ارسال به کمیته مدیریت اجرایی</option>
@@ -84,7 +79,10 @@
                 <div class="col-lg-4" style="float: left">
                     روند وضعیت:
                     <br/>
-                    <a href="#" class="btn btn-outline-dark btn-icon mg-r-5"><div style="font-size: 18px"><i class="icon ion-loop"></i></div></a>
+                    <a href="#" class="btn btn-outline-dark btn-icon mg-r-5"><div style="font-size: 18px"><i class="icon ion-loop" onclick="$('#statusLog').slideDown();"></i></div></a>
+                </div>
+                <div class="col-lg-4">
+                    <div id='statusLog' class='form-control' style='display: none'></div>
                 </div>
             </div><!-- row -->
             <br/>
@@ -109,10 +107,10 @@
                     هدف جزئی
                     <select class="form-control" id='plans_minorGoal' name='plans_minorGoal'>
                         <option value="">انتخاب</option>
-                        <option value="1">ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% در سال نسبت به سال قبل</option>
-                        <option value="2">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
-                        <option value="3">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
-                        <option value="4">پیاده سازی استانداردهای بیمارستان دوستدار ایمنی و اعتباربخشی  وارتقا آگاهی و عملکرد کارکنان در راستای اجرای بهینه استاندارد های مربوطه به میزان 10% در سال 1396 نسبت به سال قبل    </option>
+                        <option value="ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% در سال نسبت به سال قبل">ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% در سال نسبت به سال قبل</option>
+                        <option value="کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                        <option value="کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                        <option value="پیاده سازی استانداردهای بیمارستان دوستدار ایمنی و اعتباربخشی  وارتقا آگاهی و عملکرد کارکنان در راستای اجرای بهینه استاندارد های مربوطه به میزان 10%در سال 1396 نسبت به سال قبل">پیاده سازی استانداردهای بیمارستان دوستدار ایمنی و اعتباربخشی  وارتقا آگاهی و عملکرد کارکنان در راستای اجرای بهینه استاندارد های مربوطه به میزان 10%در سال 1396 نسبت به سال قبل</option>
                     </select>
                 </div>
             </div>
@@ -122,15 +120,15 @@
                     استراتژی
                     <select class="form-control" id='plans_strategic' name="plans_strategic">
                         <option value="">انتخاب</option>
-                        <option value="1">ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% در سال نسبت به سال قبل</option>
-                        <option value="2">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
-                        <option value="3">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
-                        <option value="4">پیاده سازی استانداردهای بیمارستان دوستدار ایمنی و اعتباربخشی  وارتقا آگاهی و عملکرد کارکنان در راستای اجرای بهینه استاندارد های مربوطه به میزان 10% در سال 1396نسبت به سال قبل </option>
+                        <option value="ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% ">ارتقا ایمنی سازه ای ، غیر سازه ای و عملکردی به میزان10% در سال نسبت به سال قبل</option>
+                        <option value="کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                        <option value="کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل">کاهش میزان عفونت های بیمارستانی به میزان 5% در سال  نسبت به سال قبل</option>
+                        <option value="پیاده سازی استانداردهای بیمارستان دوستدار ایمنی و اعتباربخشی  وارتقا آگاهی و عملکرد کارکنان در راستای اجرای بهینه استاندارد های مربوطه به میزان 10% در سال 1396نسبت به سال قبل ">پیاده سازی استانداردهای بیمارستان دوستدار ایمنی و اعتباربخشی  وارتقا آگاهی و عملکرد کارکنان در راستای اجرای بهینه استاندارد های مربوطه به میزان 10% در سال 1396نسبت به سال قبل </option>
                     </select>
                 </div>
             </div>
             <div class="row">
-                <div id="planBehboodDiv" style="display: none">
+                <div id="planImprovementDiv" style="display: none">
                     <div class="col-lg">
                         عنوان مشکل
                         <input class="form-control" id='plans_titleOfTheProblem' name='plans_titleOfTheProblem' placeholder="عنوان مشکل" type="text">
@@ -156,12 +154,12 @@
                     دامنه:
                     <select class="form-control" id="plans_domain" name='plans_domain'>
                         <!--این آپشن ها را از قسمت مدیریت بخش ها بصورت اتوماتیک می آوریم-->
-                        <option value="">انتخاب بخش</option>
-                        <option value="1">جراحی</option>
-                        <option value="2">داخلی</option>
-                        <option value="3">زنان</option>
-                        <option value="4">مردان</option>
-                    </select>
+                        <!--                        <option value="">انتخاب بخش</option>
+                                                <option value="1">جراحی</option>
+                                                <option value="2">داخلی</option>
+                                                <option value="3">زنان</option>
+                                                <option value="4">مردان</option>
+                                            </select>-->
                 </div>
             </div><!-- row -->
             <div class="row">
@@ -189,10 +187,9 @@
             </div><!-- col -->
         </div><!-- row -->
         <!--</div> programAmaliatyDiv-->
-        <div class="col-lg-3">
-            <button id='recordPlans' style="display: none" class="btn btn-success btn-block mg-b-10" onclick="hmisPlans.m_insert();">ثبت  برنامه</button>
+        <div class="col-lg-3" id="buttonRecord">
         </div>
-        <div id="editPlansDiv" class="col-lg-3">
+        <div id="editPlansDiv" class="col-lg-12">
         </div>
     </div><!-- div newFormPlans  -->
 </div><!-- card -->
@@ -200,11 +197,12 @@
     <div class="card bd-primary mg-t-20" id="newFormQuestion">
         <div class="card-header bg-primary tx-white">مدیریت گام های اجرایی:</div>
         <div id="stepsForm1" class="card-body pd-sm-30">
-            <div class='card-body pd-sm-30'>
-                <p class='mg-b-20 mg-sm-b-30'>
-                    <a  id='btn_addNewSteps' class="btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white" style='color:#fff;display: none' onclick="$('#stepsForm').show();new jj('#stepsForm').jjFormClean();$('#btn_insertSteps').show();$('#btnEditDiv').hide();" > گام جدید</a>
-                </p>
-            </div>
+            <!--            <div class='card-body pd-sm-30'>
+                            <p class='mg-b-20 mg-sm-b-30'>
+                                <a  id='btn_addNewSteps' class="btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white" style='color:#fff;' onclick="$('#stepsForm').slideDown();new jj('#stepsForm').jjFormClean();$('#btn_insertSteps').slideDown();$('#btnEditDiv').slideUp();" > گام جدید</a>
+                            </p>
+                        </div>-->
+
             <div id="stepsForm" class="card-body pd-sm-30">
 
                 <input id="hmis_steps_id" name="hmis_steps_id" type="hidden"/>
@@ -218,32 +216,51 @@
                             <input id="steps_title" name="steps_title" class="form-control is-valid" placeholder="عنوان:" type="text">
                         </div><!-- form-group -->
                     </div><!-- col -->
-                    <div class="col-lg mg-t-20 mg-lg-t-0">
+                    <div class="col-lg-6">
                         <div class="form-group has-warning mg-b-0">
-                            مسئول اجرا:
-                            <select class="form-control" id="steps_responsibleForRunning" name="steps_responsibleForRunning">
-                                <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
-                                <option value="">انتخاب مسئول اجرا</option>
-                                <option value="1">مترون</option>
-                                <option value="2">سرپرستار چشم زنان</option>
-                                <option value="3">مسئول امور عمومی</option>
-                                <option value="4">مسئول تدارکات</option>
+                            مسئول پیگیری
+                            <select id="steps_trackerId" name="steps_trackerId" class="form-control">
                             </select>
                         </div><!-- form-group -->
                     </div><!-- col -->
-                    <div class="col-lg mg-t-20 mg-lg-t-0">
+                    <!--/////////////////////////////////////////////////////-->
+                    <div class="col-lg-6">
                         <div class="form-group has-warning mg-b-0">
-                            مسئول پیگیری:
-                            <select class="form-control" id="steps_responsibleForTrack" name="steps_responsibleForTrack">
-                                <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
-                                <option value="">انتخاب مسئول پیگیری</option>
-                                <option value="1">مترون</option>
-                                <option value="2">سرپرستار چشم زنان</option>
-                                <option value="3">مسئول امور عمومی</option>
-                                <option value="4">مسئول تدارکات</option>
+                            <input onchange="hmisPlans.executorAction($(this).val());"  type="radio" checked="checked" id="roleExecutor" name="responsibleExecutor" value="سمت">
+                            انتخاب سمت مسئول اجرا
+                            <select id="steps_executorRoleId"  multiple="" name="steps_executorRoleId" class="form-control select2 select2-hidden-accessible">
+                                <!--در واقع از جدول اشخاص باید بیاورد-->
                             </select>
                         </div><!-- form-group -->
                     </div><!-- col -->
+                    <div class="col-lg-6">
+                        <div class="form-group has-warning mg-b-0">
+
+                            انتخاب اشخاص مسئول اجرا <input type="radio" onchange="hmisPlans.executorAction($(this).val());" id="userExecutor" name="responsibleExecutor" value="کاربران">
+                            <select id="steps_executorUserId" multiple="" name="steps_executorUserId" class="form-control select2 select2-hidden-accessible">
+                                <!--در واقع از جدول اشخاص باید بیاورد-->
+                            </select>
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <!--/////////////////////////////////////////////////////-->
+                    <!--                    <div class="col-lg mg-t-20 mg-lg-t-0">
+                                            <div class="form-group has-warning mg-b-0">
+                                                مسئول اجرا:
+                                                <select class="form-control" id="steps_executorId" name="steps_executorId">
+                                                    این آپشن ها را از قسمت مسئولان باید بیاوریم
+                    
+                                                </select>
+                                            </div> form-group 
+                                        </div> col -->
+                    <!--                    <div class="col-lg mg-t-20 mg-lg-t-0">
+                                            <div class="form-group has-warning mg-b-0">
+                                                مسئول پیگیری:
+                                                <select class="form-control" id="steps_trackerId" name="steps_trackerId">
+                                                    این آپشن ها را از قسمت مسئولان باید بیاوریم
+                    
+                                                </select>
+                                            </div> form-group 
+                                        </div> col -->
                 </div><!-- row -->
                 <div class="row">
                     <div class="col-lg">
@@ -266,57 +283,6 @@
                     </div><!-- col -->
                 </div>
                 <div class="row">
-                    <div class="col-lg">
-                        مستندات بارگذاری شده:
-                        <label class="custom-file">
-                            <input type="file" id="file2" class="custom-file-input">
-                            <span class="custom-file-control custom-file-control-primary"></span>
-                        </label>
-                        <a href="" style="font-size: 40px">
-                            <i class="fa fa-download" ></i>
-                        </a>
-
-                    </div><!-- col -->
-                    
-                    
-                    
-                    
-                    <div class="col-lg">
-                        مستندات بارگذاری شده:
-                        <label class="custom-file">
-                            <input type="file" id="file2" class="custom-file-input">
-                            <span class="custom-file-control custom-file-control-primary"></span>
-                        </label>
-                        <a href="" style="font-size: 40px">
-                            <i class="fa fa-download" ></i>
-                        </a>
-
-                    </div><!-- col -->
-                    <div class="col-lg">
-                        مستندات بارگذاری شده:
-                        <label class="custom-file">
-                            <input type="file" id="file3" class="custom-file-input">
-                            <span class="custom-file-control custom-file-control-primary"></span>
-                        </label>
-                        <a href="" style="font-size: 40px">
-                            <i class="fa fa-download" ></i>
-                        </a>
-
-                    </div><!-- col -->
-                     <div class="col-lg">
-                                           مستندات بارگذاری شده:
-                                        <div class="input-group">
-                                            
-                                            <span class="input-group-btn">
-                                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>
-                                                <input id="uploaded_file" name="uploaded_file"  onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                            </span>
-                                            <span class="form-control"></span>
-                                        </div>
-                                            <a onclick="//hmisDepartment.downloadIcon();"><i  class="fa fa-download"  id="downloadIcon" ></i></a>
-                                        </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-4">
                         هزینه:
                         <div class="form-group has-success mg-b-0">
@@ -325,20 +291,111 @@
                     </div><!-- col -->
 
                 </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        درصد از کل:
+                        <div class="form-group has-success mg-b-0">
+                            <input  class="form-control is-valid"  min="0" max="100" id="steps_percent" name="steps_percent"   type="number" value="" />
+
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+
+                </div>
+                <div class="row" id="decriptionStepsDiv" style="display:none">
+                    <div class="col-lg-4">
+                        توضیحات مسئول پیگیری:
+                        <div class="form-group has-success mg-b-0">
+                            <input  class="form-control is-valid"  id="stepsInPlans_descriptionTracker" name="steps_descriptionTracker"   type="text" />
+
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class="col-lg-4">
+                        توضیحات مسئول اجرا:
+                        <div class="form-group has-success mg-b-0">
+                            <input  class="form-control is-valid" id="stepsInPlans_descriptionExecutor" name="steps_descriptionExecutor"    type="text"/>
+
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" style="">
+
+                        <input id="steps_files" name="steps_files" type="hidden">
+                        <input id="steps_filesTitle" name="steps_filesTitle" type="hidden">
+                        <div id="inputAfterSelectGauge" ></div>
+                        <div  id="inputTextSelectorDiv" ></div>
+                        <div  id="inputTitleSelectorDiv" ></div>
+                        <div  id="showFilesDiv" ></div>
+
+                        <div class="input-group">
+
+                            <input class="btn btn-primary" id="sendFiles" type="submit" value="ارسال">
+                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                            <input id="attachFileSteps" name="attachFileSteps" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                            <!--<span class="form-control"></span>-->
+                        </div>
+                        عنوان فایل
+                        <input id="steps_titleFile1" name="steps_titleFile1"  style="display: block;
+                               width: 100%;
+                               padding: 0.65rem 0.75rem;
+                               font-size: 1.3em;
+                               line-height: 1.25;
+                               color: #495057;
+                               background-color: #fff;
+                               background-image: none;
+                               background-clip: padding-box;
+                               border: 1px solid rgba(0, 0, 0, 0.15);
+                               border-radius: 3px;
+                               transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                        <span id="user_pic" class="form-control"></span>
+                        <div id="filesDownloadStepsDiv"></div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+                    <!--                    <div class="col-lg-3">
+                                            بارگذاری مستندات:<br/>
+                                            <input id="plans_files" name="plans_files" type="hidden" />
+                                            <img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>
+                                            <div class="row">
+                                                <input class="btn btn-primary" id="sendFilesPlans" type="submit" value="ارسال">
+                                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                                <input id="attachFilesPlans" name="attachFilesPlans" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                                <span class="form-control col-lg"></span>
+                                            </div>
+                                        </div>-->
+                </div>
+                <div class="row">
+                    <div class="col-lg-3" id="inputFilesPlansDiv"></div>
+                </div>
+                <div class="row mg-t-20">
+                    <div class="col-lg-3">
+                        <div class="form-group has-success mg-b-0">
+                            <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="$('#stepsForm').slideUp();">لغو</button>
+                        </div><!-- form-group -->
+                    </div><!-- col -->
+                    <div class='col-lg-6' id='steps_button'></div>
+                    <!--                    <div class="col-lg-3">
+                                            <button id='btn_insertSteps' class="btn btn-outline-success  btn-block mg-b-10" onclick="hmisSteps.m_insert();">ثبت گام</button>
+                                        </div> col -->
+
+                </div>
+
             </div><!-- stepsForm -->
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="form-group has-success mg-b-0">
-                        <button class="btn btn-secondary btn-block mg-b-10" onclick="$('#stepsForm').hide();">لغو</button>
-                    </div><!-- form-group -->
-                </div><!-- col -->
-                <div class="col-lg-3">
-                    <button id='btn_insertSteps' class="btn btn-success btn-block mg-b-10" onclick="hmisSteps.m_insert();">ثبت گام</button>
-                </div><!-- col -->
-                <div id='btnEditDiv' class="col-lg-3" style="display: none">
-                </div><!-- col -->
-            </div>
         </div><!-- stepsForm1 -->
+        <div class="col-lg-12">
+
+            <div  id="tblSteps" ></div>
+
+        </div>
         <br/>
 
         <div class="row">
@@ -376,12 +433,8 @@
             </div>
             <!--</div>-->
             <!--<div class="row row-sm">-->
-            <div class="col-lg-12">
 
-                <div  id="tblSteps" ></div>
-
-            </div>
-            <div style="display:contents" id='btns_plans'></div>
+            <div style="display:contents" id= 'btns_plans'></div>
             <br/>
 
         </div><!-- row -->
@@ -403,7 +456,7 @@
 <div class="row">
     <div class="col-lg-2">
         <div class="form-group has-success mg-b-0">
-            <button id="cancel_Plans" class="btn btn-secondary btn-block mg-b-10">لغو</button>
+            <button id="cancel_Plans" class="btn btn-outline-secondary mg-b-10  btn-block">بازگشت</button>
         </div>
     </div>
 
@@ -411,10 +464,14 @@
 
 
 <script>
-        $(document).ready(function () {
-            $('.custom-file-input').on('change', function () {
-                var fileName = document.getElementById("exampleInputFile").files[0].name;
-                $(this).next('.form-control-file').addClass("selected").html(fileName);
-            });
-        });</script>
+    $(document).ready(function () {
+        $('.custom-file-input').on('change', function () {
+            var fileName = document.getElementById("exampleInputFile").files[0].name;
+            $(this).next('.form-control-file').addClass("selected").html(fileName);
+        });
+    });</script>
 
+<script>
+    $('#steps_executorRoleId').select2({minimumResultsForSearch: '', width: '100%'});
+    $('#steps_executorUserId').select2({minimumResultsForSearch: '', width: '100%'});
+</script>

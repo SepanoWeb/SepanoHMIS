@@ -555,6 +555,76 @@ public class Js {
         }
         //<============ BY RASHIDI ========
     }
+    public static class jjStrategic {
+
+        static String hmis = "hmisStrategic";
+
+        public static String refresh() {
+            return hmis + ".m_refresh();\n";
+        }
+
+        public static String insert() {
+            return hmis + ".m_insert();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        public static String addEN(String id) {
+            return hmis + ".m_add_EN(" + id + ");\n";
+        }
+
+        public static String addAr(String id) {
+            return hmis + ".m_add_Ar(" + id + ");\n";
+        }
+
+        public static String searchTextInTitle(String text) {
+            return hmis + ".m_searchTextInTitle('" + text + "');\n";
+        }
+
+        public static String searchTextInAll(String text) {
+            return hmis + ".m_searchTextInAll('" + text + "');\n";
+        }
+
+        public static String wikiId(String id) {
+            return hmis + ".m_wikiId('" + id + "');\n";
+        }
+
+        public static String wikiText(String text) {
+            return hmis + ".m_wikiText('" + text + "');\n";
+        }
+
+        public static String clean() {
+            return hmis + ".m_clean();\n";
+        }
+
+        public static String addNew() {
+            return hmis + ".m_add_new();\n";
+        }
+
+        public static String showForm() {
+            return hmis + ".m_show_form();\n";
+        }
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+
+        //============ BY RASHIDI ========>
+        public static String addLang(int id, int langId) {
+            return hmis + ".m_add_Ln(" + id + "," + langId + ");\n";
+        }
+        //<============ BY RASHIDI ========
+    }
     public static class jjSessions {
 
         static String hmis = "hmisSessions";
@@ -1804,7 +1874,38 @@ public class Js {
             return cms + ".m_add_EN(" + id + ");\n";
         }
     }
+    ///////////////////تنظیمات یادآوری
+    public static class jjSetting {
 
+        static String hmis = "hmisSetting";
+
+        public static String insert() {
+            return "hmisSetting.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisSetting.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+   
     public static class jjPic {
 
         static String cms = "cmsPic";

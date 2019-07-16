@@ -12,32 +12,15 @@ var hmisApproved = {
     loadForm: function () {
         if ($("#swApprovedForm").html() == '') {
             $("#swApprovedForm").load("formHMIS/05approved.html", null, function () {
-                new jj('#sendFilesApproved').jjAjaxFileUpload4('attachFileApproved', '#approved_fileOfResponsible', '#inputFileApprovedDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
 
-                $("#cancel_Approved").button().click(function (e) {
+                new jj('#sendFilesApproved1').jjAjaxFileUpload4('attachFileApproved1', '#approved_fileOfResponsible', '#inputFileApprovedDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
+                $("#cancel_Approved").click(function (e) {
                     hmisApproved.m_clean();
                     hmisApproved.m_show_tbl();
                 });
 
 
-
-//                $("#upload_Content_file").button().click(function () {
-//                });
-                //============ BY RASHIDI ========>
-//                $("#content_insert_tags").button().click(function (e) {
-//                    $("#" + cmsContent.f_tags).val($("#" + cmsContent.f_tags).val() + $("#tags_name").val() + ',');//تگ نوشته شده را به یک اینپوت مخفی اضافه می کند
-//                   cmsContent.m_insertTags();
-//
-//                });
-//               $('#tags_name').keyup(function () {
-//                    if ($("#tags_name").val() === "") {
-//                       $("#content_search_tags_result").hide();
-//                   }
-//                   cmsContent.m_searchTags();
-//               });
                 hmisApproved.m_refresh();
-//                $('#newCommetteForm').show();
-//                $('#formInvitation').hide();
 
 
             });
@@ -53,62 +36,66 @@ var hmisApproved = {
         new jj(param).jjAjax2(false);
     },
     m_show_form: function () {
-        $('#swApprovedTbl').hide();
-        $('#swApprovedForm').show();
+        $('#swApprovedTbl').slideUp();
+        $('#swApprovedForm').slideDown();
         hmisApproved.tabSizeForm();
     },
     m_clean: function () {
-        new jj("#" + hmisApproved.f_content_id).jjVal("");
-        new jj("#" + hmisApproved.f_title).jjVal("");
-        new jj("#" + hmisApproved.f_lang).jjVal("1");
-        new jj("#" + hmisApproved.f_parent).jjVal("0");
-        new jj("#insertApproved2").jjFormClean();
+
+        new jj("#insertApproved2 input:radio").jjFormClean();
         new jj("#approved_trackerId").jjVal("");
-        new jj("#approved_executorId").jjVal("");
+        new jj("#approved_executorUserId").jjVal("");
+        new jj("#approved_executorRoleId").jjVal("");
+        $("#inputTextSelectorDiv").html("");
 
     },
     m_add_new: function () {
-        $("#approved_status").val("در حال انجام");
-        $("#approved_status").attr("disabled", "disabled");
+        var param = "";
+        $("#approved_executorUserId").attr("disabled", "disabled");
+
+        $("#approved_description").summernote();
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
-        new jj("do=" + hmisApproved.tableName + ".add_new&jj=1").jjAjax2(false);
+        param += "&hmis_sessions_id=" + new jj("#hmis_sessions_id").jjVal();
+        param += "&do=" + hmisApproved.tableName + ".add_new&jj=1";
+        new jj(param).jjAjax2(false);
         hmisApproved.m_clean();
-//        hmisApproved.m_show_form();
-//                $('#newCommetteForm').show();
-//                $('#formInvitation').hide();
-
-        //        oEditor.execCommand( 'bold');
-
     },
     m_show_tbl: function () {
-        $('#swApprovedTbl').show();
-        $('#swApprovedForm').hide();
+        $('#swApprovedTbl').slideDown();
+        $('#swApprovedForm').slideUp();
         if ($('#swApprovedTbl').html() == "") {
             hmisApproved.m_refresh();
         }
         hmisApproved.tabSizeTbl();
     },
     m_insert: function () {
-//        var valid =  hmisApproved.m_validation();
-//        if (valid == "") {
-        $("#inputTextSelectorDiv").html("");
+        var temp1 = "";
+        var temp2 = "";
+        var execturesRoleId = $('#approved_executorRoleId').val();
+        var execturesUserId = $('#approved_executorUserId').val();
         var param = "";
-        param += "&do=" + hmisApproved.tableName + ".insert";
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-        var temp = $("#inputTextSelectorDiv input");
-        var attachedFile = "";
-        for (var i = 0; i < temp.length; i++) {
-            attachedFile += $(temp[i]).val() + "%23A%23";
+        if ($("input:radio[name=responsibleExecutor]:checked").val() == "سمت") {
+            for (var i = 0; i < execturesRoleId.length; i++) {
+                temp2 += execturesRoleId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+            }
+            param += "&approved_executorRoleId=" + temp2;
+            param += "&approved_executorUserId=";
+
+        } else if ($("input:radio[name=responsibleExecutor]:checked").val() == "کاربران") {
+            for (var i = 0; i < execturesUserId.length; i++) {
+                temp1 += execturesUserId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+            }
+            param += "&approved_executorRoleId=";
+            param += "&approved_executorUserId=" + temp1;
         }
-        param += "&approved_file=" + attachedFile;
+
+        param += "&do=" + hmisApproved.tableName + ".insert";
         param += "&" + new jj('#insertApproved2').jjSerial();
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
-        hmisApproved.m_clean();
-//        } else {
-//            new jj(valid).jjDialog();
-//        }
+
     },
     m_edit: function () {
         var param = "";
@@ -119,19 +106,41 @@ var hmisApproved = {
         hmisApproved.m_clean();
     },
     editInSessions: function () {
-//        var valid = hmisPlan.m_validation();
-//        if (valid == "") {
+
+        var temp2 = "";
+        var temp1 = "";
+
+        /////////////////////////////////////////////
+        var execturesRoleId = $('#approved_executorRoleId').val();
+        var execturesUserId = $('#approved_executorUserId').val();
+        if ($("input:radio[name=responsibleExecutor]:checked").val() == "سمت") {
+            for (var i = 0; i < execturesRoleId.length; i++) {
+                temp2 += execturesRoleId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+            }
+            param += "&approved_executorRoleId=" + temp2;
+//            param += "&approved_executorUserId=";
+
+        } else if ($("input:radio[name=responsibleExecutor]:checked").val() == "کاربران") {
+            for (var i = 0; i < execturesUserId.length; i++) {
+                temp1 += execturesUserId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+            }
+//            param += "&approved_executorRoleId=";
+            param += "&approved_executorUserId=" + temp1;
+        }
+
+
+        /////////////////////////////////////////////
         var param = "";
         param += "&do=" + hmisApproved.tableName + ".editInSessions";
         param += "&" + new jj('#insertApproved2').jjSerial();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+//        param += "&approved_executorRoleId=" + temp2;
+//        param += "&approved_executorUserId=" + temp1;
 
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
-//        } else {
-//            new jj(valid).jjDialog();
-//        }
+
     },
     editApprovedPrevious: function () {
 //        var valid = hmisPlan.m_validation();
@@ -141,10 +150,13 @@ var hmisApproved = {
         param += "&" + new jj('#approvedPreviousDiv').jjSerial();
         param += "&approvedId=" + new jj('#approvedPrevious_id').jjVal();
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-
         new jj(param).jjAjax2(false);
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
+        $("#inputFileApprovedPreviousDiv").html("");
+       
+
+
 //        } else {
 //            new jj(valid).jjDialog();
 //        }
@@ -160,10 +172,15 @@ var hmisApproved = {
      * @param {type} id
      * @returns {undefined}
      */
+
     m_delete: function (id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisApproved.m_delete_after_question(' + id + ');\n', true, "");
+//        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo(' hmisApproved.m_delete_after_question(' + id + ');\n', true, "");
+        if (confirm("آیا از حذف این رکورد اطمینان دارید؟")) {
+            hmisApproved.confirmationFinalApproved_after_question(id);
+        } else {
+        }
     },
-    m_delete_after_question: function (id) {
+    confirmationFinalApproved_after_question: function (id) {
         var param = "";
 //        alert(new jj('#hmis_sessions_id').jjVal());
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
@@ -197,20 +214,54 @@ var hmisApproved = {
         param += "do=" + hmisApproved.tableName + ".selectApprovedPrevious";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
+        $("#inputFileApprovedPreviousDiv").html("");
+
 //        hmisApproved.m_show_form();
     },
     selectInSessions: function (id) {
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
-        $('#insertApproved2').slideDown();
+//        $('#insertApproved2').slideDown();
         $("html, body").delay(1000).animate({scrollTop: $('#insertApproved2').offset().top}, 800);
         var param = "";
         param += "do=" + hmisApproved.tableName + ".selectInSessions";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
         new jj(param).jjAjax2(false);
+        $("#approved_description").summernote();
 //        hmisApproved.m_show_form();
     },
+    /**
+     * سلکت در جلسات ابلاغ شده من
+     * @param {type} id
+     * @returns {undefined}
+     */
+    selectInCommunicatedSessions: function (id) {
+        new jj("#communicatedApproved_startDate").jjCalendarWithYearSelector(1340, 1420);
+        new jj("#communicatedApproved_endDate").jjCalendarWithYearSelector(1340, 1420);
+        $("html, body").delay(1000).animate({scrollTop: $('#insertApprovedCommunicated').offset().top}, 800);
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".selectInCommunicatedSessions";
+        param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
+        param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+        new jj(param).jjAjax2(false);
+        $("#communicatedApproved_description").summernote();
+//        hmisApproved.m_show_form();
+    },
+    /**
+     * ابلاغ مصوبات وایجاد رکورد به تعداد مسئولین اجرا
+     * @param {type} id
+     * @returns {undefined}
+     */
+    communicatedApproved: function (id) {
+        var param = "";
+//        param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+        param += "do=" + hmisApproved.tableName + ".communicatedApproved";
+        param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
+        new jj(param).jjAjax2(false);
+//        hmisApproved.m_show_form();
+    },
+
     m_add_EN: function (id) {
         var param = "";
         param += "do=" + hmisApproved.tableName + ".add_EN";
@@ -278,80 +329,53 @@ var hmisApproved = {
     },
 
     /////////////////////shiran////////////
-//    showInvitationForm: function (commeteId) {
-//        hmisApproved.m_show_form();
-////        $('#hmis_commettes_id').val(commeteId);
-////        $('#newCommetteForm').hide();
-////        $('#formInvitation').show();
-//    },
-//    Invitees: function () {//مدعوین
-//
-//        var param = "";
-//        var temp = $('#InviteesDiv input:checkbox[class=checkBoxInvitees]:checked');
-//        var InviteesOutSide = $('#InviteesDiv input:text[class=InviteesOutSide]');
-//
-//        if (temp.size() == 0 && InviteesOutSide.size() == 0) {//اگر تیک عضوی را نزده بود
-//            alert("لطفا افراد را انتخاب کنید");
-//            return;
-//        }
-//        var temp1 = "";
-//        var temp2 = "";
-//        for (var i = 0; i < temp.size(); i++) {
-//            temp1 += $(temp[i]).attr('value') + "%23A%23"; //نام چک باکس عدد مورد نظر
-//        }
-//        for (var i = 0; i < InviteesOutSide.size(); i++) {
-//            if ($(InviteesOutSide[i]).val() !== "") {
-//                temp2 += $(InviteesOutSide[i]).val() + "%23A%23"; //نام چک باکس عدد مورد نظر
-//            }
-//        }
-//        alert(temp2);
-//        alert(temp1);
-//        param += "&sessions_Invitees=" + temp1;
-//        param += "&sessions_InviteesOutSide=" + temp2;
-//        param += "&commettesId=" + new jj("#hmis_commettes_id").jjVal();//ای دی کمیته
-//        param += "&" + new jj('#formInvitation').jjSerial();
-//        param += "&do=Sessions.requestSendComment&jj=1";
-//        new jj(param).jjAjax2(false);
-//    },
+    /**
+     * حذف نام فایل
+     * @param {type} idUpload
+     * @param {type} id
+     * @returns {undefined}
+     */
+    m_remove: function (idUpload, approvedId) {
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف", "hmisApproved.removeFile(" + idUpload + "," + approvedId + ");");
+    },
+    removeFile: function (idUpload, approvedId) {
 
-//    mainTabSetSize: function () {
-////        var aa = $("#swContent").children();
-////        var bb = 0;
-////        for(i=0; i < aa.length; i++){  
-////            if($(aa[i]).css("display")!='none'){
-////                bb+= new jj($(aa[i]).css("height")).jjConvertToInt() ;
-////            }
-////        }
-////        if(bb==0){
-////            $('#tabs').css('height',572);
-////        }else{
-////            $('#tabs').css('height',bb+44);
-////        }
-//    }
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".removeFile";
+        param += "&upload_id=" + idUpload;
+        param += "&hmis_approved_id=" + approvedId;
+        new jj(param).jjAjax2(false);
+
+    },
+    /**
+     * زمانی که پیشنهادی به دبیر کمیته داده می شود می تواند آن را رد کند یا اینکه آن را به عنوان مصوبه بپذیرد
+     * @param {type} id
+     * @param {type} sessionsId
+     * @returns {undefined}
+     */
+    actionIconAdd: function (id, sessionsId) {
+
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".addApproved";
+        param += "&hmis_approved_id=" + id;
+        param += "&sessionsId=" + sessionsId;
+        new jj(param).jjAjax2(false);
+
+    },
+    /**
+     * رد پیشنهاد برنامه عملیاتی
+     * @param {type} id
+     * @returns {undefined}
+     */
+    actionIconReject: function (id, sessionsId) {
+
+        var param = "";
+        param += "do=" + hmisApproved.tableName + ".rejectApproved";
+        param += "&hmis_approved_id=" + id;
+        param += "&sessionsId=" + sessionsId;
+
+        new jj(param).jjAjax2(false);
+
+    },
 
 };
-//============ BY RASHIDI ========> 
-//function selectSearchResult(selectedTagNo) {
-//    $("#tags_name").val($("#tagsResult_td" + selectedTagNo).html());
-//    $("#content_search_tags_result").hide();
-//}
-
-//function deleteContentTag(deletedTagNo) {
-//    new jj("آیا از حذف این برچسب اطمینان دارید؟").jjDialog_YesNo('afterDeleteContentTag(' + deletedTagNo + ');\n', true, "");
-//}
-//function afterDeleteContentTag(deletedTagNo) {
-//
-////    var myString = $("#" + cmsContent.f_tags).val();
-////    var oldWord = $("#contetn_tag_span" + deletedTagNo).html().toString();
-////    var reg = new RegExp(oldWord, "g");
-////    myString = myString.replace(reg, "");
-////    alert(myString);
-//
-//    var str = $("#" + cmsContent.f_tags).val();
-//    var tagName = $("#contetn_tag_span" + deletedTagNo).html().toString();
-//    var reg = new RegExp(tagName, "g");
-//    str = str.replace(reg, "");
-//    $("#" + cmsContent.f_tags).val(str);
-//    $("#contetn_tag_span" + deletedTagNo).remove();
-//}
-//<============ BY RASHIDI ========  
