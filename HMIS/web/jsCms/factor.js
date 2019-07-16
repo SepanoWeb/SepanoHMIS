@@ -18,7 +18,7 @@ var cmsFactor ={
         param += "&panel=" + (containerId==null ? "swProduct1Tbl" : containerId);
         param += "&sort=" + (sortField==null ? "0" : sortField);
         param += "&height=400";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsFactor.tabSizeTbl();
     }, 
     m_refresh2:function( containerId,sortField,tableHeight){
@@ -27,7 +27,7 @@ var cmsFactor ={
         param += "&panel=" + (containerId==null ? "swProduct4Tbl" : containerId);
         param += "&sort=" + (sortField==null ? "0" : sortField);
         param += "&height=400";
-        jj(param).jjAjax2(false);
+     new jj(param).jjAjax2(false);
         cmsFactor.tabSizeTbl();
     }, 
     m_refresh3:function( containerId,sortField,tableHeight){
@@ -36,7 +36,7 @@ var cmsFactor ={
         param += "&panel=" + (containerId==null ? "swProduct5Tbl" : containerId);
         param += "&sort=" + (sortField==null ? "0" : sortField);
         param += "&height=400";
-        jj(param).jjAjax2(false);
+         new jj(param).jjAjax2(false);
         cmsFactor.tabSizeTbl();
     }, 
     m_refresh4:function( containerId,sortField,tableHeight){
@@ -45,7 +45,7 @@ var cmsFactor ={
         param += "&panel=" + (containerId==null ? "swProduct6Tbl" : containerId);
         param += "&sort=" + (sortField==null ? "0" : sortField);
         param += "&height=400";
-        jj(param).jjAjax2(false);
+         new jj(param).jjAjax2(false);
         cmsFactor.tabSizeTbl();
     }, 
     m_refresh5:function( containerId,sortField,tableHeight){
@@ -54,7 +54,7 @@ var cmsFactor ={
         param += "&panel=" + (containerId==null ? "swProduct7Tbl" : containerId);
         param += "&sort=" + (sortField==null ? "0" : sortField);
         param += "&height=400";
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsFactor.tabSizeTbl();
     }, 
     
@@ -110,7 +110,7 @@ var cmsFactor ={
             var param = "";
             param += "do="+cmsFactor.tableName+".insert";
             param += "&"+ new jj('#swProduct1Form').jjSerial();
-            jj(param).jjAjax2(false);
+            new jj(param).jjAjax2(false);
             cmsFactor.m_show_tbl();
             cmsFactor.m_clean();
         }else{
@@ -123,7 +123,7 @@ var cmsFactor ={
             var param = "";
             param += "do="+cmsFactor.tableName+".edit";
             param += "&"+ new jj('#swProduct1Form').jjSerial();
-            jj(param).jjAjax2(false);
+            new jj(param).jjAjax2(false);
             cmsFactor.m_show_tbl();
             cmsFactor.m_clean();
         }else{
@@ -143,7 +143,7 @@ var cmsFactor ={
         var param = "";
         param += "do="+cmsFactor.tableName+".delete";
         param += "&" + cmsFactor.f_id + "=" + (id==null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsFactor.m_show_tbl();
         cmsFactor.m_clean();
     }, 
@@ -151,7 +151,7 @@ var cmsFactor ={
         var param = "";
         param += "do="+cmsFactor.tableName+".select";
         param += "&" + cmsFactor.f_id + "=" + (id==null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         cmsFactor.m_show_form();
         $('#swProduct1').css('height',580);
         cmsFactor.heightTab = 580;
@@ -162,7 +162,7 @@ var cmsFactor ={
         var param = "";
         param += "do="+cmsFactor.tableName+".add_EN";
         param += "&" + cmsFactor.f_id + "=" + (id==null ? "" : id);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
         new jj("#"+cmsFactor.f_parent).jjVal(id);
         new jj("#"+cmsFactor.f_lang).jjVal("2");
         cmsFactor.m_show_form();
@@ -171,13 +171,13 @@ var cmsFactor ={
         var param = "";
         param += "do="+cmsFactor.tableName+".searchTextInTitle";
         param += "&text=" + (text==null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     }, 
     m_searchTextInAll:function(text){
         var param = "";
         param += "do="+cmsFactor.tableName+".searchTextInAll";
         param += "&text=" + (text==null ? "" : text);
-        jj(param).jjAjax2(false);
+        new jj(param).jjAjax2(false);
     },
     
     tabSizeTbl: function () {

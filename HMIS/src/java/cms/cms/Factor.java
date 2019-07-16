@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
 
 public class Factor {
@@ -198,11 +199,12 @@ public class Factor {
     public static int rul_lng5 = 209;//====== BY RASHIDI ======
 ////    public static int rul_reserved = 210 --- 220;// RESERVED : 210 -- 220
 
-    public static String refresh(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
             StringBuffer html = new StringBuffer();
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _date + "=" + new jjCalendar_IR().getDBFormat_8length()));
@@ -239,17 +241,21 @@ public class Factor {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshFactor", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "16" : "", "لیست فاکتور های امروز");
-            return html2;
+
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String refresh2(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh2(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
             StringBuffer html = new StringBuffer();
             String query = (new jjCalendar_IR().getDBFormat_8length() + "").substring(0, 6) + "00";
@@ -287,17 +293,21 @@ public class Factor {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshFactor2", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "" : "", "لیست فاکتور های این ماه");
-            return html2;
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String refresh3(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh3(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
             StringBuffer html = new StringBuffer();
             String query = (new jjCalendar_IR().getDBFormat_8length() + "").substring(0, 4) + "0000";
@@ -335,17 +345,21 @@ public class Factor {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshFactor3", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "" : "", "لیست فاکتور های امسال");
-            return html2;
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
-    public static String refresh4(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh4(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
             StringBuffer html = new StringBuffer();
             jjCalendar_IR ir = new jjCalendar_IR();
@@ -385,17 +399,21 @@ public class Factor {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshFactor4", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "" : "", "لیست فاکتور های پارسال");
-            return html2;
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
-    public static String refresh5(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String refresh5(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
             StringBuffer html = new StringBuffer();
 //            DefaultTableModel dtm = db.Select(tableName, _remainder + ">0");
@@ -434,13 +452,16 @@ public class Factor {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshFactor5", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "" : "", "لیست فاکتور های تسویه نشده");
-            return html2;
+            Server.outPrinter(request, response, html2);
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String add_new(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             StringBuffer html = new StringBuffer();
 
@@ -449,9 +470,13 @@ public class Factor {
                 html.append(Js.setHtml("#Factor_button", "<input type=\"button\" id=\"insert_Factor_new\" value=\"" + lbl_insert + "\" class=\"tahoma10\">"));
                 html.append(Js.buttonMouseClick("#insert_Factor_new", Js.jjFactor.insert()));
             }
-            return html.toString();
+            Server.outPrinter(request, response, html.toString());
+            return "";
+
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
@@ -654,11 +679,12 @@ public class Factor {
         return map;
     }
 
-    public static String insert(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
             if (!hasAccess.equals("")) {
                 return hasAccess;
+
             }
             List<Map<String, Object>> row = jjDatabase.separateRow(db.insert(tableName, getPack(request, db, isPost)));
             if (row.size() == 0) {
@@ -666,19 +692,25 @@ public class Factor {
                 if (jjTools.getParameter(request, "myLang").equals("2")) {
                     errorMessage = "Edit Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
             }
-            return Js.jjFactor.refresh() + Js.jjFactor.print(row.get(0).get(_id).toString());
+            Server.outPrinter(request, response, Js.jjFactor.refresh() + Js.jjFactor.print(row.get(0).get(_id).toString()));
+            return "";
+
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
         }
     }
 
-    public static String edit(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String edit(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_edt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
+
             }
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -686,7 +718,9 @@ public class Factor {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
+
             }
             if (!db.update(tableName, getPack(request, db, isPost), _id + "=" + jjTools.getParameter(request, _id))) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
@@ -695,17 +729,23 @@ public class Factor {
                 }
                 return Js.dialog(errorMessage);
             }
-            return Js.jjFactor.refresh();
+            Server.outPrinter(request, response, Js.jjFactor.refresh());
+            return "";
+
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
-    public static String delete(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String delete(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+
+                Server.outPrinter(request, response, hasAccess);
+                return "";
             }
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -713,26 +753,36 @@ public class Factor {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
+
             }
             if (!db.delete(tableName, _id + "=" + id)) {
                 String errorMessage = "عملیات حذف به درستی صورت نگرفت";
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Delete Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
+
             }
-            return Js.jjFactor.refresh();
+            Server.outPrinter(request, response, Js.jjFactor.refresh());
+            return "";
+
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
-    public static String setCustToFactor(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String setCustToFactor(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
-                return hasAccess;
+                Server.outPrinter(request, response, hasAccess);
+                return "";
+
             }
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -740,25 +790,33 @@ public class Factor {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
+
             }
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(Customer.tableName, Customer._id + "=" + id));
             if (row.size() == 0) {
                 String errorMessage = "مشتری با این کد وجود ندارد";
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
+
             }
 
             StringBuffer html = new StringBuffer();
 
             html.append(Js.setVal("#" + _cust_name, row.get(0).get(Customer._ful_name)));
             html.append(Js.setVal("#" + _cust_id, row.get(0).get(Customer._id)));
-            return html.toString();
+
+            Server.outPrinter(request, response, html.toString());
+            return "";
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
-    public static String searchCustomer(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String searchCustomer(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String text = jjTools.getParameter(request, "text");
             String panel = jjTools.getParameter(request, "panel");
@@ -778,11 +836,13 @@ public class Factor {
                 return Js.setHtml("#" + panel, "");
             }
         } catch (Exception ex) {
-            return Server.ErrorHandler(ex);
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+
         }
     }
 
-    public static String select(HttpServletRequest request, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -790,7 +850,9 @@ public class Factor {
                 if (jjTools.isLangEn(request)) {
                     errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
                 }
-                return Js.dialog(errorMessageId);
+                Server.outPrinter(request, response, Js.dialog(errorMessageId));
+                return "";
+
             }
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
             if (row.size() == 0) {
@@ -798,7 +860,9 @@ public class Factor {
                 if (jjTools.isLangEn(request)) {
                     errorMessage = "Select Fail;";
                 }
-                return Js.dialog(errorMessage);
+                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                return "";
+
             }
             StringBuffer html = new StringBuffer();
             StringBuffer html2 = new StringBuffer();
@@ -978,6 +1042,7 @@ public class Factor {
             html.append(Js.buttonMouseClick("#print_Factor", Js.jjFactor.print(id)));
             return (Js.setHtml("#Factor_button", html2.toString())) + html.toString();
         } catch (Exception ex) {
+            
             return Server.ErrorHandler(ex);
         }
     }
@@ -1117,8 +1182,8 @@ public class Factor {
 //                        html.append(Js.setCss("#" + formElementsKeys[num], "borderColor", "red"));
                         return Js.dialog("موجودی کالای " + row.get(i).get(Product._name) + " کافی نیست.");
                     } else {
-                        boolean result = db.otherStatement("UPDATE " + Product.tableName + " SET " 
-                                + Product._quantity + " = " + Product._quantity + " - " + jjTools.getParameter(request, "account_factor_pr_count_"+num) + " WHERE " + Product._id + " = " + row.get(i).get(Product._id));//کم کردن موجودی مربوط به آن کالا
+                        boolean result = db.otherStatement("UPDATE " + Product.tableName + " SET "
+                                + Product._quantity + " = " + Product._quantity + " - " + jjTools.getParameter(request, "account_factor_pr_count_" + num) + " WHERE " + Product._id + " = " + row.get(i).get(Product._id));//کم کردن موجودی مربوط به آن کالا
                         map.put("account_factor_pr_id_" + num, row.get(i).get(Product._id));
                         map.put("account_factor_pr_name_" + num, row.get(i).get(Product._name));
                         map.put("account_factor_pr_code_" + num, row.get(i).get(Product._code));
@@ -1197,7 +1262,6 @@ public class Factor {
                     html.append("</table>");
 
                     //نمایش توضیحات فاکتور
-                    
                     html.append("<div class='factorCommentsDiv'>");
                     html.append("<div id='" + _comment + "'>" + factorRow.get(0).get(_comment) + "</div>");
                     html.append("<div id='" + _comment2 + "'>" + factorRow.get(0).get(_comment2) + "</div>");
@@ -1252,7 +1316,7 @@ public class Factor {
         }
         return "";
     }
+
     ////// <------------- refreshFactorStatus() ------------- 
 //    <============ BY RASHIDI ========
-
 }

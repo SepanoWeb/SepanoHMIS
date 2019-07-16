@@ -93,3 +93,21 @@ pre {
     max-width: 20%;
     max-height: 100px;
 }
+
+
+.status_created {
+    background-color: #fff2be !important;
+    /*color: #cbc8c8 !important;*/
+}
+.status_posted {
+    background-color: #73e950   !important;
+    /*color: #cbc8c8 !important;*/
+}
+.status_postQueue  {
+    background-color: #aef9ae !important;
+    /*color: #cbc8c8 !important;*/
+}
+.status_displayed   {
+    background-color: #cde7ea !important;
+    /*color: #cbc8c8 !important;*/
+}

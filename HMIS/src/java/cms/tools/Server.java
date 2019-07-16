@@ -15,7 +15,10 @@ import HMIS.Upload;
 //<<<<<<< HEAD
 import HMIS.Department;
 import HMIS.CreateDocumentary;
+//import HMIS.Documentary;
+import HMIS.Documentary;
 import HMIS.ManagementGauges;
+import HMIS.Positions;
 
 import HMIS.Messenger;
 import HMIS.Sessions;
@@ -93,7 +96,8 @@ public class Server extends HttpServlet {
 
             clazzes.add(Access_Group_User.class);
             clazzes.add(Access_User.class);
-            clazzes.add(Product.class);
+//            clazzes.add(Product.class);
+
             clazzes.add(Forum.class);
             clazzes.add(Backup.class);
             clazzes.add(Poll.class);
@@ -129,8 +133,13 @@ public class Server extends HttpServlet {
             clazzes.add(Role.class);
             clazzes.add(CreateDocumentary.class);
             ////////////shirn1 پیام     
-            clazzes.add(Messenger.class);
+//            clazzes.add(Messenger.class);
+            clazzes.add(HMIS.Messenger.class);
             clazzes.add(ManagementGauges.class);
+            clazzes.add(Documentary.class);///////////بارگذاری مستندات من
+           
+//            clazzes.add(Documentary.class);///////////بارگذاری مستندات من
+            clazzes.add(Positions.class);///////////جایگاه ها
 
             clazzes.add(Sessions.class);//صورت جلسه 13971212
             clazzes.add(Approved.class);//صورت جلسه 13971212

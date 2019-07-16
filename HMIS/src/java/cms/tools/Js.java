@@ -15,7 +15,7 @@ import jj.jjNumber;
 public class Js {
 
     public static String replacor(String comment) {
-        String replacor = "^*#~";;
+        String replacor = "^*#~";
         comment = comment.trim().replace("\'", replacor);
         comment = comment.replace("\\\"", replacor);
         comment = comment.replace("'", replacor);
@@ -1651,6 +1651,69 @@ public class Js {
             return hmis + ".m_show_tbl();\n";
         }
     }
+    ////جدول نقش ها
+    
+    public static class jjPositions {
+
+        static String hmis = "hmisPositions";
+
+        public static String insert() {
+            return "hmisPositions.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisPositions.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
+    ///////////////////بارگذاری مستندات من
+    public static class jjDocumentary {
+
+        static String hmis = "hmisDocumentary";
+
+        public static String insert() {
+            return "hmisDocumentary.m_insert();\n";
+        }
+
+        public static String refresh() {
+            return "hmisDocumentary.m_refresh();\n";
+        }
+
+        public static String edit() {
+            return hmis + ".m_edit();\n";
+        }
+
+        public static String delete(String id) {
+            return hmis + ".m_delete(" + id + ");\n";
+        }
+
+        public static String select(String id) {
+            return hmis + ".m_select(" + id + ");\n";
+        }
+
+        
+
+        public static String showTbl() {
+            return hmis + ".m_show_tbl();\n";
+        }
+    }
     ///////////////////پیام ها
     public static class jjMessenger {
 
@@ -1667,9 +1730,40 @@ public class Js {
         public static String edit() {
             return hmis + ".m_edit();\n";
         }
+        ///این تابع برای ویرایش پیام های  خوانده نشده نوشته شده
+        public static String editUnread() {
+            return hmis + ".m_editUnreadMessages();\n";
+        }
+        ///این تابع برای ویرایش پیام های  من نوشته شده
+        public static String editMyMessages() {
+            return hmis + ".m_editMyMessages();\n";
+        }
+        ///این تابع برای ویرایش پیام های  دیده شده نوشته شده
+        public static String editMessagesSeen() {
+            return hmis + ".m_editMessagesSeen();\n";
+        }
+        public static String editMessages() {
+            return hmis + ".m_editMessages();\n";
+        }
 
         public static String delete(String id) {
             return hmis + ".m_delete(" + id + ");\n";
+        }
+         ///این تابع برای حذف پیام های  خوانده نشده نوشته شده
+        public static String deleteUnread(String id) {
+            return hmis + ".m_deleteUnread(" + id + ");\n";
+        }
+         ///این تابع برای حذف پیام های من نوشته شده
+        public static String deleteMyMessages(String id) {
+            return hmis + ".m_deleteMyMessages(" + id + ");\n";
+        }
+         ///این تابع برای حذف پیام های دیده شده نوشته شده
+        public static String deleteMessagesSeen(String id) {
+            return hmis + ".m_deleteMessagesSeen(" + id + ");\n";
+        }
+         ///این تابع برای حذف پیام ها نوشته شده
+        public static String deleteMessages(String id) {
+            return hmis + ".m_deleteMessages(" + id + ");\n";
         }
 
         public static String select(String id) {

@@ -435,6 +435,7 @@ public class CreateDocumentary {
         StringBuilder html = new StringBuilder();
         StringBuilder script = new StringBuilder();
         try {
+           
 //            script.append("$('.form-group').select2({ width: '100%'});\n");
 
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
@@ -670,7 +671,7 @@ public class CreateDocumentary {
                         html3 += "<div class='row col-lg-12 ' id='row'>\n"
                                 + "<div class=\"col-lg-3\">\n"
                                 + "عنوان امضا کننده\n"
-                                + "<input class='form-control'  id='signatory_title_" + i + "' "
+                                + "<input class='form-control c'  id='signatory_title_" + i + "' "
                                 + "name='createDocumentary_signatory_title_" + i + "' "
                                 + "value='" + row.get(0).get("createDocumentary_signatory_title_" + i).toString() + "' />"
                                 + "</div>\n"
@@ -689,7 +690,7 @@ public class CreateDocumentary {
                                 + "</div>"
                                 + "<div class=\"col-lg-3\">"
                                 + "<button class=\"btn btn-outline-danger btn-block mg-t-20 mg-b-20  buttonRemove\">حذف</button>\n"
-                                + "<button class=\"btn btn-outline btn-block mg-t-20 mg-b-20 \" onclick='hmisMessenger.sendMesseageToSignatory(" + UserRow.get(0).get(Access_User._id) + "," + row.get(0).get(_id) + ")'>ارسال پیام</button>\n"
+                                + "<button class=\"btn btn-outline btn-block mg-t-20 mg-b-20 \" id='payam' onclick='hmisMessenger.sendMesseageToSignatory(" + UserRow.get(0).get(Access_User._id) + "," + row.get(0).get(_id) +")'>ارسال پیام</button>\n"
                                 + "</div>"
                                 + "</div>";
 
@@ -708,7 +709,7 @@ public class CreateDocumentary {
             boolean flag = true;
             //ویژگی : اگر یکی از امضا کنندگان مستند را رد بکند دیگر امکان یرایش مستند وجود ندارد ولی امکان حذف وجود دارد
             for (int j = 1; j <= 20; j++) {
-                if (row.get(0).get("createDocumentary_signatory_signature_" + j).equals("0")) {
+                if (row.get(0).get("createDocumentary_signatory_signature_" + j).equals("0")||row.get(0).get("createDocumentary_signatory_signature_" + j).equals("1")) {
                     flag = false;
                 }
 
@@ -723,31 +724,16 @@ public class CreateDocumentary {
                     htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.edit() + "' id='edit_CreateDocumentary'>" + lbl_edit + "</button></div>";
 
                 }
-//                boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
-//                if (accDelete) {
-//                    htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.delete(id) + "' id='delete_CreateDocumentary'>" + lbl_delete + "</button></div>";
-//                }
+
                 script1.append(Js.setHtml("#CreateDocumentary_button", htmlBottons));
             }
-//
-//                if (accEdit) {
-//                    htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.edit() + "' id='edit_CreateDocumentary'>" + lbl_edit + "</button></div>";
-//
-//                }
+
             boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
             if (accDelete) {
                 htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.delete(id) + "' id='delete_CreateDocumentary'>" + lbl_delete + "</button></div>";
             }
             script1.append(Js.setHtml("#CreateDocumentary_button", htmlBottons));
-//               Server.outPrinter(request, response,script1);    
-//
-//            } else if(flag==false) {
-//                System.out.println("////////////////////////no");
-//            }
 
-//            }
-//            String htmlBottons = "";
-//            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
             Server.outPrinter(request, response, html.toString() + script + script2 + script3 + script4 + script1);
             return "";
 //
@@ -757,95 +743,7 @@ public class CreateDocumentary {
             return "";
         }
     }
-//    public static String copyDocumentary(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
-//        try {
-//            String id = jjTools.getParameter(request, _id);
-//            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
-//            if (!errorMessageId.equals("")) {
-//                if (jjTools.isLangEn(request)) {
-//                    errorMessageId = jjValidation.isDigitMessageEn(id, "ID");
-//                }
-//                Server.outPrinter(request, response, Js.dialog(errorMessageId));
-//                return "";
-//            }
-//            StringBuilder script = new StringBuilder();
-//            StringBuilder script1 = new StringBuilder();
-//
-//            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
-//
-//            StringBuilder html = new StringBuilder();
-//            StringBuilder html2 = new StringBuilder();
-//
-//            script.append(Js.setVal("#createDocumentary_" + _id, row.get(0).get(_id)));
-//
-//            script.append(Js.setVal("#" + _title, row.get(0).get(_title)));
-//            script.append(Js.setVal("#" + _titleFile1, row.get(0).get(_titleFile1)));
-//            script.append(Js.setVal("#" + _titleFile2, row.get(0).get(_titleFile2)));
-//            script.append(Js.setVal("#" + _titleFile3, row.get(0).get(_titleFile3)));
-//            script.append(Js.setAttr("#Downloadfile3", "href", "upload/" + row.get(0).get(_attachmentfile3)));
-//            script.append(Js.setAttr("#Downloadfile2", "href", "upload/" + row.get(0).get(_attachmentfile2)));
-//            script.append(Js.setAttr("#Downloadfile1", "href", "upload/" + row.get(0).get(_attachmentfile1)));
-//
-//            script.append(Js.setVal("#createDocumentary_attachmentfile3", row.get(0).get(_attachmentfile3)));
-//            script.append(Js.setVal("#createDocumentary_attachmentfile2", row.get(0).get(_attachmentfile2)));
-//            script.append(Js.setVal("#createDocumentary_attachmentfile1", row.get(0).get(_attachmentfile1)));
-////            script.append(Js.setVal("#createDocumentary_attachmentfile1", row.get(0).get(_attachmentfileTitle1)));
-////            script.append(Js.setVal("#title1", row.get(0).get(_attachmentfileTitle1)));
-//
-//            if (row.get(0).get(_attachmentfile1).equals("")) {
-//                script.append(Js.setAttr("#PicPreviewFile1", "src", "img/preview.jpg"));
-////                
-//            } else {
-//                script.append(Js.setAttr("#PicPreviewFile1", "src", "upload/" + row.get(0).get(_attachmentfile1).toString() + ""));
-//                script.append(Js.show("#Downloadfile1"));
-//            }
-//            if (row.get(0).get(_attachmentfile2).equals("")) {
-//                script.append(Js.setAttr("#PicPreviewFile2", "src", "img/preview.jpg"));
-//                script.append(Js.hide("#Downloadfile2"));
-//            } else {
-//                script.append(Js.setAttr("#PicPreviewFile1", "src", "upload/" + row.get(0).get(_attachmentfile2).toString() + ""));
-//                script.append(Js.show("#Downloadfile2"));
-//            }
-//            if (row.get(0).get(_attachmentfile3).equals("")) {
-//                script.append(Js.setAttr("#PicPreviewFile3", "src", "img/preview.jpg"));
-//                script.append(Js.hide("#Downloadfile3"));
-//            } else {
-//                script.append(Js.setAttr("#PicPreviewFile3", "src", "upload/" + row.get(0).get(_attachmentfile3).toString() + ""));
-//                script.append(Js.show("#Downloadfile3"));
-//            }
-//            StringBuilder script2 = new StringBuilder();
-//            StringBuilder script3 = new StringBuilder();
-//            StringBuilder script4 = new StringBuilder();
-//            String html3 = "";
-//            String html4 = "";
-//            String temp = "";
-//
-//
-//            script.append(Js.setVal("#" + _date, row.get(0).get(_date).toString()));
-//            script.append(Js.setVal("#" + _summary, row.get(0).get(_summary).toString()));
-//            script.append(Js.setVal("#" + _category, row.get(0).get(_category).toString()));
-//
-//            script.append(Js.setValSummerNote("#createDocumentary_htmlContent", row.get(0).get(_htmlContent)));
-//
-//            String htmlBottons = "";
-//            boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
-////            if (accEdit) {
-////                htmlBottons += "<div class='col-lg'><button title='" + lbl_edit + "' class='btn btn-outline-warning btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.edit() + "' id='edit_CreateDocumentary'>" + lbl_edit + "</button></div>";
-////
-////            }
-////            boolean accDelete = Access_User.hasAccess(request, db, rul_dlt);
-////            if (accDelete) {
-////                htmlBottons += "<div class='col-lg'><button title='" + lbl_delete + "' class='btn btn-outline-danger btn-block mg-b-10' onclick='" + Js.jjCreateDocumentary.delete(id) + "' id='delete_CreateDocumentary'>" + lbl_delete + "</button></div>";
-////            }
-//            script1.append(Js.setHtml("#CreateDocumentary_button", htmlBottons));
-//
-//            Server.outPrinter(request, response, html.toString() + script + script1 + script2 + script3 + script4);
-//            return "";
-//        } catch (Exception e) {
-//            Server.outPrinter(request, response, Server.ErrorHandler(e));
-//            return "";
-//        }
-//    }
+
 //    *
 //    این تابع برای کپی کردن فایل یعنی اگر بخواهیم صفحه ای که داخلش هستیم را کپی کنیم ازاین تابع استفاده می کنیم
 //*/

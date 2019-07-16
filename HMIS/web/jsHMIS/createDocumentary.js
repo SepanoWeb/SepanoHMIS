@@ -103,6 +103,7 @@ var hmisCreateDocumentary = {
         hmisCreateDocumentary.m_show_form();
 
         $('.form-group').val("null").trigger('change');
+        
 
 
         $("#Downloadfile2").hide();
@@ -112,6 +113,7 @@ var hmisCreateDocumentary = {
 
 
         hmisCreateDocumentary.m_clean();
+        $(".note-editable").load("entekhabePeymankar.html", null, function () {});
 
 
     },

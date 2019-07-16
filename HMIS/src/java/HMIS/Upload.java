@@ -31,9 +31,12 @@ public class Upload {
          StringBuilder html = new StringBuilder();
          String title = jjTools.getParameter(request, "title");
          String filename = jjTools.getParameter(request, "filename");
+//         String pic = jjTools.getParameter(request, "pic");
+         
          List<Map<String, Object>> rows = jjDatabase.separateRow(db.Select(UploadServlet.tableName,_file_name+"='"+filename+"'"));
        String uploadFilename=rows.get(0).get(UploadServlet._file_name).toString();
           Map<String, Object> map = new HashMap<String, Object>();
+          
 
             map.put(_title, title);
             if (!db.update(tableName, map, _file_name + "='" + uploadFilename+"'")) {

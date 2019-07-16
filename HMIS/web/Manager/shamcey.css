@@ -10178,7 +10178,8 @@ table.dataTable tbody th, table.dataTable tbody td {
     padding: 0.75rem;
 }
 table.dataTable.row-border tbody th, table.dataTable.row-border tbody td, table.dataTable.display tbody th, table.dataTable.display tbody td {
-    border-top-color: #dee2e6;
+    /*border-top-color: #dee2e6;*/
+    border-top-color: #85a6c8;
 }
 table.dataTable.no-footer {
     border-bottom-color: #dee2e6;

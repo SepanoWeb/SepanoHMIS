@@ -71,6 +71,7 @@ and open the template in the editor.
                                                 <select multiple="multiple" id="messenger_receiver" name="messenger_receiver"  class="form-control" >   
                                                 </select>
                                             </div>
+                                            <!--                                                <div id="messenger_receivers"></div>-->
                                         </div>
                                         <div class="col-lg" style="">
                                             فرستنده
@@ -95,15 +96,58 @@ and open the template in the editor.
 
                                             <input type="text" id="messenger_status" name="messenger_status"   class="form-control"  disabled="disabled"/>
                                         </div>
+                                        <div class="col-lg-4" id="sendingMetod"></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <!--<div class="col-lg-4" id="sendingMetod1"></div>-->
+                                        <div class="col-lg-12" style="margin-top: 3%;
+                                             margin-bottom: 3%;">
+
+                                            <input id="messenger_attachFile" name="messenger_attachFile" type="hidden">
+                                            <input id="messenger_attachFileTitle" name="messenger_attachFileTitle" type="hidden">
+                                            <!--<img id="PicPreviewFile"  name="PicPreviewFile" class="img-thumbnail" src="" style="float:right;width: 15%">-->
+                                            <div class="inputAfterSelectManager" ></div>
+                                            <div  class="inputSelectorDiv" ></div>
+
+
+
+                                            <div class="col-lg-12"> عنوان فایل</div>
+                                            <input id="messenger_titleFile" name="messenger_titleFile"  style="display: block;
+                                                   width: 100%;
+                                                   padding: 0.65rem 0.75rem;
+                                                   font-size: 1.3rem;
+                                                   line-height: 1.25;
+                                                   color: #495057;
+                                                   background-color: #fff;
+                                                   background-image: none;
+                                                   background-clip: padding-box;
+                                                   border: 1px solid rgba(0, 0, 0, 0.15);
+                                                   border-radius: 3px;
+                                                   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                                            <span id="user_pic" class="form-control"></span>
+                                            <div class="input-group">
+
+                                                <input class="btn btn-primary" id="send" type="submit" value="ارسال">
+                                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                                <input id="attachFile" name="attachFile" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+
+                                            </div>
+                                        </div>
+
+
+
+
+
                                         <div class="col-lg-4" style="" id="logStatus" >
 
                                             جزئیات پیام :
                                             <div style="display: initial;" onclick="if ($('#messenger_logStatusDiv').css('display') == 'none') {
-                                        $('#messenger_logStatusDiv').show('fast');
+                                                        $('#messenger_logStatusDiv').show('fast');
 //                                        payamhayeDaryaftiJoziat();
-                                    } else {
-                                        $('#messenger_logStatusDiv').hide('fast');
-                                    }">
+                                                    } else {
+                                                        $('#messenger_logStatusDiv').hide('fast');
+                                                    }">
                                                 <img src="imgfeyz/add_row.png" alt="Log"/>
                                             </div>                                
                                             <div id="messenger_logStatusDiv" style="display: none;">
@@ -144,27 +188,27 @@ and open the template in the editor.
                                         <div id="Messenger_button" class="col-lg-9 mg-t-20 row">            
                                         </div>
                                     </div><!-- card -->
-<!--                                    <table>
-                                        <tr >
-                                        <div style=" text-align: right;width: 30%">
-                                            <a  id="cancel_Messenger"  class="btn btn-secondary btn-block mg-b-10"  style=" color: white;    position: relative;
-                                                top: 45px; right: 17px;"  >بازگشت</a>
-                                        </div>
-
-
-
-
-
-
-                                        <div id="Messenger_button" style="position: relative;float: left;   width: 57%;
-                                             padding-top: 1%;
-                                             padding-bottom: 1%;
-                                             color: white;
-                                             ">
-                                        </div>
-                                        </td>
-                                        </tr>
-                                    </table>-->
+                                    <!--                                    <table>
+                                                                            <tr >
+                                                                            <div style=" text-align: right;width: 30%">
+                                                                                <a  id="cancel_Messenger"  class="btn btn-secondary btn-block mg-b-10"  style=" color: white;    position: relative;
+                                                                                    top: 45px; right: 17px;"  >بازگشت</a>
+                                                                            </div>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                                                            <div id="Messenger_button" style="position: relative;float: left;   width: 57%;
+                                                                                 padding-top: 1%;
+                                                                                 padding-bottom: 1%;
+                                                                                 color: white;
+                                                                                 ">
+                                                                            </div>
+                                                                            </td>
+                                                                            </tr>
+                                                                        </table>-->
                                 </div><!-- card -->
                             </div><!-- col -->
                         </div><!-- col -->
