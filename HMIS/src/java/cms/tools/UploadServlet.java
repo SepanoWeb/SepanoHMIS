@@ -172,7 +172,7 @@ public class UploadServlet extends HttpServlet {
                         String name2 = file.getName().substring(0, file.getName().lastIndexOf("."));
                         String extension2 = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length());
                         File file2 = new File(file.getParent() + "/" + name2 + "_small." + extension2);
-//                        map.put(_title, extension2);
+                        map.put(_title, jjTools.getParameter(request, _title));
                          map.put(_type, extension2);
                          db.insert(UploadServlet.tableName, map);
                         if (extension2.toLowerCase().equals("jpg") 

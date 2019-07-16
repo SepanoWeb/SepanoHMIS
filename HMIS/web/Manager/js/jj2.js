@@ -1877,6 +1877,7 @@ var jj = function (selector) {
                 dataType: 'JSON',
                 cache: false,
                 success: function (data) {
+
                     if (data != null) {
                         data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
                         data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
@@ -1913,6 +1914,7 @@ var jj = function (selector) {
      * @param selector is button for send
      * @example jj("#btnSendId").jjAjaxFileUpload('inputFileId','#inputTextId','#viewImgId');
      * <script type="text/javascript" src="js/jquery/ajaxfileupload.js"></script>
+
      * divUploadSelectorبرای قراردادن قایل های اپلود شده در دیو
      */
 
@@ -1966,14 +1968,12 @@ var jj = function (selector) {
 <input  class='col-xs-12 form-control ' disabled='disabled' value='" + $("#" + inputFiletitle.replace("#", "")).val() + "'>"
                                             + " <input class='col-xs-12 form-control file' disabled='disabled' value='" + data + "'>"
                                             + "<button  class='buttonRemove col-lg-1' style='background-color: #e16262;color: white;float:left' onclick=' $(this).parent().remove();' >حذف</button>"
-                                            + "<a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + data + "' >دانلود</a></div>");
-//                              
+                                            + "<a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + data + "' >دانلود</a></div>");   
                                 } else {
                                     $(divUploadSelector).append("<div><input  class='col-xs-12 form-control ' disabled='disabled' value='" + $("#" + inputFiletitle.replace("#", "")).val() + "'>" + " <input class='col-xs-12 form-control file' disabled='disabled' value='" + data + "'>" + "<button  class='buttonRemove col-lg-1' style='background-color: #e16262;color: white;float:left' onclick=' $(this).parent().remove();' >حذف</button>" + "<a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + data + "' >دانلود</a></div>");
 
                                 }
                             }
-//                    
                         } else {
                             new jj('حجم فایل شما بیش اندازه بزرگ می باشد.').jjModal();
                         }
@@ -1988,8 +1988,6 @@ var jj = function (selector) {
             });
         });
     };
-
-
 
 
 //    this.jjAjaxFileUploadTitleUploadFiles = function (inputFileId, inputTextSelector, inputFiletitle, inputTilteSelector, divUploadSelector) {

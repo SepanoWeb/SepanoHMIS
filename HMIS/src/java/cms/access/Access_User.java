@@ -583,9 +583,10 @@ public class Access_User {
                 if (!fileRow.isEmpty()) {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
 //                    html3.append("<div >" + "<input class='col-xs-12' disabled='disabled'  value='" + attachFilesArray[l] + "'/>"  + "</div>");
-                    html3.append( "<input class='col-xs-11'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<span  class='col-xs-1' onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:56%' />" + "</span>" );
+                    html3.append( "<input style='text-align: center;' class='col-lg-11' disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" );
+
 //                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='"+Js.modal("hjgjhgkjgkjgk", id)+"'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" + "</div>");
-                   
+         
                 }
             }
 
@@ -944,24 +945,24 @@ public class Access_User {
                     html.append("cmsEnrolment3.m_refresh();\n");
                 }
             }
-            if (Access_User.getAccessDialog(request, db, News.rul_rfs).equals("")) {
-                html.append("$( '#NewsTab' ).show();\n");
-                html.append("$( '#newsTab1' ).show();\n");
-                if (show) {
-                    html.append("$( '#tabs' ).tabs({selected:2});\n");
-                    html.append("cmsNews.m_refresh();\n");
-                }
-                show = false;
-            }
-            if (Access_User.getAccessDialog(request, db, Category_News.rul_rfs).equals("")) {
-                html.append("$( '#NewsTab' ).show();\n");
-                html.append("$( '#newsTab2' ).show();\n");
-                if (show) {
-                    html.append("$( '#tabs' ).tabs({selected:2});\n");
-                    html.append("cmsCategoryNews.m_refresh();\n");
-                }
-                show = false;
-            }
+//            if (Access_User.getAccessDialog(request, db, News.rul_rfs).equals("")) {
+//                html.append("$( '#NewsTab' ).show();\n");
+//                html.append("$( '#newsTab1' ).show();\n");
+//                if (show) {
+//                    html.append("$( '#tabs' ).tabs({selected:2});\n");
+//                    html.append("cmsNews.m_refresh();\n");
+//                }
+//                show = false;
+//            }
+//            if (Access_User.getAccessDialog(request, db, Category_News.rul_rfs).equals("")) {
+//                html.append("$( '#NewsTab' ).show();\n");
+//                html.append("$( '#newsTab2' ).show();\n");
+//                if (show) {
+//                    html.append("$( '#tabs' ).tabs({selected:2});\n");
+//                    html.append("cmsCategoryNews.m_refresh();\n");
+//                }
+//                show = false;
+//            }
             if (Access_User.getAccessDialog(request, db, Pic.rul_rfs).equals("")) {
                 html.append("$( '#PicTab' ).show();\n");
                 html.append("$( '#PicTab1' ).show();\n");

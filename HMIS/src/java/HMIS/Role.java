@@ -43,7 +43,7 @@ public class Role {
     public static String _title = "role_title";
     public static String _date = "role_date";
     public static String _user_id = "role_user_id";//
-    public static String _condition = "role_condition";//sh1: این برای چی هست ؟ کامنتش را بگذارید لطفا
+    public static String _condition = "role_condition";//sh1: فعال یاغیر فعال بودن نقش
 //    public static String _condition2 = "role_condition2";//
     public static String _comment = "role_comment";//
     public static String _discription = "role_discription";//
