@@ -21,7 +21,7 @@ var hmisMyMessages = {
                 });
 
 
-                new jj('#sendMyMessage').jjAjaxFileUploadTitleUploadFiles('#MyMessageAttachFile', '#myMessages_attachFile', 'myMessages_titleFile', '#myMessages_attachFileTitle');
+                new jj('#sendMyMessage').jjAjaxFileUploadTitleUploadFiles('#MyMessageAttachFile', '#myMessages_attachFile', 'myMessages_titleFile', '#myMessages_attachFileTitle','.inputSelectorDiv');
 
 
                 hmisMyMessages.selectOptionUserMyMessages("myMessages_receiver");
