@@ -106,7 +106,7 @@ public class Access_User {
             StringBuilder html = new StringBuilder();
             StringBuilder html3 = new StringBuilder();
 
-            DefaultTableModel dtm = db.Select(tableName, _id + "<>1");
+            DefaultTableModel dtm = db.Select(tableName, _id + ">5");// تا شماره  پنج کاربر های رزرو هستند
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
             html.append(" <div class='card bd-primary mg-t-20'>"
                     + "    <div class='card-header bg-primary tx-white'>کاربران</div>"
@@ -153,7 +153,8 @@ public class Access_User {
             return "";
         }
     }
-           public static String changeStatus(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, String id, String newSatus) throws Exception {
+
+    public static String changeStatus(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, String id, String newSatus) throws Exception {
         try {
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
             if (!errorMessageId.equals("")) {
@@ -196,7 +197,8 @@ public class Access_User {
                 html.append(Js.setHtml("#User_button", ""));
             }
 
-            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName));
+            List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=0"));
+            //برای نشان دادن لوگوی اختصاصی بیمارستان در قسمت اضافه کردن کاربان
             StringBuilder script2 = new StringBuilder();
             if (row.get(0).get(Access_User._attachPicPersonal).equals("")) {
                 script2.append(Js.setAttr("#PicPreviewPersonal", "src", "img/preview.jpg"));
@@ -479,8 +481,13 @@ public class Access_User {
                 }
                 Server.outPrinter(request, response, Js.dialog(errorMessageId));
                 return "";
+            }            
+            if (id.equals("0") || id.equals("1") || id.equals("2") || id.equals("3") || id.equals("4") || id.equals("1")) {
+                String errorMessage = "شما اجازه مشاهده اطلاعات این شخص را ندارید";
+                Server.outPrinter(request, response, Js.dialog(errorMessage) + Js.jjUser.showTbl());
+                return "";
             }
-
+           //@ToDo کاربرانی که در قسمت های مختلف سیستم تراکنش داشته اند را نابید بتوانیم خذف کنیم
             if (!db.delete(tableName, _id + "=" + id)) {
                 String errorMessage = "عملیات حذف به درستی صورت نگرفت";
                 if (jjTools.isLangEn(request)) {
@@ -509,7 +516,7 @@ public class Access_User {
      *
      * @param id
      */
-     public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+    public static String select(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String id = jjTools.getParameter(request, _id);
             String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
@@ -521,7 +528,7 @@ public class Access_User {
                 return "";
             }
 
-            if (id.equals("1")) {
+            if (id.equals("0") || id.equals("1") || id.equals("2") || id.equals("3") || id.equals("4") || id.equals("1")) {
                 String errorMessage = "شما اجازه مشاهده اطلاعات این شخص را ندارید";
                 Server.outPrinter(request, response, Js.dialog(errorMessage) + Js.jjUser.showTbl());
                 return "";
@@ -546,7 +553,7 @@ public class Access_User {
             html.append(Js.setVal("#user_nameUser", row.get(0).get(_name)));
             html.append(Js.setVal("#user_AccountInformationUser", row.get(0).get(_AccountInformation)));
 
-            html.append(Js.setVal("#user_birthdateUser", row.get(0).get(_birthdate)));
+            html.append(Js.setVal("#user_birthdateUser", jjCalendar_IR.getViewFormat(row.get(0).get(_birthdate))));
             html.append(Js.setVal("#user_gradeUser", row.get(0).get(_grade)));
             html.append(Js.setVal("#user_jensiatUser", row.get(0).get(_jensiat)));
             html.append(Js.setVal("#user_codeMeliUser", row.get(0).get(_codeMeli)));
@@ -613,7 +620,7 @@ public class Access_User {
             }
 
             html.append(Js.setVal("#user_addressUser", row.get(0).get(_address)));
-            html.append(Js.setValDate("#user_birthdateUserUser", row.get(0).get(_birthdate)));
+            html.append(Js.setValDate("#user_birthdateUserUser", jjCalendar_IR.getViewFormat(row.get(0).get(_birthdate))));
 ///////////////////////////
             /////این تابع برای نمایش فایل های اپلود شده توسط فردی که واردشده نوشته شده است
             /////شیران1
@@ -734,7 +741,7 @@ public class Access_User {
             System.out.println("____________________________________");
 
             db.update(tableName, map, _id + "=" + idUser);
-            changeStatus(request, response, db, idUpload,status_deleted+" "+jjTools.getSessionAttribute(request, "#USER_NAME")+" "+jjTools.getSessionAttribute(request, "#USER_FAMILY"));
+            changeStatus(request, response, db, idUpload, status_deleted + " " + jjTools.getSessionAttribute(request, "#USER_NAME") + " " + jjTools.getSessionAttribute(request, "#USER_FAMILY"));
 //            if (!db.delete(UploadServlet.tableName, UploadServlet._id + "=" + idUpload)) {
 //                String errorMessage = "عملیات حذف به درستی صورت نگرفت";
 //                if (jjTools.isLangEn(request)) {
@@ -1524,7 +1531,8 @@ public class Access_User {
             return "";
         }
     }
-        /**
+
+    /**
      * این متد کاربران فعال را بصورت آپشن برای قرار گرفتن در سلکت بر می گرداند
      *
      * @param request panel درون ریکوئست اگر با نقطه شروع نشود آی دی در نظر می
@@ -1532,22 +1540,23 @@ public class Access_User {
      * @param response
      * @param db
      * @param needString
-     * @return بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در پنل معرفی شده
+     * @return بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در
+     * پنل معرفی شده
      * @throws Exception
      */
     public static String getSelectOption(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         StringBuilder optionHtml = new StringBuilder();
         try {
-            List<Map<String, Object>> rowAllActiveRols = jjDatabase.separateRow(db.Select(tableName, _id + "," + _name+ "," +_family , "id>0 AND "+_isActive+"=1", _family));// بر اساس حروف الفبا مرتب باشد بهتر است
-                optionHtml.append("<option  value='ALL'>تمام کاربران ثبت شده</option>");
+            List<Map<String, Object>> rowAllActiveRols = jjDatabase.separateRow(db.Select(tableName, _id + "," + _name + "," + _family, "id>0 AND " + _isActive + "=1", _family));// بر اساس حروف الفبا مرتب باشد بهتر است
+            optionHtml.append("<option  value='ALL'>تمام کاربران ثبت شده</option>");
             for (int i = 0; i < rowAllActiveRols.size(); i++) {
-                optionHtml.append("<option  value='").append(rowAllActiveRols.get(i).get(_id)).append("'>").append(rowAllActiveRols.get(i).get(_family)+"-").append(rowAllActiveRols.get(i).get(_name)).append("</option>");
+                optionHtml.append("<option  value='").append(rowAllActiveRols.get(i).get(_id)).append("'>").append(rowAllActiveRols.get(i).get(_family) + "-").append(rowAllActiveRols.get(i).get(_name)).append("</option>");
             }
             String panel = jjTools.getParameter(request, "panel");
             if (panel.isEmpty()) {
                 panel = ".usersSelectOption";
             }
-            Server.outPrinter(request, response,  Js.setHtml(panel, optionHtml));
+            Server.outPrinter(request, response, Js.setHtml(panel, optionHtml));
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
