@@ -41,6 +41,8 @@ public class FormAnswerSet {
     public static final String _userMAC = "formAnswers_userMAC";// مک آدرس پر کننده ی فرم
     public static final String _userIPV4 = "formAnswers_userIPV4";// آی پی پر کننده ی فرم
     public static final String _userIPV6 = "formAnswers_userIPV6";// آی پی ورژن شش پر کننده ی فرم
+    public static final String _sum = "hmis_formanswerset_sum";// آی پی ورژن شش پر کننده ی فرم
+    public static final String _avg = "hmis_formanswerset_avg";// آی پی ورژن شش پر کننده ی فرم
 //   
     public static final String lbl_insert = "ثبت و افزودن سوال";
     public static final String lbl_delete = "حذف فرم";
@@ -55,8 +57,8 @@ public class FormAnswerSet {
     public static int rul_ins = 0;// 62;
     public static int rul_edt = 0;// 63;
     public static int rul_dlt = 0;// 64;
-    public static int rul_5 = 0;// 65;
-    public static int rul_6 = 0;// 66;
+    public static int rul_result_all = 0;// 65; //مشاهده ی نتایج همه ی فرم های تکمیل شده
+    public static int rul_statistics_all = 0;// 66;
     public static int rul_7 = 0;// 67;
     public static int rul_8 = 0;// 68;
     public static int rul_9 = 0;// 69;
@@ -97,14 +99,14 @@ public class FormAnswerSet {
             String userRoleInsession = jjTools.getSeassionUserRole(request);
             System.out.println(">>>>>>>>UserRoles is:" + userRoleInsession);
             String where = " WHERE (";
-            String userRoles[] = userRoleInsession.split("%23A%23");
+            String userRoles[] = userRoleInsession.split(",");
             for (int i = 0; i < userRoles.length; i++) {
-                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "\\%23A\\%23%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
+                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
             }
             if (!jjTools.getSeassionUserRole(request).isEmpty()) {// اگر کاربر جاری نقشی در سیستم دارد
                 where += Forms._accessessRoles + " like " + "'%ALL%'" + " OR ";//فرم هایی که برای همه ی سمت ها دسترسی دارند را هم نشان بدهیم
             }
-            where += Forms._accessessUsers + " like " + "'%" + userId + "\\%23A\\%23%'" + " OR ";
+            where += Forms._accessessUsers + " like " + "'%" + userId + "%'" + " OR ";
             where += Forms._accessessUsers + " like " + "'%ALL%'" + " OR ";
             where += Forms._accessessUsers + " = " + "''" + " OR ";
             where += Forms._accessessUsers + "='' ) AND  ";
@@ -126,7 +128,7 @@ public class FormAnswerSet {
                 html.append("<tr>");
                 html.append("<td class='r'>" + formRows.get(i).get(Forms._id) + formRows.get(i).get(Forms._code) + "</td>");
                 html.append("<td class='r'>" + formRows.get(i).get(Forms._title) + "</td>");
-                html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
+                html.append("<td class='c'><i class='p icon fa fa-pencil' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
                 html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "'></i></td>");
                 html.append("</tr>");
             }
@@ -135,7 +137,6 @@ public class FormAnswerSet {
             html.append("</div>");
             String jj = jjTools.getParameter(request, "jj");
             if ("0".equals(jj)) {//برای ارجاع به فایل جی اس پی
-                System.out.println("(((((((((((((((((((((((((((((((((((((((((((((");
                 request.getRequestDispatcher("feiz/MyForms.jsp").forward(request, response);
             } else {// اگر این درخواست باید بصورت ایجکس پاسخ گفته شود
                 StringBuilder script = new StringBuilder();
@@ -150,6 +151,17 @@ public class FormAnswerSet {
         }
     }
 
+    /**
+     * فرم های پر شده از یک نوع فرم را نشان می دهد ممکن است کاربر جاری پر کرده
+     * باشد یا نقش جاری کسی که دسترسی دارد
+     *
+     * @param request
+     * @param response
+     * @param db
+     * @param needString
+     * @return
+     * @throws Exception
+     */
     public static String refreshMyAnswers(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
@@ -164,27 +176,38 @@ public class FormAnswerSet {
                 Server.outPrinter(request, response, "کد صحیح نیست");
                 return "";
             }
-            //ویژگی : اگر فردی در سمتی یک فرم را پر کند و فرد دیگری در آن سمت قرار گیرد نمیتواند فرم تکمیل شده ی فرم قبلی را ببیند ولی مدیران با دسترسی بالاتر میبینند
-            //ویژگی : اگر فردی در سمتی یک فرم را پر کند و فرد دیگری در آن سمت قرار گیرد نمیتواند فرم تکمیل شده ی فرم قبلی را ببیند ولی مدیران با دسترسی بالاتر میبینند
+            //ویژگی : اگر فردی در سمتی یک فرم را پر کند و فرد دیگری در آن سمت قرار گیرد میتواند فرم تکمیل شده ی فرم قبلی را ببیند همچنین مدیران با دسترسی بالاتر میبینند
+            String where = " WHERE " + _formId + "=" + formId + " AND (" + _userId + "=" + userId;
+            String userRoleInsession = jjTools.getSeassionUserRole(request);
+            String userRoles[] = userRoleInsession.split(",");
+            for (int i = 0; i < userRoles.length; i++) {
+                where += " OR " + _userRole + " = " + userRoles[i];// ممکن است کاربر چند تا تقش داشته باشد
+            }
+            where += ")";
 
-            DefaultTableModel dtm = db.Select(tableName, _formId + "=" + formId + " AND " + _userId + "=" + userId);
+            DefaultTableModel dtm = db.JoinLeft(tableName, Role.tableName,
+                    tableName + "." + _id + ","
+                    + _date + ","
+                    + _time + ","
+                    + _status + ","
+                    + _userName + ","
+                    + _userMAC + ","
+                    + _userIPV6 + ","
+                    + Role._title, _userRole, Role._id, where);
             List<Map<String, Object>> row = jjDatabaseWeb.separateRow(dtm);
             html.append("<p class='mg-b-20 mg-sm-b-30'>");
             html.append("عنوان :" + FormTitleRow.get(0).get(Forms._title));
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
             //ویژگی : اگر کاربر قبلا دسترسی داشته و اکنون دسترسی اش برای فرم خاصی برداشته شده یا نقشش عوض شده که به فرمی دسترسی ندارد دیگر دکمهی یجدید را نمی بیند
             //تشخیص دسترسی نقش یا شخص کاربر برای تکمیل این فرم---------------------------------------------------
-            String userRoleInsession = jjTools.getSeassionUserRole(request);
-            System.out.println(">>>>>>>>UserRoles is:" + userRoleInsession);
-            String where = " WHERE (";
-            String userRoles[] = userRoleInsession.split("%23A%23");
+            where = " WHERE (";
             for (int i = 0; i < userRoles.length; i++) {
-                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "\\%23A\\%23%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
+                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
             }
-            if (!jjTools.getSeassionUserRole(request).isEmpty()) {// اگر کاربر جاری نقشی در سیستم دارد
+            if (!userRoleInsession.isEmpty()) {// اگر کاربر جاری نقشی در سیستم دارد
                 where += Forms._accessessRoles + " like " + "'%ALL%'" + " OR ";//فرم هایی که برای همه ی سمت ها دسترسی دارند را هم نشان بدهیم
             }
-            where += Forms._accessessUsers + " like " + "'%" + userId + "\\%23A\\%23%'" + " OR ";
+            where += Forms._accessessUsers + " like " + "'%" + userId + "%'" + " OR ";
             where += Forms._accessessUsers + " like " + "'%ALL%'" + " OR ";
             where += Forms._accessessUsers + " = " + "''" + " OR ";
             where += Forms._accessessUsers + "='' ) AND  ";
@@ -193,7 +216,9 @@ public class FormAnswerSet {
             //--------------------------------------------------------------------------------------------------------------------
             if (accIns && db.otherSelect("SELECT * FROM " + Forms.tableName + where).getRowCount() > 0) {//و اگر نقش یا شخص این کاربر موجود در سشن به این فرم دسترسی داشته باشد  دکمه جدید را نشان بدهد
                 html.append("<br/>");
-                html.append("<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' href ='Server?do=FormAnswerSet.add_new&formAnswers_formId=" + formId + "' target='_blank' >تکمیل یک نمونه فرم جدید</a>");
+                html.append("<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' href ='Server?do=FormAnswerSet.add_new&formAnswers_formId=" + formId + "' target='_blank' "
+                        + " onclick='hmisFormAnswerSets.refreshMyAnswersAfterQuestion(" + formId + ");' "
+                        + ">تکمیل یک نمونه فرم جدید</a> ");
             }
             html.append("</p>");
             html.append("<div class='table-wrapper'>");
@@ -203,17 +228,21 @@ public class FormAnswerSet {
             html.append("<th width='20%' class='c'>سمت</th>");
             html.append("<th width='20%' class='c'>تاریخ</th>");
             html.append("<th width='20%' class='c'>ساعت</th>");
-            html.append("<th width='20%' class='c'>آنالیز و آمار</th>");
-            html.append("<th width='20%' class='c'>آنالیز و آمار</th>");
+            html.append("<th width='20%' class='c'>mac/ip</th>");
+            html.append("<th width='20%' class='c'>ویرایش</th>");
+            html.append("<th width='20%' class='c'>آمار و نتایج</th>");
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
                 html.append("<tr  class='mousePointer " + getClassByStatus(row.get(i).get(_status).toString()) + "' >");
                 html.append("<td class='r'>" + row.get(i).get(_id) + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_userName) + "</td>");
-                html.append("<td class='r'>" + row.get(i).get(_userRole) + "</td>");
-                html.append("<td class='r'>" + row.get(i).get(_date) + "</td>");
-                html.append("<td class='r'>" + row.get(i).get(_time) + "</td>");
-                html.append("<td class='c'><a href='Server?do=FormAnswerSet.selectToEdit&formAnswers_formId=13&id=" + row.get(i).get(_id).toString() + "' target='_blank'><i class='p icon ion-ios-gear-outline' style='color:#ffcd00!important'></i></td>");
+                html.append("<td class='c'>" + row.get(i).get(Role._title) + "</td>");
+                html.append("<td class='c'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_date)) + "</td>");
+                html.append("<td class='c'>" + row.get(i).get(_time) + "</td>");
+                html.append("<td class='c'>" + row.get(i).get(_userMAC) + "<br/>" + row.get(i).get(_userIPV6) + "</td>");
+                html.append("<td class='c'><a href='Server?do=FormAnswerSet.selectToEdit&formAnswers_formId=" + formId + "&id=" + row.get(i).get(_id).toString() + "' target='_blank'"
+                        + " onclick='hmisFormAnswerSets.refreshMyAnswersAfterQuestion(" + formId + ");' "
+                        + "><i class='p icon fa fa-pencil' style='color:#ffcd00!important'></i></td>");
                 html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswerSet.select(row.get(i).get(_id).toString()) + "'></i></td>");
                 html.append("</tr>");
             }
@@ -231,6 +260,7 @@ public class FormAnswerSet {
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {
+            ex.printStackTrace();
             Server.outPrinter(request, response, ex.getMessage());
             return ex.getMessage();
         }
@@ -243,14 +273,14 @@ public class FormAnswerSet {
             int userId = jjTools.getSeassionUserId(request);
             String userRoleInsession = jjTools.getSeassionUserRole(request);
             String where = " WHERE (";
-            String userRoles[] = userRoleInsession.split("%23A%23");
+            String userRoles[] = userRoleInsession.split(",");
             for (int i = 0; i < userRoles.length; i++) {
-                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "\\%23A\\%23%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
+                where += Forms._accessessRoles + " like " + "'%" + userRoles[i] + "%' OR ";// ممکن است کاربر چند تا تقش داشته باشد
             }
             if (!jjTools.getSeassionUserRole(request).isEmpty()) {// اگر کاربر جاری نقشی در سیستم دارد
                 where += Forms._accessessRoles + " like " + "'%ALL%'" + " OR ";//فرم هایی که برای همه ی سمت ها دسترسی دارند را هم نشان بدهیم
             }
-            where += Forms._accessessUsers + " like " + "'%" + userId + "\\%23A\\%23%'" + " OR ";
+            where += Forms._accessessUsers + " like " + "'%" + userId + "%'" + " OR ";
             where += Forms._accessessUsers + " like " + "'%ALL%'" + " OR ";
             where += Forms._accessessUsers + " = " + "''" + " OR ";
             where += Forms._accessessUsers + "='' ) AND  ";
@@ -319,11 +349,48 @@ public class FormAnswerSet {
     }
 
     /**
+     * نشان دادن نتایج یک فرم که ثبت شده به کاربری که آنرا ثبت کرده یا کاربری که
+     * مجوز مشاهده دارد
+     *
+     * @param request
+     * @param response
+     * @param db
+     * @param isPost
+     * @return
+     * @throws Exception
+     */
+    public static String showResult(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+        request.setAttribute("db", db);
+        System.out.println("------->>>>>feiz/formResult.jsp");
+        request.getRequestDispatcher("feiz/formResult.jsp").forward(request, response);
+        return "";
+    }
+
+    /**
+     * نشان دادن نتایج یک فرم که ثبت شده به کاربری که آنرا ثبت کرده یا کاربری که
+     * مجوز مشاهده دارد
+     *
+     * @param request
+     * @param response
+     * @param db
+     * @param isPost
+     * @return
+     * @throws Exception
+     */
+    public static String showAllResult(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+        request.setAttribute("db", db);
+        System.out.println("------->>>>>feiz/formAllResult.jsp");
+        request.getRequestDispatcher("feiz/formAllResult.jsp").forward(request, response);
+        return "";
+    }
+
+    /**
      * درج در دیتابیس برای اولین بار ثبت موقت فرم و ثبت نهایی و آزمون توسط کاربر
      * این تابع اگر فرم یونیک باشد و قبلا توسط این مک یا این کاربر پر شده باشد
      * اجازه تکمیل نمیدهد
      *
      * @param request
+     * @param response
      * @param db
      * @param isPost
      * @return
@@ -356,13 +423,12 @@ public class FormAnswerSet {
             }
 
             Map<String, Object> map = new HashMap();
-
             map.put(_formId, formId);
             map.put(_userId, jjTools.getSeassionUserId(request));
-            if (jjTools.getSeassionUserRole(request).split("%23A%23").length > 1) {// اگر بیشتر از یک نقش در سشن داشت از ریکوئست نقش انتخابی کاربر را بخواند
+            if (jjTools.getSeassionUserRole(request).split(",").length > 1) {// اگر بیشتر از یک نقش در سشن داشت از ریکوئست نقش انتخابی کاربر را بخواند
                 map.put(_userRole, jjTools.getParameter(request, _userRole));
             } else {// در غیر اینصورت نقش را  از سشن بخواند که ممکن است تهی باشدیعنی نقشی نداشته باشد
-                map.put(_userRole, jjTools.getSeassionUserRole(request));
+                map.put(_userRole, jjTools.getSeassionUserRole(request).replaceAll(",", ""));
             }
             map.put(_userName, jjTools.getSeassionUserNameAndFamily(request));
             map.put(_userMAC, userMAC);
@@ -391,11 +457,51 @@ public class FormAnswerSet {
                     flag = false;
                     qNo += "سوال شماره ی" + (i + 1) + "،";//سوال هایی که ضروری هستند و پاسخ داده نشده اند
                 }
-                answerMap.put(FormAnswers._questionId, questionRows.get(i).get(_id));
-                answerMap.put(FormAnswers._answer, answerI.replaceAll("#A#", "%23A%23"));
-                answerMap.put(FormAnswers._answerSet_id, id);
-                db.insert(FormAnswers.tableName, answerMap);// برای هر پاسخ یک سطر در جدول پاسخ ها داریم
+                if (questionRows.get(i).get(FormQuestions._answersType).equals("checkbox")) {//اگر چک باکس بود به تعداد تیک هایی که زده باید ردیف ایجاد کنیم
+                    String answerOptionId[] = answerI.split(",");
+                    for (int j = 0; j < answerOptionId.length; j++) {
+                        answerMap.put(FormAnswers._questionId, questionRows.get(i).get(_id));
+                        answerMap.put(FormAnswers._answer, answerOptionId[j]);
+                        answerMap.put(FormAnswers._answerSet_id, id);
+                        db.insert(FormAnswers.tableName, answerMap);// برای هر تیک چک باس یک سطر در جدول پاسخ ها داریم
+                    }
+                } else {
+                    answerMap.put(FormAnswers._questionId, questionRows.get(i).get(_id));
+                    answerMap.put(FormAnswers._answer, answerI.replaceAll("#A#", ","));
+                    answerMap.put(FormAnswers._answerSet_id, id);
+                    db.insert(FormAnswers.tableName, answerMap);// برای هر پاسخ یک سطر در جدول پاسخ ها داریم
+                }
             }
+            //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            // بعد از بروز رسانی مقادیر مجموع و میانگین نهایی را بروز رسانی می کنیم
+            map.clear();
+            // محاسبه ی مجموع و میانگین نمره ها و امتیازات همراه با ضرایب و وزن ها
+            String sql = "SELECT formanswers_answer,formQuestions_title,formQuestions_weight,formQuestionOptions_value,formQuestions_answersType FROM `hmis_formanswers` "
+                    + " LEFT JOIN hmis_formquestions on hmis_formquestions.id=formanswers_questionId "
+                    + " LEFT JOIN hmis_formquestionoptions on formanswers_answer=hmis_formquestionoptions.id "
+                    + " WHERE formanswers_answerSet_id=" + id + " AND( formQuestions_answersType='radio' OR formQuestions_answersType='checkbox' OR formQuestions_answersType='number' OR formQuestions_answersType='select_option')";
+            List<Map<String, Object>> pointsRow = jjDatabaseWeb.separateRow(db.otherSelect(sql));
+            Float sum = (float) 0;
+            Float avg = (float) 0;
+            for (int i = 0; i < pointsRow.size(); i++) {
+                // اگر  نوع سوالچند گزینه ای نبود پس عددی است و خود جواب را باید ضرب کنیم
+                String strValue = !jjNumber.isFloat(pointsRow.get(i).get(FormQuestionOptions._value).toString()) ? pointsRow.get(i).get(FormAnswers._answer).toString() : pointsRow.get(i).get(FormQuestionOptions._value).toString();
+                String strWeight = pointsRow.get(i).get(FormQuestions._weight) == null ? "0" : pointsRow.get(i).get(FormQuestions._weight).toString();
+                sum += (jjNumber.isFloat(strValue) ? Float.valueOf(strValue) : 0) * (jjNumber.isFloat(strWeight) ? Float.valueOf(strWeight) : 0); // ارزش در وزن سوال ضرب می شود 
+            }
+            if (!pointsRow.isEmpty()) {
+                avg = sum / pointsRow.size(); //@ToDo بررسی شود که آیا محاسبه ی وزن در این قسمت برای محاسبه ی میانگین درست است یا نه
+            } else {
+                avg = (float) 0;
+            }
+            map.put(_sum, sum);
+            map.put(_avg, avg);
+            if (!db.update(tableName, map, _id + "=" + id)) {
+                String errorMessage = "عملیات محاسبه مقادیر فرم به درستی صورت نگرفت. 12-606";
+                Server.outPrinter(request, response, "alert('" + errorMessage + "')");
+                return Js.modal(errorMessage, "پیام سامانه");
+            }
+            //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             String message = "";
             //تغییر وضعیت==================================================
             if (jjTools.getParameter(request, _status).equals(statues_sabteNahei) && flag) {//اگر درخواست ثبت نهایی بود و به همه ی سوالات اجباری پاسخ داده بود
@@ -413,7 +519,7 @@ public class FormAnswerSet {
             //==========================================================
             script += Js.setVal("#" + tableName + "_id", id);// وقتی که آی دی را بگذاریم در فرم سمت جاوا اسکریپت کنترل می کنیم که کدام تابع صدا زده بشود
             script += Js.modal(message, "پیام سامانه");
-            script += "$('#formAnserSetBtn').html('');\n";// برای اینکه کاربر نتواند دکمه درج را مجدد بزند
+            script += "$('#formAnserSetBtn').html('فرم ثبت نهایی شد و شما دیگر قادر به تغییر یا ویرایش آن نیستید');\n";// برای اینکه کاربر نتواند دکمه درج را مجدد بزند
             script += "window.location.replace('Server?do=FormAnswerSet.selectToEdit&formAnswers_formId=" + formId + "&id=" + id + "');\n";// برای اینکه کاربر نتواند دکمه درج را مجدد بزند
 
 //                    return "alert('" + message + "')";//@ToDo چون رکورد فرم ثبت شده باید دکمه ثبت را به ویرایش تغییر بدهیم
@@ -482,10 +588,10 @@ public class FormAnswerSet {
         Map<String, Object> map = new HashMap();
         map.put(_formId, formId);
         map.put(_userId, jjTools.getSeassionUserId(request));
-        if (jjTools.getSeassionUserRole(request).split("%23A%23").length > 1) {// اگر بیشتر از یک نقش در سشن داشت از ریکوئست نقش انتخابی کاربر را بخواند
+        if (jjTools.getSeassionUserRole(request).split(",").length > 1) {// اگر بیشتر از یک نقش در سشن داشت از ریکوئست نقش انتخابی کاربر را بخواند
             map.put(_userRole, jjTools.getParameter(request, _userRole));
         } else {// در غیر اینصورت نقش را  از سشن بخواند که ممکن است تهی باشدیعنی نقشی نداشته باشد
-            map.put(_userRole, jjTools.getSeassionUserRole(request));
+            map.put(_userRole, jjTools.getSeassionUserRole(request).replaceAll(",", ""));
         }
         map.put(_userName, jjTools.getSeassionUserNameAndFamily(request));
         map.put(_userMAC, userMAC);
@@ -511,25 +617,91 @@ public class FormAnswerSet {
         for (int i = 0; i < questions.size(); i++) {//برای هر سوال
             map.clear();
             String answer = jjTools.getParameter(request, "q" + questions.get(i).get(FormQuestions._id));
-            map.put(FormAnswers._answer, answer.replaceAll("#A#", "%23A%23"));// از ریکوئست بخوانیم مقدار پاسخ جدید را
-            if (!db.update(FormAnswers.tableName, map, FormAnswers._answerSet_id + "=" + id + " AND " + FormAnswers._questionId + "=" + questions.get(i).get(FormQuestions._id))) {//اگر قبلا پاسخی وجود داشت که بروز رسانی بکن و اگر نداشت اینسرت کن
-                map.put(FormAnswers._answerSet_id, id);//اینجا سوالی که قبلا نبوده اضافه شده و باید پاسخ داده شود
-                map.put(FormAnswers._questionId, questions.get(i).get(FormQuestions._id));
-                db.insert(FormAnswers.tableName, map);
+            if (questions.get(i).get(FormQuestions._answersType).equals("checkbox")) {//اگر چک باکس بود به تعداد تیک هایی که زده باید ردیف ایجاد کنیم
+                db.delete(FormAnswers.tableName, FormAnswers._answerSet_id + "=" + id + " AND " + FormAnswers._questionId + "=" + questions.get(i).get(FormQuestions._id));//پاسخ های قبلی این چک باکس را پاک می کنیم
+                String answerOptionId[] = answer.split(",");
+                for (int j = 0; j < answerOptionId.length; j++) {
+                    map.put(FormAnswers._questionId, questions.get(i).get(_id));
+                    map.put(FormAnswers._answer, answerOptionId[j]);
+                    map.put(FormAnswers._answerSet_id, id);
+                    db.insert(FormAnswers.tableName, map);// برای هر تیک چک باس یک سطر در جدول پاسخ ها داریم
+                }
+            } else {
+                map.put(FormAnswers._answer, answer.replaceAll("#A#", ","));// از ریکوئست بخوانیم مقدار پاسخ جدید را
+                if (!db.update(FormAnswers.tableName, map, FormAnswers._answerSet_id + "=" + id + " AND " + FormAnswers._questionId + "=" + questions.get(i).get(FormQuestions._id))) {//اگر قبلا پاسخی وجود داشت که بروز رسانی بکن و اگر نداشت اینسرت کن
+                    map.put(FormAnswers._answerSet_id, id);//اینجا سوالی که قبلا نبوده اضافه شده و باید پاسخ داده شود
+                    map.put(FormAnswers._questionId, questions.get(i).get(FormQuestions._id));
+                    db.insert(FormAnswers.tableName, map);
+                }
             }
             if (questions.get(i).get(FormQuestions._isRequierd).equals("1") && answer.isEmpty()) {//در ثبت نهایی اگر پاسخ سوالی ضروری بود و کاربر پاسخ نداده بود باید فرم را از حالت ثبت نهایی خارج کنیم
                 flag = false;
                 qNo += "سوال شماره ی" + (i + 1) + "،";//سوال هایی که ضروری هستند و پاسخ داده نشده اند
             }
         }
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        // بعد از بروز رسانی مقادیر مجموع و میانگین نهایی را بروز رسانی می کنیم
+        map.clear();
+        // محاسبه ی مجموع و میانگین نمره ها و امتیازات همراه با ضرایب و وزن ها
+        String sql = "SELECT formanswers_answer,formQuestions_title,formQuestions_weight,formQuestionOptions_value,formQuestions_answersType FROM `hmis_formanswers` "
+                + " LEFT JOIN hmis_formquestions on hmis_formquestions.id=formanswers_questionId "
+                + " LEFT JOIN hmis_formquestionoptions on formanswers_answer=hmis_formquestionoptions.id "
+                + " WHERE formanswers_answerSet_id=" + id + " AND( formQuestions_answersType='radio' OR formQuestions_answersType='checkbox' OR formQuestions_answersType='number' OR formQuestions_answersType='select_option')";
+        List<Map<String, Object>> pointsRow = jjDatabaseWeb.separateRow(db.otherSelect(sql));
+        Float sum = (float) 0;
+        Float avg = (float) 0;
+        for (int i = 0; i < pointsRow.size(); i++) {
+            // اگر  نوع سوالچند گزینه ای نبود پس عددی است و خود جواب را باید ضرب کنیم
+            String strValue = !jjNumber.isFloat(pointsRow.get(i).get(FormQuestionOptions._value).toString()) ? pointsRow.get(i).get(FormAnswers._answer).toString() : pointsRow.get(i).get(FormQuestionOptions._value).toString();
+            String strWeight = pointsRow.get(i).get(FormQuestions._weight) == null ? "0" : pointsRow.get(i).get(FormQuestions._weight).toString();
+            sum += (jjNumber.isFloat(strValue) ? Float.valueOf(strValue) : 0) * (jjNumber.isFloat(strWeight) ? Float.valueOf(strWeight) : 0); // ارزش در وزن سوال ضرب می شود 
+            System.out.println(">>>>>>>>>>>>sum = " + sum + " ("+strValue+ "*" +strWeight+ ") ");
+        }
+        if (!pointsRow.isEmpty()) {
+            avg = sum / pointsRow.size(); //@ToDo بررسی شود که آیا محاسبه ی وزن در این قسمت برای محاسبه ی میانگین درست است یا نه
+        } else {
+            avg = (float) 0;
+        }
+        map.put(_sum, sum);
+        map.put(_avg, avg);
+        if (!db.update(tableName, map, _id + "=" + id)) {
+            String errorMessage = "عملیات محاسبه مقادیر فرم به درستی صورت نگرفت. 12-606";
+            Server.outPrinter(request, response, "alert('" + errorMessage + "')");
+            return Js.modal(errorMessage, "پیام سامانه");
+        }
+        //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         //ویژگی : تغییر وضعیت هنگام ویرایش یا ثبت نهایی فرم
         String message = "";
-        if (jjTools.getParameter(request, _status).equals(statues_sabteNahei) && flag) {//اگر درخواست ثبت نهایی بود و به همه ی سوالات اجباری پاسخ داده بود
+        if (jjTools.getParameter(request, _status).equals(statues_sabteNahei) && flag) {//اگر درخواست ثبت نهایی بود و به همه ی سوالات اجباری پاسخ داده بود  
             changeStatus(id, statues_sabteNahei, db);
             message = "پاسخ شما در سامانه ثبت نهایی شد";
+            //برای مشاهده ی نتایج بعد از ثبت نهایی در دوحالت کلی و جزئی کاربر را ارجاع می دهیم به جی اس پی نتایج
+            String html = "";
+            script += Js.setHtml("#formAnserSetBtn", "فرم ثبت نهایی شده و قادر به ویرایش یا تغییر آن نیستید");
+            if (formRow.get(0).get(Forms._showResultToQuestioner).equals("1")) {
+                //ساخت دکمه های مشاهده ی نتایج و ارسال آن برای کاربر
+                html += "<div class='col-lg-3'>"
+                        + "<a class='btn btn-outline-primary mg-b-10  btn-block' href='Server?do=FormAnswerSet.showResult&formAnswers_formId=" + formId + "&id=" + id + "' target='_blank' >مشاهده ی نتایج</a>"
+                        + "</div>";
+
+            }
+            if (formRow.get(0).get(Forms._showAllResultToQuestioner).equals("1")) {
+                //ساخت دکمه های مشاهده ی نتایج و ارسال آن برای کاربر
+                html += "<div class='col-lg-3'>"
+                        + "<a class='btn btn-outline-warning mg-b-10  btn-block' href='Server?do=FormAnswerSet.showAllResult&formAnswers_formId=" + formId + "' target='_blank' >مشاهده ی آمار کلی</a>"
+                        + "</div>";
+            }
+            //اگر فرم بعدی گذاشته بود برای این فرم
+            if (!formRow.get(0).get(Forms._nextFormId).toString().isEmpty()) {
+                html += "<a style='color:#fff' class='btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white' href='Server?do=FormAnswerSet.add_new&amp;formAnswers_formId=13' target='_blank'>"
+                        + "تکمیل فرم بعدی  "
+                        + "</a>";
+            }
+            script += Js.append("#formAnserSetBtn", html);
+
             if (formRow.get(0).get(Forms._uniqueComplete).equals("1")) {
                 script += "addFormIdToCookie(" + formId + ");\n";//در کوکی ست کنیم که این فرم قبلا ثبت نهایی شده است                
-            }else{
+            } else {
                 script += "removeFormIdFromCookie(" + formId + ");\n";//در کوکی پاک کنیم که این فرم قبلا ثبت نهایی شده است
             }
         } else {
@@ -538,7 +710,7 @@ public class FormAnswerSet {
                 message = "شما به " + qNo + "پاسخ نداده اید ";
             }
             message += ". فرم شما موقتا ثبت شد";
-            
+
 //            script += "window.location.replace('Server?do=FormAnswerSet.selectToEdit&formAnswers_formId=" + formId + "&id=" + id + "');\n";// برای اینکه کاربر نتواند دکمه درج را مجدد بزند
         }
         //==========================================================

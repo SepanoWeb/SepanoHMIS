@@ -119,24 +119,14 @@ var hmisRole = {
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
         $('.summernote').summernote();
         new jj(param).jjAjax2(false);
-        $("#ListKarbaran").hide();
-       
-      
-       
+        $("#ListKarbaran").hide();       
         $("#ListKarbaranDarSelect").show();
-
-
         hmisRole.m_show_form();
-
-
     },
     m_selectKarbar: function (id) {
-
         var param = "";
         param += "do=" + hmisRole.tableName + ".selectKarbar";
         param += "&" + hmisRole.f_id + "=" + (id == null ? "" : id);
-        hmisRole.m_show_form();
-//       $("#role_email").val('');
         new jj(param).jjAjax2(false);
     },
 /**
@@ -148,6 +138,17 @@ var hmisRole = {
         var param = "";
         param += "panel=" + panel;
         param += "&do=" + hmisRole.tableName + ".getSelectOption";
+        new jj(param).jjAjax2(false);
+    },
+/**
+ *  قراردادن نقش ها در سلکت آپشن ها
+ * @param {type} selector میتوانیم هر سلکتوری بدهیم مثلا سلکتور کلاس بدهیم
+ * @returns {undefined}
+ */
+    getSelectOptionRequierd: function (panel) {
+        var param = "";
+        param += "panel=" + panel;
+        param += "&do=" + hmisRole.tableName + ".getSelectOptionRequierd";
         new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {
@@ -175,7 +176,19 @@ var hmisRole = {
        param += "&do=" +hmisRole.tableName + ".getRoleName";
         
         new jj(param).jjAjax2(false);
-
+    },
+    
+  /**
+ *  قراردادن نقش های این کاربر در سلکت آگشن
+ *  @param {type} selector میتوانیم کلاس بدهیم
+ * @returns {undefined}
+ * @Example: cmsUser.getSelectOption("#userform .usersSelectOption");
+ */
+    getUeserRolesSelectOption: function (selector) {
+        var param = "";
+        param += "panel=" + selector;
+        param += "&do=" + hmisRole.tableName + ".getUeserRolesSelectOption";
+        new jj(param).jjAjax2(false);
     }
 
 };

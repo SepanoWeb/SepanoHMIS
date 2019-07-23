@@ -99,7 +99,7 @@ public class FormAnswers {
                 html.append("<tr>");
                 html.append("<td class='r'>" + formRows.get(i).get(Forms._code) + "</td>");
                 html.append("<td class='r'>" + formRows.get(i).get(Forms._title) + "</td>");
-                html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
+                html.append("<td class='c'><i class='p icon fa fa-pencil' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
                 html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "'></i></td>");
                 html.append("</tr>");
             }
