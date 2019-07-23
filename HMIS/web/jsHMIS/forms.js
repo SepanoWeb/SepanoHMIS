@@ -12,13 +12,11 @@ var hmisForms = {
         if ($("#swFormsForm").html() == '') {
 //        if (true) {
             $("#swFormsForm").load("formHMIS/02newForm.html", null, function () {
-
                 $('.summernote').summernote({height: 150});///برای تبدیل شدن به textEditor
                 new jj("#forms_creationDate").jjCalendarWithYearSelector(1340, 1420);
                 $('#forms_creationTime').wickedpicker({
                     twentyFour: true
                 });
-                alert("hmisForms.loadForm();");
                 new jj("#forms_expireDate").jjCalendarWithYearSelector(1340, 1420);
                 $('#forms_expireTime').wickedpicker({
                     twentyFour: true
@@ -33,6 +31,7 @@ var hmisForms = {
                 $(".roleSelectOption").select2({
                     width: '100%' 
                 });
+                hmisRole.getUeserRolesSelectOption("#swFormsForm #forms_ownerRole");// برای قرار گرفتن سلکت آپشن نقش ها در قسمت های مربوطه
                 cmsUser.getSelectOption("#swFormsForm .userSelectOption");// برای قرار گرفتن سلکت آپشن نقش ها در قسمت های مربوطه
                 $(".userSelectOption").select2({
                     width: '100%' 

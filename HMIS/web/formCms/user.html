@@ -86,7 +86,7 @@
                                         <!--<span class="form-control"></span>-->
                                     </div>
                                     <a   id="DownloadPicSignature" href="" style="display: none" target="_blank">
-                                        دانلود عکس امضا
+                                دانلود عکس امضا
                                     </a>
                                 </div>
                             </div>
@@ -240,25 +240,9 @@
                             <div class="col-lg-12" style="">
 
                                 <input id="user_attachFile" name="user_attachFile" type="hidden">
+                                <div id="inputAfterSelect" ></div>
+                                <div  id="inputTextSelectorDiv" ></div>
 
-                                <input id="user_attachFileTitle" name="user_attachFileTitle" type="hidden">
-                                <div class="inputAfterSelect" ></div>
-
-                                <div  class="inputSelectorDiv" ></div>
-                                <div class="col-lg-12"> عنوان فایل</div>
-                                <input id="user_titleFile" name="user_titleFile"  style="display: block;
-                                       width: 100%;
-                                       padding: 0.65rem 0.75rem;
-                                       font-size: 1.3rem;
-                                       line-height: 1.25;
-                                       color: #495057;
-                                       background-color: #fff;
-                                       background-image: none;
-                                       background-clip: padding-box;
-                                       border: 1px solid rgba(0, 0, 0, 0.15);
-                                       border-radius: 3px;
-                                       transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
-                                <span id="user_pic4" class="form-control"></span>
                                 <div class="input-group">
 
                                     <input class="btn btn-primary" id="sendPicFiles" type="submit" value="ارسال">
@@ -266,6 +250,7 @@
                                     <input id="attachFile" name="attachFile" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                                     <!--<span class="form-control"></span>-->
                                 </div>
+                                <span id="user_pic4" class="form-control"></span>
 
 
                             </div>
@@ -305,38 +290,38 @@
                 </div><!-- card -->
 
 
-                <!--                <table class="col-lg-12">
-                                    <tr style="background-color: #eaeaf4;height: 40px">
-                                        <td style="text-align: right">
-                                    <div style="float: right">
-                                        <a id="cancel_User" class="btn btn-secondary btn-block mg-b-10" style="  
-                
-                                           color: white;
-                                           width: 20%;
-                                           position: relative;
-                                           top: 45px;
-                
-                                           "  >
-                                            بازگشت
-                                        </a>
-                
-                                        <div id="User_button" style="position: relative;float: left;   width: 57%;
-                                             padding-top: 1%;
-                                             padding-bottom: 1%;
-                                             color: white;
-                                             ">
-                                        </div>
-                                    </div>
-                                    </td>
-                                    </tr>
-                                </table>-->
-                <div class="row col-lg-12">
-                    <div class="mg-t-20  col-lg">
-                        <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="cmsUser.m_show_tbl();">بازگشت </button>                
-                    </div><!-- col -->
-                    <div id="User_button" class="col-lg-9 mg-t-20 row">            
+<!--                <table class="col-lg-12">
+                    <tr style="background-color: #eaeaf4;height: 40px">
+                        <td style="text-align: right">
+                    <div style="float: right">
+                        <a id="cancel_User" class="btn btn-secondary btn-block mg-b-10" style="  
+
+                           color: white;
+                           width: 20%;
+                           position: relative;
+                           top: 45px;
+
+                           "  >
+                            بازگشت
+                        </a>
+
+                        <div id="User_button" style="position: relative;float: left;   width: 57%;
+                             padding-top: 1%;
+                             padding-bottom: 1%;
+                             color: white;
+                             ">
+                        </div>
                     </div>
-                </div><!-- card -->
+                    </td>
+                    </tr>
+                </table>-->
+ <div class="row col-lg-12">
+                                        <div class="mg-t-20  col-lg">
+                                            <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="cmsUser.m_show_tbl();">بازگشت </button>                
+                                        </div><!-- col -->
+                                        <div id="User_button" class="col-lg-9 mg-t-20 row">            
+                                        </div>
+                                    </div><!-- card -->
             </div>
 
 

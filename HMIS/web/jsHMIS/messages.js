@@ -33,7 +33,7 @@ var hmisMessages = {
                 });
 
 
-                new jj('#sendMessages').jjAjaxFileUploadTitleUploadFiles('#MessagesAttachFile', '#messagesSeen_attachFile', 'messagesSeen_titleFile', '#messagesSeen_attachFileTitle','.inputSelectorDiv');
+                new jj('#sendMessages').jjAjaxFileUploadTitleUploadFiles('#MessagesAttachFile', '#messagesSeen_attachFile', 'messagesSeen_titleFile', '#messagesSeen_attachFileTitle');
 
 
                 hmisMessages.selectOptionUserMessages("messages_receiver");

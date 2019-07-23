@@ -59,6 +59,16 @@ var hmisFormAnswerSets = {
         new jj(param).jjAjax2(false);
         hmisFormAnswerSets.m_show_form();
     },    
+    /**
+      * نمایش یک مودال برای رفرش کردن لیست پاسخ های کاربر به یک فرم خاص
+      * برای اینکه تکمیل فرم در صفحه ی دیگری انجام میشود و بعد از تکمیل جدول فرم های تکمیل شده در صفحه ی قبل بدون تغییر باقی میماند
+     * @param {type} formId
+     * @param {type} containerId
+     * @returns {undefined}
+     */
+    refreshMyAnswersAfterQuestion: function (formId) {
+        new jj("لیست پاسخ های شما تازه سازی بشود ؟").jjModal_Yes_No("آیا فرم شما با موفقیت ثبت شد?" , 'hmisFormAnswerSets.refreshMyAnswers('+formId+');');
+    },    
         /**
      * این تابع جدولی از فرم هایی که تا کنون پر شده را می آورد و میتوانیم جدید یکی پر کنیم 
      * @param {type} formId

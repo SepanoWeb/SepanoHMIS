@@ -13,6 +13,7 @@ import jj.jjNumber;
  * @author Arvin2
  */
 public class Js {
+
     public static String replacor(String comment) {
         String replacor = "^*#~";
         comment = comment.trim().replace("\'", replacor);
@@ -260,8 +261,8 @@ public class Js {
      *Dont put "#" befor selector
      *This method add "#"befor and "_editor" after selector.
      *There Must be in cms.html and ***.js a variable whit this name: ****_editor
-     *
-     @example
+     * 
+     @example 
      * html.append(Js.setValEditor("" + _content, row.get(0).get("portal_user_content")));
      */
 
@@ -273,8 +274,8 @@ public class Js {
      *Dont put "#" befor selector
      *This method add "#"befor and "_editor" after selector.
      *There Must be in cms.html and ***.js a variable whit this name: ****_editor
-     *
-     @example
+     * 
+     @example 
      * html.append(Js.setValEditor("" + _content, row.get(0).get("portal_user_content")));
      */
     public static String setValEditor(String editorName, String value) {

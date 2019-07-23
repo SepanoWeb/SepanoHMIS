@@ -33,7 +33,7 @@ var hmisUnreadMessages = {
                 });
 
 
-                new jj('#SendUnreadMessages').jjAjaxFileUploadTitleUploadFiles('#UnreadMessagesAttachFile', '#unreadMessages_attachFile', 'unreadMessages_titleFile', '#unreadMessages_attachFileTitle','.inputSelectorDiv');
+                new jj('#SendUnreadMessages').jjAjaxFileUploadTitleUploadFiles('#UnreadMessagesAttachFile', '#unreadMessages_attachFile', 'unreadMessages_titleFile', '#unreadMessages_attachFileTitle');
 
 
                 hmisUnreadMessages.selectOptionUserUnreadMessages("unreadMessages_receiver");

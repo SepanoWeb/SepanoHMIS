@@ -567,6 +567,10 @@ public class Access_User {
             html.append(Js.setAttr("#DownloadPicPersonnelCard", "href", "upload/" + row.get(0).get(_attachPicPersonnelCard)));
             /////برای دانلود عکس ها نوشته شده
             html.append(Js.setAttr("#DownloadPicSignature", "href", "upload/" + row.get(0).get(_attachPicSignature)));
+
+//            html.append(Js.setHtml("#user_pic1", row.get(0).get(_attachAxPersonal)));
+//            html.append(Js.setHtml("#user_pic3", row.get(0).get(_attachAxPersonnelCard)));
+//            html.append(Js.setHtml("#user_pic2", row.get(0).get(_attachAxSignature)));
             String script1 = "";
             StringBuilder html3 = new StringBuilder();
             StringBuilder html4 = new StringBuilder();
@@ -576,54 +580,24 @@ public class Access_User {
             String attachFiles = row.get(0).get(_attachFile).toString();
 
             String[] attachFilesArray = attachFiles.split("#A#");
-//
-////            for (int l = 0; l < attachFilesArray.length; l++) {
-////                List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
-////                if (!fileRow.isEmpty()) {
-////                    String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
-//////                    html3.append("<div >" + "<input class='col-xs-12' disabled='disabled'  value='" + attachFilesArray[l] + "'/>"  + "</div>");
-////                    html3.append( "<input style='text-align: center;' class='col-lg-11' disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" );
-////
-//////                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='"+Js.modal("hjgjhgkjgkjgk", id)+"'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" + "</div>");
-////         
-////                }
-////            }
-//
-//            script1 = Js.setHtml("#inputAfterSelect", html3);
-            
-            //////////////
-            for (int l = 0; l < attachFilesArray.length ; l++) {
+
+//      if (row.get(0).get(Access_User._attachFile).equals("")) {
+//      html4.append("$('#inputAfterSelect').hide()");}
+//      else{
+//           html4.append("$('#inputAfterSelect').show()");
+            for (int l = 0; l < attachFilesArray.length; l++) {
                 List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
-                
                 if (!fileRow.isEmpty()) {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
-                    String titleUpload = fileRow.get(0).get(UploadServlet._title).toString();
-                    String extension2 = attachFilesArray[l].substring(attachFilesArray[l].lastIndexOf(".") + 1, attachFilesArray[l].length());
-                    if (extension2.toLowerCase().equals("jpg")
-                            || extension2.toLowerCase().equals("png")
-                            || extension2.toLowerCase().equals("gif")
-                            || extension2.toLowerCase().equals("svg")) {
-                        if (titleUpload.equals("")) {
-                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button class='col-lg-1 form-control'  style='background-color: #e16262;color: white;float:left' onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 5px;padding-bottom: 9px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
-                        } else {
+//                    html3.append("<div >" + "<input class='col-xs-12' disabled='disabled'  value='" + attachFilesArray[l] + "'/>"  + "</div>");
+                    html3.append( "<input style='text-align: center;' class='col-lg-11' disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" );
 
-                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload+ "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
-                        }
-                    } else {
-                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='cmsUser.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
-                    }
+//                    html3.append("<div class='col-xs-12'>" + "<input  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<div  onclick='"+Js.modal("hjgjhgkjgkjgk", id)+"'>" + "<img  src='imgfeyz/delet.png' style='width:2%' />" + "</div>" + "</div>");
+         
                 }
             }
 
-            script1 += Js.setHtml(".inputAfterSelect", html2);
-            //////////////
-            
-            
-            
-            
-            
-            
-            
+            script1 = Js.setHtml("#inputAfterSelect", html3);
 
             if (row.get(0).get(Access_User._attachPicPersonal).equals("")) {
                 script.append(Js.setAttr("#PicPreviewPersonal", "src", "img/preview.jpg"));

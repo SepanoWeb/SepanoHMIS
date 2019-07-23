@@ -175,7 +175,7 @@ public class jjDatabaseQuery {
         return SQL;
     }
     public static String joinLeft(String firtTableName, String secondTableName, String whichField, String onFirstColumn, String onSecondcolumn,String where) {
-        String SQL = "SELECT " + whichField + " FROM " + firtTableName + " LEFT JOIN " + secondTableName + " ON " + firtTableName + "." + onFirstColumn + " = " + secondTableName + "." + onSecondcolumn + where+";";
+        String SQL = "SELECT " + whichField + " FROM " + firtTableName + " LEFT JOIN " + secondTableName + " ON " + firtTableName + "." + onFirstColumn + " = " + secondTableName + "." + onSecondcolumn +  where+";";
         return SQL;
     }
 //<========== JOIN ====

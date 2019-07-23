@@ -26,7 +26,7 @@ var hmisMessagesSeen = {
                 });
 
 
-                new jj('#sendMessagesSeen').jjAjaxFileUploadTitleUploadFiles('#MessagesSeenAttachFile', '#messagesSeen_attachFile', 'messagesSeen_titleFile', '#messagesSeen_attachFileTitle','.inputSelectorDiv');
+                new jj('#sendMessagesSeen').jjAjaxFileUploadTitleUploadFiles('#MessagesSeenAttachFile', '#messagesSeen_attachFile', 'messagesSeen_titleFile', '#messagesSeen_attachFileTitle');
 
 
                 hmisMessagesSeen.selectOptionUserMessagesSeen("messagesSeen_receiver");

@@ -38,7 +38,7 @@
         String sql = "SELECT hmis_formquestions.*,formanswers_answerSet_id,formanswers_answerSet_id,formanswers_answer FROM hmis_formquestions LEFT JOIN hmis_formanswers on"
                 + " hmis_formanswers.formanswers_questionId= hmis_formquestions.id "
                 + "WHERE "
-                + "formQuestions_formID=" + formId + " AND hmis_formanswers.formanswers_answerSet_id=" + answerSetId + " ;";
+                + "formQuestions_formID=" + formId + " AND hmis_formanswers.formanswers_answerSet_id=" + answerSetId + " group by formanswers_answerSet_id,formanswers_questionId;";
         questionsAndAnswerRows = jjDatabaseWeb.separateRow(db.otherSelect(sql));
     } else {
         return;//
@@ -60,7 +60,7 @@
         <!--time picker-->
         <!--<link href="Manager/css/wickedpicker.min.css" rel="stylesheet" />-->
         <!--DataTable-->
-        <link href="Manager/dataTable/jquery.dataTables.css" rel="stylesheet"/>
+        <!--<link href="Manager/dataTable/jquery.dataTables.css" rel="stylesheet"/>-->
         <!--<link href="Manager/dataTable/select2.min.css" rel="stylesheet"/>-->
 
         <!--TextEditor-->
@@ -203,8 +203,16 @@
                                         if (questionsAndAnswerRows.get(i).get(FormAnswers._answer).toString().isEmpty()) {//اگر در حال ویرایش جواب های قبلی این فیلد را خالی گذاشته بودیم
                                             defaultVal = questionsAndAnswerRows.get(i).get(FormQuestions._defaultValue).toString();//مقدار پیش فرض
                                         } else {
-                                            defaultVal = questionsAndAnswerRows.get(i).get(FormAnswers._answer).toString();//پاسخ قبلی
+                                            System.out.println("++++++++++++++++++++++");
+
+                                            //ّبرای چک باکس ها چون کاربر ممکن است چند تا را تیک زده باشد بنابر این چند جواب در دیتابیس داریم
+                                            List<Map<String, Object>> userChecked = jjDatabaseWeb.separateRow(
+                                                    db.Select(FormAnswers.tableName, FormAnswers._answerSet_id + "=" + answerSetId + " AND " + FormAnswers._questionId + "=" + questionsAndAnswerRows.get(i).get(FormQuestions._id)));
+                                            for (int k = 0; k < userChecked.size(); k++) {
+                                                defaultVal += userChecked.get(k).get(FormAnswers._answer).toString() + ",";//پاسخ قبلی
+                                            }
                                         }
+                                        System.out.println("++++++++++++++++++++++defaultVal " + defaultVal);
                                         List<Map<String, Object>> optionsRow = jjDatabaseWeb.separateRow(db.Select(FormQuestionOptions.tableName, FormQuestionOptions._question_id + "=" + questionsAndAnswerRows.get(i).get(FormQuestions._id)));
                                     %>
                                     <!--برای ذخیره ی رشته ی انتخاب شده ها-->
@@ -215,15 +223,14 @@
                                             <%= questionsAndAnswerRows.get(i).get(FormQuestions._isRequierd).toString().equals("1") ? "required" : ""%>
                                             >                                    
                                     <%
-                                        System.out.println("------->>>>>");
                                         for (int j = 0; j < optionsRow.size(); j++) {
                                             String checkBoxValue = optionsRow.get(j).get(FormQuestionOptions._id).toString();
                                             String checked = "";
-                                            if (defaultVal.startsWith(checkBoxValue + "%23A%23") || defaultVal.matches(".*%23A%23" + checkBoxValue + "%23A%23.*")) {
-                                                System.out.println("------->>>>>" + j);
+                                            if (defaultVal.startsWith(checkBoxValue + ",") || defaultVal.matches(".*," + checkBoxValue + ",.*")) {
+                                                System.out.println("-------<<<<<" + j);
                                                 checked = " checked='checked' ";
                                             } else {
-                                                System.out.println("-------<<<<<" + j);
+                                                System.out.println("------->>>>>" + j);
                                                 checked = "";
                                             }
                                     %>
@@ -263,10 +270,10 @@
                                             String radioValue = optionsRow.get(j).get(FormQuestionOptions._id).toString();
                                             String checked = "";
                                             if (defaultVal.equals(radioValue)) {// در رادوی ها آی دی یکی از آپشن ها میتواند در مقدار ذخیره شده باشد
-                                                System.out.println("------->>>>>" + j);
+                                                System.out.println("-------<<<<<" + j);
                                                 checked = " checked='checked' ";
                                             } else {
-                                                System.out.println("-------<<<<<" + j);
+                                                System.out.println("------->>>>>" + j);
                                                 checked = "";
                                             }
                                     %>
@@ -288,7 +295,7 @@
                                     </div>
                                     <%
                                         }
-                                    } else if (questionType.equals("select_option")) {//اگر رادیو بود برای گزینه های هر سوال
+                                    } else if (questionType.equals("select_option")) {//اگر سلکت آپشن بود بود برای گزینه های هر سوال
                                         String defaultVal = "";
                                         if (questionsAndAnswerRows.get(i).get(FormAnswers._answer).toString().isEmpty()) {//اگر در حال ویرایش جواب های قبلی این فیلد را خالی گذاشته بودیم
                                             defaultVal = questionsAndAnswerRows.get(i).get(FormQuestions._defaultValue).toString();//مقدار پیش فرض
@@ -300,17 +307,17 @@
                                     <div class="col-lg-12">
                                         <select class="" 
                                                 id="q<%= questionsAndAnswerRows.get(i).get(FormQuestions._id).toString()%>" 
-                                            name="q<%= questionsAndAnswerRows.get(i).get(FormQuestions._id).toString()%>" 
+                                                name="q<%= questionsAndAnswerRows.get(i).get(FormQuestions._id).toString()%>" 
                                                 <%= questionsAndAnswerRows.get(i).get(FormQuestions._isRequierd).toString().equals("1") ? "required" : ""%> >
                                             <%
                                                 for (int j = 0; j < optionsRow.size(); j++) {
                                                     String optionsValue = optionsRow.get(j).get(FormQuestionOptions._id).toString();
                                                     String selected = "";
                                                     if (defaultVal.equals(optionsValue)) {// در رادوی ها آی دی یکی از آپشن ها میتواند در مقدار ذخیره شده باشد
-                                                        System.out.println("------->>>>>" + j);
+                                                        System.out.println("-------<<<<<" + j);
                                                         selected = " selected='selected' ";
                                                     } else {
-                                                        System.out.println("-------<<<<<" + j);
+                                                        System.out.println("------->>>>>" + j);
                                                         selected = "";
                                                     }
                                             %>
@@ -339,7 +346,7 @@
                                     jjfileUplaodScripts.append(
                                             "new jj('#send_q" + questionsAndAnswerRows.get(i).get(FormQuestions._id).toString() + "_icon').jjAjaxFileUpload2("
                                             + "'q" + questionsAndAnswerRows.get(i).get(FormQuestions._id).toString() + "_file'"
-                                            + ", '#q" + questionsAndAnswerRows.get(i).get(FormQuestions._id).toString()+"'"
+                                            + ", '#q" + questionsAndAnswerRows.get(i).get(FormQuestions._id).toString() + "'"
                                             + ", '#q" + questionsAndAnswerRows.get(i).get(FormQuestions._id).toString() + "_Preview');\n");
                                 %>
                                 <div class="col-lg-3" style="margin-bottom: 20px">
@@ -378,20 +385,7 @@
                 <br/>
             </div>
             <div  id ="newFormToCompleteBottons" class="row col-lg-12 formAnswerBtn" >
-                <%
-                    String userRoles[] = jjTools.getSeassionUserRole(request).split("%23A%23");
-                    if (userRoles.length
-                            > 1) {// اگر بیشتر از یک نقش داشت سلکت اپشن نقش هایش را نشانش می دهیم  که هر کدام را خواست انتخاب کند
-%>
 
-                <div class="col-lg-3">
-                    <select id="formAnswers_userRole" name="formAnswers_userRole" class="form-control" style="width: 100%">
-                        <%=Role.getUeserRolesSelectOption(jjTools.getSeassionUserId(request), db)%>
-                    </select>
-                </div>
-                <%
-                    }
-                %>
                 <div class="col-lg-3">
                     <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="window.close();">بازگشت </button>
                 </div>
@@ -424,7 +418,19 @@
                 } else {
                     //اگر فرم در حالت ثبت نهایی بود نمی توانیم آنرا ویرایش کنیم و دکمه هار باید حذف کنیم
                     if (db.Select(FormAnswerSet.tableName, FormAnswerSet._id + "=" + answerSetId + " AND " + FormAnswerSet._status + "='" + FormAnswerSet.statues_sabteAvalie + "'").getRowCount() == 1) {
-
+                        String userRoles[] = jjTools.getSeassionUserRole(request).split(",");
+                        // اگر بیشتر از یک نقش داشت سلکت اپشن نقش هایش را نشانش می دهیم  که هر کدام را خواست انتخاب کند
+                        if (userRoles.length > 1) {
+                %>
+                <div class="col-lg-12">
+                        سمت شما :
+                        <br/>
+                    <select id="formAnswers_userRole" name="formAnswers_userRole" class="form-control" style="width: 100%">
+                        <%= Role.getUeserRolesSelectOption(request, response, db, true) %>
+                    </select>
+                </div>
+                <%
+                    }
                 %>
                 <div id="formAnserSetBtn" class="col-lg-8">
                     <div class="col-lg-6">
@@ -434,7 +440,23 @@
                         <button class="btn btn-outline-success mg-b-10  btn-block" onclick="formAnswerSet_editAndFinalForm();">ثبت نهایی </button>                
                     </div>
                 </div>
-                <%                    } else {
+                <%     
+                    } else {
+                    //ّبرای مشاهده ی نتایج در صورت وجود دسترسی به نتایج کلی و نتایج همین فرم
+                    if (formRow.get(0).get(Forms._showResultToQuestioner).equals("1") || formRow.get(0).get(Forms._showAllResultToQuestioner).equals("1")) {
+                %>
+                <div class="col-lg-3">
+                    <a class="btn btn-outline-primary mg-b-3  btn-block" href="Server?do=FormAnswerSet.showResult&formAnswers_formId=<%=formId%>&id=<%= answerSetId%>" target="_blank">مشاهده ی نتایج</a>
+                </div>
+                <%
+                    }
+                    if (formRow.get(0).get(Forms._showAllResultToQuestioner).equals("1")) {
+                %>
+                <div class="col-lg-3">
+                    <a class="btn btn-outline-warning mg-b-3  btn-block" href="Server?do=FormAnswerSet.showAllResult&formAnswers_formId=<%=formId%>" target="_blank">مشاهده ی آمار کلی</a>
+                </div>
+                <%
+                    }
                 %>
                 <div id="formAnserSetBtn" class="col-lg-8">
                     شما این فرم را قبلا ثبت نهایی کرده اید
@@ -528,61 +550,57 @@
 
 
         <script type="text/javascript">
-
-                                (function () {
+                            (function () {
             <%
                 // وقتی فرم با موفقیت ثبت نهایی شد باید در کوکی های مرورگر و اپ کاربر کوکی فرم های یونیک را ذخیره کنیم
                 // البته در موقع نشان دادن هم میتوانیم با جاوا در دیتا بیش چک کنیم که دیگر این فرم را نشان کاربر ندهیم
                 // سمت کلاینت فرم های یونیک را در کوکی ست کنیم که موقع پر کردن بهشان اجازه ندهد
-                if (formRow.get(
-                        0).get(Forms._uniqueComplete).toString().equals("1")) {// اگر فرم باید یونیک پر شود چک کنیم ببینیم در یونیک فرم های پر شده ی این مرورگر وجود دارد یا نه
+                if (formRow.get(0).get(Forms._uniqueComplete).toString().equals("1")) {// اگر فرم باید یونیک پر شود چک کنیم ببینیم در یونیک فرم های پر شده ی این مرورگر وجود دارد یا نه
 %>
-                                    var formid = <%=formId%>;
-                                    var uniqueForms = Cookies.get('#UNIQUE_FORMS_Compleited');// فرم های که باید توسط هر کاربر یکبار تکمیل شوند بعد از تکمیل نهایی در این کوکی ذخیره میشوند
-                                    if (uniqueForms) {
-                                        var uniqueFormsId = uniqueForms.split(",");
-                                        for (var i = 0; i < uniqueFormsId.length; i++) {
-                                            alert("checkUniqueFormInCookies...");
-                                            if (uniqueFormsId[i] == formid) {// یعنی این فرم قبلا توسط این کاربر با موفقیت ثبت شده است
-                                                $("#newFormToCompleteBottons .btn-outline-warning ,#newFormToCompleteBottons .btn-outline-success").remove();
-                                                alert("شما قبلا به این فرم پاسخ گفته اید!!!");
-                                            }
-                                            ;
+                                var formid = <%=formId%>;
+                                var uniqueForms = Cookies.get('#UNIQUE_FORMS_Compleited');// فرم های که باید توسط هر کاربر یکبار تکمیل شوند بعد از تکمیل نهایی در این کوکی ذخیره میشوند
+                                if (uniqueForms) {
+                                    var uniqueFormsId = uniqueForms.split(",");
+                                    for (var i = 0; i < uniqueFormsId.length; i++) {
+                                        alert("checkUniqueFormInCookies...");
+                                        if (uniqueFormsId[i] == formid) {// یعنی این فرم قبلا توسط این کاربر با موفقیت ثبت شده است
+                                            $("#newFormToCompleteBottons .btn-outline-warning ,#newFormToCompleteBottons .btn-outline-success").remove();
+                                            alert("شما قبلا به این فرم پاسخ گفته اید!!!");
                                         }
+                                        ;
                                     }
+                                }
 
             <%
             } else {//برای حذف فرم هایی که قبلا یکتا بوده اند و الان دیگر یکتا نیستند ازکوکی باید اقدام کنیم
 %>
-                                    var formid = <%=formId%>;
-                                    var uniqueForms = Cookies.get('#UNIQUE_FORMS_Compleited');// فرم های که باید توسط هر کاربر یکبار تکمیل شوندبعد از تکمیل نهایی در این کوکی ذخیره میشوند
-                                    removeFormIdFromCookie(formid);
-
+                                var formid = <%=formId%>;
+                                var uniqueForms = Cookies.get('#UNIQUE_FORMS_Compleited');// فرم های که باید توسط هر کاربر یکبار تکمیل شوندبعد از تکمیل نهایی در این کوکی ذخیره میشوند
+                                removeFormIdFromCookie(formid);
             <%
                 }
-
             %>
 //            Math.floor(""Math.random() * 10);
-                                    if (Cookies.get('#USER_MAC')) {
-                                        alert(Cookies.get('#USER_MAC'));
-                                    } else {
-                                        Cookies.set('#USER_MAC', Math.random() * 50000000000000000000);
+                                if (Cookies.get('#USER_MAC')) {
+                                    alert(Cookies.get('#USER_MAC'));
+                                } else {
+                                    Cookies.set('#USER_MAC', Math.random() * 50000000000000000000);
+                                }
+                                new jj("body .datepicker").jjCalendar();
+                                new jj("body input[type='number']").jjSetTextFieldOnlyGetNumber(1000000, 0);// حداکثر طول رشته داخل نامبر
+                                $(".question input:checkbox").click(function () {
+                                    var checked = $(this).parent().parent().parent().find("input:checkbox:checked");
+                                    var newVal = "";
+                                    for (var i = 0; i < checked.length; i++) {
+                                        newVal += $(checked[i]).val() + ",";
                                     }
-                                    new jj("body .datepicker").jjCalendar();
-                                    new jj("body input[type='number']").jjSetTextFieldOnlyGetNumber(1000000, 0);// حداکثر طول رشته داخل نامبر
-                                    $(".question input:checkbox").click(function () {
-                                        var checked = $(this).parent().parent().parent().find("input:checkbox:checked");
-                                        var newVal = "";
-                                        for (var i = 0; i < checked.length; i++) {
-                                            newVal += $(checked[i]).val() + "#A#";
-                                        }
-                                        $(this).parent().parent().parent().find("input:hidden").val(newVal);
-                                    });
-                                    $(".question input:radio").click(function () {
-                                        $(this).parent().parent().parent().find("input:hidden").val($(this).val());
-                                    });
+                                    $(this).parent().parent().parent().find("input:hidden").val(newVal);
+                                });
+                                $(".question input:radio").click(function () {
+                                    $(this).parent().parent().parent().find("input:hidden").val($(this).val());
+                                });
 
-                                })();
+                            })();
             <%=jjfileUplaodScripts%>
         </script>
         <%= formRow.get(0).get(Forms._javaScript)%>
