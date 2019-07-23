@@ -90,8 +90,7 @@ public class Department {
                 html.append("<td class='tahoma10' style='text-align: center;'>" + (row.get(i).get(_id).toString()) + "</td>");
                 html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_title).toString()) + "</td>");
                 List<Map<String, Object>> depatementRow = jjDatabase.separateRow(db.Select(DepartmentPosition.tableName, DepartmentPosition._id + "=" + row.get(i).get(_location).toString()));
-                html.append("<td class='tahoma10' style='text-align: right;'>" + (depatementRow.get(0).get(DepartmentPosition._subcategory).toString()) + "</td>");
-
+                html.append("<td class='tahoma10' style='text-align: right;'>" + (row.get(0).get(_location).toString()) + "</td>");
                 html.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'><a src='img/l.png' style='cursor: pointer;height:30px' onclick='hmisDepartment.m_select(" + row.get(i).get(_id) + ");' ></a></td>");
                 html.append("</tr>");
             }
@@ -132,37 +131,16 @@ public class Department {
     public static String selectOptionDepartment(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         StringBuilder html = new StringBuilder();
         try {
-            StringBuilder html3 = new StringBuilder();
-            String script = "";
             String panel = jjTools.getParameter(request, "panel");
-            String html4 = "<option id='selectHospital0' style='color:black' value=''>موقعیت مورد نظر را انتخاب کنید</option>";
-            html4 += "<option id='selectHospital0' style='color:black' value='ALL'>همه بخش ها</option>";
-            Document doc = Jsoup.parse(html4);
-            List<Map<String, Object>> rowLocation = jjDatabase.separateRow(db.Select(DepartmentPosition.tableName, "*", "id>=0", DepartmentPosition._parent));
-            for (int i = 0; i < rowLocation.size(); i++) {
-                String parentID = rowLocation.get(i).get(DepartmentPosition._parent).toString();
-                String space = "-";
-                for (int j = 0; j <= Integer.parseInt(rowLocation.get(i).get(DepartmentPosition._level).toString()); j++) {
-                    space += "- ";
-                }
-                String optionHtml = "<option id='selectHospital" + rowLocation.get(i).get(_id) + "'  value='" + rowLocation.get(i).get(_id) + "'>"
-                        + space
-                        + rowLocation.get(i).get(DepartmentPosition._subcategory)
-                        + "</option>";
-                doc.getElementById("selectHospital" + parentID).append(optionHtml);
-                String level = rowLocation.get(i).get(_level).toString();
-//                for (int j = 0; j <  ; j++) {
-//                doc.select(parentID).append("<div id='" + rowLocation.get(i).get(_id) + "' level='" + level + "' class='parentTree closed level" + level + "' >" + rowLocation.get(i).get(Department._subcategory) + "</div>");
-//                }
-                String haspitalname = rowLocation.get(i).get(DepartmentPosition._subcategory).toString();
-//                doc.select(parentSelector).append("<div  level='" + level + "' class='parentTree closed level" + level + "' > <span onclick=\"cmsLocation.showsubdiv(this);\" style='cursor: pointer;'>+</span><span onclick=\"cmsLocation.saveuniversity(this);\" id='" + row.get(i).get(_id) + "'>" + row.get(i).get(_universityname) + "</span></div>");
+            html.append("<option value=''>یخش را انتخاب کنید</option>");
+            List<Map<String, Object>> rowDepartments = jjDatabase.separateRow(db.Select(tableName));
+            for (int i = 0; i < rowDepartments.size(); i++) {
+                html.append("<option value='" + rowDepartments.get(i).get(_id) + "'>" + rowDepartments.get(i).get(_title) + "</option>");
             }
             if (panel == "") {
                 panel = "department_location";
             }
-            script += Js.setHtml("#" + panel, doc.getElementsByTag("body").toString());
-
-            Server.outPrinter(request, response, script);
+            Server.outPrinter(request, response, Js.setHtml("#" + panel, html));
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -174,7 +152,7 @@ public class Department {
         StringBuilder html = new StringBuilder();
         StringBuilder script = new StringBuilder();
         try {
-           script.append("$('#department_location').select2();\n");
+            script.append("$('#department_location').select2();\n");
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
 //            if (accIns) {
 //                html.append(Js.setHtml("#Department_button", "<div class='row'><div class='col-lg-6'><input type='button' id='insert_Department_new'  value=\"" + lbl_insert + "\" class='tahoma10 btn btn-success btn-block mg-b-10 ui-button ui-corner-all ui-widget'></div></div>"));
@@ -219,7 +197,7 @@ public class Department {
             map.put(_publicContent, request.getParameter(_publicContent));
             map.put(_praivateContent, request.getParameter(_praivateContent));
 //             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(DepartmentPosition.tableName, "*", "id>=0", DepartmentPosition._parent));
-            
+
             map.put(_location, jjTools.getParameter(request, _location));
 
             if (db.insert(tableName, map).getRowCount() == 0) {
@@ -268,15 +246,15 @@ public class Department {
             StringBuilder html2 = new StringBuilder();
 
             script.append(Js.setVal("#department_" + _id, row.get(0).get(_id)));
-              
+
             script.append(Js.setVal("#" + _title, row.get(0).get(_title)));
             script.append(Js.setAttr("#IconDownload", "href", "upload/" + row.get(0).get(_icon)));
             script.append(Js.setVal("#" + _organizationalCode, row.get(0).get(_organizationalCode)));
-            script.append(Js.setVal("#department_icon" , row.get(0).get(_icon)));
-             html.append(Js.setAttr("#IconDownload", "href", "upload/" + row.get(0).get(_icon)));
+            script.append(Js.setVal("#department_icon", row.get(0).get(_icon)));
+            html.append(Js.setAttr("#IconDownload", "href", "upload/" + row.get(0).get(_icon)));
             if (row.get(0).get(_icon).equals("")) {
                 script.append(Js.setAttr("#PicPreviewIcon", "src", "img/preview.jpg"));
-                 script.append(Js.hide("#IconDownload"));
+                script.append(Js.hide("#IconDownload"));
             } else {
                 script.append(Js.setAttr("#PicPreviewIcon", "src", "upload/" + row.get(0).get(_icon).toString() + ""));
                 script.append(Js.show("#IconDownload"));

@@ -4,175 +4,181 @@
  * and open the template in the editor.
  */
 
-///ایجاد مستند
-
-var hmisDocumentary = {
-    tableName: "Documentary",
+var hmisDepartment = {
+    tableName: "Department",
     f_id: "id",
     loadForm: function () {
-//        if ($("#swDocumentaryForm").html() == '') {
-        if (true) {
-            $("#swDocumentaryForm").load("formHMIS/documentary.html", null, function () {
-//                new jj('#documentary_LoadingPeriod').jjCalendarWithYearSelector(1310, 1410);
-                $("#cancel_Documentary").button().click(function (e) {
+        if ($("#swDepartmentForm").html() == '') {
+            $("#swDepartmentForm").load("formHMIS/department.html", null, function () {
 
-                    hmisDocumentary.m_clean();
-                    hmisDocumentary.m_show_tbl();
-
+                $("#cancel_Department").on('click', function (e) {
+//                   alert(1);
+                    hmisDepartment.m_clean();
+                    hmisDepartment.m_show_tbl();
                 });
-                new jj('#sendFiles').jjAjaxFileUploadByTitleAndMultiFile('#attachFileDocumentary', 'documentary_attachFileDocumentary', 'documentary_titleFile', "#documentary_divUpload");
+
+//                $("#sendPicIcon").button().click(function () {
+//                });
+//                $("#upload_fileIcon").button().click(function () {
+//                });
+//                new jj('#sendPicIcon').jjAjaxFileUploadIcon('#upload_fileIcon', '#department_icon', '#PicPreviewIcon');
+                new jj('#sendPicIcon').jjAjaxFileUpload2('upload_fileIcon', '#department_icon', '#PicPreviewIcon');
+                $('#departmentIcon').keyup(function () {
+                    $('#PicPreviewIcon').attr('src', 'upload/' + $('#departmentIcon').val());
+                    if ($('#departmentIcon').val() == '') {
+                        $('#PicPreviewIcon').attr('src', 'img/preview.jpg');
+                    }
+                });
+                hmisDepartment.selectOptionDepartment("department_location");
+//                $("#department_location").select2({
+//                    minimumResultsForSearch: '',
+//                    width: '100%'
+//                });
             });
+
+
+
         }
     },
     m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".refresh";
-        param += "&panel=" + (containerId == null ? "swDocumentaryTbl" : containerId);
+        param += "do=" + hmisDepartment.tableName + ".refresh";
+        param += "&panel=" + (containerId == null ? "swDepartmentTbl" : containerId);
         param += "&sort=" + (sortField == null ? "0" : sortField);
         param += "&height=" + (tableHeight == null ? PanelHeight : tableHeight);
         param += "&jj=1";
         new jj(param).jjAjax2(false);
-        hmisDocumentary.tabSizeTbl();
+        hmisDepartment.tabSizeTbl();
+    },
+    bazgasht: function () {
+        hmisDepartment.m_clean();
+        hmisDepartment.m_show_tbl();
     },
     m_add_new: function () {
-        new jj("do=" + hmisDocumentary.tableName + ".add_new").jjAjax2(false);
-        hmisDocumentary.m_show_form();
+        new jj("do=" + hmisDepartment.tableName + ".add_new").jjAjax2(false);
+        $('.summernote').summernote();///برای تبدیل شدن به textEditor
+        $('#department_location').val("null").trigger('change');
+        $("#IconDownload").hide();
+        hmisDepartment.m_show_form();
+        hmisDepartment.m_clean();
 
 
 
-
-        hmisDocumentary.m_clean();
-
-
+        //
+//        part_content_editor = new jj('#department_publicContent').jjEditor();
+//        part_praivate_editor = new jj('#department_praivateContent').jjEditor();
+//        cmsUser.m_getGroups();
     },
     m_show_form: function () {
-        $('#swDocumentaryTbl').hide();
-        $('#swDocumentaryForm').show();
-        new jj("#swDocumentaryForm").jjFormClean();
-
-        hmisDocumentary.tabSizeForm();
-    },
-    m_show_formCopy: function () {
-        $('#swDocumentaryTbl').hide();
-        $('#swDocumentaryForm').show();
-        hmisDocumentary.tabSizeForm();
+        $('#swDepartmentTbl').hide();
+        $('#swDepartmentForm').show();
+        if ($('#swDepartmentTbl').html() == "") {
+            hmisDepartment.m_refresh();
+        }
+        hmisDepartment.tabSizeForm();
     },
     m_clean: function () {
-        new jj("#swDocumentaryForm").jjFormClean();
-        $("#inputAfterSelectGauge").html('');
-        $("#documentary_divUpload").html('');
+        new jj("#swDepartmentForm").jjFormClean();
+        $("#departmentIcon").html('');
+        $('#PicPreviewIcon').attr('src', '');
+        $("#selectHospital").val('');
+//         $("#departmentIcon").html('');
+//        $('#PicPreviewIcon').attr('src', '');
+        $('#department_publicContent').summernote('code', '');
+        $('#department_praivateContent').summernote('code', '');
     },
     m_show_tbl: function () {
-        $('#swDocumentaryTbl').show();
-        $('#swDocumentaryForm').hide();
-        if ($('#swDocumentaryTbl').html() == "") {
-            hmisDocumentary.m_refresh();
+        $('#swDepartmentTbl').show();
+        $('#swDepartmentForm').hide();
+        if ($('#swDepartmentTbl').html() == "") {
+            hmisDepartment.m_refresh();
         }
-        hmisDocumentary.m_refresh();
-        hmisDocumentary.tabSizeTbl();
-
+        hmisDepartment.m_refresh();
+        hmisDepartment.tabSizeTbl();
     },
-    m_edit: function (id) {
-        var documentary_attachFileDocumentary = $("#swDocumentaryForm .documentary_attachFileDocumentary");
-        var temp = ""
-        for (var i = 0; i < documentary_attachFileDocumentary.length; i++) {
-            temp += $(documentary_attachFileDocumentary[i]).val() + ",";
-        }
-
+    m_insert: function () {
         var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".edit";
-        param += "&documentary_attachFileDocumentary=" + temp;
-        param += "&" + new jj("#swDocumentaryForm").jjSerial();
+        param += "do=" + hmisDepartment.tableName + ".insert";
+        param += "&" + new jj("#swDepartmentForm").jjSerial();
+        param += "&department_praivateContent=" + $('#department_praivateContent').summernote('code');
+        param += "&department_publicContent=" + $('#department_publicContent').summernote('code');
+        param += "&jj=1";
+//        param += "&selectOptionDepartement=" + $("#locationSelectOption option:selected").val();
         new jj(param).jjAjax2(false);
-        hmisDocumentary.m_show_tbl();
-        hmisDocumentary.m_clean();
-        $(".inputSelectorDiv").html('');
-
+        hmisDepartment.m_show_tbl();
+        hmisDepartment.m_clean();
     },
-    m_editAndFinalize: function () {
-        var noFileWarningMassage = "";// پیام هشدار برای اینکه اگر فایل بارگذاری نکرده بود مطلع بشود
-        if($("#swDocumentaryForm .documentary_attachFileDocumentary").length==0){
-            noFileWarningMassage ="شما برای این سنجه فایلی بارگذاری نکرده اید" + " <br/>";
-        }
-        new jj(noFileWarningMassage+"آیا از تایید نهایی این رکورد اطمینان دارید؟").jjModal_Yes_No("ثبت نهایی",'hmisDocumentary.m_editAndFinalizeAfterQuestion();');
-    },
-    m_editAndFinalizeAfterQuestion: function () {
-        var documentary_attachFileDocumentary = $("#swDocumentaryForm .documentary_attachFileDocumentary");
-        var temp = ""
-        for (var i = 0; i < documentary_attachFileDocumentary.length; i++) {
-            temp += $(documentary_attachFileDocumentary[i]).val() + ",";
-        }
+    m_edit: function () {
         var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".edit";
-        param += "&documentary_attachFileDocumentary=" + temp;
-        param += "&documentary_status=بارگذاری شده";// برای تغییر وصعیت و بعد از ویرایش انجام می شود
-        param += "&" + new jj("#swDocumentaryForm").jjSerial();
+        param += "&do=" + hmisDepartment.tableName + ".edit";
+//         param += $('#department_publicContent').summernote('code');
+        param += "&department_praivateContent=" + $('#department_praivateContent').summernote('code');
+        param += "&department_publicContent=" + $('#department_publicContent').summernote('code');
+        param += "&" + new jj("#swDepartmentForm").jjSerial();
+        param += "&jj=1";
+//        param += "&selectOptionDepartement=" + $("#locationSelectOption option:selected").val();
         new jj(param).jjAjax2(false);
-        hmisDocumentary.m_show_tbl();
-        hmisDocumentary.m_clean();
-        $(".inputSelectorDiv").html('');
-
+        hmisDepartment.m_show_tbl();
+        hmisDepartment.m_clean();
     },
     m_delete: function (id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo('hmisDocumentary.m_delete_after_question(' + id + ');\n', true, "");
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo('hmisDepartment.m_delete_after_question(' + id + ');\n', true, "");
     },
     m_delete_after_question: function (id) {
         var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".delete";
-        param += "&" + hmisDocumentary.f_id + "=" + (id == null ? "" : id);
+        param += "do=" + hmisDepartment.tableName + ".delete";
+        param += "&" + hmisDepartment.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
-        hmisDocumentary.m_show_tbl();
-        hmisDocumentary.m_clean();
-    },
-    undo: function (id) {
-        var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".undo";
-        param += "&" + hmisDocumentary.f_id + "=" + (id == null ? "" : id);
-        new jj(param).jjAjax2(false);       
-        hmisDocumentary.m_clean();
+        hmisDepartment.m_show_tbl();
+        hmisDepartment.m_clean();
     },
     m_select: function (id) {
         var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".select";
-        param += "&" + hmisDocumentary.f_id + "=" + (id == null ? "" : id);
-
+        param += "do=" + hmisDepartment.tableName + ".select";
+        param += "&" + hmisDepartment.f_id + "=" + (id == null ? "" : id);
+        $('.summernote').summernote();
         new jj(param).jjAjax2(false);
-        $(".inputSelectorDiv").html("");
-
-
-        hmisDocumentary.m_show_form();
-        hmisDocumentary.m_clean();
+        hmisDepartment.m_show_form();
+//        part_content_editor = new jj('#department_publicContent').jjEditor();
+//         part_praivate_editor = new jj('#department_praivateContent').jjEditor();
 
     },
-    copyDocumentary: function () {
-        alert("مستند مورد نظر کپی شد");
-        new jj("do=" + hmisDocumentary.tableName + ".copyDocumentary").jjAjax2(false);
-        hmisDocumentary.m_show_formCopy();
-        $("#signatorys").html('');
-        $("#signatorysAdd").html('');
+    selectOptionDepartment: function (panel) {
+        var param = "";
+        param += "panel=" + panel;
+        param += "&do=" + hmisDepartment.tableName + ".selectOptionDepartment";
+//        param += "&" + hmisDepartment.f_id + "=" + (id == null ? "" : id);
+//        $('.summernote').summernote();
+        new jj(param).jjAjax2(false);
+
+
+
+//        hmisDepartment.m_show_form();
+//        part_content_editor = new jj('#department_publicContent').jjEditor();
+//         part_praivate_editor = new jj('#department_praivateContent').jjEditor();
+
     },
     m_getMenu: function () {
         var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".getMenu";
+        param += "do=" + hmisDepartment.tableName + ".getMenu";
         new jj(param).jjAjax2(false);
     },
     tabSizeTbl: function () {
-        $('#swDocumentary').css('height', 515);
-        hmisDocumentary.heightTab = 515;
+        $('#swDepartment').css('height', 515);
+        hmisDepartment.heightTab = 515;
     },
     tabSizeForm: function () {
-        $('#swDocumentary').css('height', 270);
-        hmisDocumentary.heightTab = 270;
+        $('#swDepartment').css('height', 270);
+        hmisDepartment.heightTab = 270;
     },
     heightTab: "515",
     mainTabSetSize: function () {
-        $('#swDocumentary').css('height', hmisDocumentary.heightTab);
+        $('#swDepartment').css('height', hmisDepartment.heightTab);
+    },
+    ////این تابع برای دانلود آیکون در قسمت دپارتمان طراحی شده
+    downloadIcon: function () {
+        $('#downloadIcon').attr('href', 'upload/' + $('#uploaded_file').val());
     },
 }
-
-
-
-
-
 
 
