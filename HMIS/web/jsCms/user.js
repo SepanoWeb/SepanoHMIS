@@ -71,8 +71,8 @@ var cmsUser = {
 //                $("#attachFile").button().click(function () {
 //                });
                 
-                new jj('#sendPicFiles').jjAjaxFileUploadTitleUploadFiles('#attachFile', '#user_attachFile','user_titleFile','#user_attachFileTitle','.inputSelectorDiv');
-                
+                new jj('#sendPicFiles').jjAjaxFileUpload3('#attachFile', '#user_attachFile');
+
 //                $('#user_pic4').keyup(function () {
 ////                    $('#PicPreviewAttach').attr('src', 'upload/' + $('#user_pic4').val());
 //
@@ -119,14 +119,14 @@ var cmsUser = {
         new jj("#swUserForm").jjFormClean();
         new jj("#user_grade").jjVal('');
         $('#PicPreview').attr('src', '');
-        $('#PicPreviewPersonal').attr('src', '');
-        $('#PicPreviewSignature').attr('src', '');
+        $('#PicPreviewPersonal').attr('src', 'img/preview.jpg');
+        $('#PicPreviewSignature').attr('src', 'img/preview.jpg');
         $("#inputTextSelectorDiv").html('');
-        $("#user_pic1").html('');
-        $("#user_pic2").html('');
-        $("#user_pic3").html('');
-        $("#user_pic4").html('');
-        $("#inputAfterSelect").html('');
+        $("#user_pic1").html('img/preview.jpg');
+        $("#user_pic2").html('img/preview.jpg');
+        $("#user_pic3").html('img/preview.jpg');
+        $("#user_pic4").html('img/preview.jpg');
+        $("#inputAfterSelect").html('img/preview.jpg');
         
          new jj("#user_attachPicPersonal").jjVal('');
          new jj("#user_attachPicPersonnelCard").jjVal('');
@@ -239,8 +239,6 @@ var cmsUser = {
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
          $("#user_pic4").html('');
-         $(".inputSelectorDiv").html('');
-         
         cmsUser.m_show_form();
         cmsUser.m_getGroups(id);
 

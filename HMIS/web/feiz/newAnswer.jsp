@@ -49,7 +49,7 @@
         <!--time picker-->
         <!--<link href="Manager/css/wickedpicker.min.css" rel="stylesheet" />-->
         <!--DataTable-->
-        <link href="Manager/dataTable/jquery.dataTables.css" rel="stylesheet"/>
+        <!--<link href="Manager/dataTable/jquery.dataTables.css" rel="stylesheet"/>-->
         <!--<link href="Manager/dataTable/select2.min.css" rel="stylesheet"/>-->
 
         <!--TextEditor-->
@@ -73,7 +73,6 @@
     </head>
     <body>
         <div id="swOneFormToCompleteForm">
-
             <div class="card bd-primary mg-t-20 mg-b-25" id="newFormQuestion">
                 <div class="card-header bg-primary tx-white"><%=formRow.get(0).get(Forms._title)%></div>
                 <div class="card-body pd-sm-30 mg-b-25">
@@ -172,7 +171,7 @@
                                         for (int j = 0; j < optionsRow.size(); j++) {
                                             // @ToDo ّبرای گزینه های پیش فرض باید امکان راحتی در قسمت تعریف بگذاریم که تیک خور باشد
                                             String checked = "";
-                                            if (defaultVal.startsWith(questionsRow.get(i).get(FormQuestions._id) + "%23A%23") || defaultVal.matches(".*%23A%23" + questionsRow.get(i).get(FormQuestions._id) + "%23A%23.*")) {
+                                            if (defaultVal.startsWith(questionsRow.get(i).get(FormQuestions._id) + ",") || defaultVal.matches(".*," + questionsRow.get(i).get(FormQuestions._id) + ",.*")) {
                                                 checked = " checked='checked'";
                                             } else {
                                                 checked = "";
@@ -223,23 +222,30 @@
                                     </div>
                                     <%
                                         }
-
                                     } else if (questionType.equals("select_option")) {//اگر سلکت آپشن بود برای گزینه های هر سوال
                                         List<Map<String, Object>> optionsRow = jjDatabaseWeb.separateRow(db.Select(FormQuestionOptions.tableName, FormQuestionOptions._question_id + "=" + questionsRow.get(i).get(FormQuestions._id)));
+                                        String defaultVal = questionsRow.get(i).get(FormQuestions._defaultValue).toString();//مقدار پیش فرض                                        
                                     %>
-                                    <input  type="hidden"
-                                            id="q<%= questionsRow.get(i).get(FormQuestions._id).toString()%>" 
-                                            name="q<%= questionsRow.get(i).get(FormQuestions._id).toString()%>" 
-                                            value="<%= questionsRow.get(i).get(FormQuestions._defaultValue)%>"
-                                            <%= questionsRow.get(i).get(FormQuestions._isRequierd).toString().equals("1") ? "required" : ""%>
-                                            >                                    
                                     <div class="col-lg-12">
-                                        <select class="form-control" <%= questionsRow.get(i).get(FormQuestions._isRequierd).toString().equals("1") ? "required" : ""%> >
+                                        <select class="form-control" 
+                                                id="q<%= questionsRow.get(i).get(FormQuestions._id).toString()%>" 
+                                            name="q<%= questionsRow.get(i).get(FormQuestions._id).toString()%>" 
+                                                <%= questionsRow.get(i).get(FormQuestions._isRequierd).toString().equals("1") ? "required" : ""%> >
                                             <%
                                                 for (int j = 0; j < optionsRow.size(); j++) {
+                                                    String optionsValue = optionsRow.get(j).get(FormQuestionOptions._id).toString();
+                                                    String selected = "";
+                                                    if (defaultVal.equals(optionsValue)) {// در رادوی ها آی دی یکی از آپشن ها میتواند در مقدار ذخیره شده باشد
+                                                        System.out.println("-------<<<<<" + j);
+                                                        selected = " selected='selected' ";
+                                                    } else {
+                                                        System.out.println("------->>>>>" + j);
+                                                        selected = "";
+                                                    }
                                             %>
                                             <option
-                                                value="<%= optionsRow.get(j).get(FormQuestionOptions._id)%>"                                                
+                                                value="<%= optionsRow.get(j).get(FormQuestionOptions._id)%>" 
+                                                <%= selected%>
                                                 >
                                                 <%= optionsRow.get(j).get(FormQuestionOptions._lable)%>
                                             </option>
@@ -297,9 +303,9 @@
                         String userRoles[] = jjTools.getSeassionUserRole(request).split("%23A%23");
                         if (userRoles.length > 1) {// اگر بیشتر از یک نقش داشت سلکت اپشن نقش هایش را نشانش می دهیم  که هر کدام را خواست انتخاب کند
 %>
-                    <div class="col-lg-3">
+                    <div class="col-lg-12">
                         <select id="formAnswers_userRole" name="formAnswers_userRole" class="form-control" style="width: 100%">
-                            <%= Role.getUeserRolesSelectOption(jjTools.getSeassionUserId(request), db)%>
+                            <%= Role.getUeserRolesSelectOption(request, response, db, true) %>
                         </select>
                     </div>
                     <%
@@ -443,7 +449,7 @@
                                         var checked = $(this).parent().parent().parent().find("input:checkbox:checked");
                                         var newVal = "";
                                         for (var i = 0; i < checked.length; i++) {
-                                            newVal += $(checked[i]).val() + "#A#";
+                                            newVal += $(checked[i]).val() + ",";
                                         }
                                         $(this).parent().parent().parent().find("input:hidden").val(newVal);
                                     });
@@ -454,6 +460,5 @@
                                 <%=jjfileUplaodScripts %>
         </script>
         <%= formRow.get(0).get(Forms._javaScript)%>
-
     </body>
 </html>

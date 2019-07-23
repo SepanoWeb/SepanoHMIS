@@ -20,10 +20,7 @@ var hmisDocumentary = {
                     hmisDocumentary.m_show_tbl();
 
                 });
-
-                new jj('#sendFiles').jjAjaxFileUploadTitleUploadFiles('#attachFileDocumentary', '#documentary_attachFileDocumentary', 'documentary_titleFile', '#documentary_attachFileTitle');
-                 $(".summernote").summernote();
-
+                new jj('#sendFiles').jjAjaxFileUploadByTitleAndMultiFile('#attachFileDocumentary', 'documentary_attachFileDocumentary', 'documentary_titleFile', "#documentary_divUpload");
             });
         }
     },
@@ -58,14 +55,12 @@ var hmisDocumentary = {
     m_show_formCopy: function () {
         $('#swDocumentaryTbl').hide();
         $('#swDocumentaryForm').show();
-
-
         hmisDocumentary.tabSizeForm();
     },
     m_clean: function () {
-
         new jj("#swDocumentaryForm").jjFormClean();
         $("#inputAfterSelectGauge").html('');
+        $("#documentary_divUpload").html('');
     },
     m_show_tbl: function () {
         $('#swDocumentaryTbl').show();
@@ -77,24 +72,46 @@ var hmisDocumentary = {
         hmisDocumentary.tabSizeTbl();
 
     },
-    m_insert: function () {
-        var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".insert";
-        param += "&" + new jj("#swDocumentaryForm").jjSerial();
+    m_edit: function (id) {
+        var documentary_attachFileDocumentary = $("#swDocumentaryForm .documentary_attachFileDocumentary");
+        var temp = ""
+        for (var i = 0; i < documentary_attachFileDocumentary.length; i++) {
+            temp += $(documentary_attachFileDocumentary[i]).val() + ",";
+        }
 
-        new jj(param).jjAjax2(false);
-        hmisDocumentary.m_show_tbl();
-        hmisDocumentary.m_clean();
-    },
-    m_edit: function () {
         var param = "";
         param += "do=" + hmisDocumentary.tableName + ".edit";
+        param += "&documentary_attachFileDocumentary=" + temp;
         param += "&" + new jj("#swDocumentaryForm").jjSerial();
         new jj(param).jjAjax2(false);
         hmisDocumentary.m_show_tbl();
         hmisDocumentary.m_clean();
         $(".inputSelectorDiv").html('');
-      
+
+    },
+    m_editAndFinalize: function () {
+        var noFileWarningMassage = "";// پیام هشدار برای اینکه اگر فایل بارگذاری نکرده بود مطلع بشود
+        if($("#swDocumentaryForm .documentary_attachFileDocumentary").length==0){
+            noFileWarningMassage ="شما برای این سنجه فایلی بارگذاری نکرده اید" + " <br/>";
+        }
+        new jj(noFileWarningMassage+"آیا از تایید نهایی این رکورد اطمینان دارید؟").jjModal_Yes_No("ثبت نهایی",'hmisDocumentary.m_editAndFinalizeAfterQuestion();');
+    },
+    m_editAndFinalizeAfterQuestion: function () {
+        var documentary_attachFileDocumentary = $("#swDocumentaryForm .documentary_attachFileDocumentary");
+        var temp = ""
+        for (var i = 0; i < documentary_attachFileDocumentary.length; i++) {
+            temp += $(documentary_attachFileDocumentary[i]).val() + ",";
+        }
+        var param = "";
+        param += "do=" + hmisDocumentary.tableName + ".edit";
+        param += "&documentary_attachFileDocumentary=" + temp;
+        param += "&documentary_status=بارگذاری شده";// برای تغییر وصعیت و بعد از ویرایش انجام می شود
+        param += "&" + new jj("#swDocumentaryForm").jjSerial();
+        new jj(param).jjAjax2(false);
+        hmisDocumentary.m_show_tbl();
+        hmisDocumentary.m_clean();
+        $(".inputSelectorDiv").html('');
+
     },
     m_delete: function (id) {
         new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo('hmisDocumentary.m_delete_after_question(' + id + ');\n', true, "");
@@ -107,17 +124,11 @@ var hmisDocumentary = {
         hmisDocumentary.m_show_tbl();
         hmisDocumentary.m_clean();
     },
-    m_remove: function (idUpload, id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف", "hmisDocumentary.removeFile(" + idUpload + "," + id + ");");
-    },
-    removeFile: function (idUpload, id) {
-
+    undo: function (id) {
         var param = "";
-        param += "do=" + hmisDocumentary.tableName + ".removeFile";
-        param += "&upload_id=" + idUpload;
-        param += "&documentary_id=" + id;
-        new jj(param).jjAjax2(false);
-        hmisDocumentary.m_show_tbl();
+        param += "do=" + hmisDocumentary.tableName + ".undo";
+        param += "&" + hmisDocumentary.f_id + "=" + (id == null ? "" : id);
+        new jj(param).jjAjax2(false);       
         hmisDocumentary.m_clean();
     },
     m_select: function (id) {

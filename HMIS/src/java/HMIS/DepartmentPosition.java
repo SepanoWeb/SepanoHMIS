@@ -8,32 +8,9 @@
 package HMIS;
 
 import cms.access.Access_User;
-import static cms.access.Access_User.rul_ins;
 import cms.tools.Js;
 import cms.tools.Server;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.table.DefaultTableModel;
-import jj.jjDatabase;
-import jj.jjDatabaseWeb;
-import jj.jjNumber;
-
-
-//import static HMIS.Location._haspitalname;
-//import static HMIS.Location._id;
-//import static HMIS.Location._level;
-//import static HMIS.Location._parent;
-//import static HMIS.Location.tableName;
-import cms.access.Access_User;
-import cms.cms.Content;
-import static cms.cms.Product.rul_ins;
-import cms.tools.Js;
-import cms.tools.Server;
-import cms.tools.email;
 import cms.tools.jjTools;
-import cms.tools.jjValidation;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,8 +20,6 @@ import javax.swing.table.DefaultTableModel;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 /**
  *
  * @author PadidarNB

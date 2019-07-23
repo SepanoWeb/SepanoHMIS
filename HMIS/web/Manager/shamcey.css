@@ -11459,6 +11459,7 @@ body {
 }
 
 .sh-sideleft-menu {
+    direction:ltr;
     overflow-y: scroll !important;
     position: fixed;
     top: 100px;
@@ -11475,9 +11476,9 @@ body {
     }
 }
 .sh-sideleft-menu .nav {
+    direction: rtl;
     display: block;
     padding: 0;
-    display: block;
 }
 .sh-sideleft-menu .nav > .nav-item {
     display: block;
