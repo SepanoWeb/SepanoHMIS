@@ -6,6 +6,11 @@
 
 <!--<div class="sh-pagebody">-->
 <!--////////////////////////////////////////////////////////////////-->
+<style>
+            .required{
+                border:1px solid red!important;
+            }
+        </style>
 <div class="col-lg-12 card card-body bd-primary">
     <div class="sh-breadcrumb">
         <nav class="breadcrumb">
@@ -80,44 +85,90 @@
 
         <div class="row col-lg">
 
-        <div class="col-lg-9">
-            :توضیحات مسئول اجرا
-            <div class="form-group has-success mg-b-0">
-                <input id="approvedPrevious_descriptionExecutor"  disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
-            </div><!-- form-group -->
-        </div><!-- col -->   
-        <div class="col-lg-9">
-            :توضیحات مسئول پیگیری 
-            <div class="form-group has-success mg-b-0">
-                <input id="approvedPrevious_descriptionTracker" disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
-            </div><!-- form-group -->
-        </div><!-- col -->   
+            <div class="col-lg-9">
+                :توضیحات مسئول اجرا
+                <div class="form-group has-success mg-b-0">
+                    <input id="approvedPrevious_descriptionExecutor"  disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
+                </div><!-- form-group -->
+            </div><!-- col -->   
+            <div class="col-lg-9">
+                :توضیحات مسئول پیگیری 
+                <div class="form-group has-success mg-b-0">
+                    <input id="approvedPrevious_descriptionTracker" disabled="disabled" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا وارد می کند" type="text" >
+                </div><!-- form-group -->
+            </div><!-- col -->   
 
-        <div class="col-lg-9">
-            روند وضعیت  مصوبه:
-            <div class="form-group has-success mg-b-0">
-                <textarea id="approvedPrevious_statusLog"  class="form-control is-valid"></textarea>
-            </div><!-- form-group -->
-        </div><!-- col -->   
+            <div class="col-lg-9">
+                روند وضعیت  مصوبه:
+                <div class="form-group has-success mg-b-0">
+                    <textarea id="approvedPrevious_statusLog"  class="form-control is-valid"></textarea>
+                </div><!-- form-group -->
+            </div><!-- col -->   
         </div><!-- col -->  
-        <div class="row col-lg-12">
+<!--        <div class="row col-lg-12">
             <div class="col-lg-3">
                 بارگذاری مستندات:<br/>
                 <input id="approved_fileCheckOut" name="approved_file" type="hidden" />
-                <!--<img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>-->
+                <img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>
                 <div class="row">
                     <input class="btn btn-primary" id="sendFilesApprovedPrevious" type="submit" value="ارسال">
                     <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
                     <input id="attachFileApprovedPrevious" name="attachFileApprovedPrevious" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                     <span class="form-control col-lg"></span>
                 </div>
-            </div><!-- col -->
-            <!--<span>فایل های دبیر کمیته</span>-->
-            <div class="col-lg-3" id="inputFileApprovedPreviousDiv"></div><!-- فایل های دبیر کمیته جدید -->
-            <!--<span>فایل های مسئولین </span>-->
+            </div> col 
+            <span>فایل های دبیر کمیته</span>
+            <div class="col-lg-3" id="inputFileApprovedPreviousDiv"></div> فایل های دبیر کمیته جدید 
+            <span>فایل های مسئولین </span>
+
+        </div>-->
+
+
+
+        <div class="row col-lg-12" >
+            بارگذاری مستندات:
+            <input id="approved_fileCheckOut" name="approved_file" type="hidden">
+            <input id="approvedPrevious_filesTitle" name="approvedPrevious_filesTitle" type="hidden">
+                    <div class="col-lg-12"  id="inputTextSelectorDiv1" ></div>
+            <div  id="inputTitleSelectorDiv2" ></div>
+            <div  id="inputFileApprovedPreviousDiv" class='col-lg-12'></div>
+
+
+            عنوان فایل
+            <input id="approvedPrevious_titleFile1" name="approvedPrevious_titleFile1"  style="display: block;
+                   width: 100%;
+                   padding: 0.65rem 0.75rem;
+                   font-size: 1.3rem;
+                   line-height: 1.25;
+                   color: #495057;
+                   background-color: #fff;
+                   background-image: none;
+                   background-clip: padding-box;
+                   border: 1px solid rgba(0, 0, 0, 0.15);
+                   border-radius: 3px;
+                   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+            <span id="user_pic" class="form-control"></span>
+            <div class="input-group">
+
+                <input class="btn btn-primary" id="sendFilesApprovedPrevious" type="submit" value="ارسال">
+                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                <input id="attachFileApprovedPrevious" name="attachFileApprovedPrevious" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+            </div>
             <div class="col-lg-12 row" id="ApprovedPrevious_FileInsessions"></div><!-- فایل مسئولین -->
             <div class="col-lg-12 row" id="ApprovedPrevious_FileApprovedInsessions"></div><!-- فایل دبیر کیته -->
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="row col-lg-12">
             <div class="col-lg-6" id="ApprovedPrevious_button"></div><!-- دکمه ویرایش از جاوا -->
             <div class="col-lg-3">
@@ -168,7 +219,7 @@
                 <div class="col-lg-3">
                     مسئول ابلاغ
                     <div class="form-group has-success mg-b-0">
-                        <select id="sessions_communicatorId" name="sessions_communicatorId" class="form-control"></select>
+                        <select id="sessions_communicatorRoleId" name="sessions_communicatorRoleId" class="form-control"></select>
                         <!--<input id="sessions_communicator" name="sessions_communicator" class="form-control is-valid" placeholder="مسئله یا مشکل را وارد کنید" type="text">-->
                     </div><!-- form-group -->
                 </div><!-- col -->   
@@ -196,29 +247,40 @@
                         <input id="sessions_weakPoint" name="sessions_weakPoint" class="form-control is-valid" placeholder="نقاط ضعف را وارد کنید" type="text">
                     </div><!-- form-group -->
                 </div><!-- col -->
-                <div class="col-lg-3">
-                    عنوان مستند:
-                    <div class="form-group has-success mg-b-0">
-                        <input id="sessions_titleFile" name="sessions_titleFile" class="form-control is-valid" placeholder="عنوان فایل را انتخاب کنید" type="text">
-                    </div><!-- form-group -->
-                </div><!-- col -->   
+                <div class="row col-lg-12" >
+                    بارگذاری مستندات:
+                    <input id="sessions_file" name="sessions_file" type="hidden">
+                    <input id="sessions_filesTitle" name="sessions_filesTitle" type="hidden">
+                    <div class="col-lg-12"  id="inputTextSelectorSessionsDiv" ></div>
+                    <!--<div  id="inputTitleSelectorSessionsDiv" ></div>-->
+                    <!--<div  id="inputTextSelectorSessionsDiv" class='col-lg-12'></div>-->
 
 
-                <div class="col-lg-12">
-                    بارگذاری مستندات:<br/>
-                    <input id="sessions_file" name="sessions_file" type="hidden" />
-                    <div class="row">
+                    عنوان فایل
+                    <input id="sessions_titleFile1" name="sessions_titleFile1"  style="display: block;
+                           width: 100%;
+                           padding: 0.65rem 0.75rem;
+                           font-size: 1.3rem;
+                           line-height: 1.25;
+                           color: #495057;
+                           background-color: #fff;
+                           background-image: none;
+                           background-clip: padding-box;
+                           border: 1px solid rgba(0, 0, 0, 0.15);
+                           border-radius: 3px;
+                           transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                    <span id="user_pic" class="form-control"></span>
+                    <div class="input-group">
+
                         <input class="btn btn-primary" id="sendFilesSessions" type="submit" value="ارسال">
                         <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                        <input id="attachFileSessions" name="attachFileSessions" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                        <span class="form-control col-lg"></span>
+                        <input id="attachFileSessions" name="attachFileSessions" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                     </div>
-                    <!--                                    <a onclick="hmisDepartment.downloadIcon();"></a>-->
-                    <!--</label>-->
-                    <div id="inputTextSelectorSessionsDiv"></div>
-                    <div id="filesDownloadDiv"></div>
+                    <div id="filesDownloadDiv" class="col-lg-12"></div>
 
                 </div>
+
+              
             </div>
         </div><!-- card-body -->
         <div class="card-header btn-teal tx-white">
@@ -280,32 +342,78 @@
                             </div><!-- form-group -->
                         </div><!-- col -->   
                         <br/>
-                        <div class="col-lg-3">
-                            بارگذاری مستندات:<br/>
-                            <input id="approved_file" name="approved_file" type="hidden" />
-                            <div class="row col-lg-12 mg-b-10">
+                        <!--                        <div class="col-lg-3">
+                                                    بارگذاری مستندات:<br/>
+                                                    <input id="approved_file" name="approved_file" type="hidden" />
+                                                    <div class="row col-lg-12 mg-b-10">
+                                                        <input class="btn btn-primary" id="sendFilesApproved" type="submit" value="ارسال">
+                                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                                        <input id="attachFileApproved" name="attachFileApproved" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                                        <span class="form-control col-lg"></span>
+                                                    </div>
+                                                                                        <a onclick="hmisDepartment.downloadIcon();"></a>
+                                                    </label>
+                                                    <div id="inputApprovedFileDiv"></div>
+                                                    <div id="inputDownloadDiv"></div>
+                        
+                                                </div> col  
+                        -->
+
+                        <div class="row col-lg-12" >
+                            بارگذاری مستندات:
+                            <input id="approved_file" name="approved_file" type="hidden">
+                            <input id="approved_filesTitle" name="approved_filesTitle" type="hidden">
+                            <div class="col-lg-12"  id="inputTextSelectorDiv2" ></div>
+                            <!--<div  id="inputTitleSelectorDiv2" ></div>-->
+                            <div  id="inputApprovedFileDiv" class='col-lg-12'></div>
+
+
+                            عنوان فایل
+                            <input id="approved_titleFile1" name="approved_titleFile1"  style="display: block;
+                                   width: 100%;
+                                   padding: 0.65rem 0.75rem;
+                                   font-size: 1.3rem;
+                                   line-height: 1.25;
+                                   color: #495057;
+                                   background-color: #fff;
+                                   background-image: none;
+                                   background-clip: padding-box;
+                                   border: 1px solid rgba(0, 0, 0, 0.15);
+                                   border-radius: 3px;
+                                   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                            <span id="user_pic" class="form-control"></span>
+                            <div class="input-group">
+
                                 <input class="btn btn-primary" id="sendFilesApproved" type="submit" value="ارسال">
                                 <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                                <input id="attachFileApproved" name="attachFileApproved" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                <span class="form-control col-lg"></span>
+                                <input id="attachFileApproved" name="attachFileApproved" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                             </div>
-                            <!--                                    <a onclick="hmisDepartment.downloadIcon();"></a>-->
-                            <!--</label>-->
-                            <div id="inputApprovedFileDiv"></div>
-                            <div id="inputDownloadDiv"></div>
+                            <div id="inputDownloadDiv" class="col-lg-12 mg-t-20"></div>
 
-                        </div><!-- col --> 
+                        </div>
                         <div class="col-lg-12">
                             توضیحات:
                             <div class="form-group has-success mg-b-0">
                                 <input id="approved_description" style="z-index: 0" name="approved_description" class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا واردمی کند" type="text" >
                             </div><!-- form-group -->
                         </div><!-- col -->   
+                        <div class="col-lg-12">
+                             توضیحات مسئول پیگیری:
+                            <div class="form-group has-success mg-b-0">
+                                <input id="approved_descriptionTracker" style="z-index: 0"  class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا واردمی کند" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->   
+                        <div class="col-lg-12">
+                             توضیحات مسئول اجرا
+                            <div class="form-group has-success mg-b-0">
+                                <input id="approved_descriptionExecutor" style="z-index: 0"  class="form-control is-valid" placeholder="دلایل عدم انجام یادرخواست فرصت اضافی را مسئول اجرا واردمی کند" type="text" >
+                            </div><!-- form-group -->
+                        </div><!-- col -->   
 
 
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-3 mg-t-20">
                             <div class="form-group has-success mg-b-0">
                                 <button class="btn btn-outline-secondary btn-block mg-b-10" onclick="$('#insertApproved2').slideUp();$('#approvedTbl').slideDown();">انصراف
                                 </button>
@@ -352,11 +460,11 @@
 
     <div class="col-lg-6" id="Sessions_button"  ></div>
     <div class="col-lg-3">
-<!--        <a href="feiz/login.html">
-            <a class="btn btn-outline-primary active btn-block mg-b-10"  href="Server?do=Sessions.downloadSessions&id=">
-                چاپ صورت جلسه
-            </a>   
-        </a>-->
+        <!--        <a href="feiz/login.html">
+                    <a class="btn btn-outline-primary active btn-block mg-b-10"  href="Server?do=Sessions.downloadSessions&id=">
+                        چاپ صورت جلسه
+                    </a>   
+                </a>-->
     </div><!-- col --> 
 
     <div class="col-lg-3">
@@ -382,6 +490,6 @@
 <script>
     $('#approved_executorRoleId').select2({minimumResultsForSearch: '', width: '100%'});
     $('#approved_executorUserId').select2({minimumResultsForSearch: '', width: '100%'});
-    $('#sessions_communicatorId').select2({minimumResultsForSearch: '', width: '100%'});
+    $('#sessions_communicatorRoleId').select2({minimumResultsForSearch: '', width: '100%'});
 
 </script>

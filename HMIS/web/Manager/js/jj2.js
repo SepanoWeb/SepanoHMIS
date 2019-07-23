@@ -374,39 +374,39 @@ var jj = function (selector) {
         var com_textarea = $(this.selector + " textarea");
         for (var i = 0; i < com_hidden.length; i++) {
             if (com_hidden[i].name != "") {
-                param += (param == "" ? "" : "&") + com_hidden[i].name + "=" + new jj("#" + com_hidden[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_hidden[i].name + "=" + new jj(this.selector + " #" + com_hidden[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_text.length; i++) {
             if (com_text[i].name != "") {
-                param += (param == "" ? "" : "&") + com_text[i].name + "=" + new jj("#" + com_text[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_text[i].name + "=" + new jj(this.selector + " #" + com_text[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_checkbox.length; i++) {
             if (com_checkbox[i].name != "") {
-                param += (param == "" ? "" : "&") + com_checkbox[i].name + "=" + new jj("#" + com_checkbox[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_checkbox[i].name + "=" + new jj(this.selector + " #" + com_checkbox[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_number.length; i++) {
             if (com_number[i].name != "") {
-                param += (param == "" ? "" : "&") + com_number[i].name + "=" + new jj("#" + com_number[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_number[i].name + "=" + new jj(this.selector + " #" + com_number[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_radio.length; i++) {
             if (com_radio[i].name != "") {
                 if (new jj("#" + com_radio[i].id).jjVal() == 1) {
-                    param += (param == "" ? "" : "&") + com_radio[i].name + "=" + $("#" + com_radio[i].id).attr("value");
+                    param += (param == "" ? "" : "&") + com_radio[i].name + "=" + $(this.selector + " #" + com_radio[i].id).attr("value");
                 }
             }
         }
         for (var i = 0; i < com_select.length; i++) {
-            if (com_select[i].name != "") {
-                param += (param == "" ? "" : "&") + com_select[i].name + "=" + new jj("#" + com_select[i].id).jjVal();
+            if (com_select[i].name != "" && com_select[i].id != "") {
+                param += (param == "" ? "" : "&") + com_select[i].name + "=" + new jj(this.selector + " #" + com_select[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_password.length; i++) {
             if (com_password[i].name != "") {
-                param += (param == "" ? "" : "&") + com_password[i].name + "=" + new jj("#" + com_password[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_password[i].name + "=" + new jj(this.selector + " #" + com_password[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_textarea.length; i++) {
@@ -417,7 +417,7 @@ var jj = function (selector) {
                     val = (new jj(new jj(val).jjTrim()).jjGetUtf8());
                     param += (param == "" ? "" : "&") + com_textarea[i].name + "=" + val;
                 } else {// اگر تکست اریا معمولی باشد
-                    param += (param == "" ? "" : "&") + com_textarea[i].name + "=" + new jj("#" + com_textarea[i].id).jjVal();
+                    param += (param == "" ? "" : "&") + com_textarea[i].name + "=" + new jj(this.selector + " #" + com_textarea[i].id).jjVal();
                 }
             }
         }
@@ -426,6 +426,7 @@ var jj = function (selector) {
     this.jjFormClean = function () {
         var com_checkbox = $(this.selector + " input:checkbox");
         var com_text = $(this.selector + " input:text");
+        var com_text = $(this.selector + " input:hidden");
         var com_radio = $(this.selector + " input:radio");
         var com_password = $(this.selector + " input:password");
         var com_file = $(this.selector + " input:file");
@@ -1932,6 +1933,7 @@ var jj = function (selector) {
                 dataType: 'JSON',
                 cache: false,
                 success: function (data) {
+                    new jj(data).jjModal("نام فایل ");
                     var param = "";
                     param += "&title=" + $("#" + inputFiletitle.replace("#", "")).val();
                     param += "&filename=" + data;
@@ -1942,7 +1944,7 @@ var jj = function (selector) {
                     if (data != null) {
                         data = data.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', '');
                         data = data.replace('<PRE style="word-wrap: break-word; white-space: pre-wrap;">', '');
-                        data = data.replace("<PRE>", '').replace("</PRE>",'').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
+                        data = data.replace("<PRE>", '').replace("</PRE>", '').replace("<pre>", '').replace("</pre>", '').replace("upload/", '').replace("Upload/", '');
                         data = data.replace("/", '').replace("/", '').replace("\\", '');
                     } else {
                         new jj('فایل به درستی ارسال نشد.').jjModal();
@@ -2202,7 +2204,7 @@ var jj = function (selector) {
                     dataType: 'JSON',
                     cache: false,
                     success: function (data) {
-                        alert(data);
+                        new jj(data).jjModal('فایل بدرسیت بارگذاری شد');
 
                         data = data == null ? "" : data;
 
@@ -2227,17 +2229,16 @@ var jj = function (selector) {
                                 $(btn).show();
                                 $("#" + inputFileId.replace("#", "")).show();
 
-                                alert('.حجم فایل شما بیش اندازه بزرگ می باشد');
+                                new jj('حجم فایل شما بیش اندازه بزرگ می باشد').jjModal('خطا');
                             }
                         } else {
-                            alert('.فایل به درستی ارسال نشد');
+                            new jj('فایل به درستی ارسال نشد').jjModal('خطا');
                             $(inputTextSelector).val('');
                             $(inputTextSelector).hide();
 
                             $(btn).show();
                             $("#" + inputFileId.replace("#", "")).show();
-
-                            alert('.حجم فایل شما بیش اندازه بزرگ می باشد');
+                            new jj('حجم فایل شما بیش اندازه بزرگ می باشد').jjModal('خطا');
                         }
                     }
 

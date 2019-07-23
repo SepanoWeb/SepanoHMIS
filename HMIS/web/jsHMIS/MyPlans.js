@@ -23,6 +23,22 @@ var hmisMyPlans = {
 
             });
         }
+        hmisRole.getSelectOption("#swMyPlansForm #myPlans_supervisorRolId");
+        hmisRole.getSelectOption("#swMyPlansForm #plans_improveQualityId");
+        hmisDepartment.selectOptionDepartment("myPlans_department");
+        hmisDepartment.selectOptionDepartment("myPlans_domain");
+        $("#myPlans_supervisorRolId").select2({
+            width: '100%'
+        });
+        $("#plans_improveQualityId").select2({
+            width: '100%'
+        });
+        $("#myPlans_department").select2({
+            width: '100%'
+        });
+        $("#myPlans_domain").select2({
+            width: '100%'
+        });
     },
     m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
@@ -109,7 +125,7 @@ var hmisMyPlans = {
      * @param {type} id
      * @returns {undefined}
      */
-     communicatedByImproveQuality_after_question: function (id) {
+    communicatedByImproveQuality_after_question: function (id) {
         var param = "";
         param += "&id=" + id;
         param += "&plans_commettesId=" + new jj("#plans_commettesId").jjVal();//ای دی دبیر کمیته
@@ -182,7 +198,7 @@ var hmisMyPlans = {
         new jj(param).jjAjax2(false);
         hmisMyPlans.m_clean();
     },
-     executorActionMyPlans: function (value) {
+    executorActionMyPlans: function (value) {
         if (value == "سمت") {
             $("#MyPlansSteps_executorUserId").attr("disabled", "disabled");
             $("#MyPlansSteps_executorRoleId").removeAttr("disabled");

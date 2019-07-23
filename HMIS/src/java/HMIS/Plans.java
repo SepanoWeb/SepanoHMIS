@@ -21,7 +21,6 @@ import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
 
-
 /**
  *
  * @author shohreh.shiran Date 1397.10.25
@@ -59,10 +58,8 @@ public class Plans {
     public static int rul_rfsAll = 0;
     public static int rul_confirmBySupervisor = 0;//مافوق
     public static int rul_communicatingToSupervisor = 0;
-    public static int rul_correctionPlans = 0;//اصلاحیه
-//    public static int rul_FinalApproval = 0;
-//    public static int rul_RejectThePlans = 0;
-//    public static int rul_sendPlansToDepartement = 0;
+//    public static int rul_correctionPlans = 0;//اصلاحیه
+
     public static int rul_ins = 0;
     public static int rul_edt = 0;
     public static int rul_dlt = 0;
@@ -75,7 +72,6 @@ public class Plans {
     public static String lbl_edit = "ویرایش";
     public static String lbl_repair = "اصلاح";
     public static String lbl_communicatingToSupervisor = "ابلاغ به مافوق";
-//    public static String status_confirmSupervisor = "تایید مافوق";
     public static String status_initialRegistration = "ثبت اولیه";
     public static String status_correctionPlans = "اصلاحیه";
     public static String status_confirmationFinal = "تایید نهایی";
@@ -85,8 +81,6 @@ public class Plans {
     public static String status_confirmByImproveQuality = "تایید مسئول بهبود کیفیت";
     public static String status_confirmByManager = "تایید مدیر";
     public static String status_ignorByManager = "رد برنامه توسط مدیر";
-//    public static String lbl_FinalApproval = "تایید نهایی وارسال به کمیته مدیریت اجرایی";
-//    public static String lbl_RejectThePlans = "رد برنامه";
     public static String vaziat = "";
 
     public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
@@ -103,7 +97,6 @@ public class Plans {
             StringBuilder html3 = new StringBuilder();
             DefaultTableModel dtm = db.Select(tableName);
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
-
             html.append("<div class=\"card-header bg-primary tx-white\">برنامه های عملیاتی/بهبود کیفیت تعریف شده</div>\n");
             html.append(" <div class=\"card-body pd-sm-30\">\n"
                     + " <p class=\"mg-b-20 mg-sm-b-30\">\n"
@@ -122,41 +115,46 @@ public class Plans {
             html.append("<th width='5%'>عملیات</th>");
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
-            float percent = 0;
+                float percent = 0;
                 List<Map<String, Object>> StepsRow = jjDatabaseWeb.separateRow(db.Select(Steps.tableName, Steps._plansId + "=" + row.get(i).get(_id) + " AND steps_status!='" + Steps.status_initialRegistration + "'"));
                 if (StepsRow.size() > 0) {
 
                     for (int j = 0; j < StepsRow.size(); j++) {//جمع درصد تکمیل گام
-//                        if (!StepsRow.get(i).get(Steps._percent).equals("0") && !StepsRow.get(i).get(Steps._progressPercent).equals("0")) {
-                            percent += Float.parseFloat(StepsRow.get(j).get(Steps._percent).toString()) * (Float.parseFloat(StepsRow.get(j).get(Steps._progressPercent).toString()) / 100);
-//                        }
+                        percent += Float.parseFloat(StepsRow.get(j).get(Steps._percent).toString()) * (Float.parseFloat(StepsRow.get(j).get(Steps._progressPercent).toString()) / 100);
                     }
                 }
-                System.out.println("percent"+percent);
-                html.append("<tr onclick=hmisPlans.m_select(" + row.get(i).get(_id) + ") class='mousePointer'>");
+                System.out.println("percent" + percent);
+                html.append("<tr  onclick=hmisPlans.m_select(" + row.get(i).get(_id) + ") class='mousePointer'>");
                 html.append("<td class='c'>" + row.get(i).get(_id) + "</td>");
                 html.append("<td class='r'>" + (row.get(i).get(_title).toString()) + "</td>");
                 html.append("<td class='r'>" + (row.get(i).get(_typeOfProgram).toString()) + "</td>");
                 html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_date)) + "</td>");
                 html.append("<td class='r'>" + (row.get(i).get(_status).toString()) + "</td>");
-                html.append("<td class='r'>" + percent + "%</td>");
+                html.append("<td >"
+                        + "<div class=\"progress\">\n"
+                        + "<div class=\"progress-bar\" role=\"progressbar\" aria-valuenow="+percent+" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: "+percent+"%;\">\n"
+                        + ""+percent+"%\n"
+                        + "</div>\n"
+                        + "</div>"
+                        + "</td>");
                 html.append("<td class='c'><i class='icon ion-ios-gear-outline'></i></td>");
                 html.append("</tr>");
             }
+            
             html.append("</tbody></table>");
             html.append("</div>");
             html.append("</div>");
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            html1.append("<option value=''>انتخاب کنید</option>");
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
+//            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
+//            html1.append("<option value=''>انتخاب کنید</option>");
+//            for (int i = 0; i < RolesRow.size(); i++) {
+//                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
+//            }
 
-            List<Map<String, Object>> departementRow = jjDatabase.separateRow(db.Select(Department.tableName));
-            html3.append("<option value=''>انتخاب کنید</option>");
-            for (int i = 0; i < departementRow.size(); i++) {
-                html3.append("<option id='" + departementRow.get(i).get(Department._id) + "' value='" + departementRow.get(i).get(Department._id) + "'>" + departementRow.get(i).get(Department._title) + "</option>");
-            }
+//            List<Map<String, Object>> departementRow = jjDatabase.separateRow(db.Select(Department.tableName));
+//            html3.append("<option value=''>انتخاب کنید</option>");
+//            for (int i = 0; i < departementRow.size(); i++) {
+//                html3.append("<option id='" + departementRow.get(i).get(Department._id) + "' value='" + departementRow.get(i).get(Department._id) + "'>" + departementRow.get(i).get(Department._title) + "</option>");
+//            }
 
             String height = jjTools.getParameter(request, "height");
             String panel = jjTools.getParameter(request, "panel");
@@ -168,9 +166,9 @@ public class Plans {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshPlans", "300", 0, "", "برنامه های عملیاتی");
-            html2 += Js.setHtml("#plans_supervisorRolId", html1);
-            html2 += Js.setHtml("#plans_department", html3);
-            html2 += Js.setHtml("#plans_domain", html3);
+//            html2 += Js.setHtml("#plans_supervisorRolId", html1);
+//            html2 += Js.setHtml("#plans_department", html3);
+//            html2 += Js.setHtml("#plans_domain", html3);
 
             Server.outPrinter(request, response, html2);
             return "";
@@ -365,7 +363,6 @@ public class Plans {
                 }
             }
 
-            
             script += "$('#recordPlans').slideUp();";//ثیت برنامه عملیاتی
             ////////////////////////////نمایش جدول گامها//////////////////
             List<Map<String, Object>> StepsRow = jjDatabase.separateRow(db.Select(Steps.tableName, Steps._plansId + "=" + id));
@@ -396,7 +393,7 @@ public class Plans {
             for (int i = 0; i < StepsRow.size(); i++) {
                 float percent = 0;
 //                if (!StepsRow.get(i).get(Steps._status).equals(Steps.status_initialRegistration) && !StepsRow.get(i).get(Steps._percent).toString().equals("0") && !StepsRow.get(i).get(Steps._progressPercent).toString().equals("0")) {//بدست آوردن پیشرفت گام نسبت به درصد گام
-                    percent = Float.parseFloat(StepsRow.get(i).get(Steps._percent).toString()) * (Float.parseFloat(StepsRow.get(i).get(Steps._progressPercent).toString()) / 100);
+                percent = Float.parseFloat(StepsRow.get(i).get(Steps._percent).toString()) * (Float.parseFloat(StepsRow.get(i).get(Steps._progressPercent).toString()) / 100);
 //                }
                 html2.append("<tr  onclick='hmisPlans.selectStepsInPlans(" + StepsRow.get(i).get(Steps._id) + ")' class='mousePointer " + Sessions.getClassCssForVaziat(StepsRow.get(i).get(Steps._status).toString()) + "'>");
                 html2.append("<td class='c'>" + StepsRow.get(i).get(Steps._id) + "</td>");
@@ -421,23 +418,23 @@ public class Plans {
             html2.append("</tbody></table>");
             html2.append("</div>");
             html2.append("</div>");
-            html5.append("<option>انتخاب کنید</option>");
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html5.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
-            html6.append("<option>انتخاب کنید</option>");
-            List<Map<String, Object>> UserRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
-            for (int i = 0; i < UserRow.size(); i++) {
-                html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
-            }
+//            html5.append("<option>انتخاب کنید</option>");
+//            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
+//            for (int i = 0; i < RolesRow.size(); i++) {
+//                html5.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
+//            }
+//            html6.append("<option>انتخاب کنید</option>");
+//            List<Map<String, Object>> UserRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
+//            for (int i = 0; i < UserRow.size(); i++) {
+//                html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
+//            }
             script += Js.setHtml("#tblSteps", html2.toString());
             script += Js.table("#refreshTblSteps", "300", 0, "", "گام های اجرایی");
             script += Js.setHtml("#editPlansDiv", html4.toString());
             script += Js.setHtml("#btns_plans", html3.toString());
-            script += Js.setHtml("#steps_executorRoleId", html5);
-            script += Js.setHtml("#steps_executorUserId", html6);
-            script += Js.setHtml("#steps_trackerId", html5);
+//            script += Js.setHtml("#steps_executorRoleId", html5);
+//            script += Js.setHtml("#steps_executorUserId", html6);
+//            script += Js.setHtml("#steps_trackerId", html5);
             script += html;
             Server.outPrinter(request, response, script);
             return "";
@@ -883,16 +880,16 @@ public class Plans {
                 html.append("</tr>");
 
             }
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            html1.append("<option value=''> انتخاب کنید</option>");
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
-            List<Map<String, Object>> departmentRow = jjDatabase.separateRow(db.Select(Department.tableName));
-            html3.append("<option value=''>انتخاب کنید</option>");
-            for (int i = 0; i < departmentRow.size(); i++) {
-                html3.append("<option id='" + departmentRow.get(i).get(Department._id) + "' value='" + departmentRow.get(i).get(Department._id) + "'>" + departmentRow.get(i).get(Department._title) + "</option>");
-            }
+//            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
+//            html1.append("<option value=''> انتخاب کنید</option>");
+//            for (int i = 0; i < RolesRow.size(); i++) {
+//                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
+//            }
+//            List<Map<String, Object>> departmentRow = jjDatabase.separateRow(db.Select(Department.tableName));
+//            html3.append("<option value=''>انتخاب کنید</option>");
+//            for (int i = 0; i < departmentRow.size(); i++) {
+//                html3.append("<option id='" + departmentRow.get(i).get(Department._id) + "' value='" + departmentRow.get(i).get(Department._id) + "'>" + departmentRow.get(i).get(Department._title) + "</option>");
+//            }
             List<Map<String, Object>> commettesRow = jjDatabase.separateRow(db.Select(Commettes.tableName));
             html4.append("<option value=''>انتخاب کنید</option>");
             for (int i = 0; i < commettesRow.size(); i++) {
@@ -918,10 +915,10 @@ public class Plans {
 //            html2 += Js.setHtml("#MyPlansSteps_executorRoleId", html1);
 //            html2 += Js.setHtml("#MyPlansSteps_executorUserId", html5);
             html2 += Js.table("#refreshMyPlans", "300", 0, "", "جلسات");
-            html2 += Js.setHtml("#myPlans_supervisorRolId", html1);//انتخاب مافوق
-            html2 += Js.setHtml("#myPlans_department", html3);//انتخاب بخش
-            html2 += Js.setHtml("#myPlans_domain", html3);//انتخاب دامنه
-            html2 += Js.setHtml("#plans_improveQualityId", html1);//انتخاب بهبود کیفیت
+//            html2 += Js.setHtml("#myPlans_supervisorRolId", html1);//انتخاب مافوق
+//            html2 += Js.setHtml("#myPlans_department", html3);//انتخاب بخش
+//            html2 += Js.setHtml("#myPlans_domain", html3);//انتخاب دامنه
+//            html2 += Js.setHtml("#plans_improveQualityId", html1);//انتخاب بهبود کیفیت
             html2 += Js.setHtml("#plans_commettesId", html4);//انتخاب  کمیته
             Server.outPrinter(request, response, html2);
 
@@ -1223,17 +1220,6 @@ public class Plans {
             }
             html.append("</tbody></table>");
             html.append("</div>");
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-
-            html1.append("<option value=''> انتخاب کنید</option>");
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
-            List<Map<String, Object>> departmentRow = jjDatabase.separateRow(db.Select(Department.tableName));
-            html3.append("<option value=''>انتخاب کنید</option>");
-            for (int i = 0; i < departmentRow.size(); i++) {
-                html3.append("<option id='" + departmentRow.get(i).get(Department._id) + "' value='" + departmentRow.get(i).get(Department._id) + "'>" + departmentRow.get(i).get(Department._title) + "</option>");
-            }
             List<Map<String, Object>> commettesRow = jjDatabase.separateRow(db.Select(Commettes.tableName));
             html4.append("<option value=''>انتخاب کنید</option>");
             for (int i = 0; i < commettesRow.size(); i++) {
@@ -1249,14 +1235,8 @@ public class Plans {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshManagerPlans", "300", 0, "", "جلسات");
-
-            html2 += Js.setHtml("#myPlans_supervisorRolId", html1);//انتخاب مافوق
-            html2 += Js.setHtml("#myPlans_department", html3);//انتخاب بخش
-            html2 += Js.setHtml("#myPlans_domain", html3);//انتخاب دامنه
-            html2 += Js.setHtml("#plans_improveQualityId", html1);//انتخاب بهبود کیفیت
             html2 += Js.setHtml("#plans_commettesId", html4);//انتخاب  کمیته
             Server.outPrinter(request, response, html2);
-
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));
@@ -1368,24 +1348,24 @@ public class Plans {
                 html3.append("</tr>");
             }
             html3.append("</tbody></table>");
-            html5.append("<option>انتخاب کنید</option>");
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html5.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
-            html6.append("<option>انتخاب کنید</option>");
-            List<Map<String, Object>> UserRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
-            for (int i = 0; i < UserRow.size(); i++) {
-                html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
-            }
+//            html5.append("<option>انتخاب کنید</option>");
+//            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
+//            for (int i = 0; i < RolesRow.size(); i++) {
+//                html5.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
+//            }
+//            html6.append("<option>انتخاب کنید</option>");
+//            List<Map<String, Object>> UserRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
+//            for (int i = 0; i < UserRow.size(); i++) {
+//                html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
+//            }
             //////////////////////////////////////////////////////////////
             script += Js.setHtml("#myPlans_button", html2);
             script += Js.table("#refreshStepsInManagerPlans", "300", 0, "", "جلسات");
             script += Js.setHtml("#tblStepsMyPlans", html3);
             script += html.toString();
-            script += Js.setHtml("#MyPlansSteps_executorUserId", html6);
-            script += Js.setHtml("#MyPlansSteps_executorRoleId", html5);
-            script += Js.setHtml("#MyPlansSteps_trackerId", html5);
+//            script += Js.setHtml("#MyPlansSteps_executorUserId", html6);
+//            script += Js.setHtml("#MyPlansSteps_executorRoleId", html5);
+//            script += Js.setHtml("#MyPlansSteps_trackerId", html5);
             script += Js.setHtml("#filesDownloadDiv", html8);
             Server.outPrinter(request, response, script);
             return "";
@@ -1457,16 +1437,18 @@ public class Plans {
             return "";
         }
     }
+
     /**
      * پایش برنامه ها
+     *
      * @param request
      * @param response
      * @param db
      * @param needString
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
- public static String refreshPlansForAssess(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+    public static String refreshPlansForAssess(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
@@ -1503,15 +1485,15 @@ public class Plans {
             html.append("<th width='5%'>عملیات</th>");
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
-            float percent = 0;
+                float percent = 0;
                 List<Map<String, Object>> StepsRow = jjDatabaseWeb.separateRow(db.Select(Steps.tableName, Steps._plansId + "=" + row.get(i).get(_id) + " AND steps_status!='" + Steps.status_initialRegistration + "'"));
                 if (StepsRow.size() > 0) {
 
                     for (int j = 0; j < StepsRow.size(); j++) {//جمع درصد تکمیل گام
-                            percent += Float.parseFloat(StepsRow.get(j).get(Steps._percent).toString()) * (Float.parseFloat(StepsRow.get(j).get(Steps._progressPercent).toString()) / 100);
+                        percent += Float.parseFloat(StepsRow.get(j).get(Steps._percent).toString()) * (Float.parseFloat(StepsRow.get(j).get(Steps._progressPercent).toString()) / 100);
                     }
                 }
-                System.out.println("percent"+percent);
+                System.out.println("percent" + percent);
                 html.append("<tr onclick=hmisPlans.m_select(" + row.get(i).get(_id) + ") class='mousePointer'>");
                 html.append("<td class='c'>" + row.get(i).get(_id) + "</td>");
                 html.append("<td class='r'>" + (row.get(i).get(_title).toString()) + "</td>");
@@ -1529,7 +1511,6 @@ public class Plans {
             html.append("</tbody></table>");
             html.append("</div>");
             html.append("</div>");
-           
 
             String height = jjTools.getParameter(request, "height");
             String panel = jjTools.getParameter(request, "panel");
@@ -1541,7 +1522,7 @@ public class Plans {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshPlansForAssess", "300", 0, "", "پایش برنامه های عملیاتی");
-    
+
             Server.outPrinter(request, response, html2);
             return "";
         } catch (Exception ex) {
