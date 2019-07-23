@@ -4,6 +4,9 @@
  */
 package jj;
 
+import jdk.nashorn.internal.runtime.regexp.JdkRegExp;
+import jdk.nashorn.internal.runtime.regexp.RegExp;
+
 /**
  *
  * @author Milad
@@ -62,20 +65,35 @@ public class jjNumber {
     }
 
     /**
-     *
+     *رشته های بصورت اعداد  صجیج را چک می کند
      * check and turn true if String is digit
      */
     public static boolean isDigit(String forCheck) {
-        if (forCheck.length() < 1) {
-            return false;
-        }
-        char c[] = forCheck.toCharArray();
-        for (int i = 0; i < c.length; i++) {
-            if (!Character.isDigit(c[i])) {
-                return false;
+        if (!forCheck.isEmpty()) {
+            if (forCheck.matches("^-?\\d+$")) {
+                return true;
             }
         }
-        return true;
+        return false;
+    }
+
+    /**
+     *
+     *رشته های بصورت اعداد دارای ممیز را چک می کند
+     * <br/>
+     * مثل
+     * <br/>
+     * 2.5,2.0,3,0.5 =>true
+     *
+     * @param forCheck رشته ای که میخواهیم چک کنیم
+     */
+    public static boolean isFloat(String forCheck) {
+        if (!forCheck.isEmpty()) {
+            if (forCheck.matches("^-?\\d+\\.?\\d*$")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static boolean isOdd(int forCheck) {
@@ -87,17 +105,10 @@ public class jjNumber {
      * check and turn true if String is digit
      */
     public static boolean isDigitDouble(String forCheck) {
-        if (forCheck.length() < 1) {
-            return false;
-        }
-        char c[] = forCheck.toCharArray();
-        for (int i = 0; i < c.length; i++) {
-            if ((!Character.isDigit(c[i])) && (c[i] != '.')) {
-                return false;
+        if (!forCheck.isEmpty()) {
+            if (forCheck.matches("^-?\\d+\\.?\\d*$")) {
+                return true;
             }
-        }
-        if (forCheck.equals(".")) {
-            return false;
         }
         return true;
     }
