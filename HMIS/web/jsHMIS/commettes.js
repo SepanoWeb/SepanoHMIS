@@ -323,7 +323,7 @@ var hmisCommettes = {
         for (var i = 1; i < InviteesOutSide.length; i++) {
             var InputInviteesOutSide = $("#InviteesDiv #invitedOutSide_" + [i] + " input");
         var name=$("#InviteesDiv #invitedOutSide_" + [i] + " .name").val();
-            if (hmisCommettes.validateName(name)&&name=="" && hmisCommettes.validatePhone($("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val()) &&$("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val()==""&& (hmisCommettes.validateEmail($("#InviteesDiv #invitedOutSide_" + [i] + " .email").val())&&$("#InviteesDiv #invitedOutSide_" + [i] + " .email").val()&&$("#InviteesDiv #invitedOutSide_" + [i] + " .email").val()!="") && hmisCommettes.validateName( ("#InviteesDiv #invitedOutSide_" + [i] + " .role").val())) {
+            if (hmisCommettes.validateName(name) && hmisCommettes.validatePhone($("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val()) && (hmisCommettes.validateEmail($("#InviteesDiv #invitedOutSide_" + [i] + " .email").val())&&$("#InviteesDiv #invitedOutSide_" + [i] + " .email").val()&&$("#InviteesDiv #invitedOutSide_" + [i] + " .email").val()!="") && hmisCommettes.validateName( ("#InviteesDiv #invitedOutSide_" + [i] + " .role").val())) {
                 temp4 += validateName(name) + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() + "%23A%23";
                 InviteesOutSideName = "#InviteesDiv #invitedOutSide_" + [i] + " input";
             } else {
