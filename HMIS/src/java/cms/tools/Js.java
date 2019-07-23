@@ -13,9 +13,15 @@ import jj.jjNumber;
  * @author Arvin2
  */
 public class Js {
+<<<<<<< HEAD
 
 
 
+=======
+    
+    
+    
+>>>>>>> c20de8450500d823112adaffd8dbd46fa337fc4b
     public static String replacor(String comment) {
         String replacor = "^*#~";
         comment = comment.trim().replace("\'", replacor);

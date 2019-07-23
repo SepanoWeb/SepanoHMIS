@@ -71,8 +71,8 @@ var cmsUser = {
 //                $("#attachFile").button().click(function () {
 //                });
                 
-                new jj('#sendPicFiles').jjAjaxFileUpload3('#attachFile', '#user_attachFile');
-
+                new jj('#sendPicFiles').jjAjaxFileUploadTitleUploadFiles('#attachFile', '#user_attachFile','user_titleFile','#user_attachFileTitle','.inputSelectorDiv');
+                
 //                $('#user_pic4').keyup(function () {
 ////                    $('#PicPreviewAttach').attr('src', 'upload/' + $('#user_pic4').val());
 //
@@ -239,6 +239,8 @@ var cmsUser = {
         param += "&" + cmsUser.f_id + "=" + (id == null ? "" : id);
         new jj(param).jjAjax2(false);
          $("#user_pic4").html('');
+         $(".inputSelectorDiv").html('');
+         
         cmsUser.m_show_form();
         cmsUser.m_getGroups(id);
 

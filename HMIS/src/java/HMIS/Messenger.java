@@ -45,8 +45,8 @@ public class Messenger {
     public static String _email = "messenger_email";///ایمیل
     public static String _sendingMethod = "messenger_sendingMethod";///روش ارسال
     public static String _attachFile = "messenger_attachFile";///روش ارسال
-    public static String _attachFileTitle = "messenger_attachFileTitle";///روش ارسال
-    public static String _titleFile = "messenger_titleFile";///روش ارسال
+//    public static String _attachFileTitle = "messenger_attachFileTitle";///روش ارسال
+//    public static String _titleFile = "messenger_titleFile";///روش ارسال
     public static String _sendToSms = "messenger_sendToSms";///روش ارسال
     public static String _sendToEmail = "messenger_sendToEmail";///روش ارسال
 //    public static String _statusTrend = "messenger_statusTrend";///وضعیت پیام روند
@@ -556,54 +556,21 @@ public class Messenger {
             return "";
         }
     }
-    /*
-     این تابع برای اضافه کردن روش ارسال نوشته شده
-     */
-
-    public static String sendMetod1(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
-        try {
-            StringBuilder html = new StringBuilder();
-            String script6 = "<div >روش ارسال<input  type='checkbox' id='messenger_sendToEmail' name='messenger_sendToEmail'  value='1'  class='form-control'/>ایمیل"
-                    + "<input type='checkbox' id='messenger_sendToSms' name='messenger_sendToSms'  value='1'   class='form-control'  />sms</div>";
-            html.append(Js.setHtml("#sendingMetod1", script6));
-
-            Server.outPrinter(request, response, html);
-            return "";
-        } catch (Exception e) {
-            Server.outPrinter(request, response, Server.ErrorHandler(e));
-            return "";
-
-        }
-    }
-    /*
-     این تابع برای اضافه کردن روش2 ارسال نوشته شده
-     */
-//    public static String sendMetod2(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
-//           try {
-//               StringBuilder html=new StringBuilder();
-//                String script6 = "<div   >روش ارسال<input  type='checkbox' id='messenger_sendToEmail' name='messenger_sendToEmail'  value='1'  class='form-control'/>ایمیل"
-//                    + "<input type='checkbox' id='messenger_sendToSms' name='messenger_sendToSms'  value='1'   class='form-control'  />sms</div>";
-//            html.append(Js.setHtml("#sendingMetod2", script6));
-//               
-//           Server.outPrinter(request, response,html);
-//            return "";}
-//           catch (Exception e) {
-//            Server.outPrinter(request, response, Server.ErrorHandler(e));
-//            return "";
-//
-//        }
-//    }
+  
 
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         StringBuilder html = new StringBuilder();
         StringBuilder html2 = new StringBuilder();
         StringBuilder script = new StringBuilder();
         StringBuilder script2 = new StringBuilder();
+        
 //        String id = jjTools.getSessionAttribute(request, "#ID");
 
         try {
             script.append(Js.setVal("#" + _sender, jjTools.getSeassionUserNameAndFamily(request)));
             script.append("$('#messenger_receiver').select2();\n");
+             html.append(Js.setVal("#messenger_sendToEmail", "email"));
+            html.append(Js.setVal("#messenger_sendToSms", "sms"));
 //            script.append("hmisMessenger.send();");
 
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
@@ -618,13 +585,13 @@ public class Messenger {
             boolean accSms = Access_User.hasAccess(request, db, rul_ins);
             String html3 = "<div >روش ارسال";
             if (accEmail) {//@ToDo 
-                html3 += "<input  type='checkbox' id='messenger_sendToEmail' name='messenger_sendToEmail'  value='1'  class='form-control'/>ایمیل";
+                html3 += "<input  type='checkbox' id='messenger_sendToEmail' name='messenger_sendingMethod'  value='email'  class='form-control'/>ایمیل";
 
 //                script.append(Js.click("#insert_Messenger_new", Js.jjMessenger.insert()));
             }
 
             if (accSms) {//@ToDo 
-                html3 += "<input type='checkbox' id='messenger_sendToSms' name='messenger_sendToSms'  value='1'   class='form-control'  />sms";
+                html3 += "<input type='checkbox' id='messenger_sendToSms' name='messenger_sendingMethod'  value='sms'   class='form-control'  />sms";
             }
             html3 += "</div>";
             script2.append(Js.setHtml("#sendingMetod", html3));
@@ -916,12 +883,11 @@ public class Messenger {
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_textMessage, jjTools.getParameter(request, _textMessage));
             map.put(_dateOfCreation, jjTools.getParameter(request, _dateOfCreation));
-            map.put(_attachFileTitle, jjTools.getParameter(request, _attachFileTitle));
-            map.put(_attachFile, jjTools.getParameter(request, _attachFile));
-            map.put(_titleFile, jjTools.getParameter(request, _titleFile));
+//            map.put(_attachFileTitle, jjTools.getParameter(request, _attachFileTitle));
+//            map.put(_attachFile, jjTools.getParameter(request, _attachFile));
+//            map.put(_titleFile, jjTools.getParameter(request, _titleFile));
             map.put(_sendingMethod, jjTools.getParameter(request, _sendingMethod));
-            map.put(_sendToSms, jjTools.getParameter(request, _sendToSms));
-            map.put(_sendToEmail, jjTools.getParameter(request, _sendToEmail));
+           
 
             map.put(_displayed, jjTools.getParameter(request, _displayed));
 
@@ -1044,17 +1010,17 @@ public class Messenger {
             script.append(Js.setVal("#" + _dateOfCreation, row.get(0).get(_dateOfCreation)));
             script.append(Js.setVal("#" + _postageDate, jjCalendar_IR.getViewFormat(row.get(0).get(_postageDate))));
             script.append(Js.setVal("#messenger_attachFile", row.get(0).get(_attachFile)));
-            script.append(Js.setVal("#messenger_attachFileTitle", row.get(0).get(_attachFileTitle)));
+//            script.append(Js.setVal("#messenger_attachFileTitle", row.get(0).get(_attachFileTitle)));
             String attachFiles = row.get(0).get(_attachFile).toString();
 //            script.append("hmisMessenger.send();");
-            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
+//            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
 
             String[] attachFilesArray = attachFiles.split("%23A%23");
-            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
+//            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
 
-            for (int l = 0; l < attachFilesArray.length && l < attachFileTitlesArray.length; l++) {
+            for (int l = 0; l < attachFilesArray.length ; l++) {
                 List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
-                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
+//                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
                 if (!fileRow.isEmpty()) {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
                     String titleUpload = fileRow.get(0).get(UploadServlet._title).toString();
@@ -1067,10 +1033,10 @@ public class Messenger {
                             html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button class='col-lg-1 form-control'  style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>" + "حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         } else {
 
-                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" +titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         }
                     } else {
-                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                     }
                 }
             }
@@ -1136,15 +1102,25 @@ public class Messenger {
 
             if (row.get(0).get(_status).equals(status_posted)) {
                     for (int n = 0; n < metodArray.length; n++) {
-                if (metodArray[n].equals("email")) {
+                         
                         tempMetod += "'" + metodArray[n] + "',";
+                if (tempMetod.equals("email")) {
                         System.out.println("metodArray=" + tempMetod);
-                        html.append(Js.setVal("#", metodArray[n]));
+                       
+                       
+                        
 
 //              
                     
-                    if (metodArray[n].equals("sms")) {
-                        html.append(Js.setVal("#" + _sendingMethod, metodArray[n]));
+                    if (row.get(0).get(_sendingMethod).toString().equals("sms")) {
+                       
+//                        html.append(Js.setHtml("#sms",tempMetod ));
+                        html.append( "$('#sms').html([" + tempMetod + "]);");
+//                html.append(Js.setAttr("#sendToSms", "checked", "checked"));
+                    }
+                    if (row.get(0).get(_sendingMethod).toString().equals("email")) {
+//                       html.append(Js.setHtml("#email", tempMetod));
+                          html.append( "$('#email').html([" + tempMetod + "]);");
 //                html.append(Js.setAttr("#sendToSms", "checked", "checked"));
                     }
                     }
@@ -1232,17 +1208,17 @@ public class Messenger {
             script.append(Js.setVal("#unreadMessages_dateOfCreation", row.get(0).get(_dateOfCreation)));
             script.append(Js.setVal("#unreadMessages_postageDate", jjCalendar_IR.getViewFormat(row.get(0).get(_postageDate))));
             script.append(Js.setVal("#unreadMessages_attachFile", row.get(0).get(_attachFile)));
-            script.append(Js.setVal("#unreadMessages_attachFileTitle", row.get(0).get(_attachFileTitle)));
+//            script.append(Js.setVal("#unreadMessages_attachFileTitle", row.get(0).get(_attachFileTitle)));
             String attachFiles = row.get(0).get(_attachFile).toString();
 
-            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
+//            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
 
             String[] attachFilesArray = attachFiles.split("%23A%23");
-            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
+//            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
 
-            for (int l = 0; l < attachFilesArray.length && l < attachFileTitlesArray.length; l++) {
+            for (int l = 0; l < attachFilesArray.length ; l++) {
                 List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
-                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
+//                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
                 if (!fileRow.isEmpty()) {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
                     String titleUpload = fileRow.get(0).get(UploadServlet._title).toString();
@@ -1255,10 +1231,10 @@ public class Messenger {
                             html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button class='col-lg-1 form-control'  style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>" + "حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         } else {
 
-                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" +titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         }
                     } else {
-                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                     }
                 }
             }
@@ -1286,12 +1262,12 @@ public class Messenger {
             script1.append(Js.setHtml("#UnreadMessages_button", htmlBottons));
             boolean accEmail = Access_User.hasAccess(request, db, rul_ins);
             if (row.get(0).get(_status).equals(status_posted)) {
-                if (row.get(0).get(_sendToSms).equals("1")) {
+                if (row.get(0).get(_sendingMethod).equals("1")) {
                     html.append("$('#SmsAndEmail').show();");
 //              
                     html.append(Js.setAttr("#sendToEmail", "checked", "checked"));
                 }
-                if (row.get(0).get(_sendToEmail).equals("1")) {
+                if (row.get(0).get(_sendingMethod).equals("1")) {
                     html.append("$('#SmsAndEmail').show();");
                     html.append(Js.setAttr("#sendToSms", "checked", "checked"));
                 }
@@ -1378,17 +1354,17 @@ public class Messenger {
             script.append(Js.setVal("#myMessages_dateOfCreation", row.get(0).get(_dateOfCreation)));
             script.append(Js.setVal("#myMessages_postageDate", jjCalendar_IR.getViewFormat(row.get(0).get(_postageDate))));
             script.append(Js.setVal("#myMessages_attachFile", row.get(0).get(_attachFile)));
-            script.append(Js.setVal("#myMessages_attachFileTitle", row.get(0).get(_attachFileTitle)));
+//            script.append(Js.setVal("#myMessages_attachFileTitle", row.get(0).get(_attachFileTitle)));
             String attachFiles = row.get(0).get(_attachFile).toString();
 
-            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
+//            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
 
             String[] attachFilesArray = attachFiles.split("%23A%23");
-            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
+//            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
 
-            for (int l = 0; l < attachFilesArray.length && l < attachFileTitlesArray.length; l++) {
+            for (int l = 0; l < attachFilesArray.length ; l++) {
                 List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
-                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
+//                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
                 if (!fileRow.isEmpty()) {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
                     String titleUpload = fileRow.get(0).get(UploadServlet._title).toString();
@@ -1401,10 +1377,10 @@ public class Messenger {
                             html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button class='col-lg-1 form-control'  style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>" + "حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         } else {
 
-                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" +titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         }
                     } else {
-                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                     }
                 }
             }
@@ -1521,17 +1497,17 @@ public class Messenger {
             script.append(Js.setVal("#messagesSeen_dateOfCreation", row.get(0).get(_dateOfCreation)));
             script.append(Js.setVal("#messagesSeen_postageDate", jjCalendar_IR.getViewFormat(row.get(0).get(_postageDate))));
             script.append(Js.setVal("#messagesSeen_attachFile", row.get(0).get(_attachFile)));
-            script.append(Js.setVal("#messagesSeen_attachFileTitle", row.get(0).get(_attachFileTitle)));
+//            script.append(Js.setVal("#messagesSeen_attachFileTitle", row.get(0).get(_attachFileTitle)));
             String attachFiles = row.get(0).get(_attachFile).toString();
 
-            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
+//            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
 
             String[] attachFilesArray = attachFiles.split("%23A%23");
-            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
+//            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
 
-            for (int l = 0; l < attachFilesArray.length && l < attachFileTitlesArray.length; l++) {
+            for (int l = 0; l < attachFilesArray.length ; l++) {
                 List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
-                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
+//                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
                 if (!fileRow.isEmpty()) {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
                     String titleUpload = fileRow.get(0).get(UploadServlet._title).toString();
@@ -1544,10 +1520,10 @@ public class Messenger {
                             html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button class='col-lg-1 form-control'  style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>" + "حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         } else {
 
-                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         }
                     } else {
-                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                     }
                 }
             }
@@ -1664,17 +1640,17 @@ public class Messenger {
             script.append(Js.setVal("#messages_dateOfCreation", row.get(0).get(_dateOfCreation)));
             script.append(Js.setVal("#messages_postageDate", jjCalendar_IR.getViewFormat(row.get(0).get(_postageDate))));
             script.append(Js.setVal("#messages_attachFile", row.get(0).get(_attachFile)));
-            script.append(Js.setVal("#messages_attachFileTitle", row.get(0).get(_attachFileTitle)));
+//            script.append(Js.setVal("#messages_attachFileTitle", row.get(0).get(_attachFileTitle)));
             String attachFiles = row.get(0).get(_attachFile).toString();
 
-            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
+//            String attachFileTitles = row.get(0).get(_attachFileTitle).toString();
 
             String[] attachFilesArray = attachFiles.split("%23A%23");
-            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
+//            String[] attachFileTitlesArray = attachFileTitles.split("%23A%23");
 
-            for (int l = 0; l < attachFilesArray.length && l < attachFileTitlesArray.length; l++) {
+            for (int l = 0; l < attachFilesArray.length ; l++) {
                 List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFilesArray[l] + "'"));
-                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
+//                List<Map<String, Object>> titleRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._title + "='" + attachFileTitlesArray[l] + "'"));
                 if (!fileRow.isEmpty()) {
                     String idUpload = fileRow.get(0).get(UploadServlet._id).toString();
                     String titleUpload = fileRow.get(0).get(UploadServlet._title).toString();
@@ -1687,10 +1663,10 @@ public class Messenger {
                             html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button class='col-lg-1 form-control'  style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>" + "حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         } else {
 
-                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                            html2.append("<img class='col-xs-12' style='width:10%;float:right' src='upload/" + attachFilesArray[l] + "'/><input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                         }
                     } else {
-                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + attachFileTitlesArray[l] + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
+                        html2.append("<input class='col-lg-12 form-control'  style='text-align: center' disabled='disabled'  value='" + titleUpload + "'/>" + "<input  style='text-align: center;' class='col-lg-12'  disabled='disabled'  value='" + attachFilesArray[l] + "'/>" + "<button  class='col-lg-1' style='background-color: #e16262;color: white;float:left' onclick='hmisMessenger.m_remove(" + idUpload + "," + id + ")'>حذف" + "</button><a  class='col-lg-1' style='background-color: green;color: white;float:left;text-align: center;padding-top: 2px;padding-bottom: 1px;margin-top: 1px;' href='upload/" + attachFilesArray[l] + "' >دانلود</a>");
                     }
                 }
             }
@@ -1771,17 +1747,17 @@ public class Messenger {
             String filename = rowupload.get(0).get(UploadServlet._file_name).toString() + "%23A%23";
             String title = rowupload.get(0).get(UploadServlet._title).toString() + "%23A%23";
             String attacheFiles = rowMesesnger.get(0).get(Messenger._attachFile).toString();
-            String attacheFilesTitle = rowMesesnger.get(0).get(Messenger._attachFileTitle).toString();
+//            String attacheFilesTitle = rowMesesnger.get(0).get(Messenger._attachFileTitle).toString();
             System.out.println(filename);
             System.out.println("____________________________________");
             System.out.println(attacheFiles);
             attacheFiles = attacheFiles.replace(filename, "");
-            attacheFilesTitle = attacheFilesTitle.replace(title, "");
+//            attacheFilesTitle = attacheFilesTitle.replace(title, "");
             System.out.println(attacheFiles);
 
             Map<String, Object> map = new HashMap<String, Object>();
             map.put(_attachFile, attacheFiles);
-            map.put(_attachFileTitle, attacheFilesTitle);
+//            map.put(_attachFileTitle, attacheFilesTitle);
             System.out.println("____________________________________");
 
             db.update(tableName, map, _id + "=" + idMesenger);
@@ -1827,9 +1803,9 @@ public class Messenger {
 //            map.put(_sender, jjTools.getParameter(request, _sender));
             map.put(_dateOfCreation, jjTools.getParameter(request, _dateOfCreation));
             map.put(_postageDate, jjTools.getParameter(request, _postageDate));
-            map.put(_attachFileTitle, jjTools.getParameter(request, _attachFileTitle));
+//            map.put(_attachFileTitle, jjTools.getParameter(request, _attachFileTitle));
             map.put(_attachFile, jjTools.getParameter(request, _attachFile));
-            map.put(_titleFile, jjTools.getParameter(request, _titleFile));
+//            map.put(_titleFile, jjTools.getParameter(request, _titleFile));
             map.put(_sendingMethod, jjTools.getParameter(request, _sendingMethod));
 //            String errorMessageId = jjValidation.isDigitMessageFa(id, "کد");
 //            if (!errorMessageId.equals("")) {
@@ -1860,7 +1836,7 @@ public class Messenger {
         try {
 //            Content.catchProductTitle = null;
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
-            if (!hasAccess.equals("")) {
+             if (!hasAccess.equals("")) {
                 Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
                 return "";
 

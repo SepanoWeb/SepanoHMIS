@@ -17,60 +17,27 @@ var hmisManagementGauges = {
             $("#swManagementGaugesForm").load("formHMIS/managementGauges.html", null, function () {
                 new jj('#managementGauges_date').jjCalendarWithYearSelector(1310, 1410);
                 $("#cancel_ManagementGauges").on('click', function (e) {
-
                     hmisManagementGauges.m_clean();
                     hmisManagementGauges.m_show_tbl();
                 });
 
-                hmisManagementGauges.selectOptionDepartment("managementGauges_department");
+                hmisDepartment.selectOptionDepartment("managementGauges_department");
                 hmisManagementGauges.getoptionAxis("managementGauges_axis");
                 hmisManagementGauges.getoptionUnderAxis("managementGauges_underTheAxis");
                 hmisManagementGauges.getoptionStandard("managementGauges_standard");
                 hmisManagementGauges.getoptionGauge("managementGauges_gauge");
                 hmisManagementGauges.getoptionStep("managementGauges_step");
-                hmisManagementGauges.getoptionUploadDate("managementGauges_uploadDate");
-                hmisManagementGauges.getoptionLevel("managementGauges_level");
+                hmisRole.getSelectOptionRequierd("#swManagementGaugesForm #managementGauges_responsibleLoadingRole");// برای قرار گرفتن سلکت آپشن نقش ها در قسمت های مربوطه
+                hmisRole.getSelectOptionRequierd("#swManagementGaugesForm #managementGauges_responsibleGauge");// برای قرار گرفتن سلکت آپشن نقش ها در قسمت های مربوطه
 
-                hmisManagementGauges.selectOptionRoleResponsibleLoading("managementGauges_responsibleLoading");
-                hmisManagementGauges.selectOptionRoleResponsibleGauge("managementGauges_responsibleGauge");
-
-//                 $("#managementGauges_department").select2({
-//                    minimumResultsForSearch: '',
-//                    width: '100%'
-//                });
-//                 $("#managementGauges_axis").select2({
-//                    minimumResultsForSearch: '',
-//                    width: '100%'
-//                });
-//                 $("#managementGauges_underTheAxis").select2({
-//                    minimumResultsForSearch: '',
-//                    width: '100%'
-//                });
-//                 $("#managementGauges_standard").select2({
-//                    minimumResultsForSearch: '',
-//                    width: '100%'
-//                });
-//                 $("#managementGauges_gauge").select2({
-//                    minimumResultsForSearch: '',
-//                    width: '100%'
-//                });
-////                 $("#managementGauges_step").select2({
-////                    minimumResultsForSearch: '',
-////                    width: '100%'
-////                });
-//                 $("#managementGauges_responsibleLoading").select2({
-//                    minimumResultsForSearch: '',
-//                    width: '100%'
-//                });
-//                 $("#managementGauges_uploadDate").select2({
-//                    minimumResultsForSearch: '',
-//                    width: '100%'
-//                });
-                $('.summernote').summernote();
+                 $("#managementGauges_responsibleLoadingRole").select2({
+                    minimumResultsForSearch: '',
+                    width: '100%'
+                });
+                $('#managementGauges_comment').summernote({
+                    tooltip: false
+                });
             });
-
-
-
         }
     },
     m_refresh: function (containerId, sortField, tableHeight) {
@@ -84,15 +51,14 @@ var hmisManagementGauges = {
         hmisManagementGauges.tabSizeTbl();
     },
     changeSelectToInputAxis: function () {
-        if ($('#axis').css('display') == 'none') {
-
-            $('#axis').show();
+        if ($('#axis_div').css('display') == 'none') {
+            $('#axis_div').show();
             $('#managementGauges_axis').attr('name', 'managementGauges_axis');
             $('#managementGauges_axis1').hide();
             $('#managementGauges_axis1').attr('name', 'managementGauges_axis1');
         } else {
 
-            $('#axis').hide();
+            $('#axis_div').hide();
             $('#managementGauges_axis').attr('name', 'managementGauges_axis1');
             $('#managementGauges_axis1').show();
             $('#managementGauges_axis1').attr('name', 'managementGauges_axis');
@@ -103,13 +69,13 @@ var hmisManagementGauges = {
 
     },
     changeSelectToInputUnderTheAxis: function () {
-        if ($('#underTheAxis').css('display') == 'none') {
-            $('#underTheAxis').show();
+        if ($('#underTheAxis_div').css('display') == 'none') {
+            $('#underTheAxis_div').show();
             $('#managementGauges_underTheAxis').attr('name', 'managementGauges_underTheAxis');
             $('#managementGauges_underTheAxis1').hide();
             $('#managementGauges_underTheAxis1').attr('name', 'managementGauges_underTheAxis1');
         } else {
-            $('#underTheAxis').hide();
+            $('#underTheAxis_div').hide();
             $('#managementGauges_underTheAxis').attr('name', 'managementGauges_underTheAxis1');
             $('#managementGauges_underTheAxis1').show();
             $('#managementGauges_underTheAxis1').attr('name', 'managementGauges_underTheAxis');
@@ -120,13 +86,13 @@ var hmisManagementGauges = {
 
     },
     changeSelectToInputStandard: function () {
-        if ($('#standard').css('display') == 'none') {
-            $('#standard').show();
+        if ($('#standard_div').css('display') == 'none') {
+            $('#standard_div').show();
             $('#managementGauges_standard').attr('name', 'managementGauges_standard');
             $('#managementGauges_standard1').hide();
             $('#managementGauges_standard1').attr('name', 'managementGauges_standard1');
         } else {
-            $('#standard').hide();
+            $('#standard_div').hide();
             $('#managementGauges_standard').attr('name', 'managementGauges_standard1');
             $('#managementGauges_standard1').show();
             $('#managementGauges_standard1').attr('name', 'managementGauges_standard');
@@ -137,13 +103,13 @@ var hmisManagementGauges = {
 
     },
     changeSelectToInputGauge: function () {
-        if ($('#gauge').css('display') == 'none') {
-            $('#gauge').show();
+        if ($('#gauge_div').css('display') == 'none') {
+            $('#gauge_div').show();
             $('#managementGauges_gauge').attr('name', 'managementGauges_gauge');
             $('#managementGauges_gauge1').hide();
             $('#managementGauges_gauge1').attr('name', 'managementGauges_gauge1');
         } else {
-            $('#gauge').hide();
+            $('#gauge_div').hide();
             $('#managementGauges_gauge').attr('name', 'managementGauges_gauge1');
             $('#managementGauges_gauge1').show();
             $('#managementGauges_gauge1').attr('name', 'managementGauges_gauge');
@@ -154,13 +120,13 @@ var hmisManagementGauges = {
 
     },
     changeSelectToInputStep: function () {
-        if ($('#step').css('display') == 'none') {
-            $('#step').show();
+        if ($('#step_div').css('display') == 'none') {
+            $('#step_div').show();
             $('#managementGauges_step').attr('name', 'managementGauges_step');
             $('#managementGauges_step1').hide();
             $('#managementGauges_step1').attr('name', 'managementGauges_step1');
         } else {
-            $('#step').hide();
+            $('#step_div').hide();
             $('#managementGauges_step').attr('name', 'managementGauges_step1');
             $('#managementGauges_step1').show();
             $('#managementGauges_step1').attr('name', 'managementGauges_step');
@@ -205,27 +171,6 @@ var hmisManagementGauges = {
 
         new jj(param).jjAjax2(false);
     },
-//    getoptionResponsibleLoading: function (panel) {
-//        var param = "";
-//        param += "panel=" + panel;
-//        param += "&do=" + hmisManagementGauges.tableName + ".getoptionResponsibleLoading";
-//
-//        new jj(param).jjAjax2(false);
-//    },
-    getoptionUploadDate: function (panel) {
-        var param = "";
-        param += "panel=" + panel;
-        param += "&do=" + hmisManagementGauges.tableName + ".getoptionUploadDate";
-
-        new jj(param).jjAjax2(false);
-    },
-    getoptionLevel: function (panel) {
-        var param = "";
-        param += "panel=" + panel;
-        param += "&do=" + hmisManagementGauges.tableName + ".getoptionLevel";
-
-        new jj(param).jjAjax2(false);
-    },
 //    *
 //    برای دراوردن بخش ها
 //    */
@@ -264,9 +209,7 @@ var hmisManagementGauges = {
         $('#managementGauges_step').select2();
         $('#managementGauges_gauge').select2();
         $('#managementGauges_standard').select2();
-
         $('#managementGauges_axis').select2();
-        $('#managementGauges_uploadDate').select2();
     },
     m_show_form: function () {
         $('#swManagementGaugesTbl').hide();
@@ -285,7 +228,7 @@ var hmisManagementGauges = {
         $("#managementGauges_gauge").val('');
         $("#managementGauges_step").val('');
         $("#managementGauges_responsibleLoading").val('');
-        $("#managementGauges_uploadDate").val('');
+        $("#managementGauges_uploadPeriod").val('');
         $("#managementGauges_date").val('');
         $("#managementGauges_department").val('').trigger('change');
         $("#managementGauges_responsibleLoading").val('').trigger('change');
@@ -315,9 +258,6 @@ var hmisManagementGauges = {
         hmisManagementGauges.getoptionStandard("managementGauges_standard");
         hmisManagementGauges.getoptionGauge("managementGauges_gauge");
         hmisManagementGauges.getoptionStep("managementGauges_step");
-
-//        hmisManagementGauges.getoptionResponsibleLoading("managementGauges_responsibleLoading");
-        hmisManagementGauges.getoptionUploadDate("managementGauges_uploadDate");
     },
     m_edit: function () {
         var param = "";
@@ -335,8 +275,6 @@ var hmisManagementGauges = {
         hmisManagementGauges.getoptionGauge("managementGauges_gauge");
         hmisManagementGauges.getoptionStep("managementGauges_step");
 
-        hmisManagementGauges.getoptionResponsibleLoading("managementGauges_responsibleLoading");
-        hmisManagementGauges.getoptionUploadDate("managementGauges_uploadDate");
     },
     m_delete: function (id) {
         new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo('hmisManagementGauges.m_delete_after_question(' + id + ');\n', true, "");
@@ -375,5 +313,67 @@ var hmisManagementGauges = {
         $('#swManagementGauges').css('height', hmisManagementGauges.heightTab);
     },
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
