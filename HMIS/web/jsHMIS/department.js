@@ -137,12 +137,7 @@ var hmisDepartment = {
         param += "do=" + hmisDepartment.tableName + ".select";
         param += "&" + hmisDepartment.f_id + "=" + (id == null ? "" : id);
         $('.summernote').summernote();
-
-
         new jj(param).jjAjax2(false);
-
-
-
         hmisDepartment.m_show_form();
 //        part_content_editor = new jj('#department_publicContent').jjEditor();
 //         part_praivate_editor = new jj('#department_praivateContent').jjEditor();

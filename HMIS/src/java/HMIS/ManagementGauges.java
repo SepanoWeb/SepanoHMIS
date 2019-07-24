@@ -9,7 +9,6 @@ package HMIS;
  *
  * @author shiran
  */
-import static HMIS.DepartmentPosition._level;
 import cms.access.Access_User;
 import cms.tools.Js;
 import cms.tools.Server;
@@ -22,6 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
+import jj.jjCalendar_IR;
 import jj.jjDatabase;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
@@ -44,67 +44,114 @@ public class ManagementGauges {
     public static String _step = "managementGauges_step";
     public static String _date = "managementGauges_date";
     public static String _responsibleLoading = "managementGauges_responsibleLoading";
-    public static String _uploadDate = "managementGauges_uploadDate";
+    public static String _responsibleLoadingRole = "managementGauges_responsibleLoadingRole";
+    public static String _uploadPeriod = "managementGauges_uploadPeriod";
     public static String _comment = "managementGauges_comment";
-    public static String _condition = "managementGauges_condition";
+    public static String _isActive = "managementGauges_isActive";
     public static String _level = "managementGauges_level";
+    public static String _responsibleGauge = "managementGauges_responsibleGauge";
 
-    public static String lbl_insert = "ذخیره";
+    public static String lbl_add_new = "سنجه جدید";
+    public static String lbl_insert = "دخیره";
     public static String lbl_delete = "حذف";
     public static String lbl_edit = "ویرایش";
 
-    public static int rul_rfs = 0;
+    public static int rul_rfs_all = 0;
+    public static int rul_rfs_own = 0;
     public static int rul_ins = 0;
     public static int rul_edt = 0;
     public static int rul_dlt = 0;
 
     /**
-     * این جدول مخصوص بخش ها ست
      *
-     * @param height is int height of table
-     * @param sort is number of default sort column number
-     * @param panel is container id
+     *
+     * @param request
+     * @param response
+     * @param db
+     * @param needString
+     * @throws java.lang.Exception
+     * @return اسکریپتی برای ایجاد جدول
      */
     public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
-//            String hasAccess = Department.getAccessDialog(request, db, rul_rfs);
-//            if (!hasAccess.equals("")) {
-//                Server.outPrinter(request, response,hasAccess;
-//            }
-            StringBuilder html = new StringBuilder();
-            StringBuilder html3 = new StringBuilder();
+            DefaultTableModel dtm;
+            if (Access_User.hasAccess(request, db, rul_rfs_all)) {
+                dtm = db.otherSelect("SELECT " + "group_concat(documentary_status order by hmis_documentary.id) as statuses," + tableName + ".* ," + Department._title + "," + Role._title + "," + Access_User._name + "," + Access_User._family + " FROM  " + tableName
+                        + " LEFT JOIN " + Documentary.tableName + " ON " + Documentary._gaugeId + " = hmis_managementGauges.id "
+                        + " LEFT JOIN " + Department.tableName + " ON " + _department + " = Department.id "
+                        + " LEFT JOIN " + Role.tableName + " ON " + _responsibleLoadingRole + " = hmis_role.id " // برای استخراج نام مسئول بارگذاری و نقش او
+                        + " LEFT JOIN " + Access_User.tableName + " ON " + Role._user_id + " = access_user.id "
+                        + "group by hmis_managementGauges.id " // ّرای پرچم ها
+                        + ";");
 
-            DefaultTableModel dtm = db.Select(ManagementGauges.tableName);
+            } else if (Access_User.hasAccess(request, db, rul_rfs_own)) {
+                String userRolesinSession[] = jjTools.getSeassionUserRole(request).split(",");
+                String where = "";
+                for (int i = 0; i < userRolesinSession.length; i++) {
+                    if (i == userRolesinSession.length - 1) {// برای آخری  OR نمیخواهیم
+                        where += _responsibleGauge + "=" + userRolesinSession[i];
+                    } else {
+                        where += _responsibleGauge + "=" + userRolesinSession[i] + " OR ";
+                    }
+                }
+                dtm = db.otherSelect("SELECT " + tableName + ".* ," + Department._title + "," + Role._title + "," + Access_User._name + "," + Access_User._family + " FROM  " + tableName
+                        + " LEFT JOIN " + Department.tableName + " ON " + _department + " = Department.id "
+                        + " LEFT JOIN " + Role.tableName + " ON " + _responsibleGauge + " = hmis_role.id " // برای استخراج نام مسئول بارگذاری و نقش او
+                        + " LEFT JOIN " + Access_User.tableName + " ON " + Role._user_id + " = access_user.id " + where + ";");
+            } else {
+                //اگر اجازه مشاهده ی هیچ کدام را نداشت
+                Server.outPrinter(request, response, Access_User.getAccessDialog(request, db, rul_rfs_own));
+                return "";
+            }
+            StringBuilder html = new StringBuilder();
+
+//            DefaultTableModel dtm = db.Select(ManagementGauges.tableName);
+//            DefaultTableModel dtm = db.Select(ManagementGauges.tableName, ManagementGauges._responsibleGauge + "=" + jjTools.getSeassionUserId(request),"AND ORDER BY managementgauges.managementgauges_level ");
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
 
-            html.append(" <div class='card bd-primary mg-t-20'>"
-                    + "    <div class='card-header bg-primary tx-white'>مدیریت سنجه ها</div>"
-                    + "    <div class='card-body pd-sm-30'>"
-                    + "        <p class='mg-b-20 mg-sm-b-30'>"
-                    + "            <a  class='btn btn-success pd-sm-x-20 mg-sm-r-5' style='color: white;' onclick='hmisManagementGauges.m_add_new();' > سنجه جدید</a>"
-                    + "        </p>");
+            html.append("<div class='card bd-primary mg-t-20'><div class='card-header bg-primary tx-white'>مدیریت سنجه ها</div><div class='card-body pd-sm-30'>");
+            if (Access_User.hasAccess(request, db, rul_ins)) {
+                html.append("<p class='mg-b-20 mg-sm-b-30'>"
+                        + "<a  class='btn btn-success pd-sm-x-20 mg-sm-r-5' style='color: white;' onclick='" + Js.jjManagementGauges.add_new() + "' >" + lbl_add_new + "</a>"
+                        + "</p>");
+            }
 
             html.append("<table class='table display responsive nowrap' id='refreshGauge' dir='rtl'><thead>");
-            html.append("<th style='text-align: center;' width='5%'>کد</th>");
-            html.append("<th style='text-align: center;' width='30%'>واحد/بخش</th>");
-            html.append("<th style='text-align: center;' width='20%'>استاندارد</th>");
-            html.append("<th style='text-align: center;' width='20%'>سنجه</th>");
-            html.append("<th style='text-align: center;' width='20%'>گام</th>");
-            html.append("<th style='text-align: center;' width='20%'>مسئول بارگذاری</th>");
-            html.append("<th style='text-align: center;' width='20%'>آخرین بارگذاری</th>");
+            html.append("<th class='c' width='5%'>کد</th>");
+            html.append("<th class='c' width='30%'>واحد/بخش</th>");
+            html.append("<th class='c' width='30%'>سطح</th>");
+            html.append("<th class='c' width='20%'>استاندارد</th>");
+            html.append("<th class='c' width='20%'>سنجه</th>");
+            html.append("<th class='c' width='20%'>گام</th>");
+            html.append("<th class='c' width='20%'>مسئول بارگذاری</th>");
+            html.append("<th class='c' width='20%'>آخرین بارگذاری</th>");
 
-            html.append("<th style='text-align: center;' width='5%'>ویرایش</th>");
+            html.append("<th class='c' width='5%'>ویرایش</th>");
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
-
                 html.append("<tr  onclick='hmisManagementGauges.m_select(" + row.get(i).get(_id) + ");' class='mousePointer' >");
-                html.append("<td class='tahoma10' style='text-align: center;'>" + (row.get(i).get(_id).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_department).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_standard).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_gauge).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_step).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_responsibleLoading).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_date).toString()) + "</td>");
+                html.append("<td class='c' >" + (row.get(i).get(_id).toString()) + "</td>");
+                html.append("<td class='c' >" + (row.get(i).get(Department._title).toString()) + "</td>");
+                html.append("<td class='c' >" + (row.get(i).get(_level).toString()) + "</td>");
+                html.append("<td class='c' >" + (row.get(i).get(_standard).toString()) + "</td>");
+                String FlagsHtml = "";
+                if (!row.get(i).get("statuses").toString().isEmpty()) {
+                    String statusFlags[] = row.get(i).get("statuses").toString().split(",");
+                    for (int j = 0; j < statusFlags.length; j++) {
+                        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" + row.get(i).get(_id).toString());
+                        if (statusFlags[j].equals(Documentary.status_Uploaded)) {
+                            FlagsHtml += "<i class='icon ion-flag' style='color:green;font-size: 1em;padding: 0 5px;'></i>";
+                        } else if (statusFlags[j].equals(Documentary.status_noUploaded)) {
+                            FlagsHtml += "<i class='icon ion-flag' style='color:red;font-size: 1em;padding: 0 5px;'></i>";
+                        }
+                    }
+                }
+                html.append("<td class='c' >" + (row.get(i).get(_gauge).toString())
+                        + "<br/>" + FlagsHtml
+                        + "</td>");
+                html.append("<td class='c' >" + (row.get(i).get(_step).toString()) + "</td>");
+                html.append("<td class='c' >" + row.get(i).get(Role._title).toString() + "<br/>(" + row.get(i).get(Access_User._name).toString() + " " + row.get(i).get(Access_User._family).toString() + ")</td>");
+                html.append("<td class='c' >" + (row.get(i).get(_date).toString()) + "</td>");
 
                 html.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'><a src='img/l.png' style='cursor: pointer;height:30px' onclick='hmisManagementGauges.m_select(" + row.get(i).get(_id) + ");' ></a></td>");
                 html.append("</tr>");
@@ -172,18 +219,18 @@ public class ManagementGauges {
             return "";
         }
     }
+
     /*
      getoptionAxis
      برای در اوردن  محور با استفاده از سلکت دیستینگ
      که به ترتیب دخیره درمدیریت سنجه نشان داده میشود
      */
-
     public static String getoptionAxis(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         StringBuilder html = new StringBuilder();
-        try {            
+        try {
             String script = "";
             String panel = jjTools.getParameter(request, "panel");
-             html.append( "<option  style='color:black;' value=''>انتخاب  محور</option>");
+            html.append("<option  style='color:black;' value=''>انتخاب  محور</option>");
             List<Map<String, Object>> row = jjDatabase.separateRow(db.SelectDistinct(ManagementGauges.tableName, _axis));
             for (int i = row.size() - 1; i >= 0; i--) {
                 html.append("<option value='" + row.get(i).get(_axis).toString() + "'"
@@ -250,7 +297,7 @@ public class ManagementGauges {
             StringBuilder html3 = new StringBuilder();
             String script = "";
             String panel = jjTools.getParameter(request, "panel");
-             html.append("<option  style='color:black' value=''>انتخاب استاندارد</option>");
+            html.append("<option  style='color:black' value=''>انتخاب استاندارد</option>");
 
             List<Map<String, Object>> row = jjDatabase.separateRow(db.SelectDistinct(ManagementGauges.tableName, _standard));
 
@@ -343,88 +390,23 @@ public class ManagementGauges {
             return "";
         }
     }
-    /*
-     getoptionResponsibleLoading
-     برای در اوردن مسیول بار گذاری با استفاده از سلکت دیستینگ
-     که به ترتیب دخیره درمدیریت سنجه نشان داده میشود
-     */
-
-    public static String getoptionResponsibleLoading(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
-        StringBuilder html = new StringBuilder();
-        try {
-            StringBuilder html3 = new StringBuilder();
-            String script = "";
-            String panel = jjTools.getParameter(request, "panel");
-            html.append("<option  style='color:black' value=''>انتخاب مسئول بارگذاری</option>");
-
-            List<Map<String, Object>> row = jjDatabase.separateRow(db.SelectDistinct(ManagementGauges.tableName, _responsibleLoading));
-
-            for (int i = row.size() - 1; i >= 0; i--) {
-
-                html.append("<option value='" + row.get(i).get(_responsibleLoading).toString() + "'"
-                        + (row.get(i).get(_responsibleLoading).toString().equals(_responsibleLoading) ? " selected='selected'>" : ">")
-                        + row.get(i).get(_responsibleLoading).toString() + "</option>");//'option' and 'value' for this fild is same('value' is not necessary)
-
-            }
-            if (panel == "") {
-                panel = "managementGauges_responsibleLoading";
-            }
-            script += Js.setHtml("#" + panel, html.toString());
-
-            Server.outPrinter(request, response, script);
-            return "";
-        } catch (Exception e) {
-            Server.outPrinter(request, response, Server.ErrorHandler(e));
-            return "";
-        }
-    }
-    /*
-     getoptionUploadDate
-     برای در اوردن دوره بار گذاری با استفاده از سلکت دیستینگ
-     */
-
-    public static String getoptionUploadDate(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
-        StringBuilder html = new StringBuilder();
-        try {
-            StringBuilder html3 = new StringBuilder();
-            String script = "";
-            String panel = jjTools.getParameter(request, "panel");
-           html.append("<option  style='color:black' value=''>انتخاب دوره بارگذاری</option>");
-
-            List<Map<String, Object>> row = jjDatabase.separateRow(db.SelectDistinct(ManagementGauges.tableName, _uploadDate));
-
-            for (int i = row.size() - 1; i >= 0; i--) {
-
-                html.append("<option value='" + row.get(i).get(_uploadDate).toString() + "'"
-                        + (row.get(i).get(_uploadDate).toString().equals(_uploadDate) ? " selected='selected'>" : ">")
-                        + row.get(i).get(_uploadDate).toString() + "</option>");//'option' and 'value' for this fild is same('value' is not necessary)
-
-            }
-            if (panel == "") {
-                panel = "managementGauges_uploadDate";
-            }
-            script += Js.setHtml("#" + panel, html.toString());
-
-            Server.outPrinter(request, response, script);
-            return "";
-        } catch (Exception e) {
-            Server.outPrinter(request, response, Server.ErrorHandler(e));
-            return "";
-        }
-    }
 
     public static String add_new(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         StringBuilder html = new StringBuilder();
         StringBuilder script = new StringBuilder();
+        StringBuilder script1 = new StringBuilder();
         try {
-//            script.append("$('#managementGauges_department').select2();\n");
+
+            html.append(Js.setVal("#active", "1"));
+            html.append(Js.setVal("#noActive", "0"));
+
             boolean accIns = Access_User.hasAccess(request, db, rul_ins);
 
             if (accIns) {
                 script.append(Js.setHtml("#ManagementGauges_button", "<div class='col-lg-6'><input type='button' id='insert_ManagementGauges_new'  value=\"" + lbl_insert + "\" class='btn btn-outline-success active btn-block mg-b-10'></div>"));
                 script.append(Js.click("#insert_ManagementGauges_new", Js.jjManagementGauges.insert()));
             }
-            Server.outPrinter(request, response, html.toString() + script);
+            Server.outPrinter(request, response, html.toString() + script + script1);
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
@@ -443,11 +425,11 @@ public class ManagementGauges {
      */
     public static String insert(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
-            String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
-            if (!hasAccess.equals("")) {
-                Server.outPrinter(request, response, hasAccess);
-                return "";
-            }
+//            String hasAccess = Access_User.getAccessDialog(request, db, rul_ins);
+//            if (!hasAccess.equals("")) {
+//                Server.outPrinter(request, response, hasAccess);
+//                return "";
+//            }
 
             Map<String, Object> map = new HashMap<String, Object>();
 
@@ -456,13 +438,18 @@ public class ManagementGauges {
             map.put(_department, jjTools.getParameter(request, _department));
             map.put(_gauge, jjTools.getParameter(request, _gauge));
             map.put(_responsibleLoading, jjTools.getParameter(request, _responsibleLoading));
+            map.put(_responsibleLoadingRole, jjTools.getParameter(request, _responsibleLoadingRole));
             map.put(_standard, jjTools.getParameter(request, _standard));
             map.put(_step, jjTools.getParameter(request, _step));
             map.put(_underTheAxis, jjTools.getParameter(request, _underTheAxis));
-            map.put(_uploadDate, jjTools.getParameter(request, _uploadDate));
+            map.put(_uploadPeriod, jjTools.getParameter(request, _uploadPeriod));
             map.put(_comment, jjTools.getParameter(request, _comment));
+//            StringBuilder html=new StringBuilder();
+//            html.append(Js.setVal("#active", "1"));
+//            html.append(Js.setVal("#noActive","0"));
+            map.put(_isActive, jjTools.getParameter(request, _isActive));
             map.put(_level, jjTools.getParameter(request, _level));
-            map.put(_condition, jjTools.getParameter(request, _condition));
+            map.put(_responsibleGauge, jjTools.getParameter(request, _responsibleGauge));
 
             if (db.insert(tableName, map).getRowCount() == 0) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
@@ -513,23 +500,52 @@ public class ManagementGauges {
             script.append(Js.setVal("#managementGauges_" + _id, row.get(0).get(_id)));
 
             script.append(Js.setVal("#" + _axis, row.get(0).get(_axis)));
+            script.append("$('#managementGauges_axis').select2();\n");
 
             script.append(Js.setVal("#" + _underTheAxis, row.get(0).get(_underTheAxis)));
-//            script.append(Js.setVal("#managementGauges_underTheAxis1", row.get(0).get(_axis)));
+            script.append("$('#managementGauges_underTheAxis').select2();\n");
             script.append(Js.setVal("#" + _date, row.get(0).get(_date)));
             script.append(Js.setVal("#" + _department, row.get(0).get(_department)));
             script.append("$('#managementGauges_department').select2();\n");
             script.append(Js.setVal("#" + _gauge, row.get(0).get(_gauge)));
-//            script.append(Js.setVal("#managementGauges_gauge1", row.get(0).get(_gauge)));
-            script.append(Js.setVal("#" + _responsibleLoading, row.get(0).get(_responsibleLoading)));
+            script.append("$('#managementGauges_gauge').select2();\n");
+            String responsibleLoading = row.get(0).get(_responsibleLoading).toString();
+
+            String[] responsibleLoadingArray = responsibleLoading.split(",");//آی دی  ها با این رشته از هم جدا می شود
+            String temp = "";
+            for (int j = 0; j < responsibleLoadingArray.length; j++) {
+                temp += "'" + responsibleLoadingArray[j] + "',";
+                System.out.println("responsibleLoadingArray=" + temp);
+            }
+
+            script.append("$('#managementGauges_responsibleLoading').val([" + temp + "]);"
+                    + "$('#managementGauges_responsibleLoading').select2({  minimumResultsForSearch: '',  width: '100%'});");
+
+            script.append(Js.setVal("#" + _responsibleLoadingRole, row.get(0).get(_responsibleLoadingRole)));
+            script.append(Js.select2("#" + _responsibleLoadingRole, ""));
             script.append(Js.setVal("#" + _standard, row.get(0).get(_standard)));
-//            script.append(Js.setVal("#managementGauges_standard1", row.get(0).get(_standard)));
+            script.append("$('#managementGauges_standard').select2();\n");
             script.append(Js.setVal("#" + _step, row.get(0).get(_step)));
-//            script.append(Js.setVal("#managementGauges_step1", row.get(0).get(_step)));
-            script.append(Js.setVal("#" + _uploadDate, row.get(0).get(_uploadDate)));
-            script.append(Js.setVal("#" + _comment, row.get(0).get(_comment)));
-            script.append(Js.setVal("#" + _condition, row.get(0).get(_condition)));
+            script.append("$('#managementGauges_step').select2();\n");
+            script.append(Js.setVal("#" + _responsibleGauge, row.get(0).get(_responsibleGauge)));
+            script.append("$('#managementGauges_responsibleGauge').select2();\n");
+            script.append(Js.setVal("#" + _uploadPeriod, row.get(0).get(_uploadPeriod)));
+
+            script.append(Js.setValSummerNote("#" + _comment, row.get(0).get(_comment)));
+
+            html.append(Js.setVal("#active", "1"));
+            html.append(Js.setVal("#noActive", "0"));
+            if (row.get(0).get(_isActive).equals("1")) {
+//           
+                html.append(Js.setAttr("#active", "checked", "checked"));
+
+            } else {
+//           
+                html.append(Js.setAttr("#noActive", "checked", "checked"));
+            }
+//            script.append(Js.setVal("#" + _status, row.get(0).get(_status)));
             script.append(Js.setVal("#" + _level, row.get(0).get(_level)));
+            script.append(Js.setVal("#" + _responsibleGauge, row.get(0).get(_responsibleGauge)));
 
             String htmlBottons = "";
             boolean accEdit = Access_User.hasAccess(request, db, rul_edt);
@@ -566,13 +582,15 @@ public class ManagementGauges {
             map.put(_department, jjTools.getParameter(request, _department));
             map.put(_gauge, jjTools.getParameter(request, _gauge));
             map.put(_responsibleLoading, jjTools.getParameter(request, _responsibleLoading));
+            map.put(_responsibleLoadingRole, jjTools.getParameter(request, _responsibleLoadingRole));
             map.put(_standard, jjTools.getParameter(request, _standard));
             map.put(_step, jjTools.getParameter(request, _step));
             map.put(_underTheAxis, jjTools.getParameter(request, _underTheAxis));
-            map.put(_uploadDate, jjTools.getParameter(request, _uploadDate));
+            map.put(_uploadPeriod, jjTools.getParameter(request, _uploadPeriod));
             map.put(_comment, jjTools.getParameter(request, _comment));
             map.put(_level, jjTools.getParameter(request, _level));
-            map.put(_condition, jjTools.getParameter(request, _condition));
+            map.put(_responsibleGauge, jjTools.getParameter(request, _responsibleGauge));
+            map.put(_isActive, jjTools.getParameter(request, _isActive));
             if (!db.update(tableName, map, _id + "=" + id)) {
                 String errorMessage = "عملیات ویرایش به درستی صورت نگرفت.";
                 if (jjTools.isLangEn(request)) {
@@ -625,4 +643,37 @@ public class ManagementGauges {
             return "";
         }
     }
+
+    public static void taskDocumentaryReminder() throws Exception {
+        System.out.println("#################################################");
+        System.out.println("######>>>>>RUN:taskDocumentaryReminder###########");
+        Server.Connect();
+        jjDatabaseWeb db = Server.db;
+        List<Map<String, Object>> rows = jjDatabaseWeb.separateRow(db.Select(tableName, _isActive + "=1 AND " + _uploadPeriod + " !='' "));
+        for (int i = 0; i < rows.size(); i++) {
+            jjCalendar_IR date = new jjCalendar_IR(rows.get(i).get(_date).toString());
+            int period = Integer.valueOf(rows.get(i).get(_uploadPeriod).toString());
+            int today = jjCalendar_IR.getDatabaseFormat_8length(null, true);
+            while (today > date.getDBFormat_8length()) {
+                date.addDay(period);
+            }
+            if (date.getDBFormat_8length() == today) {
+                System.out.println(">>>>>>>" + today);
+                DefaultTableModel rowDocument = db.Select(Documentary.tableName, Documentary._gaugeId + "= " + rows.get(i).get(_id) + " AND " + Documentary._dateCreation + "=" + today);
+                if (rowDocument.getRowCount() == 0) {// اگر قبلا ایجاد نکرده بودیم
+                    Map<String, Object> map = new HashMap<>();
+                    map.put(Documentary._dateCreation, today);
+                    map.put(Documentary._gaugeId, rows.get(i).get(_id));
+                    map.put(Documentary._responsibleLoadingRole, rows.get(i).get(_responsibleLoadingRole));
+                    map.put(Documentary._title,  rows.get(i).get(_step));
+                    List<Map<String, Object>> insertedRow = jjDatabaseWeb.separateRow(db.insert(Documentary.tableName, map));
+                    if (insertedRow.size() > 0) {
+                        Documentary.changeStatus(db, insertedRow.get(0).get(Documentary._id).toString(), Documentary.status_noUploaded);
+                    }
+                }
+            }
+        }
+        System.out.println("#################################################");
+    }
+    
 }

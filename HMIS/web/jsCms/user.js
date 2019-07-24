@@ -119,14 +119,14 @@ var cmsUser = {
         new jj("#swUserForm").jjFormClean();
         new jj("#user_grade").jjVal('');
         $('#PicPreview').attr('src', '');
-        $('#PicPreviewPersonal').attr('src', '');
-        $('#PicPreviewSignature').attr('src', '');
+        $('#PicPreviewPersonal').attr('src', 'img/preview.jpg');
+        $('#PicPreviewSignature').attr('src', 'img/preview.jpg');
         $("#inputTextSelectorDiv").html('');
-        $("#user_pic1").html('');
-        $("#user_pic2").html('');
-        $("#user_pic3").html('');
-        $("#user_pic4").html('');
-        $("#inputAfterSelect").html('');
+        $("#user_pic1").html('img/preview.jpg');
+        $("#user_pic2").html('img/preview.jpg');
+        $("#user_pic3").html('img/preview.jpg');
+        $("#user_pic4").html('img/preview.jpg');
+        $("#inputAfterSelect").html('img/preview.jpg');
         
          new jj("#user_attachPicPersonal").jjVal('');
          new jj("#user_attachPicPersonnelCard").jjVal('');

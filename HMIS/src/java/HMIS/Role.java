@@ -41,9 +41,8 @@ public class Role {
     public static String _id = "id";
 
     public static String _title = "role_title";
-    public static String _date = "role_date";
     public static String _user_id = "role_user_id";//
-    public static String _condition = "role_condition";//sh1: این برای چی هست ؟ کامنتش را بگذارید لطفا
+    public static String _condition = "role_condition";//sh1: فعال یاغیر فعال بودن نقش
 //    public static String _condition2 = "role_condition2";//
     public static String _comment = "role_comment";//
     public static String _discription = "role_discription";//
@@ -61,9 +60,12 @@ public class Role {
     /**
      * این جدول مخصوص بخش ها ست
      *
-     * @param height is int height of table
-     * @param sort is number of default sort column number
-     * @param panel is container id
+     * @param request
+     * @param response
+     * @param db
+     * @param isPost
+     * @return
+     * @throws java.lang.Exception
      */
     public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
@@ -72,7 +74,6 @@ public class Role {
 //                return hasAccess;
 //            }
             StringBuilder html = new StringBuilder();
-            StringBuilder html3 = new StringBuilder();
 
             DefaultTableModel dtm = db.Select(Role.tableName);
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
@@ -84,20 +85,20 @@ public class Role {
                     + "        </p>");
 
             html.append("<table class='table display responsive nowrap' id='refreshParts' dir='rtl'><thead>");
-            html.append("<th style='text-align: center;' width='5%'>کد</th>");
-            html.append("<th style='text-align: center;' width='30%'>عنوان</th>");
-            html.append("<th style='text-align: center;' width='20%'>وضعیت</th>");
+            html.append("<th  class='c' width='5%'>کد</th>");
+            html.append("<th  class='c' width='30%'>عنوان</th>");
+            html.append("<th  class='c' width='20%'>وضعیت</th>");
 
             html.append("<th style='text-align: center;' width='5%'>عملیات</th>");
             html.append("</thead><tbody>");
             for (int i = 0; i < row.size(); i++) {
                 html.append("<tr  onclick='hmisRole.m_select(" + row.get(i).get(_id) + ");' class='mousePointer' >");
-                html.append("<td class='tahoma10' style='text-align: center;'>" + (row.get(i).get(_id).toString()) + "</td>");
-                html.append("<td class='tahoma10' style='text-align: left;'>" + (row.get(i).get(_title).toString()) + "</td>");
+                html.append("<td  class='c'>" + (row.get(i).get(_id).toString()) + "</td>");
+                html.append("<td  class='c'>" + (row.get(i).get(_title).toString()) + "</td>");
                 if ((row.get(i).get(_condition).toString()).equals("active")) {
-                    html.append("<td class='tahoma10' style='text-align: right;'>فعال</td>");
+                    html.append("<td  class='c'>فعال</td>");
                 } else {
-                    html.append("<td class='tahoma10' style='text-align: right;'>غیر فعال</td>");
+                    html.append("<td  class='c'>غیر فعال</td>");
                 }
 //                html.append("<td class='tahoma10' style='text-align: right;'>" + (row.get(i).get(_condition2).toString()) + "</td>");
 
@@ -115,26 +116,54 @@ public class Role {
             if (panel.equals("")) {
                 panel = "swRoleTbl";
             }
-            String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
-            html2 += Js.table("#refreshRole", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست نقش ها");
-            Server.outPrinter(request, response, html2);
+            String script = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
+            script += Js.table("#refreshRole", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست نقش ها");
+            Server.outPrinter(request, response, script);
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
             return "";
         }
     }
+
     /**
-     *آی دی کاربر را می گیرد و نقش کاربر را بر می گرداند
-     * اگر آی دی کاربر را نداشت آی دی را از سشن می خواند
+     * آی دی نقش را می گیرد و نقش کاربر را بر می گرداند برای توابع سمت جاوا
+     * مواقعی که میخواهیم عنوان نقش کاربر را بدست بیاوریم اگر نقشی نداشت تهی بر
+     * میگرداند این متد به کلاینت چیزی نمیفرستد
+     *
+     * @param roleId
+     * @param db
+     * @param isPost
+     * @return
+     * @throws Exception
+     */
+    public static String getRoleName(String roleId, jjDatabaseWeb db) throws Exception {
+        try {
+            if (jjNumber.isDigit(roleId)) {
+                List<Map<String, Object>> UserRowRole = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + roleId));
+                if (!UserRowRole.isEmpty()) {
+                    return UserRowRole.get(0).get(_title).toString();
+                }
+            }
+            return "";
+
+        } catch (Exception ex) {
+            return Server.ErrorHandler(ex);
+        }
+    }
+
+    /**
+     * آی دی کاربر را می گیرد و نقش کاربر را بر می گرداند اگر آی دی کاربر را
+     * نداشت آی دی را از سشن می خواند
+     *
      * @param request panel,id
      * @param response
      * @param db
      * @param isPost
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
-        public static String getRoleName(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+    public static String getRoleName(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
             if (!hasAccess.equals("")) {
@@ -144,17 +173,16 @@ public class Role {
 
             StringBuilder script = new StringBuilder();
 //            String script = "";
-           
+
             String panel = jjTools.getParameter(request, "panel");
             String userId = jjTools.getParameter(request, "userId");
 
-         
-                List<Map<String, Object>> UserRowRole = jjDatabase.separateRow(db.Select(Role.tableName, Role._user_id + "=" + userId));
-                if (!UserRowRole.isEmpty()) {
-                    script.append(Js.setVal("#"+panel,UserRowRole.get(0).get(_title)) );
-                }
-            
-           Server.outPrinter(request, response, script);
+            List<Map<String, Object>> UserRowRole = jjDatabase.separateRow(db.Select(Role.tableName, Role._user_id + "=" + userId));
+            if (!UserRowRole.isEmpty()) {
+                script.append(Js.setVal("#" + panel, UserRowRole.get(0).get(_title)));
+            }
+
+            Server.outPrinter(request, response, script);
             return "";
 
         } catch (Exception ex) {
@@ -169,7 +197,7 @@ public class Role {
             StringBuilder html1 = new StringBuilder();
             ///ایجاد جدول کاربران 
             ///توسط شیران1
-            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
+            List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, _id + ">5"));
 
             html1.append("<table class='table display responsive nowrap' id='RefreshlistKarbaran'><thead>");
             html1.append("<th width='10%'>کد </th>");
@@ -180,10 +208,10 @@ public class Role {
             html1.append("</thead><tbody>");
             for (int i = 0; i < userRow.size(); i++) {
                 html1.append("<tr>");
-                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRow.get(i).get(Access_User._id)) + "</td>");
-                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRow.get(i).get(Access_User._family)) + "</td>");
-                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRow.get(i).get(Access_User._name)) + "</td>");
-                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRow.get(i).get(Access_User._email)) + "</td>");
+                html1.append("<td  class='c'>" + (userRow.get(i).get(Access_User._id)) + "</td>");
+                html1.append("<td class='c'>" + (userRow.get(i).get(Access_User._family)) + "</td>");
+                html1.append("<td class='c'>" + (userRow.get(i).get(Access_User._name)) + "</td>");
+                html1.append("<td class='c'>" + (userRow.get(i).get(Access_User._email)) + "</td>");
                 html1.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'  onclick='hmisRole.m_selectKarbar(" + userRow.get(i).get(Access_User._id) + ");' ></td>");
                 html1.append("</tr>");
             }
@@ -237,7 +265,7 @@ public class Role {
 
             map.put(_user_id, jjTools.getParameter(request, _user_id));
             map.put(_discription, jjTools.getParameter(request, _discription));
-            map.put(_date, jjTools.getParameter(request, _date));
+//            map.put(_date, jjTools.getParameter(request, _date));
             map.put(_comment, request.getParameter("role_comment"));
             if (db.insert(tableName, map).getRowCount() == 0) {
                 String errorMessage = "عملیات درج به درستی صورت نگرفت.";
@@ -249,7 +277,7 @@ public class Role {
                 return "";
             }
 
-            Server.outPrinter(request, response, Js.jjPlans.refresh());
+            Server.outPrinter(request, response, Js.jjRole.refresh());
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));
@@ -293,7 +321,7 @@ public class Role {
             ///ایجاد جدول کاربران 
             ///توسط شیران1
             ////
-            List<Map<String, Object>> userRows = jjDatabase.separateRow(db.Select(Access_User.tableName));
+            List<Map<String, Object>> userRows = jjDatabase.separateRow(db.Select(Access_User.tableName, _id + ">5"));
 
             html1.append("<table class='table display responsive nowrap' id='RefreshlistKarbaranDarSelect'><thead>");
             html1.append("<th width='10%'>کد </th>");
@@ -308,11 +336,11 @@ public class Role {
 //         
                 html1.append("<tr>");
 
-                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._id)) + "</td>");
+                html1.append("<td class='c'>" + (userRows.get(i).get(Access_User._id)) + "</td>");
 
-                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._family)) + "</td>");
-                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._name)) + "</td>");
-                html1.append("<td class='tahoma10' style='text-align: center;'>" + (userRows.get(i).get(Access_User._email)) + "</td>");
+                html1.append("<td class='c'>" + (userRows.get(i).get(Access_User._family)) + "</td>");
+                html1.append("<td class='c'>" + (userRows.get(i).get(Access_User._name)) + "</td>");
+                html1.append("<td class='c'>" + (userRows.get(i).get(Access_User._email)) + "</td>");
 
                 html1.append("<td style='margin:auto;color:blue;font-size: 26px;' class='fa fa-user'  onclick='hmisRole.m_selectKarbar(" + userRows.get(i).get(Access_User._id) + ");' ></td>");
 //             
@@ -453,8 +481,6 @@ public class Role {
             map.put(_discription, request.getParameter(_discription));
             map.put(_name, request.getParameter(_name));
 
-//          map.put(_date, new jjCalendar_IR().getDBFormat_8length());
-            map.put(_date, jjTools.getParameter(request, _date));
             map.put(_comment, request.getParameter("role_comment"));
 
             String id = jjTools.getParameter(request, _id);
@@ -521,26 +547,28 @@ public class Role {
         }
     }
 
-    /**
-     * آی دی کاربر را می گیرد و نقش های او را بصورت آپشن های مورد نیاز در سلکت برمیگرداند
-     *این متد فقط سمت وب کاربرد دارد و در فایل های جی اس پی هم میشود استفاده کرد
-     * @param userId
-     * @param db
-     * @return
-     * @throws Exception
-     */
-    public static String getUeserRolesSelectOption(int userId, jjDatabaseWeb db) throws Exception {
-        StringBuilder optionHtml = new StringBuilder();
+    public static String getUeserRolesSelectOption(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
-            List<Map<String, Object>> userRolesRows = jjDatabase.separateRow(db.Select(tableName, _id + "," + _title, "id=" + userId, _title));// بر اساس حروف الفبا مرتب باشد بهتر است
+            int userId = jjTools.getSeassionUserId(request);
+            StringBuilder optionHtml = new StringBuilder();
+            List<Map<String, Object>> userRolesRows = jjDatabase.separateRow(db.Select(tableName, _id + "," + _title, _user_id + "=" + userId, _title));// بر اساس حروف الفبا مرتب باشد بهتر است
             for (int i = 0; i < userRolesRows.size(); i++) {
-                if (i == 1) {
-                    optionHtml.append("<option  value='").append(userRolesRows.get(i).get(_id)).append("' selected='selected'>").append(userRolesRows.get(i).get(_title)).append("</option>");                    
+                if (i == 0) {
+                    optionHtml.append("<option  value='").append(userRolesRows.get(i).get(_id)).append("' selected='selected'>").append(userRolesRows.get(i).get(_title)).append("</option>");
                 } else {
                     optionHtml.append("<option  value='").append(userRolesRows.get(i).get(_id)).append("'>").append(userRolesRows.get(i).get(_title)).append("</option>");
                 }
             }
-            return optionHtml.toString();
+            String panel = jjTools.getParameter(request, "panel");
+            if (panel.isEmpty()) {
+                panel = "#forms_ownerRole";
+            }
+            if (needString) {
+                return optionHtml.toString();
+            } else {
+                Server.outPrinter(request, response, Js.setHtml(panel, optionHtml));
+                return "";
+            }
         } catch (Exception e) {
             return "";
         }
@@ -562,7 +590,38 @@ public class Role {
         StringBuilder optionHtml = new StringBuilder();
         try {
             List<Map<String, Object>> rowAllActiveRols = jjDatabase.separateRow(db.Select(tableName, _id + "," + _title, "id>=0", _title));// بر اساس حروف الفبا مرتب باشد بهتر است
-                optionHtml.append("<option  value='ALL'>همه مسئولین سازمانی</option>");
+            optionHtml.append("<option  value='ALL'>همه مسئولین سازمانی</option>");
+            for (int i = 0; i < rowAllActiveRols.size(); i++) {
+                optionHtml.append("<option  value='").append(rowAllActiveRols.get(i).get(_id)).append("'>").append(rowAllActiveRols.get(i).get(_title)).append("</option>");
+            }
+            String panel = jjTools.getParameter(request, "panel");
+            if (panel.isEmpty()) {
+                panel = ".roleSelectOption";
+            }
+            Server.outPrinter(request, response, Js.setHtml(panel, optionHtml));
+            return "";
+        } catch (Exception e) {
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+        }
+    }
+
+    /**
+     * این متد نقش ها را بصورت آپشن برای قرار گرفتن در سلکت بر می گرداند
+     *
+     * @param request panel سلکتور پنل است دقت شود ممکن است نامبر ساین نداشته
+     * باشد یا نخواهد
+     * @param response
+     * @param db
+     * @param needString
+     * @return بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در
+     * پنل معرفی شده
+     * @throws Exception
+     */
+    public static String getSelectOptionRequierd(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        StringBuilder optionHtml = new StringBuilder();
+        try {
+            List<Map<String, Object>> rowAllActiveRols = jjDatabase.separateRow(db.Select(tableName, _id + "," + _title, "id>=0", _title));// بر اساس حروف الفبا مرتب باشد بهتر است
             for (int i = 0; i < rowAllActiveRols.size(); i++) {
                 optionHtml.append("<option  value='").append(rowAllActiveRols.get(i).get(_id)).append("'>").append(rowAllActiveRols.get(i).get(_title)).append("</option>");
             }

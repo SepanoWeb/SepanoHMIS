@@ -37,9 +37,9 @@ and open the template in the editor.
 
                 </p>
                 <br/>
-                 <input type="hidden" id="managementGauges_id" name="id" />
+                <input type="hidden" id="managementGauges_id" name="id" />
                 <div class="row">
-                    <div class="col-lg-4" style="float: left">
+                    <div class="col-lg-10" style="float: left">
                         بخش/واحد
                         <!--آپسن ها را از جدول بخش ها بیاورد-->
                         <div class="form-group" style=" margin-bottom: 20px;" >
@@ -47,51 +47,79 @@ and open the template in the editor.
                             </select>
                         </div>
                     </div>
+                     </div>
+                 <div class="row">
+                    <div class="col-lg-10" style="float: left">
+                       مسئول سنجه
+                        <!--آپسن ها را از جدول بخش ها بیاورد-->
+                        <div class="form-group" style=" margin-bottom: 20px;" >
+                            <select  id="managementGauges_responsibleGauge" name="managementGauges_responsibleGauge"  class="form-control">   
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+               
+                <div class="row">
+                    <div class="col-lg-10" style="float: left">
+                        مسئول سنجه
+                        <!--آپسن ها را از جدول بخش ها بیاورد-->
+                        <div class="form-group" style=" margin-bottom: 20px;" >
+                            <select  id="managementGauges_responsibleGauge" name="managementGauges_responsibleGauge"  class="form-control">   
+                            </select>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="row">
                     <!--این قسمت از برنامه استراتژیک بارگذاری می گردد-->
-                    <div class="col-lg-4" >
+                    <div class="col-lg-10" >
                         محور
-                        <select class="form-control" id="managementGauges_axis" name='managementGauges_axis' >                    
-                         
-                        </select>
+                        <div id="axis_div">
+                            <select class="form-control" id="managementGauges_axis" name='managementGauges_axis'>
+                            </select>
+                        </div>
+                        <input class="form-control "  id='managementGauges_axis1' style="display: none;width: 100%;border-color: blue;"  name='managementGauges_axis1'/> 
                     </div>            
+                    <!--                    <div class="col-lg-5">
+                                            
+                                            </div>-->
                     <div class="col-lg-2">
-                        <input  id='managementGauges_axis1' style="display: none"  name='managementGauges_axis1'/> 
-                        
-                        
-               
                         <button class="btn btn-success btn-block mg-b-10" style="margin-top: 20px" onclick="hmisManagementGauges.changeSelectToInputAxis()">
-                        
-                     ...</button>
-                    </div><!-- col -->
+
+                            ...</button>
+                    </div>
+                    <!-- col -->
                 </div><!-- row -->
                 <div class="row">
                     <!--این قسمت از برنامه استراتژیک بارگذاری می گردد-->
-                    <div class="col-lg-4">
+                    <div class="col-lg-10">
                         زیر محور
-                        <select class="form-control" name="managementGauges_underTheAxis" id="managementGauges_underTheAxis">                    
-                           
-                        </select>
+                        <div id="underTheAxis_div">
+                            <select class="form-control" name="managementGauges_underTheAxis" id="managementGauges_underTheAxis">                    
+
+                            </select>
+                        </div>
+                        <input class="form-control"  id='managementGauges_underTheAxis1' style="display: none;width: 100%;border-color: blue;"  name='managementGauges_underTheAxis1'/> 
                     </div>          
                     <div class="col-lg-2">
                         .
-                          <input  id='managementGauges_underTheAxis1' style="display: none"  name='managementGauges_underTheAxis1'/> 
-                          <button class="btn btn-success btn-block mg-b-10"  onclick="hmisManagementGauges.changeSelectToInputUnderTheAxis()">
-                       ...</button>
+                        <button class="btn btn-success btn-block mg-b-10"  onclick="hmisManagementGauges.changeSelectToInputUnderTheAxis()">
+                            ...</button>
                     </div><!-- col -->
                 </div><!-- row -->
                 <div class="row">
                     <!--این استاندارد ها جدول واسط نمی خواهد بر اساس همان نوشته ها مرتب سازی کافی است-->
                     <div class="col-lg-10" >
                         استاندارد
-                        <select class="form-control" id="managementGauges_standard" name="managementGauges_standard">                    
-                       
-                        </select>
+                        <div id="standard_div">
+                            <select class="form-control" id="managementGauges_standard" name="managementGauges_standard">                    
+
+                            </select>
+                        </div>
+                        <input class="form-control "  id='managementGauges_standard1' style="display: none;width: 100%;border-color: blue;"  name='managementGauges_standard1'/> 
                     </div>
                     <div class="col-lg-2">
                         .
-                        <input  id='managementGauges_standard1' style="display: none"  name='managementGauges_standard1'/> 
                         <button class="btn btn-success btn-block mg-b-10" style="margin-top: 1px" onclick="hmisManagementGauges.changeSelectToInputStandard()">...</button>
                     </div><!-- col -->
 
@@ -100,12 +128,13 @@ and open the template in the editor.
                     <!--این قسمت از برنامه استراتژیک بارگذاری می گردد-->
                     <div class="col-lg-10" >
                         سنجه
-                        <select class="form-control"  name="managementGauges_gauge" id="managementGauges_gauge">                    
-                    
-                        </select>
+                        <div id="gauge_div">
+                            <select class="form-control"  name="managementGauges_gauge" id="managementGauges_gauge">
+                            </select>
+                        </div>
+                        <input  class="form-control" id='managementGauges_gauge1' style="display: none;width: 100%;border-color: blue;"  name='managementGauges_gauge1'/> 
                     </div>
                     <div class="col-lg-2">
-                      <input  id='managementGauges_gauge1' style="display: none"  name='managementGauges_gauge1'/> 
                         <button class="btn btn-success btn-block mg-b-10" style="margin-top: 20px" onclick="hmisManagementGauges.changeSelectToInputGauge()">...</button>
                     </div><!-- col -->
                 </div><!-- row -->
@@ -113,22 +142,22 @@ and open the template in the editor.
                     <!--این قسمت از برنامه استراتژیک بارگذاری می گردد-->
                     <div class="col-lg-10">
                         گام
-                        <select class="form-control" id="managementGauges_step"  name="managementGauges_step">                    
-                        
-                        </select>
+                        <div id="step_div">
+                            <select class="form-control" id="managementGauges_step"  name="managementGauges_step">
+                            </select>
+                        </div>
+                        <input class="form-control "   id='managementGauges_step1' style="display: none;width:100%;border-color: blue;"  name='managementGauges_step1'/> 
                     </div>
                     <div class="col-lg-2">
-                        <input  id='managementGauges_step1' style="display: none"  name='managementGauges_step1'/> 
                         <button class="btn btn-success btn-block mg-b-10" style="margin-top: 20px" onclick="hmisManagementGauges.changeSelectToInputStep()">...</button>
                     </div><!-- col -->
-                </div><!-- row -->
-
+                </div><!-- row -->                
                 <div class="row">
+                    
                     <div class="col-lg-4">
                         مسئول بارگذاری
-                        <select class="form-control" id="managementGauges_responsibleLoading" name="managementGauges_responsibleLoading">
-                            <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->
-                        
+                        <select  class="form-control" id="managementGauges_responsibleLoadingRole" name="managementGauges_responsibleLoadingRole">
+                            <!--این آپشن ها را از قسمت مسئولان باید بیاوریم-->                        
                         </select>
                     </div><!-- form-group -->
                     <div class="col-lg-4">
@@ -139,45 +168,63 @@ and open the template in the editor.
                     </div>
                     <div class="col-lg-4">
                         دوره بارگذاری
-                        <select class="form-control" id="managementGauges_uploadDate" name="managementGauges_uploadDate">
-                           
+                        <select class="form-control" id="managementGauges_uploadPeriod" name="managementGauges_uploadPeriod">
+                            <option value="">انتخاب کنید</option>
+                            <option value="1">روزانه</option>
+                            <option value="7">7 روزه</option>
+                            <option value="30">30 روزه</option>
+                            <option value="60">60 روزه</option>
+                            <option value="90">90 روزه</option>
+                            <option value="180">180 روزه</option>
+                            <option value="365">365 روزه</option>
                         </select>
                     </div>
                 </div><!-- col -->
                 <br/>
                 <div class="row">
-                     <div class="col-lg-4">
+
+                    <div class="col-lg-4">
+                        سطح
+                        <select class="form-control" id="managementGauges_level" name="managementGauges_level">
+                            <option value="1" >سطح 1</option>
+                            <option value="2" >سطح 2</option>
+                            <option value="3" >سطح 3</option>
+                        </select>
+
+
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="col-lg">
+                            فعال
+                            <input  id="active"  name="managementGauges_isActive"  value="1" type="radio"/>
+                        </div>
+                        <div class="col-lg">
+                            غیر فعال
+                            <input  id="noActive"   name="managementGauges_isActive"  value="0" type="radio" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="margin-top: 3%;">
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
                         توضیحات
-                        <textarea class="form-control" id="managementGauges_comment" name="managementGauges_comment">
-                           
-                        </textarea>
-                    </div>
-                     <div class="col-lg-4">
-                         سطح
-                        <input class="form-control" id="managementGauges_level" name="managementGauges_level">
-                          
-                        
-                    </div>
-                     <div class="col-lg-4">
-                        
-                        فعال
-                        <input type="checkbox"  class="form-control" style="position: relative;top: -27px;" id="managementGauges_condition" name="managementGauges_condition">
-<!--                        غیر فعال
-                        <input type="radio"  class="form-control" id="managementGauges_condition1" style="position: relative;top: -26px;" name="managementGauges_condition">-->
-                          
-                        
+                        <div class="summernote" id="managementGauges_comment" name="managementGauges_comment">
+
+                        </div>
                     </div>
                 </div>
-                
-            <div class="row col-lg-12">
-                <div class="mg-t-20  col-lg">
-                    <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="hmisManagementGauges.m_show_tbl();">بازگشت </button>                
-                </div><!-- col -->
-                <div id="ManagementGauges_button" class="col-lg-9 mg-t-20 row">            
-                </div>
-            </div><!-- card -->
+                <div class="row col-lg-12">
+                    <div class="mg-t-20  col-lg">
+                        <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="hmisManagementGauges.m_show_tbl();">بازگشت </button>                
+                    </div><!-- col -->
+                    <div id="ManagementGauges_button" class="col-lg-9 mg-t-20 row">            
+                    </div>
+                </div><!-- card -->
             </div><!-- card-body -->
-        
+
         </div><!-- card -->
         <br/>
     </body>

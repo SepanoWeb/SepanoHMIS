@@ -25,19 +25,29 @@ public class jjTime {
                 + ":" + (c.get(Calendar.MINUTE) < 10 ? "0" + c.get(Calendar.MINUTE) : c.get(Calendar.MINUTE));
     }
 
-    public static String getTime5lenth(String time4lenth) {
-        if(time4lenth.length()!=4){
-            jjCalendar_IR myDate = new jjCalendar_IR();
-            return myDate.getTimeFormat_5length();
+    public static String getTime5lenth(String timeDBformat) {
+        if (timeDBformat.length() == 4) {
+            return timeDBformat.substring(0, 2) + ":" + timeDBformat.substring(2, 4);
+        } else if (timeDBformat.length() > 0 && timeDBformat.length() < 4) {// در ساعت های بعد از دوازده شب برای اینکه مشکل نخورد صفر باید اضافه کنیم 00:06 یا 01:13 یا 00:12
+            String temp ="";
+            for (int i = 0; i < (4-timeDBformat.length()); i++) {
+                temp += "0";
+            }
+            temp+=timeDBformat;
+                System.out.println(temp);
+            return temp.substring(0, 2) + ":" + temp.substring(2, 4);
         }
-        return time4lenth.substring(0, 2) + ":" + time4lenth.substring(2, 4);
+        jjCalendar_IR myDate = new jjCalendar_IR();
+        return myDate.getTimeFormat_5length();
+
     }
+
     public static String getTime4lenth(String time5lenth) {
-        time5lenth=time5lenth.replaceAll(" ", "");
-        if(time5lenth.length()!=5){
+        time5lenth = time5lenth.replaceAll(" ", "");
+        if (time5lenth.length() != 5) {
             jjCalendar_IR myDate = new jjCalendar_IR();
             return myDate.getTimeFormat_4length();
-        }        
+        }
         return time5lenth.replace(":", "");
     }
 

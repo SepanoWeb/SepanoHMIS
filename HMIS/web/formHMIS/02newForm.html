@@ -183,7 +183,7 @@
                 <div class="col-lg-12">
                     متن پیشرفته ی راهنمای فرم
                     <textarea id="forms_htmlContent" name="forms_htmlContent" rows="4" class="form-control summernote" placeholder="توضیحات فرم"></textarea>
-                </div><!-- col -->
+                </div><!-- col -->                
                 <div class="col-lg-12">
                     قالب
                     <textarea id="forms_css" name="forms_css"   rows="4" class="form-control l" placeholder="<style type='text/css>...</style> OR <link href='upload/yourCss.css' rel='stylesheet'> '"></textarea>
@@ -246,6 +246,12 @@
                                     <input id="formQuestions_placeHolder" name="formQuestions_placeHolder"  class="form-control" placeholder="متن راهنمایی که کمک میکند کاربر چطور فیلد مربوطه را تکمیل کند" type="text">                            
                                 </div><!-- form-group -->
                             </div><!-- col -->
+                            <div class="col-lg-10">
+                                <div class="form-group has-success mg-b-0">
+                                    پاسخ صحیح (فقط هنگام مشاهده ی نتایج به کاربر نشان داده میشود):
+                                    <input id="formQuestions_trueAnswer" name="formQuestions_trueAnswer"  class="form-control" placeholder="پاسخ صحیح در حدود 200 کارکاکتر" type="text">                            
+                                </div><!-- form-group -->
+                            </div><!-- col -->
                             <div class="col-lg-2">
                                 <div class="form-group has-warning mg-b-0">
                                     ضریب وزنی سوال:
@@ -260,6 +266,11 @@
                             <div class="col-lg-12">
                                 متن تکمیلی و پیشرفته 
                                 <textarea id="formQuestions_htmlDiscription" name="formQuestions_htmlDiscription" rows="4" class="form-control summernote" placeholder="توضیحات فرم"></textarea>
+                            </div><!-- col -->
+                            <div class="col-lg-12">
+                                متن پیشرفته ی راهنمای پس از آزمون   (فقط هنگام مشاهده ی نتایج به کاربر نشان داده میشود) :
+                                <textarea id="formQuestions_htmlDiscriptionInResult" name="formQuestions_htmlDiscriptionInResult" rows="4" class="form-control summernote" 
+                                          placeholder="مثل روش رسیدن به پاسخ صحیح و یا راهنمایی ای که هنگام مشاهده ی نتایج کاربر مشاهده می کند"></textarea>
                             </div><!-- col -->
                         </div><!-- row -->
                         <input id="formQuestions_answersType" name="formQuestions_answersType"  type="hidden" value="select_option">                            
@@ -356,7 +367,7 @@
                         <div class="row col-sm-12 mg-t-20">
                             <div class="col-lg-3">
                                 <button class="btn btn-outline-secondary btn-block mg-b-10" onclick="hmisFormQuestions.m_show_tbl();
-                                    $('#refreshFormQuestions').dataTable({destroy: true});" title="بازگشت">بازگشت</button>
+                                        $('#refreshFormQuestions').dataTable({destroy: true});" title="بازگشت">بازگشت</button>
                             </div><!-- col-1 --> 
                             <div id="form_Question_buttons" class="col-lg row" >
                             </div>

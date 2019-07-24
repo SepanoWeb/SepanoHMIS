@@ -2,5 +2,10 @@
 @font-face {
   font-family:'Iranian-Sans';
   font-style: normal;
-  src: url(./fonts/Iranian-Sans.TTF) format('truetype');
+  src: url(fontcss/Iranian-Sans.TTF) format('truetype');
+}
+          @font-face {
+  font-family:'IranNastaliq';
+  font-style: normal;
+  src: url(fontcss/IranNastaliq.ttf) format('truetype');
 }

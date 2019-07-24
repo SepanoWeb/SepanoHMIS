@@ -35,6 +35,8 @@ public class FormQuestions {
     public static final String _weight = "formQuestions_weight";
     public static final String _answersType = "formQuestions_answersType";
     public static final String _htmlDiscription = "formQuestions_htmlDiscription";
+    public static final String _trueAnswer = "formQuestions_trueAnswer";
+    public static final String _htmlDiscriptionInResult = "formQuestions_htmlDiscriptionInResult";
 
     public static int rul_rfs = 0;//60;
     public static int rul_rfs_own = 0;// 61;//فقط امکان دیدن فرم های ایجاد شده ی توسط خود ایجاد کننده را دارد // بر روی سمت
@@ -172,6 +174,7 @@ public class FormQuestions {
             script.append(Js.setVal("#" + _icon, formRow.get(0).get(_icon).toString()));
             script.append(Js.setVal("#" + _placeHolder, formRow.get(0).get(_placeHolder).toString()));
             script.append(Js.setVal("#" + _answersType, formRow.get(0).get(_answersType).toString()));
+            script.append(Js.setVal("#" + _trueAnswer, formRow.get(0).get(_trueAnswer).toString()));
             script.append(Js.removeClass(".formTypeSelector li.active", "active"));
             script.append(Js.addClass("#field_" + formRow.get(0).get(_answersType).toString(), "active"));
             if (formRow.get(0).get(_answersType).toString().equals("radio") || formRow.get(0).get(_answersType).toString().equals("select_option") || formRow.get(0).get(_answersType).toString().equals("checkbox")) {
@@ -190,6 +193,7 @@ public class FormQuestions {
 
             }
             script.append(Js.setValSummerNote("#" + _htmlDiscription, formRow.get(0).get(_htmlDiscription).toString()));
+            script.append(Js.setValSummerNote("#" + _htmlDiscriptionInResult, formRow.get(0).get(_htmlDiscriptionInResult).toString()));
             script.append(Js.setVal("#" + _isRequierd, formRow.get(0).get(_isRequierd).toString()));
             script.append(Js.setVal("#" + _weight, formRow.get(0).get(_weight).toString()));
             String htmlBottons = "";
@@ -233,7 +237,9 @@ public class FormQuestions {
             map.put(_placeHolder, jjTools.getParameter(request, _placeHolder));
             map.put(_defaultValue, jjTools.getParameter(request, _defaultValue));
             map.put(_answersType, jjTools.getParameter(request, _answersType));
+            map.put(_trueAnswer, jjTools.getParameter(request, _trueAnswer));
             map.put(_htmlDiscription, jjTools.getParameter(request, _htmlDiscription));
+            map.put(_htmlDiscriptionInResult, jjTools.getParameter(request, _htmlDiscriptionInResult));
             map.put(_title, jjTools.getParameter(request, _title));
             map.put(_formID, jjTools.getParameter(request, _formID));
             List<Map<String, Object>> insertedFormRow = jjDatabaseWeb.separateRow(db.insert(tableName, map));
@@ -271,7 +277,9 @@ public class FormQuestions {
             map.put(_isRequierd, jjTools.getParameter(request, _isRequierd));
             map.put(_icon, jjTools.getParameter(request, _icon));
             map.put(_weight, jjTools.getParameter(request, _weight));
+            map.put(_trueAnswer, jjTools.getParameter(request, _trueAnswer));
             map.put(_answersType, jjTools.getParameter(request, _answersType));
+            map.put(_htmlDiscriptionInResult, jjTools.getParameter(request, _htmlDiscriptionInResult));
             map.put(_htmlDiscription, jjTools.getParameter(request, _htmlDiscription));
             map.put(_title, jjTools.getParameter(request, _title));
 //            map.put(_formID, jjTools.getParameter(request, _formID));نباید تغییر کند قاعدتا ولی بگذاریم هم طوری نمی شود
@@ -291,6 +299,7 @@ public class FormQuestions {
 
     public static String delete(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db,boolean needString)  throws Exception {
         try {
+            //@ToDoدر ورژن استاندارد سوالاتی که پاسخ داده شنده اند را نمیتوانیم حذف کنیم 
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
             if (!hasAccess.equals("")) {
                 Server.outPrinter(request, response,Js.modal(hasAccess, "پیام سامانه"));

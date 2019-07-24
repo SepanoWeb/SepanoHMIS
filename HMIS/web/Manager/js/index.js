@@ -83,14 +83,12 @@ function formAnswerSet_insert() {
         param += "&" + new jj('#swOneFormToCompleteForm').jjSerial();
         new jj(param).jjAjax2(false);
         $("formAnserSetBtn").html("");
-        window.close();
-        
     }
 }
+;
 /**
  * ویرایش پاسخ های داده شده که در وضعیت ثبت اولیه هستند
  * سوالاتی که اجباری هستند را خطا نمیدهد
- * @returns {undefined}
  */
 function formAnswerSet_edit() {
     var requireds = $("#swOneFormToCompleteForm input[required]:text,#swOneFormToCompleteForm input[required]:hidden");
@@ -120,17 +118,16 @@ function formAnswerSet_edit() {
         param += "&" + new jj('#swOneFormToCompleteForm').jjSerial();
         new jj(param).jjAjax2(false);
         $("formAnserSetBtn").html("");
-        window.close();
-        
     }
 }
+;
 /**
  *  ذخیره ی و ثبت نهایی فرم
  *  به سرور می فرسد.
  * سوالات اجباری را چک می کند که تکمیل شده باشند و در غیر اینصورت اسکرول می کند به آن سوال
  * @returns {undefined}
  */
-function formAnswerSet_editAndFinalForm () {
+function formAnswerSet_editAndFinalForm() {
     var requireds = $("#swOneFormToCompleteForm input[required]:text,#swOneFormToCompleteForm input[required]:hidden");
     var flag = true;
     var firsnonAnswered;
@@ -145,7 +142,7 @@ function formAnswerSet_editAndFinalForm () {
             $(requireds[i]).parent().parent().removeClass('redBorder');
         }
     }
-    if (!flag) {       
+    if (!flag) {
         new jj("شما به تعدادی از سوالات پاسخ نداده اید").jjModal(" در صورت تایید نهایی دیگر اجازه ی ویرایش فرم را نخواهید داشت");
         $([document.documentElement, document.body]).animate({
             scrollTop: $(firsnonAnswered).offset().top
@@ -156,9 +153,7 @@ function formAnswerSet_editAndFinalForm () {
     param += "do=FormAnswerSet.edit";
     param += "&formAnswers_status=ثبت نهایی";
     param += "&" + new jj('#swOneFormToCompleteForm').jjSerial();
-    new jj(" در صورت تایید فرم قابل تغییر نیست،<br/>ثبت نهایی بشود؟").jjModal_Yes_No("ثبت نهایی فرم",
-                "new jj('"+param+ "').jjAjax2(false);");
-    
+    new jj(" در صورت تایید فرم قابل تغییر نیست،<br/>ثبت نهایی بشود؟").jjModal_Yes_No("ثبت نهایی فرم", "new jj('" + param + "').jjAjax2(false);");
 }
 /**
  *  ذخیره ی و ثبت نهایی فرم
@@ -216,7 +211,7 @@ function  removeFormIdFromCookie(id) {
         }
         Cookies.set("#UNIQUE_FORMS_Compleited", temp.substring(0, (temp.length - 1)));//برای حذف کامای آخر
     }
-    alert("set #removeFormIdFromCookie:" + uniqueForms);
+//    alert("set #removeFormIdFromCookie:" + uniqueForms);
 }
 ;
 
