@@ -395,9 +395,9 @@ public class Commettes {
             System.out.println("id=" + id);
             String script = "";
             List<Map<String, Object>> RowAll = jjDatabase.separateRow(db.otherSelect("SELECT hmis_commettes.id FROM hmis_commettes "
-                    + " INNER JOIN hmis_approved ON hmis_commettes.id=hmis_approved.approved_commettesId"
-                    + " INNER JOIN hmis_sessions ON hmis_commettes.id=hmis_sessions.sessions_commettesId"));
+                    + " LEFT JOIN hmis_sessions ON hmis_commettes.id=hmis_sessions.sessions_commettesId WHERE hmis_commettes.id="+id+""));
             boolean flag = true;
+            System.out.println("rowAll="+RowAll.size());
             if (RowAll.size()>0) {
                 flag = false;
 //                for (int i = 0; i < RowAll.size(); i++) {

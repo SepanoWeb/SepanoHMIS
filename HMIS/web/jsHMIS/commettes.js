@@ -319,38 +319,43 @@ var hmisCommettes = {
         ///////////////////////////////////////مهمانان خارج از سازمان
         //این قسمت نام و نام خانوادگی فرد مهمان را میگیرد واگر خالی باشد چیزی ارسال نمی شود 
         // اول دیو کلی را می گیرد  بعد اینپوت هایی که داخل دیو ها هستند را در می آورد
+        var flag = true;
         var InviteesOutSideName = "";
-        for (var i = 1; i < InviteesOutSide.length; i++) {
-            var InputInviteesOutSide = $("#InviteesDiv #invitedOutSide_" + [i] + " input");
-        var name=$("#InviteesDiv #invitedOutSide_" + [i] + " .name").val();
-            if (hmisCommettes.validateName(name) && hmisCommettes.validatePhone($("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val()) && (hmisCommettes.validateEmail($("#InviteesDiv #invitedOutSide_" + [i] + " .email").val())&&$("#InviteesDiv #invitedOutSide_" + [i] + " .email").val()&&$("#InviteesDiv #invitedOutSide_" + [i] + " .email").val()!="") && hmisCommettes.validateName( ("#InviteesDiv #invitedOutSide_" + [i] + " .role").val())) {
-                temp4 += validateName(name) + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() + "%23A%23";
-                InviteesOutSideName = "#InviteesDiv #invitedOutSide_" + [i] + " input";
-            } else {
+        if (InviteesOutSide.length > 1) {
+            for (var i = 1; i < InviteesOutSide.length; i++) {
+                var InputInviteesOutSide = $("#InviteesDiv #invitedOutSide_" + [i] + " input");
+                var name = $("#InviteesDiv #invitedOutSide_" + [i] + " .name");
+                var phone = $("#InviteesDiv #invitedOutSide_" + [i] + " .phone");
+                var email = $("#InviteesDiv #invitedOutSide_" + [i] + " .email");
+                var role = $("#InviteesDiv #invitedOutSide_" + [i] + " .role");
+                if ($("#InviteesDiv #invitedOutSide_" + [i] + " .name").val() != "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() != "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() != "" && $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val() != "" && (hmisCommettes.validateName(name)) && (hmisCommettes.validatePhone(phone)) && (hmisCommettes.validateEmail(email)) && (hmisCommettes.validateName(role))) {
+                    temp4 +=  $("#InviteesDiv #invitedOutSide_" + [i] + " .name").val()+ "," +$("#InviteesDiv #invitedOutSide_" + [i] + " .phone").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .email").val() + "," + $("#InviteesDiv #invitedOutSide_" + [i] + " .role").val()+ "%23A%23";
+                    InviteesOutSideName = "#InviteesDiv #invitedOutSide_" + [i] + " input";
+                } else {
+                    flag = false;
+                }
             }
         }
 
-        var flag = true;
-
         if ($('#sessions_date').val() === "") {
             $('#sessions_date').addClass('required');
-            flag = false;
+//            flag = false;
         } else {
             $('#sessions_date').removeClass('required');
         }
         if ($('#sessions_dateReminder').val() === "") {
             $('#sessions_dateReminder').addClass('required');
-            flag = false;
+//            flag = false;
         } else {
             $('#sessions_dateReminder').removeClass('required');
         }
         if ($('#sessions_time').val() === "") {
             $('#sessions_time').addClass('required');
-            flag = false;
+//            flag = false;
         } else {
             $('#sessions_time').removeClass('required');
         }
-        if ($("#formInvitation input.required").length>0) {//اگر فیلدی خالی وجو داشتکه کلاسش required بود
+        if ($("#formInvitation input.required").length > 0) {//اگر فیلدی خالی وجو داشتکه کلاسش required بود
             flag = false;
         }
         if (flag === true) {
@@ -383,36 +388,40 @@ var hmisCommettes = {
 
 
     },
-    validateEmail: function (email) {
+    emailRegex: function (email) {
         var emailPathern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return emailPathern.test(email);
     },
-    emailRegex: function (obj) {
+    validateEmail: function (obj) {
         var email = $(obj).val();
-        if (!hmisCommettes.validateEmail(email)) {
+        if (!hmisCommettes.emailRegex(email)) {
 //            $(obj).css('border', '1px solid red');
             $(obj).addClass('required');
+            return false;
 
         } else {
-            $(obj).css('border', '1px solid #23BF08');
+//            $(obj).css('border', '1px solid #23BF08');
             $(obj).removeClass('required');
+            return true;
 
         }
 
     },
-    validateDate: function (date) {
+    dateRegex: function (date) {
         var datePathern = /^$|^([1۱][۰-۹ 0-9]{3}[/\/]([0 ۰][۱-۶ 1-6])[/\/]([0 ۰][۱-۹ 1-9]|[۱۲12][۰-۹ 0-9]|[3۳][01۰۱])|[1۱][۰-۹ 0-9]{3}[/\/]([۰0][۷-۹ 7-9]|[1۱][۰۱۲012])[/\/]([۰0][1-9 ۱-۹]|[12۱۲][0-9 ۰-۹]|(30|۳۰)))$/;//تاریخ شمسی
         return datePathern.test(date);
     },
-    dateRegex: function (obj) {
+    validateDate: function (obj) {
         var date = $(obj).val();
-        if (!hmisCommettes.validateDate(date)) {
+        if (!hmisCommettes.dateRegex(date)) {
 //            $(obj).css('border', '1px solid red');
             $(obj).addClass('required');
+            return false;
 
         } else {
-            $(obj).css('border', '1px solid #23BF08');
+//            $(obj).css('border', '1px solid #23BF08');
             $(obj).removeClass('required');
+            return true;
 
         }
 
@@ -426,18 +435,21 @@ var hmisCommettes = {
         var regx = /^[\u0600-\u06FF\s]+$/;
         return regx.test(str);
     },
-    validateMobile: function (mobile) {
+    mobileRegex: function (mobile) {
         var regx = /^(09|9)[0-9]{9}$/;
         return regx.test(mobile);
     },
-    mobileRegex: function (obj) {
+    validatePhone: function (obj) {
         var mobile = $(obj).val();
-        if (!hmisCommettes.validateMobile(mobile)) {
+        if (!hmisCommettes.mobileRegex(mobile)) {
 //            $(obj).css('border', '1px solid red');
             $(obj).addClass('required');
+            return false;
         } else {
 //            $(obj).css('border', '1px solid #23BF08');
             $(obj).removeClass('required');
+            return true;
+
 
         }
 
