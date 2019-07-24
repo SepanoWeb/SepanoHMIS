@@ -61,14 +61,11 @@ public class Commettes {
                 return "";
             }
             StringBuilder html = new StringBuilder();
-            StringBuilder html3 = new StringBuilder();
-            StringBuilder html4 = new StringBuilder();
-            StringBuilder html5 = new StringBuilder();
-            StringBuilder html6 = new StringBuilder();
+            StringBuilder html2 = new StringBuilder();
+
             DefaultTableModel dtm = db.Select(tableName);
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
-
-            html.append("        <div class=\"card-header bg-primary tx-white\">لیست کمیته ها و کارگروه ها</div>\n");
+            html.append("<div class=\"card-header bg-primary tx-white\">لیست کمیته ها و کارگروه ها</div>\n");
             html.append(" <div class=\"card-body pd-sm-30\">\n"
                     + "                                        <p class=\"mg-b-20 mg-sm-b-30\">\n"
                     + "                                            <a style='color:#fff' class=\"btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white\" onclick=\"hmisCommettes.m_add_new();\" >کمیته جدید</a>\n"
@@ -77,6 +74,7 @@ public class Commettes {
             html.append("        <div class=\"table-wrapper\">\n");
             html.append("<table id='refreshCommettes' class='table display responsive' class='tahoma10' style='direction: rtl;width:982px'><thead>");
             html.append("<th class='r' width='5%'>کد</th>");
+            html.append("<th class='r' width='20%'>وضعیت</th>");
             html.append("<th class='r' width='20%'>نام کمیته</th>");
             html.append("<th class='r' width='20%'>دبیر کمیته</th>");
             html.append("<th class='r' width='20%'>رئیس کمیته</th>");
@@ -88,6 +86,8 @@ public class Commettes {
                 List<Map<String, Object>> superwizerTitle = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(i).get(_superwizar)));
                 html.append("<tr  class='mousePointer'>");
                 html.append("<td class='c'>" + row.get(i).get(_id) + "</td>");
+                String StatusActive = row.get(i).get(_isActive).equals("1") ? "فعال" : "غیرفعال";
+                html.append("<td class='r'>" + StatusActive + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_title) + "</td>");
                 html.append("<td class='r'>" + secretaryTitle.get(0).get(Role._title) + "</td>");
                 html.append("<td class='r'>" + superwizerTitle.get(0).get(Role._title) + "</td>");
@@ -110,31 +110,27 @@ public class Commettes {
             script += Js.table("#refreshCommettes", "300", 0, "", "کمیته ها");
             //////////////////////////////برای سلکت های موجود در فرم کمیتهها/////////////
             List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._condition + "='active'"));
-
             ///////////////////////////////////////////////نمایش جدول نقش ها
-            html5.append("        <div class=\"table-wrapper\">\n");
-            html5.append("<table required id='refreshRoles' class='table display responsive' class='tahoma10' style='direction: rtl;'><thead>");
-            html5.append("<th class='r' width='20%'>کد</th>");
-            html5.append("<th class='r' width='20%'>سمت</th>");
-            html5.append("<th class='r' width='40%'>نام و نام خانوادگی</th>");
-            html5.append("<th class='r' width='20%'>عملیات</th>");
-            html5.append("</thead><tbody>");
+            html2.append("<div class=\"table-wrapper\">\n");
+            html2.append("<table required id='refreshRoles' class='table display responsive' class='tahoma10' style='direction: rtl;'><thead>");
+            html2.append("<th class='r' width='20%'>کد</th>");
+            html2.append("<th class='r' width='20%'>سمت</th>");
+            html2.append("<th class='r' width='40%'>نام و نام خانوادگی</th>");
+            html2.append("<th class='r' width='20%'>عملیات</th>");
+            html2.append("</thead><tbody>");
             for (int i = 0; i < roleRow.size(); i++) {
-
                 List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + roleRow.get(i).get(Role._user_id)));
-                html5.append("<tr  class='mousePointer'>");
-                html5.append("<td class='r'>" + roleRow.get(i).get(Role._id) + "</td>");
-                html5.append("<td class='r'>" + roleRow.get(i).get(Role._title) + "</td>");
-                html5.append("<td class='r'>" + userRow.get(0).get(Access_User._name) + " " + userRow.get(0).get(Access_User._family) + "</td>");
-                html5.append("<td class='r' id='td" + i + "' onclick='hmisCommettes.addMembers(" + i + ")'><i id='" + roleRow.get(i).get(Role._id) + "' class='icon ion-plus-circled'  style='' ></i></td>");
-                html5.append("</tr>");
+                html2.append("<tr  class='mousePointer'>");
+                html2.append("<td class='r'>" + roleRow.get(i).get(Role._id) + "</td>");
+                html2.append("<td class='r'>" + roleRow.get(i).get(Role._title) + "</td>");
+                html2.append("<td class='r'>" + userRow.get(0).get(Access_User._name) + " " + userRow.get(0).get(Access_User._family) + "</td>");
+                html2.append("<td class='r' id='td" + i + "' onclick='hmisCommettes.addMembers(" + i + ")'><i id='" + roleRow.get(i).get(Role._id) + "' class='icon ion-plus-circled'  style='' ></i></td>");
+                html2.append("</tr>");
             }
-            html5.append("</tbody></table>");
-
-            
-            
-            /////////////////////////////////////////////////////
-            Server.outPrinter(request, response, Js.setHtml("#tableRolesDiv", html5) + script);
+            html2.append("</tbody></table>");
+            script += Js.setHtml("#tableRolesDiv", html2);
+            script += Js.table("#refreshRoles", "300", 0, "", "نقش ها");
+            Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));
@@ -257,13 +253,7 @@ public class Commettes {
             html.append(Js.setVal("#" + _members, row.get(0).get(_members)));
             html.append(Js.setValDate("#" + _date, row.get(0).get(_date)));
             html.append(Js.setVal("#" + _regulationFile, row.get(0).get(_regulationFile)));
-            html.append(Js.setVal("#active", "1"));
-            html.append(Js.setVal("#noActive", "0"));
-            if (row.get(0).get(_isActive).equals("1")) {
-                html.append(Js.setAttr("#active", "checked", "checked"));
-            } else {
-                html.append(Js.setAttr("#noActive", "checked", "checked"));
-            }
+            html.append(Js.setVal("#" + _isActive, row.get(0).get(_isActive)));
             if (!row.get(0).get(_documnetsFile).toString().equals("")) {
                 String[] documentFile = (row.get(0).get(_documnetsFile).toString().replaceAll("#A#", "%23A%23")).split("%23A%23");
                 for (int i = 0; i < documentFile.length; i++) {
@@ -395,18 +385,14 @@ public class Commettes {
             System.out.println("id=" + id);
             String script = "";
             List<Map<String, Object>> RowAll = jjDatabase.separateRow(db.otherSelect("SELECT hmis_commettes.id FROM hmis_commettes "
-                    + " LEFT JOIN hmis_sessions ON hmis_commettes.id=hmis_sessions.sessions_commettesId WHERE hmis_commettes.id="+id+""));
+                    + " LEFT JOIN hmis_sessions ON hmis_commettes.id=hmis_sessions.sessions_commettesId WHERE hmis_commettes.id=" + id + ""));
             boolean flag = true;
-            System.out.println("rowAll="+RowAll.size());
-            if (RowAll.size()>0) {
+            System.out.println("rowAll=" + RowAll.size());
+            if (RowAll.size() > 0) {
                 flag = false;
-//                for (int i = 0; i < RowAll.size(); i++) {
-//                    if (RowAll.get(i).get(Sessions._commetteId).toString().equals(id)|| RowAll.get(i).get(Approved._commettesId).toString().equals(id)) {
-//                        flag = false;
-//                    } else {
-//                    }
+
             }
-            
+
             if (flag == false) {
                 script += Js.modal("امکان حذف کمیته وجود ندارد", "پیام سامانه");
             } else {
@@ -420,39 +406,25 @@ public class Commettes {
                 }
                 script += Js.jjCommettes.refresh();
             }
-//        }else {
-//                if (!db.delete(tableName, _id + "=" + id)) {
-//                    String errorMessage = "عملیات حذف به درستی صورت نگرفت";
-//                    if (jjTools.isLangEn(request)) {
-//                        errorMessage = "Delete Fail;";
-//                    }
-//                    script += Js.modal(errorMessage, "پیام سامانه");
-//                    return "";
-//                }
-//                script += Js.jjCommettes.refresh();
-            
-        Server.outPrinter(request, response, script);
-        return "";
-    }
-    catch (Exception ex
 
-    
-        ) {
+            Server.outPrinter(request, response, script);
+            return "";
+        } catch (Exception ex) {
             Server.outPrinter(request, response, Server.ErrorHandler(ex));
-        return "";
+            return "";
+        }
     }
-}
 
-/**
- * دعوتنامه نمایش داده می شود
- *
- * @param request
- * @param db
- * @param isPost
- * @return
- * @throws Exception
- */
-public static String showInvitationForm(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
+    /**
+     * دعوتنامه نمایش داده می شود
+     *
+     * @param request
+     * @param db
+     * @param isPost
+     * @return
+     * @throws Exception
+     */
+    public static String showInvitationForm(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean isPost) throws Exception {
         try {
 
             StringBuilder html = new StringBuilder();
@@ -462,19 +434,16 @@ public static String showInvitationForm(HttpServletRequest request, HttpServletR
             System.out.println("commettesId=" + commettesId);
             List<Map<String, Object>> commettesRow = jjDatabase.separateRow(db.Select(Commettes.tableName, Commettes._id + "=" + commettesId));
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.Select(Sessions.tableName, Sessions._id + "=" + commettesId));
-//            html.append("<label class='ckbox'>");
             String memberId = commettesRow.get(0).get(Commettes._members).toString();
             String[] membersId = (memberId.replaceAll("#A#", "%23A%23")).split("%23A%23");
             for (int i = 0; i < membersId.length; i++) {
                 List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + membersId[i]));
                 List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + roleRow.get(0).get(Role._user_id)));
-//                html.append("<div class=\" form-group has-danger mg-b-0\">");
                 html.append("<label class=\"ckbox\">");
                 html.append("<input type = \"checkbox\" value ='" + roleRow.get(0).get(Role._id) + "' class=\"checkBoxInvitees\" name = \"sessions_Invitees\" id = \"sessions_Invitees" + roleRow.get(0).get(Role._user_id) + "\" > ");
                 html.append("<span>" + userRow.get(0).get(Access_User._name) + " " + userRow.get(0).get(Access_User._family) + "-" + roleRow.get(0).get(Role._title) + "");
                 html.append("</span>");
                 html.append("</label>");
-//                html.append("</div>");
             }
             /////////////////////////////////////////////////////////////////////////////////////////////
             List<Map<String, Object>> usersRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
@@ -483,7 +452,6 @@ public static String showInvitationForm(HttpServletRequest request, HttpServletR
             for (int i = 0; i < usersRow.size(); i++) {
                 html2.append("<option value='" + usersRow.get(i).get(Access_User._id) + "'>" + usersRow.get(i).get(Access_User._name) + " " + usersRow.get(i).get(Access_User._family) + "</option> ");
             }
-
             String script = "";
             script += Js.setHtml("#sessions_InviteesInSide", html2);
             script += Js.setHtml("#invitessDiv", html);
@@ -595,25 +563,21 @@ public static String showInvitationForm(HttpServletRequest request, HttpServletR
             script += " hmisCommettes.m_select(" + id + ");";
             Server.outPrinter(request, response, script);
             return "";
-//
-
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));
             return "";
-
         }
     }
-    
-  
+
     public static void main(String[] args) {
-  System.out.println("#################################################");
+        System.out.println("#################################################");
         System.out.println("######>>>>>RUN:taskCommettesReminder###########");
         Server.Connect();
         jjDatabaseWeb db = Server.db;
         List<Map<String, Object>> rows = jjDatabaseWeb.separateRow(db.Select(tableName, _isActive + "=1 AND " + _period + " !='' "));
-        System.out.println("size="+rows.size());
+        System.out.println("size=" + rows.size());
         for (int i = 0; i < rows.size(); i++) {
-            System.out.println("rows.get(i).get(_date).toString()="+rows.get(i).get(_date).toString());
+            System.out.println("rows.get(i).get(_date).toString()=" + rows.get(i).get(_date).toString());
             jjCalendar_IR date = new jjCalendar_IR(rows.get(i).get(_date).toString());
             int period = Integer.valueOf(rows.get(i).get(_period).toString());
             int today = jjCalendar_IR.getDatabaseFormat_8length(null, true);
