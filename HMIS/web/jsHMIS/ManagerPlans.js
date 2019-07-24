@@ -22,6 +22,25 @@ var hmisManagerPlans = {
                 new jj("#myPlans_endDate").jjCalendarWithYearSelector(1370, 1420);
 
             });
+            cmsUser.getSelectOption("#swManagerPlansForm #MyPlansSteps_executorUserId");
+            hmisRole.getSelectOption("#swManagerPlansForm #MyPlansSteps_executorRoleId");
+            hmisRole.getSelectOption("#swManagerPlansForm #myPlans_supervisorRolId");
+            hmisRole.getSelectOption("#swManagerPlansForm #MyPlansSteps_trackerId");
+            hmisRole.getSelectOption("#swManagerPlansForm #plans_improveQualityId");
+            hmisDepartment.selectOptionDepartment("myPlans_department");
+            hmisDepartment.selectOptionDepartment("myPlans_domain");
+            $("#myPlans_supervisorRolId").select2({
+                width: '100%'
+            });
+            $("#plans_improveQualityId").select2({
+                width: '100%'
+            });
+            $("#myPlans_department").select2({
+                width: '100%'
+            });
+            $("#myPlans_domain").select2({
+                width: '100%'
+            });
         }
     },
     m_refresh: function (containerId, sortField, tableHeight) {
@@ -70,11 +89,11 @@ var hmisManagerPlans = {
      * @returns {undefined}
      */
     confirmByManager: function (id) {
-            if (confirm("برنامه عملیاتی را تایید می کنید؟")) {
-                hmisManagerPlans.confirmByManager_after_question(id);
-            } else {
-            }
-       
+        if (confirm("برنامه عملیاتی را تایید می کنید؟")) {
+            hmisManagerPlans.confirmByManager_after_question(id);
+        } else {
+        }
+
 
     },
     /**
@@ -89,8 +108,7 @@ var hmisManagerPlans = {
         new jj(param).jjAjax2(false);
         hmisManagerPlans.m_clean();
     },
-   
-  
+
     /**
      * نمایش گامها وجزئیات گام ها  در برنامه عملیاتی من
      * @param {type} id
@@ -134,7 +152,6 @@ var hmisManagerPlans = {
         new jj(param).jjAjax2(false);
         hmisManagerPlans.m_clean();
     },
-   
 
     tabSizeTbl: function () {
         $('#swManagerPlans').css('height', 520);

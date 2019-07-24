@@ -14,6 +14,8 @@ import cms.tools.jjValidation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.DefaultTableModel;
@@ -33,7 +35,7 @@ public class Sessions {
     public static String _creatorId = "sessions_creatorId";//ای دی ایجاد کننده
     public static String _title = "sessions_title";//عنوان جلسه
     public static String _commetteId = "sessions_commettesId";//ایدی کمیته
-    public static String _communicatorId = "sessions_communicatorId";//ابلاغ کننده
+    public static String _communicatorRoleId = "sessions_communicatorRoleId";//ابلاغ کننده
     public static String _contextInvitation = "sessions_contextInvitation";//متن دعوتنامه
     public static String _invitationDate = "sessions_invitationDate";//تاریخ ارسال دعوتنامه
     public static String _agenda = "sessions_agenda";//دستور جلسه
@@ -41,7 +43,7 @@ public class Sessions {
     public static String _time = "sessions_time";//تایم جلسه
     public static String _dateReminder = "sessions_dateReminder";//تاریخ یادآوری
     public static String _timeReminder = "sessions_timeReminder";//ساعت یادآوری
-    public static String _Invitees = "sessions_Invitees";//مدعوین داخل سازمان نقش ها
+    public static String _Invitees = "sessions_Invitees";//مدعوین داخل سازمان نقش ها//ای دی نقش ها
     public static String _InviteesInSide = "sessions_InviteesInSide";//مهمانان داخل سازمان یوزرها
     public static String _InviteesOutSide = "sessions_InviteesOutSide";//مدعوین خارج از سازمان
     public static String _status = "sessions_status";//وضعیت
@@ -55,7 +57,8 @@ public class Sessions {
     public static String _file = "sessions_file";// فایل های بارگذاری شده
     public static String _InviteesFile = "sessions_InviteesFile";//فایل برای مدعوین
     public static String _sessionDescription = "sessions_sessionDescription";//شرح جلسه
-    public static String _audience = "sessions_audience";// حضار در جلسه داخل سازمان
+    public static String _audience = "sessions_audience";// حضار در جلسه 
+    public static String _audienceInSide = "sessions_audienceInSide";// داخل  سازمان حضار در جلسه
     public static String _audienceOutSide = "sessions_audienceOutSide";// خارج از سازمان حضار در جلسه
     public static String _signers = "sessions_signers";// امضا کنندگان
 
@@ -84,7 +87,7 @@ public class Sessions {
                 return "";
             }
             StringBuilder html = new StringBuilder();
-            StringBuilder html1 = new StringBuilder();
+//            StringBuilder html1 = new StringBuilder();
 
             DefaultTableModel dtm = db.Select(tableName);
             List<Map<String, Object>> row = jjDatabase.separateRow(db.otherSelect("SELECT S.sessions_time,S.sessions_title,S.sessions_audience,S.sessions_signers,S.sessions_date,S.sessions_status,S.id,C.commettes_title,A.user_name,A.user_family "
@@ -143,11 +146,11 @@ public class Sessions {
             }
             html.append("</tbody></table>");
             html.append("</div>");
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            html1.append("<option value=''>انتخاب کنید</option>");
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
+//            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
+//            html1.append("<option value=''>انتخاب کنید</option>");
+//            for (int i = 0; i < RolesRow.size(); i++) {
+//                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
+//            }
             String height = jjTools.getParameter(request, "height");
             String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(height)) {
@@ -159,7 +162,7 @@ public class Sessions {
             String script = Js.setHtml("#" + panel, html.toString());
             script += Js.table("#refreshSessions", "300", 0, "", "جلسات");
 
-            script += Js.setHtml("#sessions_communicatorId", html1);
+//            script += Js.setHtml("#sessions_communicatorRoleId", html1);
             Server.outPrinter(request, response, script);
             return "";
         } catch (Exception ex) {
@@ -288,6 +291,7 @@ public class Sessions {
                 Server.outPrinter(request, response, Js.modal(errorMessage, "پیام سامانه"));
                 return "";
             }
+
             StringBuilder html = new StringBuilder();
             StringBuilder html1 = new StringBuilder();
             StringBuilder html2 = new StringBuilder();
@@ -304,9 +308,8 @@ public class Sessions {
             html.append(Js.setVal("#sessions_agendaSessions", row.get(0).get(_agenda)));
             html.append(Js.setVal("#sessions_titleSessions", row.get(0).get(_title)));
             html.append(Js.setVal("#" + _checkingAgenda, row.get(0).get(_checkingAgenda)));
-            html.append("$('#sessions_communicatorId').val([" + row.get(0).get(_communicatorId) + "]);$('#sessions_communicatorId').select2({ minimumResultsForSearch: '', width: '100%'});");
+            html.append("$('#sessions_communicatorRoleId').val([" + row.get(0).get(_communicatorRoleId) + "]);$('#sessions_communicatorRoleId').select2({ minimumResultsForSearch: '', width: '100%'});");
 
-//            html.append(Js.setVal("#" + _communicatorId, row.get(0).get(_communicatorId)));
             html.append(Js.setVal("#" + _titleIssue, row.get(0).get(_titleIssue)));
             html.append(Js.setVal("#" + _ProposedSolution, row.get(0).get(_ProposedSolution)));
             html.append(Js.setVal("#" + _weakPoint, row.get(0).get(_weakPoint)));
@@ -334,29 +337,46 @@ public class Sessions {
             }
             String InviteesInSideId = row.get(0).get(_InviteesInSide).toString();
             String[] InviteeInSideId = (InviteesInSideId.replaceAll("#A#", "%23A%23")).split("%23A%23");
-            String audiencesName = row.get(0).get(_audience).toString();
-            String[] audienceName = (audiencesName.replaceAll("#A#", "%23A%23")).split("%23A%23");
+            String audiences = row.get(0).get(_audience).toString();
+            String audiencesInSide = row.get(0).get(_audienceInSide).toString();
+            String audiencesOutSide = row.get(0).get(_audienceOutSide).toString();
+            String[] audienceName = (audiences.replaceAll("#A#", "%23A%23")).split("%23A%23");
+            String[] audiencesInSideName = (audiencesInSide.replaceAll("#A#", "%23A%23")).split("%23A%23");
+            String[] audiencesOutSideName = (audiencesOutSide.replaceAll("#A#", "%23A%23")).split("%23A%23");
             if (InviteeInSideId.length > 1) {//اگر  فردی وجود داشته باشد
+                //دعوت شدگان مهمان داخل سازمان
                 System.out.println("InviteeInSideId=" + InviteeInSideId.length);
                 for (int i = 0; i < InviteeInSideId.length; i++) {
+                    boolean flag = false;
+                    for (int j = 0; j < audiencesInSideName.length; j++) {
+
+                        Pattern pj = Pattern.compile("^" + InviteeInSideId[i] + "%23A%23");
+                        Matcher mj = pj.matcher(audiencesInSide);
+                        if (mj.find()) {
+                            flag = true;
+                        } else {
+                        }
+                    }
+                    String attrChecked = "";
+                    if (flag == true) {
+                        attrChecked = "checked='checked'";
+                    } else {
+                        attrChecked = "";
+                    }
                     List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + InviteeInSideId[i]));
                     html4.append("<div class=\"form-group has-danger mg-b-0\">\n"
                             + "                        <label class=\"ckbox\">\n"
-                            + "                            <input class='checkboxAudience' id='InviteeInSideId" + i + "' name='" + InviteeInSideId[i] + "' value='" + userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString() + "' type=\"checkbox\"><span>"
+                            + "                            <input class='checkboxAudienceInSide' " + attrChecked + " id='InviteeInSideId" + i + "' name='" + InviteeInSideId[i] + "' value='" + userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString() + "' type=\"checkbox\"><span>"
                             + "مهمان داخل سازمان" + "-" + userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString()
                             + ""
                     );
                     html4.append("</span>");
                     html4.append("</label>");
                     html4.append("</div>");
-                    for (int j = 0; j < audienceName.length; j++) {
-                        if (audienceName[j].equals(userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString())) {
-                            script += Js.setAttr("#InviteeInSideId" + i + "", "checked", "checked");
-                        } else {
-                        }
-                    }
+
                 }
             }
+            //دعوتشدگان مهمان خارج از سازمان
             String InviteesOutSideId = row.get(0).get(_InviteesOutSide).toString();
             if (!InviteesOutSideId.equals("")) {
                 String[] InviteeOutSideId = (InviteesOutSideId.replaceAll("#A#", "%23A%23")).split("%23A%23");
@@ -368,45 +388,66 @@ public class Sessions {
                     String Email = "";
                     String[] InviteeOutSideDetail = InviteeOutSideId[i].split(",");
                     Email = InviteeOutSideDetail[2];//در آوردن ایمیل فرد
-
+                    //در این قسمت اگر مهمانانو واعضای سازمان حضور داشته باشند  در سلک تیک میخورد
+                    boolean flag = false;
+                    for (int j = 0; j < audiencesOutSideName.length; j++) {
+                        Pattern pj = Pattern.compile("^" + InviteeOutSideId[i] + "%23A%23");
+                        Matcher mj = pj.matcher(audiencesOutSide);
+                        if (mj.find()) {
+                            flag = true;
+                        } else {
+                        }
+                    }
+                    String attrChecked = "";
+                    if (flag == true) {
+                        attrChecked = "checked='checked'";
+                    } else {
+                        attrChecked = "";
+                    }
                     html4.append("<div class=\"form-group has-danger mg-b-0\">\n"
                             + "<label class=\"ckbox\">\n"
-                            + " <input class='checkboxAudienceOutSide' id='InviteeOutSideId" + i + "'  value='" + Email + "' type=\"checkbox\"><span>"
+                            + " <input class='checkboxAudienceOutSide' " + attrChecked + " id='InviteeOutSideId" + i + "'  value='" + Email + "' type=\"checkbox\"><span>"
                             + "مهمان خارج سازمان" + "-" + InviteeOutSideId[i]
                             + "");
                     html4.append("</span>");
                     html4.append("</label>");
                     html4.append("</div>");
-                    for (int j = 0; j < audienceName.length; j++) {
-                        if (audienceName[j].equals(InviteeOutSideId[i])) {
-                            script += Js.setAttr("#InviteeOutSideId" + i + "", "checked", "checked");
-                        } else {
-                        }
-                    }
                 }
             } else {
             }
-            String InvitedsId = row.get(0).get(_Invitees).toString();
-            String[] invitedId = (InvitedsId.replaceAll("#A#", "%23A%23")).split("%23A%23");
+            //دعوتشدگان مسئول در سازمان
+            String InvitedsId = row.get(0).get(_Invitees).toString().replaceAll("#A#", "%23A%23");
+            String[] invitedId = (InvitedsId).split("%23A%23");
             if (invitedId.length >= 1) {
                 System.out.println("invitedId=" + invitedId.length);
                 for (int i = 0; i < invitedId.length; i++) {
                     List<Map<String, Object>> roleRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + invitedId[i]));
                     List<Map<String, Object>> userRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + roleRow.get(0).get(Role._user_id)));
+                    boolean flag = false;
+                    for (int j = 0; j < audienceName.length; j++) {
+
+                        Pattern pj = Pattern.compile("" + invitedId[i] + "%23A%23");
+                        Matcher mj = pj.matcher(audiences);
+                        if (mj.find()) {
+                            flag = true;
+                        } else {
+                        }
+                    }
+                    String attrChecked = "";
+                    if (flag == true) {
+                        attrChecked = "checked='checked'";
+                    } else {
+                        attrChecked = "";
+                    }
                     html4.append("<div class=\"form-group has-danger mg-b-0\">\n"
                             + "                        <label class=\"ckbox\">\n"
-                            + "                            <input class='checkboxAudience' id='Invitee" + i + "' name='" + roleRow.get(0).get(Role._user_id) + "' type=\"checkbox\" value='" + roleRow.get(0).get(Role._title).toString() + "-" + userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString() + "'><span>"
+                            + "                            <input class='checkboxAudience' " + attrChecked + "  id='Invitee" + i + "' name='" + invitedId[i] + "' type=\"checkbox\" value='" + roleRow.get(0).get(Role._title).toString() + "-" + userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString() + "'><span>"
                             + roleRow.get(0).get(Role._title).toString() + "-" + userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString()
                             + "");
                     html4.append("</span>");
                     html4.append("</label>");
                     html4.append("</div>");
-                    for (int j = 0; j < audienceName.length; j++) {
-                        if (audienceName[j].equals(roleRow.get(0).get(Role._title).toString() + "-" + userRow.get(0).get(Access_User._name).toString() + " " + userRow.get(0).get(Access_User._family).toString())) {
-                            script += Js.setAttr("#Invitee" + i + "", "checked", "checked");
-                        } else {
-                        }
-                    }
+
                 }
             }
 
@@ -416,7 +457,6 @@ public class Sessions {
                 if (accEdt) {
                     html2.append("<div class=\"col-lg-6\">");
                     html2.append("<button onclick='hmisSessions.m_edit();' id='edit_Sessions'  class='btn btn-outline-warning btn-block mg-b-10'>ثبت موقت</button>");
-//                    html.append(Js.buttonMouseClick("#edit_Sessions", ));
                     html2.append("</div>");
                 }
                 if (accEdt) {
@@ -430,37 +470,10 @@ public class Sessions {
             html2.append("<a href='Server?do=Sessions.downloadSessions&id=" + id + "' title='چاپ صورتجلسه' target='_blank'  class='active btn-block mg-l-10'><i class='fa fa-print mg-t-3'></i></a>");
             html2.append("</div>");
             html2.append("</div>");
-//            else //دکمه ابلاغ برای مسئول ابلاغ
-//            if (row.get(0).get(_status).equals(status_confirmationFinal) && Integer.valueOf(jjTools.getSessionAttribute(request,"#ID"))==Integer.valueOf(row.get(0).get(_communicatorId).toString())) {
-//
-//                System.out.println("jjTools.getSeassionUserId(request)=" + jjTools.getSeassionUserId(request) + "row.get(0).get(_communicatorId)" + row.get(0).get(_communicatorId));
-//                html2.append("<div class=\"col-lg-6\">");
-//                html2.append("<input type='button' id='sendToCommunicator_sessions' value='ابلاغ' class='btn btn-outline-success active btn-block mg-b-10'>");
-//                html.append(Js.buttonMouseClick("#sendToCommunicator_sessions", "hmisSessions.sendToCommunicator(" + id + ");"));
-//                html2.append("</div>");
-//            }
 
-//          دکمه ارسال جهت امضا
-//            html2.append("<div class=\"col-lg-6\">");
-//            html2.append("<input type='button' id='Confirmation_Sessions' value='تایید نهایی و ارسال جهت امضا' class='btn btn-outline-success active btn-block mg-b-10'>");
-//            html.append(Js.buttonMouseClick("#Confirmation_Sessions", "hmisSessions.confirmationFinalSessions(" + id + ");"));
-//            html2.append("</div>");
-//            if (accDel) {
-//                html2.append("<div class=\"col-lg-6\">");
-//                html2.append("<input type='button' id='delete_Sessions' value='" + lbl_delete + "' class='btn btn-success btn-block mg-b-10 tahoma10'  />");
-//                html.append(Js.buttonMouseClick("#delete_Sessions", Js.jjSessions.delete(id)));
-//                html2.append("</div>");
-//            }
-//            html2.append("</div>");
             DefaultTableModel dtm = db.Select(Approved.tableName, Approved._sessionsId + "=" + id);
             DefaultTableModel dtm1 = db.Select(Approved.tableName, Approved._commettesId + "=" + row.get(0).get(_commetteId) + " AND " + Approved._status + "='" + Approved.status_offer + "'");
 
-//            DefaultTableModel dtm = db.otherSelect("SELECT * FROM hmis_approved A LEFT JOIN hmis_plans P ON A.approved_commettesId=P.plans_commettesId"
-//                    + " LEFT JOIN hmis_sessions S ON A.approved_sessionsId= " + id + ""
-//            );
-//            DefaultTableModel dtm = db.otherSelect("SELECT * FROM hmis_approved A LEFT JOIN hmis_plans P ON A.approved_commettesId=P.plans_commettesId"
-//                    + " LEFT JOIN hmis_sessions S ON A.approved_sessionsId= " + id + ""
-//            );
             List<Map<String, Object>> approvedRow = jjDatabase.separateRow(dtm);
             List<Map<String, Object>> approveOffererRow = jjDatabase.separateRow(dtm1);//نمایش جدول پیشنهاد ها
 ///////////////////////////////////////////////////مصوبات مربوط به آن جلسه
@@ -469,7 +482,6 @@ public class Sessions {
             html3.append("<th width='5%'>کد</th>");
             html3.append("<th width='10%'>عنوان مصوبه</th>");
             html3.append("<th width='15%'>مسئول اجرا</th>");
-//            html3.append("<th width='15%'>مسئولین اجرا</th>");
             html3.append("<th width='20%'>مسئول پیگیری</th>");
             html3.append("<th width='15%'>تاریخ شروع </th>");
             html3.append("<th width='15%'>تاریخ پایان </th>");
@@ -510,16 +522,6 @@ public class Sessions {
             }
 
             html3.append("</tbody></table>");
-            html5.append("<option>انتخاب کنید</option>");
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html5.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
-            html6.append("<option>انتخاب کنید</option>");
-            List<Map<String, Object>> UserRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
-            for (int i = 0; i < UserRow.size(); i++) {
-                html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
-            }
 
             //////////////////////نمایش جدول مصوبات در جلسات قبلی
             List<Map<String, Object>> sessionsRow = jjDatabase.separateRow(db.otherSelect("SELECT id,sessions_commettesId FROM hmis_sessions WHERE sessions_commettesId=" + commetteId + " AND id!=" + id + " "));//نمایش جلساتی که این کمیته تشکیل داده به غیر جلسه ای که داخلش هستیم
@@ -528,7 +530,6 @@ public class Sessions {
             html1.append("<th width='5%'>کد</th>");
             html1.append("<th width='10%'>عنوان مصوبه</th>");
             html1.append("<th width='15%'>مسئول اجرا</th>");
-//            html1.append("<th width='15%'>مسئولین اجرا</th>");
             html1.append("<th width='20%'>مسئول پیگیری</th>");
             html1.append("<th width='15%'>تاریخ شروع </th>");
             html1.append("<th width='15%'>تاریخ پایان </th>");
@@ -561,9 +562,6 @@ public class Sessions {
             script += Js.setHtml("#approvedTbl", html3);//جدول مصوبه ها
             script += Js.setHtml("#audience", html4);//مدعوین
             script += html.toString();
-            script += Js.setHtml("#approved_executorRoleId", html5);//مسئول اجرا نقش ها
-            script += Js.setHtml("#approved_executorUserId", html6);//مسئولین اجرا کاربران
-            script += Js.setHtml("#approved_trackerId", html5);//مسئول پیگیری
             script += Js.setHtml("#filesDownloadDiv", html8);//فایل های بارگذاری شده
             Server.outPrinter(request, response, script);
             return "";
@@ -602,7 +600,7 @@ public class Sessions {
             List<Map<String, Object>> Row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
             String script = "";
             Map<String, Object> map = new HashMap<String, Object>();
-            if (jjTools.getParameter(request, _communicatorId).equals("null")) {
+            if (jjTools.getParameter(request, _communicatorRoleId).equals("null")) {
                 Server.outPrinter(request, response, Js.modal("لطفا ابلاغ کننده را انتخاب نمایید", "پیام سامانه"));
                 return "";
             } else {
@@ -613,10 +611,11 @@ public class Sessions {
                 map.put(_sessionDescription, jjTools.getParameter(request, _sessionDescription));
                 map.put(_weakPoint, jjTools.getParameter(request, _weakPoint));
                 map.put(_strengths, jjTools.getParameter(request, _strengths));
-                map.put(_communicatorId, jjTools.getParameter(request, _communicatorId));
+                map.put(_communicatorRoleId, jjTools.getParameter(request, _communicatorRoleId));
                 map.put(_ProposedSolution, jjTools.getParameter(request, _ProposedSolution));
-//            map.put(_audience, jjTools.getParameter(request, _audience).replaceAll("#A#", "%23A%23"));
-//            map.put(_audienceOutSide, jjTools.getParameter(request, _audienceOutSide).replaceAll("#A#", "%23A%23"));
+                map.put(_audienceInSide, jjTools.getParameter(request, _audienceInSide).replaceAll("#A#", "%23A%23"));
+                map.put(_audience, jjTools.getParameter(request, _audience).replaceAll("#A#", "%23A%23"));
+                map.put(_audienceOutSide, jjTools.getParameter(request, _audienceOutSide).replaceAll("#A#", "%23A%23"));
                 map.put(_file, jjTools.getParameter(request, _file).replaceAll("#A#", "%23A%23"));
 
                 if (!db.update(tableName, map, _id + "=" + id)) {
@@ -676,13 +675,14 @@ public class Sessions {
 
             map.put(_checkingAgenda, jjTools.getParameter(request, _checkingAgenda));
             map.put(_titleIssue, jjTools.getParameter(request, _titleIssue));
-            map.put(_communicatorId, jjTools.getParameter(request, _communicatorId));
+            map.put(_communicatorRoleId, jjTools.getParameter(request, _communicatorRoleId));
             map.put(_nextDate, jjTools.getParameter(request, _nextDate).replaceAll("/", ""));
             map.put(_sessionDescription, jjTools.getParameter(request, _sessionDescription));
             map.put(_weakPoint, jjTools.getParameter(request, _weakPoint));
             map.put(_strengths, jjTools.getParameter(request, _strengths));
             map.put(_ProposedSolution, jjTools.getParameter(request, _ProposedSolution));
             map.put(_audience, jjTools.getParameter(request, _audience).replaceAll("#A#", "%23A%23"));
+            map.put(_audienceInSide, jjTools.getParameter(request, _audienceInSide).replaceAll("#A#", "%23A%23"));
             map.put(_audienceOutSide, jjTools.getParameter(request, _audienceOutSide).replaceAll("#A#", "%23A%23"));
             String audienceOutSides = jjTools.getParameter(request, _audienceOutSide).toString();
             String[] audienceOutSide = (audienceOutSides.replaceAll("#A#", "%23A%23")).split("%23A%23");//ایمیل افراد خارج از سازمان
@@ -775,9 +775,10 @@ public class Sessions {
                     }
                     script += Js.modal(errorMessage, "پیام سامانه");
                 }
-//                System.out.println("@To Do send Comment");
+                System.out.println("@To Do send Comment");
+                script += Js.modal("پیام ارسال شد", "پیام سامانه");
                 script += "hmisSessions.m_refresh();";
-                script += "hmisCommettes.sendComment('" + text + "','" + inviteesId + "','" + inviteesOutSideId + "','" + inviteesInSideId + "');";
+//                script += "hmisCommettes.sendComment('" + text + "','" + inviteesId + "','" + inviteesOutSideId + "','" + inviteesInSideId + "');";
 
             } else if (ComemttesRow.get(0).get(Commettes._isActive).equals("0")) {
                 String errorMessage = "کمیته مورد نظر فعال نمی باشد .";
@@ -820,7 +821,8 @@ public class Sessions {
 
     /**
      * جدول جلسات من در این جدول جلساتی که برگزار شده است برای امضا وتایید سمت
-     * حضار می اید وحضار آن را تایید می کنند
+     * حضار می اید وحضار آن را تایید می کنند ویژگی تابع این است که برای دعوت
+     * شدگان نمایش داده می شود
      *
      * @param request
      * @param response
@@ -875,7 +877,7 @@ public class Sessions {
             String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(height)) {
                 height = "400";
-        }
+            }
             if (panel.equals("")) {
                 panel = "swMySessionsTbl";
             }
@@ -933,11 +935,11 @@ public class Sessions {
                     + " LEFT JOIN  hmis_role      R      ON   C.commettes_secretary=R.id"
                     + " LEFT JOIN  access_user    A      ON   R.role_user_id=A.id"
                     + " WHERE  S.sessions_status!='" + status_created + "'"
-            //                    + " WHERE S.sessions_communicatorId LIKE '%" + jjTools.getSessionAttribute(request, "#ROLE_ID") +"%'"
+            //                    + " WHERE S.sessions_communicatorRoleId LIKE '%" + jjTools.getSessionAttribute(request, "#ROLE_ID") +"%'"
             //                    + "  AND "
             //                    + " S.sessions_status='" + status_confirmationFinal + "'"
             //                    + " OR"
-            //                    + " S.sessions_communicatorId LIKE '%" + jjTools.getSessionAttribute(request, "#ROLE_ID") +"%'"
+            //                    + " S.sessions_communicatorRoleId LIKE '%" + jjTools.getSessionAttribute(request, "#ROLE_ID") +"%'"
             //                    + " AND S.sessions_status='" + status_communicated + "'"
             ));
             for (int i = 0; i < row.size(); i++) {
@@ -954,11 +956,11 @@ public class Sessions {
                 html.append("</tr>");
 
             }
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            html1.append("<option>انتخاب کنید</option>");
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
+//            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
+//            html1.append("<option>انتخاب کنید</option>");
+//            for (int i = 0; i < RolesRow.size(); i++) {
+//                html1.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
+//            }
             html.append("</tbody></table>");
             html.append("</div>");
             String height = jjTools.getParameter(request, "height");
@@ -971,7 +973,7 @@ public class Sessions {
             }
             String html2 = Js.setHtml("#" + panel, html.toString());
             html2 += Js.table("#refreshCommunicatedSessions", "300", 0, "", "جلسات");
-            html2 += Js.setHtml("#communicatedSessions_communicatorId", html1);
+//            html2 += Js.setHtml("#communicatedSessions_communicatorId", html1);
 
             Server.outPrinter(request, response, html2);
             return "";
@@ -1060,8 +1062,7 @@ public class Sessions {
             html.append(Js.setVal("#communicatedSessions_agendaSessions", row.get(0).get(_agenda)));
             html.append(Js.setVal("#communicatedSessions_titleSessions", row.get(0).get(_title)));
             html.append(Js.setVal("#communicatedSessions_checkingAgenda", row.get(0).get(_checkingAgenda)));
-            html.append(Js.setVal("#communicatedSessions_communicatorId", row.get(0).get(_communicatorId)));
-//            html.append("$('#sessions_communicatorId').val([" + row.get(0).get(_communicatorId) + "]);$('#sessions_communicatorId).select2({ minimumResultsForSearch: '', width: '100%'});");
+            html.append(Js.setVal("#communicatedSessions_communicatorId", row.get(0).get(_communicatorRoleId)));
             html.append(Js.setVal("#communicatedSessions_titleIssue", row.get(0).get(_titleIssue)));
             html.append(Js.setVal("#communicatedSessions_ProposedSolution", row.get(0).get(_ProposedSolution)));
             html.append(Js.setVal("#communicatedSessions_weakPoint", row.get(0).get(_weakPoint)));
@@ -1084,7 +1085,7 @@ public class Sessions {
             if (row.get(0).get(_status).equals(status_confirmationFinal) //                    && Integer.valueOf(jjTools.getSessionAttribute(request, "#ROLE_ID")) == Integer.valueOf(row.get(0).get(_communicatorId).toString())
                     ) {
 
-                System.out.println("jjTools.getSeassionUserId(request)=" + jjTools.getSeassionUserId(request) + "row.get(0).get(_communicatorId)" + row.get(0).get(_communicatorId));
+                System.out.println("jjTools.getSeassionUserId(request)=" + jjTools.getSeassionUserId(request) + "row.get(0).get(_communicatorId)" + row.get(0).get(_communicatorRoleId));
                 html2.append("<div class=\"col-lg-6\">");
                 html2.append("<button  id='sendToCommunicator_communicatedSessions' class='btn btn-outline-success  btn-block mg-b-10'  onclick='hmisCommunicatedSessions.sendToCommunicator(" + id + ");' >ابلاغ صورتجلسه</button>");
                 html2.append("</div>");
@@ -1146,24 +1147,24 @@ public class Sessions {
                 html3.append("</tr>");
             }
             html3.append("</tbody></table>");
-            html5.append("<option>انتخاب کنید</option>");
-            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
-            for (int i = 0; i < RolesRow.size(); i++) {
-                html5.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
-            }
-            html6.append("<option>انتخاب کنید</option>");
-            List<Map<String, Object>> UserRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
-            for (int i = 0; i < UserRow.size(); i++) {
-                html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
-            }
+//            html5.append("<option>انتخاب کنید</option>");
+//            List<Map<String, Object>> RolesRow = jjDatabase.separateRow(db.Select(Role.tableName));
+//            for (int i = 0; i < RolesRow.size(); i++) {
+//                html5.append("<option id='" + RolesRow.get(i).get(Role._user_id) + "' value='" + RolesRow.get(i).get(Role._id) + "'>" + RolesRow.get(i).get(Role._title) + "</option>");
+//            }
+//            html6.append("<option>انتخاب کنید</option>");
+//            List<Map<String, Object>> UserRow = jjDatabase.separateRow(db.Select(Access_User.tableName));
+//            for (int i = 0; i < UserRow.size(); i++) {
+//                html6.append("<option id='" + UserRow.get(i).get(Access_User._id) + "' value='" + UserRow.get(i).get(Access_User._id) + "'>" + UserRow.get(i).get(Access_User._name) + "-" + UserRow.get(i).get(Access_User._family) + "</option>");
+//            }
             //////////////////////////////////////////////////////////////
             script += Js.setHtml("#communicatedSessions_button", html2);
             script += Js.table("#refreshApprovedIncommunicatedSessions", "300", 0, "", "مصوبات");
             script += Js.setHtml("#communicatedApprovedTbl", html3);
             script += html.toString();
             script += Js.setHtml("#communicatedApproved_executorRoleId", html5);
-            script += Js.setHtml("#communicatedApproved_executorUserId", html6);
-            script += Js.setHtml("#communicatedApproved_trackerId", html5);
+//            script += Js.setHtml("#communicatedApproved_executorUserId", html6);
+//            script += Js.setHtml("#communicatedApproved_trackerId", html5);
             script += Js.setHtml("#filesDownloadDivCommunicated", html8);
             Server.outPrinter(request, response, script);
             return "";

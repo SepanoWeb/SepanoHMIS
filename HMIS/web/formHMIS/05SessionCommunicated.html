@@ -24,7 +24,7 @@
             </div><!-- sh-pagetitle-left-title -->
         </div><!-- sh-pagetitle-left -->
     </div><!-- sh-pagetitle -->
-  
+
 
 </div>
 
@@ -41,7 +41,7 @@
                 <input class="form-control" id="communicatedSessions_titleSessions" name="sessions_title" placeholder="عنوان جلسه را وارد کنید" type="text" value="جلسه ی خرداد ماه کمیته ی اجرایی">
             </div>
         </div><!-- row -->
-        
+
         <div class="card-header btn-teal tx-white">
             دستور جلسه:
         </div>
@@ -66,8 +66,9 @@
                 <div class="col-lg-3">
                     مسئول ابلاغ
                     <div class="form-group has-success mg-b-0">
-                        <select id="communicatedSessions_communicatorId" class="form-control"></select>
-                        <!--<input id="sessions_communicator" name="sessions_communicator" class="form-control is-valid" placeholder="مسئله یا مشکل را وارد کنید" type="text">-->
+                        <select disabled="" id="communicatedSessions_communicatorId" class="form-control">
+                        </select>
+
                     </div><!-- form-group -->
                 </div><!-- col -->   
                 <div class="col-lg-3">
@@ -108,11 +109,11 @@
                     <div class="row">
                         <input class="btn btn-primary" id="sendFilesSessions" type="submit" value="ارسال">
                         <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                        <input id="attachFileSessions" name="" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                        <input id="attachFileSessions" name="attachFileSessions" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                         <span class="form-control col-lg"></span>
                     </div>
-                                                        <a onclick="hmisDepartment.downloadIcon();"></a>
-                    </label>
+                    <a onclick="hmisDepartment.downloadIcon();"></a>
+
                     <div id="inputTextSelectorSessionsDiv"></div>
                     <div id="filesDownloadDivCommunicated"></div>
 
@@ -124,7 +125,7 @@
         </div>
         <div class="card-body pd-sm-30">
             <div class="row">
-               
+
                 <div id="insertApprovedCommunicated" class="card-body pd-sm-30" style="display: none">
                     <div class="row">
                         <input type="hidden" id="hmis_approved_id" name="hmis_approved_id"/>
@@ -139,7 +140,7 @@
                             <div class="form-group has-warning mg-b-0">
                                 <input onchange="hmisSessions.executorAction($(this).val());"  type="radio" checked="checked" id="roleExecutor"   value="سمت">
                                 انتخاب سمت مسئول اجرا
-                                <select id="communicatedApproved_executorRoleId"  multiple=""  class="form-control select2 select2-hidden-accessible">
+                                <select id="communicatedApproved_executorRoleId"  multiple="" name="approved_executorRoleId" class="form-control select2 select2-hidden-accessible">
                                     <!--در واقع از جدول اشخاص باید بیاورد-->
                                 </select>
                             </div><!-- form-group -->
@@ -148,9 +149,10 @@
                             <div class="form-group has-warning mg-b-0">
 
                                 انتخاب اشخاص مسئول اجرا <input type="radio" onchange="hmisSessions.executorAction($(this).val());" id="userExecutor" value="کاربران">
-                                <select id="communicatedApproved_executorUserId" multiple=""  class="form-control select2 select2-hidden-accessible">
+                                <select id="communicatedApproved_executorUserId" name="approved_executorUserId" multiple class="form-control select2 select2-hidden-accessible">
                                     <!--در واقع از جدول اشخاص باید بیاورد-->
                                 </select>
+
                             </div><!-- form-group -->
                         </div><!-- col -->
                         <div class="col-lg-3">
@@ -172,22 +174,26 @@
                                 <input style="z-index: 100" id="communicatedApproved_endDate"   class="form-control is-valid" placeholder="تاریخ پایان" type="text">
                             </div><!-- form-group -->
                         </div><!-- col -->   
-                        <br/>
                         <div class="col-lg-3">
-                            بارگذاری مستندات:<br/>
-                            <input id="approved_file" name="communicatedApproved_file" type="hidden" />
-                            <div class="row col-lg-12 mg-b-10">
-                                <input class="btn btn-primary" id="sendFilesApproved" type="submit" value="ارسال">
-                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                                <input id="attachFileApproved" name="attachFileApproved" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                <span class="form-control col-lg"></span>
-                            </div>
-                                                                <a onclick="hmisDepartment.downloadIcon();"></a>
-                            </label>
-                            <div id="inputApprovedFileDiv"></div>
-                            <div id="inputDownloadDiv"></div>
-
-                        </div><!-- col --> 
+                            وضعیت:
+                            <input id="communicatedApproved_status" class="form-control" />
+                        </div><!-- col -->
+                        <br/>
+                                                <div class="col-lg-5 mg-t-20">
+<!--                                                    بارگذاری مستندات:<br/>
+                                                    <input id="communicatedApproved_file" name="approved_file" type="hidden" />
+                                                    <div class="row col-lg-12 mg-b-10">
+                                                        <input class="btn btn-primary" id="sendFilesApproved" type="submit" value="ارسال">
+                                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                                        <input id="attachFileApproved" name="attachFileApproved" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                                        <span class="form-control col-lg"></span>
+                                                    </div>
+                                                    <a onclick="hmisDepartment.downloadIcon();"></a>
+                        
+                                                    <div id="inputApprovedFileDiv"></div>-->
+                                                    <div id="inputDownloadDiv"></div>
+                        
+                                                </div> 
                         <div class="col-lg-12">
                             توضیحات:
                             <div class="form-group has-success mg-b-0">
@@ -200,7 +206,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group has-success mg-b-0">
-                                <button class="btn btn-outline-secondary btn-block mg-b-10" onclick="$('#insertApproved2').slideUp();$('communicatedApprovedTbl').slideDown();">انصراف
+                                <button class="btn btn-outline-secondary btn-block mg-b-10" onclick="$('#insertApprovedCommunicated').slideUp();$('#communicatedApprovedTbl').slideDown();">انصراف
                                 </button>
                             </div><!-- form-group -->
                         </div><!-- col -->
@@ -214,7 +220,7 @@
             </div>
         </div><!-- card-body -->
 
-      
+
         <!--</div>-->
     </div><!-- card-body -->
 </div><!-- card -->
@@ -222,11 +228,11 @@
 <div class="row l">
 
     <!--<div class="col-lg-3">-->
-<!--        <a href="feiz/login.html">
-            <a class="btn btn-outline-primary active btn-block mg-b-10"  href="Server?do=Sessions.downloadSessions&id=">
-                چاپ صورت جلسه
-            </a>   
-        </a>-->
+    <!--        <a href="feiz/login.html">
+                <a class="btn btn-outline-primary active btn-block mg-b-10"  href="Server?do=Sessions.downloadSessions&id=">
+                    چاپ صورت جلسه
+                </a>   
+            </a>-->
     <!--</div> col --> 
     <div class="col-lg-6" id="communicatedSessions_button"  ></div>
 
@@ -250,9 +256,4 @@
         })
     });
 </script>
-<script>
-    $('#communicatedApproved_executorRoleId').select2({minimumResultsForSearch: '', width: '100%'});
-    $('#communicatedApproved_executorUserId').select2({minimumResultsForSearch: '', width: '100%'});
-    $('#communicatedApproved_communicatorId').select2({minimumResultsForSearch: '', width: '100%'});
 
-</script>
