@@ -12,7 +12,7 @@
         </div>
         <div class="card-body pd-sm-30">
             <div class="row">
-                <input type="hidden" id="hmis_approved_id" name="hmis_approved_id"/>
+                <input type="hidden" id="hmis_approved_id" name="id"/>
                 <div class="col-lg-12">
                     عنوان مصوبه:
                     <div class="form-group has-success mg-b-0">
@@ -28,20 +28,20 @@
                 <div class="col-lg-3">
                     <div class="form-group has-warning mg-b-0">
                         مسئول پیگیری
-                        <input type="text" id="trackerId" disabled="disabled"  class="form-control is-valid"/>
+                        <input type="text"  id="trackerId" disabled="disabled"  class="form-control is-valid"/>
 
                     </div><!-- form-group -->
                 </div><!-- col -->
                 <div class="col-lg-3">
                     تاریخ شروع:
                     <div class="form-group has-success mg-b-0">
-                        <input id="startDate" name="approved_startDate" class="form-control is-valid" placeholder="تاریخ شروع" type="text">
+                        <input id="startDate" disabled class="form-control is-valid" placeholder="تاریخ شروع" type="text">
                     </div><!-- form-group -->
                 </div><!-- col -->   
                 <div class="col-lg-3">
                     تاریخ پایان:
                     <div class="form-group has-success mg-b-0">
-                        <input id="endDate" name="approved_endDate" class="form-control is-valid" placeholder="تاریخ پایان" type="text">
+                        <input id="endDate"  disabled class="form-control is-valid" placeholder="تاریخ پایان" type="text">
                     </div><!-- form-group -->
                 </div><!-- col -->   
                 <br/>
@@ -72,17 +72,17 @@
                     </div><!-- form-group -->
                 </div><!-- col -->   
 
-                <div class="col-lg-3">
+<!--                <div class="col-lg-3">
                     بارگذاری مستندات:<br/>
                     <input id="approved_fileOfResponsible" name="approved_fileOfResponsible" type="hidden" />
-                    <!--<img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>-->
+                    <img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>
                     <div class="row">
                         <input class="btn btn-primary" id="sendFilesApproved1" type="submit" value="ارسال">
                         <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
                         <input id="attachFileApproved1" name="attachFileApproved1" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                         <span class="form-control col-lg"></span>
                     </div>
-                </div><!-- col -->   
+                </div> col    -->
 
                 <!--                                    <a onclick="hmisDepartment.downloadIcon();"></a>-->
                 <!--</label>-->
@@ -90,7 +90,72 @@
                 <div  class="col-lg-3" id="inputFileApprovedDiv"></div>
                 <div class="col-lg-12 mg-t-20" id="inputTextSelectorDiv"></div>
                 
+            <div class="row col-lg-12" id="executorFileApprovedDiv"  style="display:none">
+                        <div class="col-lg-12">
 
+                            <input id="approved_filesExecutor" name="approved_filesExecutor" type="hidden">
+                            <input id="approved_FilesTitleExecutor" name="approved_FilesTitleExecutor" type="hidden">
+                            <!--<div  id="inputTextSelectorDiv2" ></div>-->
+                            <!--<div  id="inputTitleSelectorDiv2" ></div>-->
+                            <div  id="showFilesExecutorDiv" ></div>
+
+                            <div class="input-group">
+
+                                <input class="btn btn-primary" id="sendExecutorFilesApproved" type="submit" value="ارسال">
+                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                <input id="attachExecutorFilesApproved" name="attachFileExecutorApproved" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                <!--<span class="form-control"></span>-->
+                            </div>
+                            عنوان فایل
+                            <input id="approved_titleFileExecutor" name="approved_titleFileExecutor"  style="display: block;
+                                   width: 100%;
+                                   padding: 0.65rem 0.75rem;
+                                   font-size: 1.3rem;
+                                   line-height: 1.25;
+                                   color: #495057;
+                                   background-color: #fff;
+                                   background-image: none;
+                                   background-clip: padding-box;
+                                   border: 1px solid rgba(0, 0, 0, 0.15);
+                                   border-radius: 3px;
+                                   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                            <span id="user_pic" class="form-control"></span>
+                        </div>
+                        </div>
+            <div class="row col-lg-12" id="trackerFileApprovedDiv"  style="display:none">
+                        <div class="col-lg-12">
+
+                            <input id="approved_filesTracker" name="approved_filesTracker" type="hidden">
+                            <input id="approved_FilesTitleTracker" name="approved_FilesTitleTracker" type="hidden">
+                            <!--<div  id="inputTextSelectorDiv2" ></div>-->
+                            <!--<div  id="inputTitleSelectorDiv2" ></div>-->
+                            <div  id="showFilesTrackerDiv" ></div>
+
+                            <div class="input-group">
+
+                                <input class="btn btn-primary" id="sendTrackerFilesApproved" type="submit" value="ارسال">
+                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                <input id="attachTrackerFilesApproved" name="attachFileTrackerApproved" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                <!--<span class="form-control"></span>-->
+                            </div>
+                            عنوان فایل
+                            <input id="approved_titleFileTracker" name="approved_titleFileTracker"  style="display: block;
+                                   width: 100%;
+                                   padding: 0.65rem 0.75rem;
+                                   font-size: 1.3rem;
+                                   line-height: 1.25;
+                                   color: #495057;
+                                   background-color: #fff;
+                                   background-image: none;
+                                   background-clip: padding-box;
+                                   border: 1px solid rgba(0, 0, 0, 0.15);
+                                   border-radius: 3px;
+                                   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                            <span id="user_pic" class="form-control"></span>
+                        </div>
+                        </div>
+                <div class="col-lg-12" id="filesApprovedExecutorDiv"></div>
+                <div class="col-lg-12" id="filesApprovedTrackerDiv"></div>
                 <div class="col-lg-3" id="Approved_button"></div>
                 <div class="col-lg-3">
                     <a id="cancel_Approved" class="btn btn-outline-secondary mg-b-10  btn-block">

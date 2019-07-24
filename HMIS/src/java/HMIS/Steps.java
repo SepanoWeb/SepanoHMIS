@@ -62,12 +62,11 @@ public class Steps {
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
     public static String lbl_edit = "ثبت ویرایش";
-
     public static String status_inDoing = "در حال انجام";
     public static String status_unDone = "غیر قابل انجام";
     public static String status_done = "انجام شده";
     public static String status_initialRegistration = "ثبت اولیه";
-
+//////////////////////////////////////////////////////////////////
     public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
@@ -98,7 +97,6 @@ public class Steps {
                 html.append("<td class='r'>" + jjCalendar_IR.getViewFormat(row.get(i).get(_endDate).toString()) + "</td>");
                 html.append("<td class='r'>" + jjNumber.getFormattedNumber(row.get(i).get(_cost).toString()) + "</td>");
                 html.append("<td class='c'><i class='icon ion-ios-gear-outline'></i></td>");
-
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -124,7 +122,6 @@ public class Steps {
     /**
      * این جدول گام هایی را نشان می دهد که ثبت اولیه نباشند گام مسئول پیگیری
      * باشد یا مسئول اجرا
-     *
      * @param request
      * @param response
      * @param db
@@ -150,13 +147,13 @@ public class Steps {
                     condition1 += " steps_executorRoleId =" + role[i] + " OR";
                     condition2 += " steps_trackerId =" + role[i] + " OR";
                 }
-                dtm = db.otherSelect("SELECT * FROM hmis_steps WHERE steps_status!='" + status_initialRegistration + "' AND steps_executorUserId=" + jjTools.getSeassionUserId(request) + " OR " + condition1.substring(0, condition1.length() - 2) + " OR " + condition2.substring(0, condition2.length() - 2) + "");
+                dtm = db.otherSelect("SELECT * FROM hmis_steps WHERE steps_status!='" + status_initialRegistration + "' AND (steps_executorUserId=" + jjTools.getSeassionUserId(request) + " OR " + condition1.substring(0, condition1.length() - 2) + " OR " + condition2.substring(0, condition2.length() - 2) + ")");
             } else {
-                dtm = db.otherSelect("SELECT * FROM hmis_steps WHERE steps_status!='" + status_initialRegistration + "' AND steps_executorUserId=" + jjTools.getSeassionUserId(request));
+                dtm = db.otherSelect("SELECT * FROM hmis_steps WHERE steps_status!='" + status_initialRegistration + "' AND  steps_executorUserId=" + jjTools.getSeassionUserId(request));
             }
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
             html.append("<div class=\"card-header bg-primary tx-white\">گام های اجرایی</div>\n");
-            html.append("        <div class=\"table-wrapper\">\n");
+            html.append("<div class=\"table-wrapper\">");
             html.append("<table id='refreshMySteps' class='table display responsive' class='tahoma10' style='direction: rtl;width:982px'><thead>");
             html.append("<th width='5%'>کد</th>");
             html.append("<th width='30%'>عنوان</th>");
@@ -718,8 +715,9 @@ public class Steps {
                 return hasAccess;
             }
             String script = "";
-            String steps_id = jjTools.getParameter(request, "hmis_steps_id");
-            System.out.println("steps_id=" + jjTools.getParameter(request, "hmis_steps_id"));
+            String steps_id = jjTools.getParameter(request, _id);
+
+            System.out.println("steps_id=" + jjTools.getParameter(request, _id));
             Map<String, Object> map = new HashMap<String, Object>();
             System.out.println("jjTools.getParameter(request, Steps._progressPercent)=" + jjTools.getParameter(request, _progressPercent));
 
@@ -886,13 +884,14 @@ public class Steps {
                                 + jjCalendar_IR.getViewFormat(jjCalendar_IR.getDatabaseFormat_8length("", true))
                                 + " "
                                 + new jjCalendar_IR().getTimeFormat_8length()
+                                + "%23A%23"
                         );
                         db.insert(tableName, map);
 
                     }
 
                 } else {
-
+                    changeStatus(request, db, id, status_inDoing);
                 }
             } else if (!ExecutorUserId.equals("")) {
                 String[] ExeUserId = ExecutorUserId.split(",");
@@ -924,17 +923,18 @@ public class Steps {
                                 + jjCalendar_IR.getViewFormat(jjCalendar_IR.getDatabaseFormat_8length("", true))
                                 + " "
                                 + new jjCalendar_IR().getTimeFormat_8length()
+                                + "%23A%23"
                         );
                         db.insert(tableName, map);
                     }
 
                 } else {
+                    changeStatus(request, db, id, status_inDoing);
 
                 }
 
             }
             System.out.println("id=" + id);
-            changeStatus(request, db, id, status_inDoing);
             Server.outPrinter(request, response, "hmisManagerPlans.m_select(" + row.get(0).get(_plansId) + ");");
             return "";
         } catch (Exception ex) {
@@ -1117,10 +1117,10 @@ public class Steps {
                 return "";
             }
 //            String trackerId = "*[1-3]";
-            String trackerId = "^" + row.get(0).get(_trackerId).toString() + ",";
+            String trackerId = "" + row.get(0).get(_trackerId).toString() + ",";
             Pattern p1 = Pattern.compile(trackerId);
             String RolesId = jjTools.getSessionAttribute(request, "#ROLE_ID");
-            String executorRoleId = "^" + (row.get(0).get(_executorRoleId).toString() + ",");//این علائم نشانه این است که فقط همان  کاراکتر وجود داشته باشد
+            String executorRoleId = "" + (row.get(0).get(_executorRoleId).toString() + ",");//این علائم نشانه این است که فقط همان  کاراکتر وجود داشته باشد
             List<Map<String, Object>> RolesTrackerIdRow = jjDatabase.separateRow(db.Select(Role.tableName, Role._id + "=" + row.get(0).get(_trackerId)));
             List<Map<String, Object>> UserTrackerIdRow = jjDatabase.separateRow(db.Select(Access_User.tableName, Access_User._id + "=" + RolesTrackerIdRow.get(0).get(Role._user_id)));
             Matcher m1 = p1.matcher(RolesId);   // get a matcher object
@@ -1160,7 +1160,7 @@ public class Steps {
             }
             Pattern p2 = Pattern.compile(executorRoleId);//برای رول ها ومچ کردن با regex
             Matcher m2 = p2.matcher(RolesId);   // get a matcher object
-            if (row.get(0).get(_executorUserId).toString().equals(jjTools.getSeassionUserId(request)) || m2.find()) {
+            if (row.get(0).get(_executorUserId).toString().equals("" + jjTools.getSeassionUserId(request) + "") || m2.find()) {
                 html.append(Js.removeAttr("#MySteps_descriptionExecutor", "disabled"));//
                 html.append("$('#executorFileDiv').show();");
                 if (!row.get(0).get(Steps._filesExecutor).toString().equals("")) {
@@ -1177,7 +1177,6 @@ public class Steps {
                         html4.append("</div>");
                     }
                 }
-                
 
             } else {
                 html.append(Js.setAttr("#MySteps_descriptionExecutor", "disabled", "disabled"));
@@ -1331,14 +1330,14 @@ public class Steps {
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(tableName, _id + "=" + id));
             List<Map<String, Object>> rowupload = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._id + "=" + idUpload));////برای دراوردن اسم فایل
             String filename = rowupload.get(0).get(UploadServlet._file_name).toString() + "%23A%23";
-            String attacheFiles = row.get(0).get(_filesExecutor).toString();
-            System.out.println(filename);
-            System.out.println("____________________________________");
-            System.out.println(attacheFiles);
-            attacheFiles = attacheFiles.replace(filename, "");
-            System.out.println(attacheFiles);
 
             if (nameFile.equals("2")) {// درقسمت تابع حذف که صدا زده می شود چون ما دونوع حذف داریممجبوریم براش عدد بگذاریم عدد یک برای حذف فایل های مربوط به مسئول پیگیری 
+                String attacheFiles = row.get(0).get(_filesExecutor).toString();
+                System.out.println(filename);
+                System.out.println("____________________________________");
+                System.out.println(attacheFiles);
+                attacheFiles = attacheFiles.replace(filename, "");
+                System.out.println(attacheFiles);
                 //عدد 2 برای حذف فایل های مسئول احرا
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put(_filesExecutor, attacheFiles);
@@ -1346,7 +1345,13 @@ public class Steps {
                 db.update(tableName, map, _id + "=" + id);
                 script += "$('#MySteps_executorFiles').val('" + attacheFiles + "');";
             }
-            if (nameFile.equals("1")) {
+            if (nameFile.equals("1")) {//اگر فایلی که خواستیم پاککنیم از فایل های مسئول پیگیری بود 
+                String attacheFiles = row.get(0).get(_filesTracker).toString();
+                System.out.println(filename);
+                System.out.println("____________________________________");
+                System.out.println(attacheFiles);
+                attacheFiles = attacheFiles.replace(filename, "");
+                System.out.println(attacheFiles);
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put(_filesTracker, attacheFiles);
                 System.out.println("____________________________________");
