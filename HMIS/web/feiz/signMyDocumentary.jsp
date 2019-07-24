@@ -448,6 +448,10 @@
         </div>
     </div><!-- card -->
 </div><!-- sh-pagebody -->
+<script src="js/jquery/jquery-1.10.2_1.js" type="text/javascript"></script>
+        <script src="js/jquery/jquery-migrate-1.2.0.js" type="text/javascript"></script>
+        <script src="Manager/popper.js"></script>
+        <script src="Manager/bootstrap.js"></script>
 
 <script>
     //@ToDo انتقال این تابع به  index.js

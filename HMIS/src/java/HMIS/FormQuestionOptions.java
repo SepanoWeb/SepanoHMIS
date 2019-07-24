@@ -45,7 +45,7 @@ public class FormQuestionOptions {
 
     public static final String lbl_insert = "ثبت و گزینه به سوال";
     public static final String lbl_delete = "حذف گزینه";
-    public static final String lbl_edit = "ویرایش";
+    public static final String lbl_edit = "ثبت ویرایش";
     public static final String lbl_add_en = "افزودن زبان انگلیسی";
     public static final String lbl_edit_en = "ویرایش بخش انگلیسی";
     public static final String lbl_add_ar = "افزودن زبان عربی";

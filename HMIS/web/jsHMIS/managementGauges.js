@@ -277,7 +277,7 @@ var hmisManagementGauges = {
 
     },
     m_delete: function (id) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjDialog_YesNo('hmisManagementGauges.m_delete_after_question(' + id + ');\n', true, "");
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("هشدار برای حذف",'hmisManagementGauges.m_delete_after_question(' + id + ');\n');
     },
     m_delete_after_question: function (id) {
         var param = "";

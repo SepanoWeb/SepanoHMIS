@@ -161,7 +161,7 @@ public class CreateDocumentary {
     public static String _signatory_role_20 = "createDocumentary_signatory_role_20";
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
+    public static String lbl_edit = "ثبت ویرایش";
     public static int rul_rfs = 0;
     public static int rul_ins = 0;
     public static int rul_edt = 0;
@@ -1007,7 +1007,7 @@ public class CreateDocumentary {
                  errorMessage = "این سند توسط یکی از امضا کنندگان رد و باطل شده است";
             }
             if (!errorMessage.isEmpty()) {
-                Server.outPrinter(request, response, Js.dialog(errorMessage));
+                Server.outPrinter(request, response, Js.modal(errorMessage,"شما اجازه این عملیات را ندارید"));
                 return "";
             }
             System.out.println("id=" + id);

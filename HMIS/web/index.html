@@ -96,52 +96,52 @@
 
                         <li class="nav-item"><a href="#swUnreadMessages"  class="nav-link ShowOneDiv" onclick="
 //                                   
-                                    hmisUnreadMessages.m_refresh();
-                                
+                                hmisUnreadMessages.m_refresh();
+
                                 hmisUnreadMessages.mainTabSetSize();
                                 hmisUnreadMessages.loadForm();
 
                                                 ">پیام های خوانده نشده</a></li>
                         <li class="nav-item"><a href="#swMessagesSeen"  class="nav-link ShowOneDiv" onclick="
 //                                   
-                                    hmisMessagesSeen.m_refresh();
-                                
+                                hmisMessagesSeen.m_refresh();
+
                                 hmisMessagesSeen.mainTabSetSize();
                                 hmisMessagesSeen.loadForm();
 
                                                 ">پیام های دیده شده</a></li>
                         <li class="nav-item"><a href="#swMyMessages"  class="nav-link ShowOneDiv" onclick="
 //                                   
-                                    hmisMyMessages.m_refresh();
-                               
+                                hmisMyMessages.m_refresh();
+
                                 hmisMyMessages.mainTabSetSize();
                                 hmisMyMessages.loadForm();
 
                                                 ">پیام های من</a></li>
                         <li class="nav-item"><a href="#swMessages"  class="nav-link ShowOneDiv" onclick="
 //                                   
-                                    hmisMessages.m_refresh();
-                               
+                                hmisMessages.m_refresh();
+
                                 hmisMessages.mainTabSetSize();
                                 hmisMessages.loadForm();
 
                                                 ">پیام ها</a></li>
-<!--                        <li class="nav-item"><a href="#swMyMessages"  class="nav-link ShowOneDiv" onclick="if ($('#swMyMessagesTbl').html() == '') {
-//                                   
-                                    hmisMyMessages.m_refresh();
-                                }
-                                ;
-                                hmisMyMessages.mainTabSetSize();
-                                hmisMyMessages.loadForm();
-
-                                                ">پیام های من</a></li>-->
-
+                        <!--                        <li class="nav-item"><a href="#swMyMessages"  class="nav-link ShowOneDiv" onclick="if ($('#swMyMessagesTbl').html() == '') {
+                        //                                   
+                                                            hmisMyMessages.m_refresh();
+                                                        }
+                                                        ;
+                                                        hmisMyMessages.mainTabSetSize();
+                                                        hmisMyMessages.loadForm();
                         
+                                                                        ">پیام های من</a></li>-->
 
 
 
-                        
-                        
+
+
+
+
                     </ul>
                 </li><!-- nav-item -->
                 <li class="nav-item">
@@ -174,11 +174,11 @@
                                 ;
                                 hmisStrategic.loadForm();
                                 return false;" class="nav-link ShowOneDiv">برنامه استراتژیک </a></li>
-<!--                        <li class="nav-item"><a href="#swStrategicGuide" onclick="
-                                hmisStrategicGuide.loadForm();
-//                                hmisStrategicGuide.m_showForm();
-                                "
-                                class="nav-link ShowOneDiv">راهنما برنامه استراتژیک</a></li>-->
+                        <!--                        <li class="nav-item"><a href="#swStrategicGuide" onclick="
+                                                        hmisStrategicGuide.loadForm();
+                        //                                hmisStrategicGuide.m_showForm();
+                                                        "
+                                                        class="nav-link ShowOneDiv">راهنما برنامه استراتژیک</a></li>-->
 
                     </ul>
                 </li><!-- nav-item -->
@@ -362,38 +362,22 @@
 
 
                                                 ">مدیریت سنجه ها</a></li>
-
-                        <li class="nav-item"><a href="#" class="nav-link ShowOneDiv" onclick="$('.sh-mainpanel').load('07allStandards.html', null, function () {
-                                });
-                                return false;">گزارش سنجه ها </a></li>
-                        <!--                        <li class="nav-item"><a href="#" class="nav-link ShowOneDiv" onclick="$('.sh-mainpanel').load('07myStandards.html', null, function () {
-                                                        });
-                                                        return false;">بارگذاری مستندات من</a></li>-->
-                        <li class="nav-item"><a href="#swDocumentary"  class="nav-link ShowOneDiv" onclick="if ($('#swDocumentaryTbl').html() == '') {
-//                                   
-                                    hmisDocumentary.m_refresh();
-                                }
+                        <li class="nav-item"><a href="#swDocumentary"  class="nav-link ShowOneDiv" onclick="
+                                hmisDocumentary.m_refresh_my();
                                 hmisDocumentary.mainTabSetSize();
-                                hmisDocumentary.loadForm();
-
-                                                ">  بارگذاری مستندات من</a></li>
-
-
-
-
-                        <li class="nav-item"><a href="#" class="nav-link ShowOneDiv" onclick="$('.sh-mainpanel').load('07otherDocuments.html', null, function () {
-                                });
-                                return false;">آرشیو مستندات اعتبار بخشی</a></li>
-
+                                hmisDocumentary.loadForm();">
+                                بارگذاری مستندات من</a></li>
+                        <li class="nav-item"><a href="#swDocumentary" class="nav-link ShowOneDiv" onclick="
+                                hmisDocumentary.m_refresh();
+                                hmisDocumentary.mainTabSetSize();
+                                hmisDocumentary.loadForm();">
+                                آرشیو مستندات سنجه ها و استانداردها</a></li>
                         <li class="nav-item"><a href="#swCreateDocumentary"  class="nav-link ShowOneDiv" onclick="if ($('#swCreateDocumentaryTbl').html() == '') {
-//                                   
                                     hmisCreateDocumentary.m_refresh();
                                 }
-
                                 hmisCreateDocumentary.mainTabSetSize();
-                                hmisCreateDocumentary.loadForm();
-
-                                                "> ایجاد مستند</a></li>
+                                hmisCreateDocumentary.loadForm();">
+                                ایجاد مستند</a></li>
                         <li  class="nav-item"><a href="#swSignDocumentary"  class="nav-link ShowOneDiv" onclick="if ($('#swSignDocumentaryTbl').html() == '') {
 
 
@@ -445,8 +429,8 @@
                         <span>HICS tree</span>
                     </a>
                     <ul class="nav-sub">
-                      
-                                                  <li  class="nav-item"><a href="#swPositions"  class="nav-link ShowOneDiv" onclick="if ($('#swPositionsTbl').html() == '') {
+
+                        <li  class="nav-item"><a href="#swPositions"  class="nav-link ShowOneDiv" onclick="if ($('#swPositionsTbl').html() == '') {
 
                                     hmisPositions.m_refresh();
                                 }
@@ -537,11 +521,11 @@
                                                  ">جدول گروه های کاربری</a></li>
                     </ul>
                 </li><!-- nav-item -->
-                
-                
-                
-                
-                
+
+
+
+
+
                 <li class="nav-item">
                     <a href="index.html" class="nav-link with-sub">                        
                         <i class="icon ion-ios-filing-outline"></i>
@@ -558,7 +542,7 @@
 
                     </ul>
                 </li><!-- nav-item -->
-                
+
                 <!--                <li class="nav-item">
                                     <a href="index.html" class="nav-link with-sub">
                                         <i class="icon ion-ios-list-outline"></i>
@@ -608,9 +592,9 @@
                     </div>
                 </a>
                 <a   style='cursor: pointer;height:30px'  href="Server?do=Positions.selectPositions" target='_blank'  class="sh-icon-link">
-                <!--<a   style='cursor: pointer;height:30px' href="feiz/positions.jsp"  class="sh-icon-link">-->
-                <!--<a   style='cursor: pointer;height:30px'  href="feiz/positions.jsp" target='_blank'  class="sh-icon-link">-->
-               
+                    <!--<a   style='cursor: pointer;height:30px' href="feiz/positions.jsp"  class="sh-icon-link">-->
+                    <!--<a   style='cursor: pointer;height:30px'  href="feiz/positions.jsp" target='_blank'  class="sh-icon-link">-->
+
                     <div>
                         <img src="Manager/icon/complain.png" style="width: 32px">
                         <span>اخطار حوادث وبلایا</span>
@@ -843,7 +827,7 @@
                                 <div id="swMessagesSeenForm" style="display: none;"></div>
                             </div>
                             <div class="Alldiv" id="swMessages">
-                               
+
                                 <div id="swMessagesTbl" ></div>
                                 <div id="swMessagesForm" style="display: none;"></div>
                             </div>
@@ -955,7 +939,7 @@
 
             <script src="jsHMIS/unreadMessages.js" type="text/javascript"></script>
             <!--<script src="jsHMIS/part.js" type="text/javascript"></script>-->
-      <script src="jsHMIS/communicatedSessions.js" type="text/javascript"></script>
+            <script src="jsHMIS/communicatedSessions.js" type="text/javascript"></script>
             <script src="jsHMIS/strategic.js" type="text/javascript"></script>
             <script src="jsCms/user.js" type="text/javascript"></script>
             <script src="jsCms/group.js" type="text/javascript"></script>
@@ -975,7 +959,7 @@
             <script src="jsHMIS/messagesSeen.js" type="text/javascript"></script>
             <script src="jsHMIS/messages.js" type="text/javascript"></script>
 
-            
+
             <!--////تنظیمات-->
             <script src="jsHMIS/setting.js" type="text/javascript"></script>
 

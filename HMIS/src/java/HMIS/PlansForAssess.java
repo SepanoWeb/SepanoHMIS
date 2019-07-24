@@ -34,7 +34,7 @@ public class PlansForAssess {
     public static int rul_lng5 = 0;
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
+    public static String lbl_edit = "ثبت ویرایش";
 
     /**
      * جدول برنامه های عملیاتی من

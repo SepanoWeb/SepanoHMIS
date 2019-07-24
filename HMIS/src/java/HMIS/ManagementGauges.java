@@ -54,7 +54,7 @@ public class ManagementGauges {
     public static String lbl_add_new = "سنجه جدید";
     public static String lbl_insert = "دخیره";
     public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
+    public static String lbl_edit = "ثبت ویرایش";
 
     public static int rul_rfs_all = 0;
     public static int rul_rfs_own = 0;
@@ -138,7 +138,6 @@ public class ManagementGauges {
                 if (!row.get(i).get("statuses").toString().isEmpty()) {
                     String statusFlags[] = row.get(i).get("statuses").toString().split(",");
                     for (int j = 0; j < statusFlags.length; j++) {
-                        System.out.println("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" + row.get(i).get(_id).toString());
                         if (statusFlags[j].equals(Documentary.status_Uploaded)) {
                             FlagsHtml += "<i class='icon ion-flag' style='color:green;font-size: 1em;padding: 0 5px;'></i>";
                         } else if (statusFlags[j].equals(Documentary.status_noUploaded)) {
@@ -152,7 +151,6 @@ public class ManagementGauges {
                 html.append("<td class='c' >" + (row.get(i).get(_step).toString()) + "</td>");
                 html.append("<td class='c' >" + row.get(i).get(Role._title).toString() + "<br/>(" + row.get(i).get(Access_User._name).toString() + " " + row.get(i).get(Access_User._family).toString() + ")</td>");
                 html.append("<td class='c' >" + (row.get(i).get(_date).toString()) + "</td>");
-
                 html.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'><a src='img/l.png' style='cursor: pointer;height:30px' onclick='hmisManagementGauges.m_select(" + row.get(i).get(_id) + ");' ></a></td>");
                 html.append("</tr>");
             }

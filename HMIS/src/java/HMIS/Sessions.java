@@ -69,7 +69,7 @@ public class Sessions {
     public static int rul_lng5 = 0;
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
+    public static String lbl_edit = "ثبت ویرایش";
     public static String status_confirmationFinal = "تایید نهایی";
     public static String status_sendComment = "ارسال دعوتنامه";
     public static String status_created = "ایجاد شده";

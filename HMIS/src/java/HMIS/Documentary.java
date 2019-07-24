@@ -50,12 +50,92 @@ public class Documentary {
     public static String lbl_finalize = "دخیره و ثبت نهایی";
 
     public static int rul_rfs = 0;
+    public static int rul_rfs_own = 0;
     public static int rul_ins = 0;
     public static int rul_edt = 0;
     public static int rul_undo = 0;
     public static int rul_dlt = 10000; // مستندات ایجاد شده قابل حذف نیستند و با دادن عدد بزرگ کسی دسترسی به حذف ندارد
 
     public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        try {
+            boolean accRefreshAll = Access_User.hasAccess(request, db, rul_edt);
+            if (!accRefreshAll) {
+                Server.outPrinter(request, response, Js.modal("شما اجازه دسترسی به این قسمت را ندارید", "محدودیت سطح دسترسی!"));
+                return "";
+            }
+            StringBuilder html = new StringBuilder();
+            String userRolesinSession[] = jjTools.getSeassionUserRole(request).split(",");            
+            DefaultTableModel dtm;
+            dtm = db.otherSelect("SELECT " + tableName + ".* ,"
+                    + ManagementGauges._axis + " ,"
+                    + ManagementGauges._underTheAxis + " ,"
+                    + ManagementGauges._standard + " ,"
+                    + ManagementGauges._gauge + " ,"
+                    + ManagementGauges._step + " ,"
+                    + Role._title + "," + Access_User._name + "," + Access_User._family + " FROM  " + tableName
+                    + " LEFT JOIN " + ManagementGauges.tableName + " ON " + _gaugeId + " = " + ManagementGauges.tableName + ".id " // برای استخراج نام مسئول بارگذاری و نقش او
+                    + " LEFT JOIN " + Role.tableName + " ON " + ManagementGauges._responsibleLoadingRole + " = hmis_role.id " // برای استخراج نام مسئول بارگذاری و نقش او
+                    + " LEFT JOIN " + Access_User.tableName + " ON " + Role._user_id + " = access_user.id " + ";");
+            List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
+            html.append(" <div class='card bd-primary mg-t-20'>"
+                    + "    <div class='card-header bg-primary tx-white'>بار گذاری سنجه ها</div>"
+                    + "    <div class='card-body pd-sm-30'>"
+            );
+            html.append("<table id='refreshDocumentary' class='table display responsive' class='tahoma10' style='direction: rtl'><thead>");
+            html.append("<th class='c' width='5%'>کد</th>");
+            html.append("<th class='c' width='30%'>سنجه</th>");
+            html.append("<th class='c' width='20%'>مسئول بارگذاری</th>");
+            html.append("<th class='c' width='20%'>نام بارگذاری کننده</th>");
+            html.append("<th class='c' width='20%'>دوره بارگذاری </th>");
+            html.append("<th class='c' width='20%'>تاریخ ایجاد(سیستمی)</th>");
+            html.append("<th class='c' width='20%'>وضعیت بارگذاری</th>");
+            html.append("<th class='c' width='5%'>مشاهده</th>");
+            html.append("</thead><tbody>");
+            for (int i = 0; i < row.size(); i++) {
+                html.append("<tr  onclick='hmisDocumentary.m_select(" + row.get(i).get(_id) + ");' class='p " + getClassByStatus(row.get(i).get(_status).toString()) + " ' >");
+                html.append("<td class='c' >" + (row.get(i).get(_id).toString()) + "</td>");
+                html.append("<td class='c' >"
+                        //                        + (row.get(i).get(_title).toString()) + "<br/>"
+                        + (row.get(i).get(ManagementGauges._axis).toString()) + "->"
+                        + (row.get(i).get(ManagementGauges._underTheAxis).toString()) + "<br/>"
+                        + (row.get(i).get(ManagementGauges._standard).toString()) + "<br/>"
+                        + (row.get(i).get(ManagementGauges._gauge).toString()) + "<br/>"
+                        + (row.get(i).get(ManagementGauges._step).toString()) + "<br/>"
+                        + "</td>");
+                html.append("<td class='c' >"
+                        + (row.get(i).get(Role._title).toString()) + "<br/>"
+                        + (row.get(i).get(Access_User._name).toString() + " " + row.get(i).get(Access_User._family).toString())
+                        + "</td>");
+                html.append("<td class='c' >" + (row.get(i).get(_nameResponsibleLoading).toString()) + "</td>");
+                html.append("<td class='c' >" + (row.get(i).get(_LoadingPeriod).toString()) + "</td>");
+                html.append("<td class='c' >" + jjCalendar_IR.getViewFormat(row.get(i).get(_dateCreation).toString()) + "</td>");
+                html.append("<td class='c' >" + (row.get(i).get(_status).toString()) + "</td>");
+
+                html.append("<td style='' ><a onclick='hmisManagementGauges.m_select(" + row.get(i).get(_id) + ");' ><i class='fa fa-eye'></i></a></td>");
+                html.append("</tr>");
+            }
+            html.append("</tbody></table>");
+            html.append("</div></div>");
+
+            String height = jjTools.getParameter(request, "height");
+            String panel = jjTools.getParameter(request, "panel");
+            if (!jjNumber.isDigit(height)) {
+                height = "400";
+            }
+            if (panel.equals("")) {
+                panel = "swDocumentaryTbl";
+            }
+            String html2 = "$('#" + panel + "').html(\"" + html.toString() + "\");\n";
+            html2 += Js.table("#refreshDocumentary", height, 0, Access_User.getAccessDialog(request, db, rul_ins).equals("") ? "14" : "", "لیست  سنجه ها");
+            Server.outPrinter(request, response, html2);
+            return "";
+        } catch (Exception e) {
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+        }
+    }
+
+    public static String refresh_my(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
 
             StringBuilder html = new StringBuilder();
@@ -69,7 +149,13 @@ public class Documentary {
                 }
             }
             DefaultTableModel dtm;
-            dtm = db.otherSelect("SELECT " + tableName + ".* ," + Role._title + "," + Access_User._name + "," + Access_User._family + " FROM  " + tableName
+            dtm = db.otherSelect("SELECT " + tableName + ".* ,"
+                    + ManagementGauges._axis + " ,"
+                    + ManagementGauges._underTheAxis + " ,"
+                    + ManagementGauges._standard + " ,"
+                    + ManagementGauges._gauge + " ,"
+                    + ManagementGauges._step + " ,"
+                    + Role._title + "," + Access_User._name + "," + Access_User._family + " FROM  " + tableName
                     + " LEFT JOIN " + ManagementGauges.tableName + " ON " + _gaugeId + " = " + ManagementGauges.tableName + ".id " // برای استخراج نام مسئول بارگذاری و نقش او
                     + " LEFT JOIN " + Role.tableName + " ON " + ManagementGauges._responsibleLoadingRole + " = hmis_role.id " // برای استخراج نام مسئول بارگذاری و نقش او
                     + " LEFT JOIN " + Access_User.tableName + " ON " + Role._user_id + " = access_user.id " + where + ";");
@@ -80,7 +166,7 @@ public class Documentary {
             List<Map<String, Object>> row = jjDatabase.separateRow(dtm);
             html.append("<table class='table display responsive nowrap' id='refreshDocumentary' dir='rtl'><thead>");
             html.append("<th class='c' width='5%'>کد</th>");
-            html.append("<th class='c' width='30%'>عنوان گام</th>");
+            html.append("<th class='c' width='30%'>سنجه</th>");
             html.append("<th class='c' width='20%'>مسئول بارگذاری</th>");
             html.append("<th class='c' width='20%'>نام بارگذاری کننده</th>");
             html.append("<th class='c' width='20%'>دوره بارگذاری </th>");
@@ -91,7 +177,14 @@ public class Documentary {
             for (int i = 0; i < row.size(); i++) {
                 html.append("<tr  onclick='hmisDocumentary.m_select(" + row.get(i).get(_id) + ");' class='p " + getClassByStatus(row.get(i).get(_status).toString()) + " ' >");
                 html.append("<td class='c' >" + (row.get(i).get(_id).toString()) + "</td>");
-                html.append("<td class='c' >" + (row.get(i).get(_title).toString()) + "</td>");
+                html.append("<td class='c' >"
+                        //                        + (row.get(i).get(_title).toString()) + "<br/>"
+                        + (row.get(i).get(ManagementGauges._axis).toString()) + "->"
+                        + (row.get(i).get(ManagementGauges._underTheAxis).toString()) + "<br/>"
+                        + (row.get(i).get(ManagementGauges._standard).toString()) + "<br/>"
+                        + (row.get(i).get(ManagementGauges._gauge).toString()) + "<br/>"
+                        + (row.get(i).get(ManagementGauges._step).toString()) + "<br/>"
+                        + "</td>");
                 html.append("<td class='c' >"
                         + (row.get(i).get(Role._title).toString()) + "<br/>"
                         + (row.get(i).get(Access_User._name).toString() + " " + row.get(i).get(Access_User._family).toString())
@@ -100,8 +193,7 @@ public class Documentary {
                 html.append("<td class='c' >" + (row.get(i).get(_LoadingPeriod).toString()) + "</td>");
                 html.append("<td class='c' >" + jjCalendar_IR.getViewFormat(row.get(i).get(_dateCreation).toString()) + "</td>");
                 html.append("<td class='c' >" + (row.get(i).get(_status).toString()) + "</td>");
-
-                html.append("<td style='text-align: center;color:red;font-size: 26px;' class='icon ion-ios-gear-outline'><a src='img/l.png' style='cursor: pointer;height:30px' onclick='hmisManagementGauges.m_select(" + row.get(i).get(_id) + ");' ></a></td>");
+                html.append("<td ><a  style='cursor: pointer;height:30px' onclick='hmisManagementGauges.m_select(" + row.get(i).get(_id) + ");' ><i class='icon ion-upload'></i></a></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -153,7 +245,6 @@ public class Documentary {
 
             ////////////////////////////////
             List<Map<String, Object>> row = jjDatabase.separateRow(db.Select(Documentary.tableName, _id + "=" + id));
-
             script.append(Js.setVal("#documentary_LoadingPeriod", row.get(0).get(_LoadingPeriod)));
             script.append(Js.setVal("#" + _comments, row.get(0).get(_comments)));
             script.append(Js.setVal("#documentary_" + _id, row.get(0).get(_id)));
@@ -172,7 +263,7 @@ public class Documentary {
                             || extension2.toLowerCase().equals("svg")) {
                         html2.append("<div class='col-lg-12 media-body mg-l-15'>"
                                 + "<img class='wd-40  mg-r-20' src='upload/" + attachFilesArray[l] + "'/>"
-                                + "<a  href='upload/" + attachFilesArray[l] + "'>دانلود  " + titleUpload + "</a>"
+                                + "<a  href='upload/" + attachFilesArray[l] + "'> " + "<i class='fa fa-download'></i>" + titleUpload + "</a>"
                                 + "<input class='" + _attachFileDocumentary + "'  type='hidden'  value='" + attachFilesArray[l] + "'/>"
                                 + "<div class='btn btn-danger btn-icon mg-r-5 mg-b-10' onclick='$(this).parent().remove();'><i class='fa fa-close mg-5'></i>" + "</div>"
                                 + "</div>"
@@ -180,7 +271,7 @@ public class Documentary {
                     } else {
                         html2.append("<div class='col-lg-12  media-body mg-l-15'>"
                                 + "<i class='icon ion-ios-paper-outline'></i>"
-                                + "<a  href='upload/" + attachFilesArray[l] + "'>دانلود  " + titleUpload + "</a>"
+                                + "<a  href='upload/" + attachFilesArray[l] + "'>" + "<i class='fa fa-download'></i>" + titleUpload + "</a>"
                                 + "<input class='" + _attachFileDocumentary + "'   type='hidden'  value='" + attachFilesArray[l] + "'/>"
                                 + "<div class='btn btn-danger btn-icon mg-r-5 mg-b-10' onclick='$(this).parent().remove();'><i class='fa fa-close mg-5'></i>" + "</div>"
                                 + "</div>"
@@ -238,7 +329,7 @@ public class Documentary {
                 for (int j = 0; j < attachFileDocumentarysArray.length; j++) {
                     List<Map<String, Object>> fileRow = jjDatabase.separateRow(db.Select(UploadServlet.tableName, UploadServlet._file_name + "='" + attachFileDocumentarysArray[j] + "'"));
                     if (!fileRow.isEmpty()) {
-                        html1.append("<a href=upload/" + fileRow.get(0).get(UploadServlet._file_name) + ">دانلود" + fileRow.get(0).get(UploadServlet._title) + " </a><br/>");
+                        html1.append("<a href=upload/" + fileRow.get(0).get(UploadServlet._file_name) + ">" + "<i class='fa fa-download'></i>" + fileRow.get(0).get(UploadServlet._title) + " </a><br/>");
                     }
                 }
                 html1.append("</td >");

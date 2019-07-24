@@ -45,9 +45,10 @@ commeteeTable thead{
     background-color: #36ab50;    
 }
 .table i{
-    font-size: 1.5em;
-    color: red;
+        font-size: 2.5em;
+    color: #0866c6;
     vertical-align: middle;
+    margin: auto 5px;
 }
 
 .c {

@@ -36,7 +36,6 @@ and open the template in the editor.
                 </div><!-- sh-pagetitle-left-title -->
             </div><!-- sh-pagetitle-left -->
         </div><!-- sh-pagetitle -->
-
         <div class="card bd-primary">
             <div class="card-header bg-primary tx-white">Check Box هوشمند</div>
             <div class="card-body pd-sm-30">
@@ -45,46 +44,36 @@ and open the template in the editor.
                 <div class="row">
                     <input type="hidden" id="documentary_id" name="id" />
                     <div class="col-lg-12" style="margin-bottom: 1px">
+                        <div>محور
+                        </div>
+                        <div class="card-header bg-primary tx-white" id="axis">
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="margin-bottom: 1px">
+                        <div>زیر محور
+                        </div>
+                        <div class="card-header bg-primary tx-white" id="underAxis">
+                        </div>
+                    </div>
+                    <div class="col-lg-12" style="margin-bottom: 1px">
                         <div> 
                             استاندارد
-
-
                             <div class="card-header bg-primary tx-white" id="standard" >
-
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-12" style="margin-bottom: 1px">
                         <div> سنجه
-
                         </div>
                         <div class="card-header bg-primary tx-white" id="gauges"> 
                         </div>
                     </div>
                     <div class="col-lg-12" style="margin-bottom: 1px">
                         <div>گام
-
                         </div>
                         <div class="card-header bg-primary tx-white" id="step">
-
                         </div>
-                    </div>
-                    <div class="col-lg-12" style="margin-bottom: 1px">
-                        <div>محور
-
-                        </div>
-                        <div class="card-header bg-primary tx-white" id="axis">
-
-                        </div>
-                    </div>
-                    <div class="col-lg-12" style="margin-bottom: 1px">
-                        <div>زیر محور
-
-                        </div>
-                        <div class="card-header bg-primary tx-white" id="underAxis">
-
-                        </div>
-                    </div>
+                    </div>                    
                     <div class="col-lg-12" style="margin-bottom: 1px">
                         <div>
                             توضیحات
@@ -108,7 +97,6 @@ and open the template in the editor.
                             <input class="form-control is-valid" id="documentary_comments" name="documentary_comments" placeholder="توضیحات مسئول بارگذاری" type="text" >
                         </div><!-- form-group -->
                     </div> 
-
                     <div class="col-lg-12" style="">                        
                         <div id="inputAfterSelectGauge" ></div>
                         <div  class="inputSelectorDiv" ></div>
@@ -124,11 +112,7 @@ and open the template in the editor.
                             <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
                             <!--<span class="form-control"></span>-->
                         </div>
-
                     </div>
-
-
-
                     <!--                <div class="col-lg-4">
                                         بارگذاری مستندات:
                                         <label class="custom-file">
@@ -136,7 +120,6 @@ and open the template in the editor.
                                             <span class="custom-file-control custom-file-control-primary"></span>
                                         </label>
                                     </div> col    -->
-
                     <div class="row col-lg-12">
                         <div class="mg-t-20  col-lg">
                             <button class="btn btn-outline-secondary mg-b-10  btn-block" onclick="hmisDocumentary.m_show_tbl();">بازگشت </button>                

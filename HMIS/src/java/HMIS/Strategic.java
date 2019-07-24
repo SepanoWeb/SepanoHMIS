@@ -64,7 +64,7 @@ public class Strategic {
 
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
+    public static String lbl_edit = "ثبت ویرایش";
 
     public static String refresh(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {

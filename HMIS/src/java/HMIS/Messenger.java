@@ -59,7 +59,7 @@ public class Messenger {
     public static String lbl_insert = "ارسال پیام";
 //    public static String lbl_send = "ارسال";
     public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
+    public static String lbl_edit = "ثبت ویرایش";
 
     public static int rul_rfs_karshenas = 0;//برای اینکه تشخیص دهیم کاربر مجوز دیدن پیامهای کارشناس را دارد یا نه
     public static int rul_rfs = 0;

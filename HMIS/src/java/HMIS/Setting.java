@@ -26,7 +26,7 @@ public class Setting {
 
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
+    public static String lbl_edit = "ثبت ویرایش";
     public static String lbl_add_en = "افزودن زبان انگلیسی";
     public static String lbl_edit_en = "ویرایش بخش انگلیسی";
     public static int rul_rfs = 0;

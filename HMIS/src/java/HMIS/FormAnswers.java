@@ -34,7 +34,7 @@ public class FormAnswers {
 //   
     public static final String lbl_insert = "ثبت و افزودن سوال";
     public static final String lbl_delete = "حذف فرم";
-    public static final String lbl_edit = "ویرایش";
+    public static final String lbl_edit = "ثبت ویرایش";
 
 
     public static int rul_rfs = 0;//60;

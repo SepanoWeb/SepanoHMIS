@@ -50,7 +50,7 @@ public class Role {
 
     public static String lbl_insert = "ذخیره";
     public static String lbl_delete = "حذف";
-    public static String lbl_edit = "ویرایش";
+    public static String lbl_edit = "ثبت ویرایش";
 
     public static int rul_rfs = 0;
     public static int rul_ins = 0;

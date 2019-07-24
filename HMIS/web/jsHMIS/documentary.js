@@ -24,6 +24,16 @@ var hmisDocumentary = {
             });
         }
     },
+    m_refresh_my: function (containerId, sortField, tableHeight) {
+        var param = "";
+        param += "do=" + hmisDocumentary.tableName + ".refresh_my";
+        param += "&panel=" + (containerId == null ? "swDocumentaryTbl" : containerId);
+        param += "&sort=" + (sortField == null ? "0" : sortField);
+        param += "&height=" + (tableHeight == null ? PanelHeight : tableHeight);
+        param += "&jj=1";
+        new jj(param).jjAjax2(false);
+        hmisDocumentary.tabSizeTbl();
+    },
     m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
         param += "do=" + hmisDocumentary.tableName + ".refresh";
