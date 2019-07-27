@@ -3,6 +3,7 @@ FarsiType
 Version: 1.3.6
 http://www.farsitype.ir
 
+
 This script developed to ease typing Farsi (Persian) in web forms where there is no Farsi Keyboard installed on a PC.
 Works with Internet Explorer, FireFox, Opera and Chrome.
 For more information and getting the using manual please visit the script website (http://www.farsitype.ir).

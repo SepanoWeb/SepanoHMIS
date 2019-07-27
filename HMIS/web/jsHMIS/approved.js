@@ -12,8 +12,10 @@ var hmisApproved = {
     loadForm: function () {
         if ($("#swApprovedForm").html() == '') {
             $("#swApprovedForm").load("formHMIS/05approved.html", null, function () {
+                new jj('#sendExecutorFilesApproved').jjAjaxFileUploadTitleUploadFiles('#attachExecutorFilesApproved', '#approved_filesExecutor', 'approved_titleFileExecutor', '#approved_filesTitleExecutor', "#showFilesExecutorDiv");
+                new jj('#sendTrackerFilesApproved').jjAjaxFileUploadTitleUploadFiles('#attachTrackerFilesApproved', '#approved_filesTracker', 'approved_titleFileTracker', '#approved_filesTitleTracker', "#showFilesTrackerDiv");
 
-                new jj('#sendFilesApproved1').jjAjaxFileUpload4('attachFileApproved1', '#approved_fileOfResponsible', '#inputFileApprovedDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
+//                new jj('#sendFilesApproved1').jjAjaxFileUpload4('attachFileApproved1', '#approved_fileOfResponsible', '#inputFileApprovedDiv'); //در این تابع خودمان پنل اینپوت را می فرستیم که فایل ها در آنجا نمایش داده شود 
                 $("#cancel_Approved").click(function (e) {
                     hmisApproved.m_clean();
                     hmisApproved.m_show_tbl();
@@ -47,12 +49,16 @@ var hmisApproved = {
         new jj("#approved_executorUserId").jjVal("");
         new jj("#approved_executorRoleId").jjVal("");
         $("#inputTextSelectorDiv").html("");
+        $("#inputDownloadDiv").html("");
 
     },
     m_add_new: function () {
         var param = "";
         $("#approved_executorUserId").attr("disabled", "disabled");
 
+        $("#sessions_titleFile1").val("");
+        $("#user_pic").val("");
+        $("#inputApprovedFileDiv").html("");
         $("#approved_description").summernote();
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
@@ -74,28 +80,58 @@ var hmisApproved = {
         var temp2 = "";
         var execturesRoleId = $('#approved_executorRoleId').val();
         var execturesUserId = $('#approved_executorUserId').val();
-        var param = "";
-        param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
-        if ($("input:radio[name=responsibleExecutor]:checked").val() == "سمت") {
-            for (var i = 0; i < execturesRoleId.length; i++) {
-                temp2 += execturesRoleId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
-            }
-            param += "&approved_executorRoleId=" + temp2;
-            param += "&approved_executorUserId=";
-
-        } else if ($("input:radio[name=responsibleExecutor]:checked").val() == "کاربران") {
-            for (var i = 0; i < execturesUserId.length; i++) {
-                temp1 += execturesUserId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
-            }
-            param += "&approved_executorRoleId=";
-            param += "&approved_executorUserId=" + temp1;
+        var flag = true;
+        if ($("#approved_trackerId").val() == "") {
+            $("#approved_trackerId").addClass("required");
+            flag = false;
+        } else {
+            $("#approved_trackerId").removeClass('required');
+        }
+        if ($("#approved_startDate").val() == "") {
+            $("#approved_startDate").addClass("required");
+            flag = false;
+        } else {
+            $("#approved_startDate").removeClass('required');
+        }
+        if ($("#approved_endDate").val() == "") {
+            $("#approved_endDate").addClass("required");
+            flag = false;
+        } else {
+            $("#approved_endDate").removeClass('required');
+        }
+        if ($("#approved_executorUserId").val() == "" && $("#approved_executorRoleId").val() == "") {
+            $("#approved_executorUserId").addClass("required");
+            $("#approved_executorRoleId").addClass("required");
+            flag = false;
+        } else {
+            $("#approved_executorUserId").removeClass('required');
+            $("#approved_executorRoleId").removeClass('required');
         }
 
-        param += "&do=" + hmisApproved.tableName + ".insert";
-        param += "&" + new jj('#insertApproved2').jjSerial();
-        new jj(param).jjAjax2(false);
-        hmisApproved.m_show_tbl();
+        if (flag == true) {
 
+            var param = "";
+            param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
+            if ($("input:radio[name=responsibleExecutor]:checked").val() == "سمت") {
+                for (var i = 0; i < execturesRoleId.length; i++) {
+                    temp2 += execturesRoleId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+                }
+                param += "&approved_executorRoleId=" + temp2;
+                param += "&approved_executorUserId=";
+
+            } else if ($("input:radio[name=responsibleExecutor]:checked").val() == "کاربران") {
+                for (var i = 0; i < execturesUserId.length; i++) {
+                    temp1 += execturesUserId[i] + "%23A%23"; //انتخاب چندین نفر وارسال ای دی افراد با جداساز
+                }
+                param += "&approved_executorRoleId=";
+                param += "&approved_executorUserId=" + temp1;
+            }
+
+            param += "&do=" + hmisApproved.tableName + ".insert";
+            param += "&" + new jj('#insertApproved2').jjSerial();
+            new jj(param).jjAjax2(false);
+            hmisApproved.m_show_tbl();
+        }
     },
     m_edit: function () {
         var param = "";
@@ -154,7 +190,7 @@ var hmisApproved = {
         hmisApproved.m_show_tbl();
         hmisApproved.m_clean();
         $("#inputFileApprovedPreviousDiv").html("");
-       
+
 
 
 //        } else {
@@ -191,6 +227,8 @@ var hmisApproved = {
         hmisApproved.m_clean();
     },
     m_select: function (id) {
+        $('#showFilesExecutorDiv').html("");
+        $('#showFilesTrackerDiv').html("");
         $('#inputFileApprovedDiv').html("");
         new jj("#startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#endDate").jjCalendarWithYearSelector(1340, 1420);
@@ -219,6 +257,7 @@ var hmisApproved = {
 //        hmisApproved.m_show_form();
     },
     selectInSessions: function (id) {
+        $("#inputApprovedFileDiv").html('');
         new jj("#approved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#approved_endDate").jjCalendarWithYearSelector(1340, 1420);
 //        $('#insertApproved2').slideDown();
@@ -237,14 +276,17 @@ var hmisApproved = {
      * @returns {undefined}
      */
     selectInCommunicatedSessions: function (id) {
+       
+
         new jj("#communicatedApproved_startDate").jjCalendarWithYearSelector(1340, 1420);
         new jj("#communicatedApproved_endDate").jjCalendarWithYearSelector(1340, 1420);
         $("html, body").delay(1000).animate({scrollTop: $('#insertApprovedCommunicated').offset().top}, 800);
         var param = "";
-        param += "do=" + hmisApproved.tableName + ".selectInCommunicatedSessions";
+        param += "&do=" + hmisApproved.tableName + ".selectInCommunicatedSessions";
         param += "&" + hmisApproved.f_id + "=" + (id == null ? "" : id);
         param += "&hmis_sessions_id=" + new jj('#hmis_sessions_id').jjVal();
         new jj(param).jjAjax2(false);
+
         $("#communicatedApproved_description").summernote();
 //        hmisApproved.m_show_form();
     },
@@ -335,15 +377,16 @@ var hmisApproved = {
      * @param {type} id
      * @returns {undefined}
      */
-    m_remove: function (idUpload, approvedId) {
-        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف", "hmisApproved.removeFile(" + idUpload + "," + approvedId + ");");
+    m_remove: function (idUpload, approvedId, nameFile) {
+        new jj("آیا از حذف این رکورد اطمینان دارید؟").jjModal_Yes_No("پیام هشدار قبل از حذف", "hmisApproved.removeFile(" + idUpload + "," + approvedId + "," + nameFile + ");");
     },
-    removeFile: function (idUpload, approvedId) {
+    removeFile: function (idUpload, approvedId, nameFile) {
 
         var param = "";
         param += "do=" + hmisApproved.tableName + ".removeFile";
         param += "&upload_id=" + idUpload;
         param += "&hmis_approved_id=" + approvedId;
+        param += "&nameFile=" + nameFile;
         new jj(param).jjAjax2(false);
 
     },

@@ -25,7 +25,7 @@
                         <input id="steps_percent" disabled="disabled" class="form-control is-valid" placeholder="درصد گام  را وارد کنید" type="text" >
                     </div><!-- form-group -->
                 </div><!-- col -->   
-                 <div class="col-lg-6">
+                 <div class="col-lg-12">
                     درصد پیشرفت گام
                     <div class="form-group has-success mg-b-0">
                         <input id="MySteps_progressPercent" name="steps_progressPercent" min="0" max="100" class="form-control is-valid" placeholder="درصد پیشرفت گام  را وارد کنید" type="number" >
@@ -46,13 +46,13 @@
                 <div class="col-lg-3">
                     تاریخ شروع:
                     <div class="form-group has-success mg-b-0">
-                        <input id="startDate" name="steps_startDate" class="form-control is-valid" placeholder="تاریخ شروع" type="text">
+                        <input id="startDate" disabled="disabled" name="steps_startDate" class="form-control is-valid" placeholder="تاریخ شروع" type="text">
                     </div><!-- form-group -->
                 </div><!-- col -->   
                 <div class="col-lg-3">
                     تاریخ پایان:
                     <div class="form-group has-success mg-b-0">
-                        <input id="endDate" name="steps_endDate" class="form-control is-valid" placeholder="تاریخ پایان" type="text">
+                        <input id="endDate" disabled="disabled" name="steps_endDate" class="form-control is-valid" placeholder="تاریخ پایان" type="text">
                     </div><!-- form-group -->
                 </div><!-- col -->   
                 <br/>
@@ -78,7 +78,7 @@
                     </div><!-- form-group -->
                 </div><!-- col -->   
 
-                <div class="col-lg-3">
+<!--                <div class="col-lg-3">
                     بارگذاری مستندات:<br/>
                     <input id="steps_fileOfResponsible" name="steps_fileOfResponsible" type="hidden" />
                     <div class="row">
@@ -87,7 +87,7 @@
                         <input id="attachFileSteps1" name="attachFileSteps1" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                         <span class="form-control col-lg"></span>
                     </div>
-                </div><!-- col -->   
+                </div> col    -->
 
 
                 <div  class="col-lg-3" id="inputFileStepsDiv"></div>

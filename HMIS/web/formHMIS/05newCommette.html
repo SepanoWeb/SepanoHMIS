@@ -31,15 +31,17 @@
                             </div><!-- sh-pagetitle-left-title -->
                         </div><!-- sh-pagetitle-left -->
                     </div><!-- sh-pagetitle -->
-                    <div id="formQuestions" class="col-lg-12">
+                    <div id="formQuestionsCommettes" class="col-lg-12">
                         <div class="card bd-primary mg-t-20" id="newFormQuestion">
                             <div class="card-header bg-primary tx-white">مشخصات </div>
                             <div class="card bd-primary mg-t-20 pd-20">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        وضعیت :
-                                        <input value="1" id="active" name="commettes_isActive" type="radio" checked="checked">فعال است 
-                                        <input value="0" id="noActive" name="commettes_isActive" type="radio">غیرفعال است
+                                        <label class="ckbox">
+                                            <input id="commettes_isActive" name="commettes_isActive" type="checkbox" checked="checked">
+                                            <span>فعال</span>
+                                        </label>
+
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group has-success mg-b-0">
@@ -50,33 +52,40 @@
                                     <div class="col-lg-4">
                                         <div class="form-group has-warning mg-b-0">
                                             رئیس :
-                                            <div id="selectOptionRoleTwo" required></div>
+                                            <select required class="form-control" id="commettes_superwizar" name="commettes_superwizar" tabindex='-1'></select>
 
                                         </div><!-- form-group -->
                                     </div><!-- col -->
                                     <div class="col-lg-4">
                                         <div class="form-group has-warning mg-b-0">
                                             دبیر :
-
-                                            <div id="selectOptionRoleOne"></div>
+                                            <select required class="form-control" id="commettes_secretary" name="commettes_secretary" tabindex='-1'></select>
                                         </div><!-- form-group -->
                                     </div><!-- col -->                          
                                     <div class="col-lg-4">
                                         <div class="form-group has-warning mg-b-0">
                                             برگزاری جلسات
 
-                                            <select required class="form-control" id="commettes_dateOfHoldingMeeting" name="commettes_dateOfHoldingMeeting">
-                                                <option value="ماهانه"> ماهانه</option>
-                                                <option value="سه ماهه اول">سه ماهه اول</option>
-                                                <option value="سه ماهه دوم">سه ماهه دوم</option>
-                                                <option value="سه ماهه سوم">سه ماهه سوم</option>
-                                                <option value="سه ماهه چهارم">سه ماهه چهارم</option>
-                                                <option value="شش ماهه اول">شش ماهه اول</option>
-                                                <option value="شش ماهه دوم">شش ماهه دوم</option>
-                                                <option value="سالانه">سالانه</option>
-                                                <option value="">سایر</option>
+                                            <select required class="form-control" id="commettes_period" name="commettes_period">
+                                                <option value="1">1روز</option>
+                                                <option value="7">7روز</option>
+                                                <option value="30">30روز</option>
+                                                <option value="60">60روز</option>
+                                                <option value="120">120روز</option>
+                                                <option value="180">180روز</option>
+                                                <option value="365">365روز</option>
+                                                <!--                                                <option value="شش ماهه دوم">شش ماهه دوم</option>
+                                                                                                <option value="سالانه">سالانه</option>
+                                                                                                <option value="">سایر</option>-->
                                             </select>
                                         </div><!-- form-group -->
+                                    </div><!-- col -->                          
+                                    <div class="col-lg-4">
+                                        برگزاری از تاریخ:
+                                        <div class="form-group has-success mg-b-0">
+                                            <input id="commettes_date" name="commettes_date" class="form-control is-valid" placeholder="تاریخ برگزاری" type="text">
+                                        </div><!-- form-group -->
+
                                     </div><!-- col -->                          
                                     <div class="col-lg-8">
                                         توضیحات:
@@ -99,12 +108,7 @@
                                         <div  id="inputTitleSelectorDiv2" ></div>
                                         <div  id="showFiles2Div" class='col-lg-12'></div>
 
-                                        <div class="input-group">
 
-                                            <input class="btn btn-primary" id="sendPicFilesCommettes" type="submit" value="ارسال">
-                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                                            <input id="attachFileCommettes" name="attachFileCommettes" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                        </div>
                                         عنوان فایل
                                         <input id="commettes_titleFile2" name="commettes_titleFile1"  style="display: block;
                                                width: 100%;
@@ -119,6 +123,12 @@
                                                border-radius: 3px;
                                                transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
                                         <span id="user_pic" class="form-control"></span>
+                                        <div class="input-group">
+
+                                            <input class="btn btn-primary" id="sendPicFilesCommettes" type="submit" value="ارسال">
+                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                            <input id="attachFileCommettes" name="attachFileCommettes" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                        </div>
                                     </div>
 
                                     <div class="row col-lg-12" >
@@ -129,12 +139,7 @@
                                         <div  id="inputTitleSelectorDiv1" ></div>
                                         <div  id="showFiles1Div" class='col-lg-12'></div>
 
-                                        <div class="input-group">
 
-                                            <input class="btn btn-primary" id="sendDocumentCommettes" type="submit" value="ارسال">
-                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                                            <input id="attachDocumentCommettes" name="attachDocumentCommettes" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                        </div>
                                         عنوان فایل
                                         <input id="commettes_titleFile1" name="commettes_titleFile1"  style="display: block;
                                                width: 100%;
@@ -149,6 +154,12 @@
                                                border-radius: 3px;
                                                transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
                                         <span id="user_pic" class="form-control"></span>
+                                        <div class="input-group">
+
+                                            <input class="btn btn-primary" id="sendDocumentCommettes" type="submit" value="ارسال">
+                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                            <input id="attachDocumentCommettes" name="attachDocumentCommettes" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                        </div>
                                     </div>
 
 
@@ -158,9 +169,9 @@
                                         <div class="card-body pd-sm-30">                    
                                             <p class="mg-b-20 mg-sm-b-30">
                                                 جدول اعضا 
-                                                <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('05newCommette.html', null, function () {
-                                                        });
-                                                        return false;" > افزودن عضو جدید</a>
+                                                <!--                                                <a href="index.html" class="btn btn-success pd-sm-x-20 mg-sm-r-5" onclick="$('.sh-mainpanel').load('05newCommette.html', null, function () {
+                                                                                                        });
+                                                                                                        return false;" > افزودن عضو جدید</a>-->
                                             </p>
                                             <input id="commettes_members" name="commettes_members" type="hidden">  
                                             <div  id="tableRolesDiv"></div>
@@ -233,121 +244,115 @@
                                     </div><!-- form-group -->
                                 </div><!-- col -->   
 
-                                
+
                                 <!--///////////////////////////////////////////////////-->
-                                
-                                   <div class="row col-lg-12" >
-                                        بارگذاری مستندات:
-                                        <input id="sessions_InviteesFile" name="sessions_InviteesFile" type="hidden">
-                                        <input id="sessions_filesTitle" name="sessions_filesTitle" type="hidden">
-                                        <div class="col-lg-12"  id="inputTextSelectorDiv1" ></div>
-                                        <div  id="inputTitleSelectorDiv" ></div>
-                                        <div  id="showFilesDiv" class='col-lg-12'></div>
 
-                                        <div class="input-group">
+                                <div class="row col-lg-12" >
+                                    بارگذاری مستندات برای مدعوین جلسه:<br/>                         
+                                    <input id="sessions_InviteesFile" name="sessions_InviteesFile" type="hidden">
+                                    <input id="sessions_filesTitle" name="sessions_filesTitle" type="hidden">
+                                    <div class="col-lg-12"  id="inputTextSelectorDiv1" ></div>
+                                    <div  id="inputTitleSelectorDiv" ></div>
+                                    <div  id="showFilesDiv" class='col-lg-12'></div>
 
-                                            <input class="btn btn-primary" id="sendFilesInvitees" type="submit" value="ارسال">
-                                            <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                                            <input id="attachFileInvitees" name="attachFileInvitees" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                        </div>
-                                        عنوان فایل
-                                        <input id="sessions_titleFile1" name="sessions_titleFile1"  style="display: block;
-                                               width: 100%;
-                                               padding: 0.65rem 0.75rem;
-                                               font-size: 1.3rem;
-                                               line-height: 1.25;
-                                               color: #495057;
-                                               background-color: #fff;
-                                               background-image: none;
-                                               background-clip: padding-box;
-                                               border: 1px solid rgba(0, 0, 0, 0.15);
-                                               border-radius: 3px;
-                                               transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
-                                        <span id="user_pic" class="form-control"></span>
-                                    </div>
+                                    عنوان فایل
+                                    <input id="sessions_titleFile1" name="sessions_titleFile1"  style="display: block;
+                                           width: 100%;
+                                           padding: 0.65rem 0.75rem;
+                                           font-size: 1.3rem;
+                                           line-height: 1.25;
+                                           color: #495057;
+                                           background-color: #fff;
+                                           background-image: none;
+                                           background-clip: padding-box;
+                                           border: 1px solid rgba(0, 0, 0, 0.15);
+                                           border-radius: 3px;
+                                           transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;" />
+                                    <span id="user_pic" class="form-control"></span>
+                                    <div class="input-group">
 
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                <div class="col-lg-3">
-                                    بارگذاری مستندات برای مدعوین جلسه:<br/>
-                                    <input id="sessions_InviteesFile" name="sessions_InviteesFile" type="hidden"/>
-                                    <div class="row mg-r-10">
                                         <input class="btn btn-primary" id="sendFilesInvitees" type="submit" value="ارسال">
                                         <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                                        <input id="attachFileInvitees" name="attachFileInvitees" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                        <span class="form-control col-lg"></span>
+                                        <input id="attachFileInvitees" name="attachFileInvitees" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
                                     </div>
-                                    <div   id="inputTextSelectorInviteesDiv" ></div>
-                                    <div id="inputAfterSelect" ></div>
                                 </div>
+
+
+
+
+                                <!--
+                                                                <div class="col-lg-3">
+                                
+                                                                    <input id="sessions_InviteesFile" name="sessions_InviteesFile" type="hidden"/>
+                                                                    <div class="row mg-r-10">
+                                                                        <input class="btn btn-primary" id="sendFilesInvitees" type="submit" value="ارسال">
+                                                                        <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
+                                                                        <input id="attachFileInvitees" name="attachFileInvitees" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
+                                                                        <span class="form-control col-lg"></span>
+                                                                    </div>
+                                                                    <div   id="inputTextSelectorInviteesDiv" ></div>
+                                                                    <div id="inputAfterSelect" ></div>
+                                                                </div>-->
                             </div>   
                             <div class="row">
-                                <div class="row col-lg-12" id="InviteesDiv">
-                                    <div class=" col-lg-12 pd-20">
+                                <div class="row" id="InviteesDiv">
+                                    <div class="col-lg-12 pd-20">
                                         مدعوین به جلسه : 
                                         <div class="form-group has-danger mg-b-0">
                                             <div id="invitessDiv"></div>
                                         </div><!-- form-group -->
                                     </div>
-                                    <div class="col-lg-12 mg-b-10">
-
-                                        <div class="form-group has-danger mg-b-0" >
-                                            <span>
-                                                مهمان داخل سازمان
-                                            </span>
+                                    <div class="col-lg-12 mg-b-20">
+                                        مهمان داخل سازمان:
+                                        <div class="form-group has-success mg-b-0 ">
                                             <select id='sessions_InviteesInSide' multiple name='sessions_InviteesInSide' class='form-control select2 select2-hidden-accessible' tabindex='-1' aria-hidden="true">
                                             </select>
-                                        </div><!-- form-group -->
+                                        </div>
+                                        <!--</div> form-group -->
                                     </div>
                                     <div class="col-lg-12">
                                         <span>
-                                            مهمان خارج سازمان
-                                            <div  id="rows20" style='display:none'>
-                                                <div class='col-lg-12 addSigner' id='row'>
-                                                    </span> <div class="row invitedOutSide"  id="invitedOutSide_x">
-                                                        <div class="col-lg-3">
-                                                            نام ونام خانوادگی
-                                                            <div class="form-group has-danger mg-b-0">
-                                                                <input type="text" class="form-control is-valid name signerDiv"  id='sessions_invitedOutSide_name_x' placeholder="نام و نام خانوادگی مهمان">
-                                                            </div>
+                                            مهمان خارج سازمان:
+                                        </span> 
+                                        <div  id="rows20" style='display:none'>
+                                            <div class='col-lg-12 addSigner' id='row'>
+                                                <div class="row invitedOutSide"  id="invitedOutSide_x">
+                                                    <div class="col-lg-3">
+                                                        نام :
+                                                        <div class="form-group has-danger mg-b-0">
+                                                            <input type="text" class="form-control is-valid name signerDiv"  onkeyup="hmisCommettes.validateName(this)" id='sessions_invitedOutSide_name_x' placeholder="نام و نام خانوادگی مهمان">
                                                         </div>
-                                                        <div class="col-lg-3">
-                                                            شماره همراه 
-                                                            <div class="form-group has-danger mg-b-0">
-                                                                <input type="text" onkeyup="hmisCommettes.mobileRegex(this)" class="form-control is-valid phone " id='sessions_invitedOutSide_mobile_x' placeholder="شماره همراه مهمان">
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        شماره همراه :
+                                                        <div class="form-group has-danger mg-b-0">
+                                                            <input type="text" onkeyup="hmisCommettes.validatePhone(this)" class="form-control is-valid phone " id='sessions_invitedOutSide_mobile_x' placeholder="شماره همراه مهمان">
                                                         </div>
-                                                        <div class="col-lg-3">
-                                                            <div class="form-group has-danger mg-b-0">
-                                                                سمت
-                                                                <input type="text" id='sessions_invitedOutSide_role_x' placeholder="سمت مهمان" class="form-control is-valid role ">
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group has-danger mg-b-0">
+                                                            سمت:
+                                                            <input type="text" id='sessions_invitedOutSide_role_x' onkeyup="hmisCommettes.validateName(this);"  placeholder="سمت مهمان" class="form-control is-valid role ">
                                                         </div>
-                                                        <div class="col-lg-3">
-                                                            پست الکترونیکی 
-                                                            <div class="form-group has-danger mg-b-0">
-                                                                <input onkeyup="hmisCommettes.emailRegex(this);" type="text" id='sessions_invitedOutSide_email_x' placeholder="پست الکترونیکی مهمان" class="form-control is-valid email ">
-                                                            </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        پست الکترونیکی :
+                                                        <div class="form-group has-danger mg-b-0">
+                                                            <input onkeyup="hmisCommettes.validateEmail(this);" type="text" id='sessions_invitedOutSide_email_x' placeholder="پست الکترونیکی مهمان" class="form-control is-valid email ">
                                                         </div>
-                                                        <div class="col-lg-3">
-                                                            <button class="btn btn-outline-danger btn-block mg-t-20 mg-b-20  buttonRemove">حذف</button>
-                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3">
+                                                        <button class="btn btn-outline-danger btn-block mg-t-20 mg-b-20  buttonRemove">حذف</button>
+                                                    </div>
 
-                                                    </div><!-- form-group -->
-                                                </div><!--row-->
-                                            </div>
-                                            <div id="signatorysAdd"></div>
+                                                </div><!-- form-group -->
+                                            </div><!--row-->
+                                        </div>
+                                        <div id="signatorysAdd"></div>
 
-                                            <div class='col-lg-12'>
-                                                <button class="btn btn-outline-success  btn-block mg-b-10" id="add"  ><img  style="width: 2%;" src="imgfeyz/add_1.png" />افزودن</button>
-                                            </div>
+                                        <div class='col-lg-6'>
+                                            <button class="btn btn-outline-success  btn-block mg-b-10" id="add"  ><img  style="width: 2%;" src="imgfeyz/add_1.png" />افزودن</button>
+                                        </div>
                                     </div>
 
                                     <!--                                    <div id="signatorysAdd"></div>-->
@@ -355,7 +360,7 @@
                                 <!--//////////////////////////////////////////////////////-->
                                 <div class="col-lg">
                                     <!--دسترسی برای کسی که امکان ان را داشته باشد-->
-                                    <button class="btn btn-danger btn-block mg-b-10" onclick="hmisCommettes.Invitees();"><i class="fa fa-envelope mg-r-10"></i> ارسال دعوت نامه برای مدعوین جلسه </button>
+                                    <button class="btn btn-outline-danger btn-block mg-b-10" onclick="hmisCommettes.Invitees();"><i class="fa fa-envelope mg-r-10"></i> ارسال دعوت نامه برای مدعوین جلسه </button>
                                 </div>                    
                             </div>
                         </div><!-- card -->
@@ -363,51 +368,45 @@
                 </div><!-- formInvitation -->
             </div><!-- card-body -->
         </div><!-- card-body -->
-    </div>
-    <div class="row R">
-        <div class="col-lg-12">
-            <div class="form-group has-success mg-b-0 ">
-                <button id="cancel_Commettes" class="btn btn-outline-secondary mg-b-10  btn-block" 
-                        onclick="hmisCommettes.m_clean();
-                                hmisCommettes.m_show_tbl();" >بازگشت</button>
-            </div><!-- form-group -->
+        <!--</div>-->
+        <div class="row R">
+            <div class="col-lg-12">
+                <div class="form-group has-success mg-b-0 ">
+                    <button id="cancel_Commettes" class="btn btn-outline-secondary mg-b-10  btn-block" 
+                            onclick="hmisCommettes.m_clean();
+                                    hmisCommettes.m_show_tbl();" >بازگشت</button>
+                </div><!-- form-group -->
+            </div>
         </div>
-    </div>
-    <script>
-        $('#sessions_InviteesInSide').select2({minimumResultsForSearch: '', width: '20%'});
-    </script>
-    <script>
+        <script>
+            $('#sessions_InviteesInSide').select2({minimumResultsForSearch: '', width: '20%'});
+        </script>
+        <script>
 
-        $('#add').click(function () {
-            var i = 1;
-            var available = $(".signerDiv");
-            for (var j = 0; j < 4; j++) {
-                var k = (j + 1);
+            $('#add').click(function () {
+                var i = 1;
+                var available = $(".signerDiv");
+                for (var j = 0; j < 4; j++) {
+                    var k = (j + 1);
 
-                if ($("#sessions_invitedOutSide_name_" + k).length == 0) {
-                    i = j + 1;
-                    j = 5;
+                    if ($("#sessions_invitedOutSide_name_" + k).length == 0) {
+                        i = j + 1;
+                        j = 5;
+                    }
                 }
-            }
-            if (i > 4) {
-                return;
-            }
-            new jj("افزودن مهمان شماره ی " + i).jjModal("تعریف مهمان");
-            var temp = $('#rows20').html().replace(/_x/igm, ("_" + i));
-            //            var temp = $('#rows20').html().replace(/_x/igm, ("_" + i));
+                if (i > 4) {
+                    return;
+                }
+                new jj("افزودن مهمان شماره ی " + i).jjModal("تعریف مهمان");
+                var temp = $('#rows20').html().replace(/_x/igm, ("_" + i));
+                $("#signatorysAdd").append(temp);
+            });
 
-            $("#signatorysAdd").append(temp);
-            //            $("#signatorysAdd .signerDivTemp").addClass("signerDiv");
-            //            $("#signatorysAdd .signerDivTemp").removeClass("signerDivTemp");
-            //            $('#rows20').show();
-            //            $("#createDocumentary_signatory_user_" + (i)).select2({width: '100%'});
-        });
+            $(document).on('click', '.buttonRemove', function () {
+                $(this).parent().parent().remove();
 
-        $(document).on('click', '.buttonRemove', function () {
-            $(this).parent().parent().remove();
-
-        });
-    </script>
-</body>
+            });
+        </script>
+    </body>
 
 </html>

@@ -7,12 +7,6 @@
     </nav>
 </div><!-- sh-breadcrumb -->
 <div class="sh-pagetitle">
-    <!--        <div class="input-group">
-                <input type="search" class="form-control" placeholder="Search">
-                <span class="input-group-btn">
-                    <button class="btn"><i class="fa fa-search"></i></button>
-                </span> input-group-btn
-            </div> input-group -->
     <div class="sh-pagetitle-left">
         <div class="sh-pagetitle-icon"><i class="icon ion-ios-gear mg-t-3"></i></div>
         <div class="sh-pagetitle-title">
@@ -153,13 +147,8 @@
                 <div class="col-lg">
                     دامنه:
                     <select class="form-control" id="plans_domain" name='plans_domain'>
-                        <!--این آپشن ها را از قسمت مدیریت بخش ها بصورت اتوماتیک می آوریم-->
-                        <!--                        <option value="">انتخاب بخش</option>
-                                                <option value="1">جراحی</option>
-                                                <option value="2">داخلی</option>
-                                                <option value="3">زنان</option>
-                                                <option value="4">مردان</option>
-                                            </select>-->
+
+                    </select>
                 </div>
             </div><!-- row -->
             <div class="row">
@@ -197,12 +186,6 @@
     <div class="card bd-primary mg-t-20" id="newFormQuestion">
         <div class="card-header bg-primary tx-white">مدیریت گام های اجرایی:</div>
         <div id="stepsForm1" class="card-body pd-sm-30">
-            <!--            <div class='card-body pd-sm-30'>
-                            <p class='mg-b-20 mg-sm-b-30'>
-                                <a  id='btn_addNewSteps' class="btn btn-success pd-sm-x-20 mg-sm-r-5 tx-white" style='color:#fff;' onclick="$('#stepsForm').slideDown();new jj('#stepsForm').jjFormClean();$('#btn_insertSteps').slideDown();$('#btnEditDiv').slideUp();" > گام جدید</a>
-                            </p>
-                        </div>-->
-
             <div id="stepsForm" class="card-body pd-sm-30">
 
                 <input id="hmis_steps_id" name="hmis_steps_id" type="hidden"/>
@@ -242,25 +225,7 @@
                             </select>
                         </div><!-- form-group -->
                     </div><!-- col -->
-                    <!--/////////////////////////////////////////////////////-->
-                    <!--                    <div class="col-lg mg-t-20 mg-lg-t-0">
-                                            <div class="form-group has-warning mg-b-0">
-                                                مسئول اجرا:
-                                                <select class="form-control" id="steps_executorId" name="steps_executorId">
-                                                    این آپشن ها را از قسمت مسئولان باید بیاوریم
-                    
-                                                </select>
-                                            </div> form-group 
-                                        </div> col -->
-                    <!--                    <div class="col-lg mg-t-20 mg-lg-t-0">
-                                            <div class="form-group has-warning mg-b-0">
-                                                مسئول پیگیری:
-                                                <select class="form-control" id="steps_trackerId" name="steps_trackerId">
-                                                    این آپشن ها را از قسمت مسئولان باید بیاوریم
-                    
-                                                </select>
-                                            </div> form-group 
-                                        </div> col -->
+
                 </div><!-- row -->
                 <div class="row">
                     <div class="col-lg">
@@ -333,7 +298,6 @@
                             <input class="btn btn-primary" id="sendFiles" type="submit" value="ارسال">
                             <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
                             <input id="attachFileSteps" name="attachFileSteps" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                            <!--<span class="form-control"></span>-->
                         </div>
                         عنوان فایل
                         <input id="steps_titleFile1" name="steps_titleFile1"  style="display: block;
@@ -351,27 +315,6 @@
                         <span id="user_pic" class="form-control"></span>
                         <div id="filesDownloadStepsDiv"></div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-                    <!--                    <div class="col-lg-3">
-                                            بارگذاری مستندات:<br/>
-                                            <input id="plans_files" name="plans_files" type="hidden" />
-                                            <img id="PicPreviewAttach"  class="img-thumbnail"  src="img/preview.jpg" style=""/>
-                                            <div class="row">
-                                                <input class="btn btn-primary" id="sendFilesPlans" type="submit" value="ارسال">
-                                                <span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">انتخاب فایل</span>
-                                                <input id="attachFilesPlans" name="attachFilesPlans" onchange="$(this).parent().find('span.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">
-                                                <span class="form-control col-lg"></span>
-                                            </div>
-                                        </div>-->
                 </div>
                 <div class="row">
                     <div class="col-lg-3" id="inputFilesPlansDiv"></div>
@@ -383,10 +326,6 @@
                         </div><!-- form-group -->
                     </div><!-- col -->
                     <div class='col-lg-6' id='steps_button'></div>
-                    <!--                    <div class="col-lg-3">
-                                            <button id='btn_insertSteps' class="btn btn-outline-success  btn-block mg-b-10" onclick="hmisSteps.m_insert();">ثبت گام</button>
-                                        </div> col -->
-
                 </div>
 
             </div><!-- stepsForm -->
@@ -472,6 +411,6 @@
     });</script>
 
 <script>
-    $('#steps_executorRoleId').select2({minimumResultsForSearch: '', width: '100%'});
-    $('#steps_executorUserId').select2({minimumResultsForSearch: '', width: '100%'});
+//    $('#steps_executorRoleId').select2({minimumResultsForSearch: '', width: '100%'});
+//    $('#steps_executorUserId').select2({minimumResultsForSearch: '', width: '100%'});
 </script>

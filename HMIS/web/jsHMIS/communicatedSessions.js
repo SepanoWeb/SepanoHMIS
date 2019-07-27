@@ -16,9 +16,29 @@ var hmisCommunicatedSessions = {
                     hmisCommunicatedSessions.m_clean();
                     hmisCommunicatedSessions.m_show_tbl();
                 });
+
+
                 hmisCommunicatedSessions.m_refresh();
 
             });
+            hmisRole.getSelectOption("#swCommunicatedSessionsForm #communicatedSessions_communicatorId");
+            hmisRole.getSelectOption("#swCommunicatedSessionsForm #communicatedApproved_executorRoleId");
+            hmisRole.getSelectOption("#swCommunicatedSessionsForm #communicatedApproved_trackerId");
+            cmsUser.getSelectOption("#swCommunicatedSessionsForm #communicatedApproved_executorUserId");
+
+            $("#communicatedApproved_executorRoleId").select2({
+                minimumResultsForSearch: '',
+                width: '100%'
+            });
+            $("#communicatedApproved_executorUserId").select2({
+                minimumResultsForSearch: '',
+                width: '100%'
+            });
+            $("#communicatedSessions_communicatorId").select2({
+                minimumResultsForSearch: '',
+                width: '100%'
+            });
+
         }
     },
     m_refresh: function (containerId, sortField, tableHeight) {
@@ -54,6 +74,7 @@ var hmisCommunicatedSessions = {
     },
     m_select: function (id) {
         $("#addNewApproved").hide();
+
         var param = "";
         param += "do=" + hmisSessions.tableName + ".selectCommunicatedSessions";
         param += "&" + hmisSessions.f_id + "=" + (id == null ? "" : id);
@@ -74,7 +95,7 @@ var hmisCommunicatedSessions = {
         }
 
     },
-     /**
+    /**
      * ای دی جلسه
      * @param {type} id
      * @returns {undefined}

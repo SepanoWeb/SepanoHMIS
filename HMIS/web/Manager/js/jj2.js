@@ -377,17 +377,17 @@ var jj = function (selector) {
                 param += (param == "" ? "" : "&") + com_hidden[i].name + "=" + new jj(this.selector + " #" + com_hidden[i].id).jjVal();
             }
         }
-        for (var i = 0; i < com_text.length; i++) {
             if (com_text[i].name != "" && com_text[i].id != "") {
                 param += (param == "" ? "" : "&") + com_text[i].name + "=" + new jj(this.selector + " #" + com_text[i].id).jjVal();
             }
         }
         for (var i = 0; i < com_checkbox.length; i++) {
+
             if (com_checkbox[i].name != "" && com_checkbox[i].id != "") {
                 param += (param == "" ? "" : "&") + com_checkbox[i].name + "=" + new jj(this.selector + " #" + com_checkbox[i].id).jjVal();
             }
         }
-        for (var i = 0; i < com_number.length; i++) {
+        for (var i = 0; i < com_number.length; i++) 
             if (com_number[i].name != "" && com_number[i].id != "") {
                 param += (param == "" ? "" : "&") + com_number[i].name + "=" + new jj( com_number[i]).jjVal();
             }
@@ -404,7 +404,7 @@ var jj = function (selector) {
                 param += (param == "" ? "" : "&") + com_select[i].name + "=" + $(com_select[i]).val();
             }
         }
-        for (var i = 0; i < com_password.length; i++) {
+        for (var i = 0; i < com_password.length; i++) 
             if (com_password[i].name != "" && com_password[i].id != "") {
                 param += (param == "" ? "" : "&") + com_password[i].name + "=" + $( com_password[i]).val();
             }
@@ -1937,6 +1937,7 @@ var jj = function (selector) {
                 dataType: 'JSON',
                 cache: false,
                 success: function (data) {
+                    new jj(data).jjModal("نام فایل ");
                     var param = "";
                     param += "&title=" + $("#" + inputFiletitle.replace("#", "")).val();
                     param += "&filename=" + data;

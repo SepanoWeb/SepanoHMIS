@@ -22,15 +22,45 @@ var hmisPlans = {
                 new jj("#steps_endDate").jjCalendarWithYearSelector(1370, 1420);
                 $("#plans_description").summernote();
                 //////////////////////////////
-
                 new jj('#sendFilesPlans').jjAjaxFileUpload4('attachFilesPlans', '#plans_files', '#inputFilesPlansDiv');
-
-
-
-
                 hmisPlans.m_refresh();
             });
         }
+
+        hmisRole.getSelectOption("#swPlansForm #steps_trackerId");
+        hmisRole.getSelectOption("#swPlansForm #steps_executorRoleId");
+        cmsUser.getSelectOption("#swPlansForm #steps_executorUserId");
+        hmisRole.getSelectOption("#swPlansForm #plans_supervisorRolId");
+        hmisDepartment.selectOptionDepartment("plans_department");
+        hmisDepartment.selectOptionDepartment("plans_domain");
+        $("#steps_trackerId").select2({
+            width: '100%'
+        });
+        $("#plans_supervisorRolId").select2({
+            width: '100%'
+        });
+        $("#plans_department").select2({
+            width: '100%'
+        });
+        $("#plans_hugeGoal").select2({
+            width: '100%'
+        });
+        $("#plans_minorGoal").select2({
+            width: '100%'
+        });
+        $("#plans_strategic").select2({
+            width: '100%'
+        });
+        $("#steps_executorRoleId").select2({
+            width: '100%'
+        });
+        $("#steps_executorUserId").select2({
+            width: '100%'
+        });
+        $("#plans_domain").select2({
+            width: '100%'
+        });
+
     },
     m_refresh: function (containerId, sortField, tableHeight) {
         var param = "";
