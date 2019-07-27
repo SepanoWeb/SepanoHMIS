@@ -389,35 +389,35 @@ var jj = function (selector) {
         }
         for (var i = 0; i < com_number.length; i++) {
             if (com_number[i].name != "" && com_number[i].id != "") {
-                param += (param == "" ? "" : "&") + com_number[i].name + "=" + new jj(this.selector + " #" + com_number[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_number[i].name + "=" + new jj( com_number[i]).jjVal();
             }
         }
         for (var i = 0; i < com_radio.length; i++) {
             if (com_radio[i].name != "" && com_radio[i].id != "") {
                 if (new jj("#" + com_radio[i].id).jjVal() == 1) {
-                    param += (param == "" ? "" : "&") + com_radio[i].name + "=" + $(this.selector + " #" + com_radio[i].id).attr("value");
+                    param += (param == "" ? "" : "&") + com_radio[i].name + "=" + $( com_radio[i]).attr("value");
                 }
             }
         }
         for (var i = 0; i < com_select.length; i++) {
             if (com_select[i].name != "" && com_select[i].id != "") {
-                param += (param == "" ? "" : "&") + com_select[i].name + "=" + new jj(this.selector + " #" + com_select[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_select[i].name + "=" + $(com_select[i]).val();
             }
         }
         for (var i = 0; i < com_password.length; i++) {
             if (com_password[i].name != "" && com_password[i].id != "") {
-                param += (param == "" ? "" : "&") + com_password[i].name + "=" + new jj(this.selector + " #" + com_password[i].id).jjVal();
+                param += (param == "" ? "" : "&") + com_password[i].name + "=" + $( com_password[i]).val();
             }
         }
         for (var i = 0; i < com_textarea.length; i++) {
             if (com_textarea[i].name != "" && com_textarea[i].id != "") {
                 //                alert(com_textarea[i].style.visibility);
                 if ($(com_textarea[i]).hasClass("summernote")) {
-                    var val = encodeURIComponent($(("#" + com_textarea[i].id)).summernote('code'));
+                    var val = encodeURIComponent($(( com_textarea[i])).summernote('code'));
                     val = (new jj(new jj(val).jjTrim()).jjGetUtf8());
                     param += (param == "" ? "" : "&") + com_textarea[i].name + "=" + val;
                 } else {// اگر تکست اریا معمولی باشد
-                    param += (param == "" ? "" : "&") + com_textarea[i].name + "=" + new jj(this.selector + " #" + com_textarea[i].id).jjVal();
+                    param += (param == "" ? "" : "&") + com_textarea[i].name + "=" + new jj(com_textarea[i]).jjVal();
                 }
             }
         }

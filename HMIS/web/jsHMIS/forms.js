@@ -22,6 +22,7 @@ var hmisForms = {
                     twentyFour: true
                 });
                 $("#formQuestions_answersType").val("select/option");//باید در فرم ست شود ولی عملا بعضی اوقات مقدار پیشفرض ست نمیشود
+                hmisForms.selectOptionForm("#forms_nextFormId");// برای گرفتن لیست فرم های قبلی برای انتخاب فرم بعدی
                 hmisDepartment.selectOptionDepartment("forms_departments");
                 new jj('#send_forms_icon').jjAjaxFileUpload2('forms_icon_file', '#forms_icon', '#forms_icon_Preview');
                 new jj('#send_formQuestions_icon').jjAjaxFileUpload2('formQuestions_icon_file', '#formQuestions_icon', '#formQuestions_icon_Preview');
@@ -134,10 +135,15 @@ var hmisForms = {
     tabSizeForm: function () {
         $('#swCommettes').css('height', 378);
     },
-    showMyForms: function (isAjax) {//مدعوین
-        $("swMyFormsTbl").show();
-        var param = "";
-        param += "&do=" + hmisForms.tableName + ".showMyForms&jj=" + isAjax;
+    /**
+     * سلکت همه ی فرم های موجود
+     * @param {selector} panel selector .,#,..
+     * @returns {از سمت سرور اسکریپت جی کوئری بر می گردد}
+     */
+    selectOptionForm: function (panel) {
+       var param = "";
+        param += "panel=" + panel;
+        param += "&do=" + hmisForms.tableName + ".getSelectOption";
         new jj(param).jjAjax2(false);
     }
 };

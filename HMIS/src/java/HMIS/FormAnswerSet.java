@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 import jj.jjCalendar_IR;
 import jj.jjDatabaseWeb;
 import jj.jjNumber;
+import jj.jjTime;
 
 /**
  *
@@ -142,6 +143,88 @@ public class FormAnswerSet {
                 StringBuilder script = new StringBuilder();
                 script.append(Js.setHtml("#swMyFormsTbl", html));
                 script.append(Js.table("#refreshMyForms", "", 0, "", "لیست اخبار"));
+                Server.outPrinter(request, response, script);
+            }
+            return "";
+        } catch (Exception ex) {
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+        }
+    }
+
+    /**
+     * نمایش همه ی فرم های تکمیل شده برای استفاده از قابلیت های حدول هوشمند و
+     * آمار گیری
+     *
+     * @param request
+     * @param response
+     * @param db
+     * @param needString // اگر یک کلاس جاوایی یا یک فایل جی اس پی ین نتایج را
+     * میخواهد لازم نیست به صفحه ی دیگری برویم و پاسخ را بصورت استرینگ پس می
+     * دهیم
+     * @return
+     * @throws Exception
+     */
+    public static String showAllForms(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        try {
+            String hasAccess = Access_User.getAccessDialog(request, db, rul_rfs);
+            if (!hasAccess.equals("")) {
+                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+                return "";
+            }
+
+            List<Map<String, Object>> formRows = jjDatabaseWeb.separateRow(
+                    db.otherSelect("SELECT "
+                            + tableName + ".*,"
+                            + Role._title + ","
+                            + Forms._title + ""
+                            + " FROM " + tableName 
+                            + " LEFT JOIN " + Forms.tableName + " ON   hmis_forms.id=" + _formId 
+                            + " LEFT JOIN " + Role.tableName + " ON   hmis_role.id=" + _userRole 
+                            + " WHERE "+_status+"='"+statues_sabteNahei+"';"));
+            StringBuilder html = new StringBuilder();
+            html.append("<div class='card-header bg-primary tx-white'>لیست فرم ها و چک لیست های در اختیار شما</div>\n");
+            html.append("<div class='card-body pd-sm-30'>");
+            html.append("<div class='table-wrapper'>");
+            html.append("<table id='swAllAnswerSetsTable' class='table display responsive' class='tahoma10' style='direction: rtl'><thead>");
+            html.append("<th width='5%' class='r'>کد</th>");
+            html.append("<th width='20%' class='r'>عنوان فرم</th>");
+            html.append("<th width='20%' class='c'>تکمیل کننده</th>");
+            html.append("<th width='20%' class='c'>آی پی و مک آدرس</th>");
+            html.append("<th width='20%' class='c'>نتایج</th>");
+            html.append("<th width='20%' class='c'>مشاهدی پاسخ</th>");
+            html.append("<th width='20%' class='c'>آنالیز و آمار</th>");
+            html.append("</thead><tbody>");
+            for (int i = 0; i < formRows.size(); i++) {
+                html.append("<tr class='" + getClassByStatus(formRows.get(i).get(_status).toString()) + "'>");
+                html.append("<td class='r'>" + formRows.get(i).get(_id)  + "</td>");
+                html.append("<td class='r'>" + formRows.get(i).get(Forms._title) + "</td>");
+                html.append("<td class='r'>" + formRows.get(i).get(_userName) 
+                        +"<br/> " + formRows.get(i).get(Role._title) 
+                        + "<br/>" + jjCalendar_IR.getViewFormat(formRows.get(i).get(_date)) + "-" +jjTime.getTime5lenth(formRows.get(i).get(_time).toString()) + "</td>");
+                html.append("<td class='r'>" + formRows.get(i).get(_userIPV4) + "<br/>" + formRows.get(i).get(_userMAC) + "</td>");
+                html.append("<td class='l'>sum:" + formRows.get(i).get(_sum) + "<br/>avg:" + formRows.get(i).get(_avg) + "</td>");
+                html.append("<td class='c'><a href='Server?do=FormAnswerSet.showResult&formAnswers_formId=" + formRows.get(i).get(_formId) + "&id=" + formRows.get(i).get(_id) + "' target='_blank'"
+                        + "><i class='fa fa-eye' "+"</i></a></td>");
+                html.append("<td class='c'><a href='Server?do=FormAnswerSet.showAllResult&formAnswers_formId=" + formRows.get(i).get(_formId)+"' target='_blank' >"
+                        + " <i class='p fa fa-bar-chart' onclick='" + Js.jjFormAnswerSet.refreshMyAnswers(formRows.get(i).get(_id).toString()) + "'></i></a></td>");
+                html.append("</tr>");
+            }
+            html.append("</tbody></table>");
+            html.append("</div>");
+            html.append("</div>");
+            String jj = jjTools.getParameter(request, "jj");
+            if ("0".equals(jj)) {//برای ارجاع به فایل جی اس پی
+                request.getRequestDispatcher("feiz/MyForms.jsp").forward(request, response);
+            } else {// اگر این درخواست باید بصورت ایجکس پاسخ گفته شود
+                StringBuilder script = new StringBuilder();
+                String panel = jjTools.getParameter(request, "panel");
+
+                if (panel.equals("")) {
+                    panel = "swAllAnswerSets";
+                }
+                script.append(Js.setHtml("#" + panel, html));
+                script.append(Js.table("#swAllAnswerSetsTable", "", 0, "", "لیست اخبار"));
                 Server.outPrinter(request, response, script);
             }
             return "";
@@ -655,7 +738,7 @@ public class FormAnswerSet {
             String strValue = !jjNumber.isFloat(pointsRow.get(i).get(FormQuestionOptions._value).toString()) ? pointsRow.get(i).get(FormAnswers._answer).toString() : pointsRow.get(i).get(FormQuestionOptions._value).toString();
             String strWeight = pointsRow.get(i).get(FormQuestions._weight) == null ? "0" : pointsRow.get(i).get(FormQuestions._weight).toString();
             sum += (jjNumber.isFloat(strValue) ? Float.valueOf(strValue) : 0) * (jjNumber.isFloat(strWeight) ? Float.valueOf(strWeight) : 0); // ارزش در وزن سوال ضرب می شود 
-            System.out.println(">>>>>>>>>>>>sum = " + sum + " ("+strValue+ "*" +strWeight+ ") ");
+            System.out.println(">>>>>>>>>>>>sum = " + sum + " (" + strValue + "*" + strWeight + ") ");
         }
         if (!pointsRow.isEmpty()) {
             avg = sum / pointsRow.size(); //@ToDo بررسی شود که آیا محاسبه ی وزن در این قسمت برای محاسبه ی میانگین درست است یا نه

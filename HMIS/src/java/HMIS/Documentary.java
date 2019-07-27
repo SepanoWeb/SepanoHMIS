@@ -110,8 +110,7 @@ public class Documentary {
                 html.append("<td class='c' >" + (row.get(i).get(_LoadingPeriod).toString()) + "</td>");
                 html.append("<td class='c' >" + jjCalendar_IR.getViewFormat(row.get(i).get(_dateCreation).toString()) + "</td>");
                 html.append("<td class='c' >" + (row.get(i).get(_status).toString()) + "</td>");
-
-                html.append("<td style='' ><a onclick='hmisManagementGauges.m_select(" + row.get(i).get(_id) + ");' ><i class='fa fa-eye'></i></a></td>");
+                html.append("<td ><i class='fa fa-eye'></i></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");

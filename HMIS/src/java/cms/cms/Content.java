@@ -803,6 +803,23 @@ public class Content {
         return (List<Map<String, Object>>) context.getAttribute("catchProductTitle");
     }
 
+    /**
+     * وقتی یک متنی به اتوویکی ها اضافه می شود باید این تایع فراخوانی شود که
+     * لینک این مطلب را در همه ی محتواهایی که باید اتوویکی شوند بگذارد
+     *
+     * @param request
+     * @param content
+     * @param db
+     * @param isFromClient
+     * @throws Exception
+     */
+    public static void resetAllAutoWikies(HttpServletRequest request, jjDatabaseWeb db) throws Exception {
+        //@ToDo  این قسمت برای این است که وقتی که یک محتوا ویرایش می شود همه ی اتو ویکی ها باید بروز رسانی بشوند. 
+
+        //این تابع خوب است تایمیر   داشته باشد که مثلا ده ثانیه صبر کند و بعد این عمل را انجام دهد که عمل ویرایرش در نظر کاربر کند نباشد
+        System.out.println("");
+    }
+
     public static String ConvertToWiki(HttpServletRequest request, String content, jjDatabaseWeb db, boolean isFromClient) throws Exception {
         try {
             StringBuilder contentHtml = new StringBuilder(content);

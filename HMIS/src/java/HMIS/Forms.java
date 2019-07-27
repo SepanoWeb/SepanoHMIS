@@ -6,6 +6,8 @@
 package HMIS;
 
 import cms.access.Access_User;
+import static cms.cms.Content.ConvertToWiki;
+import static cms.cms.Content.resetAllAutoWikies;
 import cms.tools.Js;
 import cms.tools.Server;
 import cms.tools.jjTools;
@@ -40,6 +42,7 @@ public class Forms {
     public static final String _icon = "forms_icon";
     public static final String _description = "forms_discription";
     public static final String _htmlContent = "forms_htmlContent";
+    public static final String _htmlContentWithWikiLinks = "forms_htmlContentWithWikiLinks";
     public static final String _ownerId = "forms_ownerId";//آی دی ایجاد کننده ی فرم
     public static final String _ownerRole = "forms_ownerRole";//سمت ایجاد کننده ی فرم
     public static final String _resultAccessRole = "forms_resultAccessRole";//نتایج آماری را به چه نقش هایی نشان بدهیم
@@ -59,6 +62,7 @@ public class Forms {
     public static final String _showCometePreAproveForm = "forms_showCometePreAproveForm";//کسی که فرم را پر می کند نتیجه ی آمار را همان موقع ببیند یا نه
     public static final String _uniqueComplete = "forms_uniqueComplete";//کسی که فرم را پر می کند نتیجه ی آمار را همان موقع ببیند یا نه
     public static final String _hasAutoWikiInContent = "forms_hasAutoWikiInContent";//در محتوای این فرم اتو ویکی فعال باشد یا نه
+    public static final String _autoWikIsUpdate = "forms_autoWikIsUpdate";//در محتوای این فرم اتو ویکی فعال باشد یا نه
 
     public static final String lbl_insert = "ثبت و افزودن سوال";
     public static final String lbl_delete = "حذف فرم";
@@ -120,7 +124,8 @@ public class Forms {
                 html.append("<td class='r'>" + row.get(i).get(_code) + "</td>");
                 html.append("<td class='r'>" + row.get(i).get(_title) + "</td>");
                 html.append("<td class='c'><i class='p icon ion-ios-gear-outline' onclick='" + Js.jjForms.select(row.get(i).get(_id).toString()) + "' style='color:#ffcd00!important'></i></td>");
-                html.append("<td class='c'><i class='p fa fa-bar-chart' onclick='" + Js.jjForms.select(row.get(i).get(_id).toString()) + "'></i></td>");
+                html.append("<td class='c'><a href='Server?do=FormAnswerSet.showAllResult&formAnswers_formId=" + row.get(i).get(_id) + "' target='_blank' >"
+                        + "<i class='p fa fa-bar-chart'></i></a></td>");
                 html.append("</tr>");
             }
             html.append("</tbody></table>");
@@ -217,7 +222,6 @@ public class Forms {
             map.put(_expireDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _expireDate), false));
             map.put(_expireTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _expireTime)));
             map.put(_nextFormId, jjNumber.isDigit(jjTools.getParameter(request, _nextFormId)));
-            map.put(_isAutoWiki, jjTools.getParameter(request, _isAutoWiki));
             map.put(_uniqueComplete, jjTools.getParameter(request, _uniqueComplete));
             map.put(_showResultToQuestioner, jjTools.getParameter(request, _showResultToQuestioner));
             map.put(_showAllResultToQuestioner, jjTools.getParameter(request, _showAllResultToQuestioner));
@@ -226,6 +230,21 @@ public class Forms {
             map.put(_css, jjTools.getParameter(request, _css));
             map.put(_javaScript, jjTools.getParameter(request, _javaScript));
             map.put(_htmlContent, jjTools.getParameter(request, _htmlContent));
+
+            String needToAutoWiki = jjTools.getParameter(request, _hasAutoWikiInContent);
+            if ("1".equalsIgnoreCase(needToAutoWiki)) {//اگر تیک خورده که محتوایش شامل اتو ویکی باشد که در اکثر مواقع اینطور است
+                String autoWikeContent = ConvertToWiki(request, jjTools.getParameter(request, _htmlContent), db, false);
+                map.put(_htmlContentWithWikiLinks, autoWikeContent);
+            } else {//اگر تیک اتوویکی ندارد نیاز نیست محتوایش اتوویکی داشته باشد
+                map.put(_htmlContentWithWikiLinks, jjTools.getParameter(request, _htmlContent));
+                map.put(_autoWikIsUpdate, jjTools.getParameter(request, _autoWikIsUpdate));
+            }
+            map.put(_isAutoWiki, jjTools.getParameter(request, _isAutoWiki));
+            if ("1".equals(jjTools.getParameter(request, _isAutoWiki).toString())) {
+                resetAllAutoWikies(request, db);
+            }
+
+            map.put(_autoWikIsUpdate, "1");//خود این محتوا آپدیت است
             map.put(_description, jjTools.getParameter(request, _description));
 
             List<Map<String, Object>> insertedFormRow = jjDatabaseWeb.separateRow(db.insert(tableName, map));
@@ -367,7 +386,6 @@ public class Forms {
             map.put(_expireDate, jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, _expireDate), false));
             map.put(_expireTime, jj.jjTime.getTime4lenth(jjTools.getParameter(request, _expireTime)));
             map.put(_nextFormId, jjNumber.isDigit(jjTools.getParameter(request, _nextFormId)));
-            map.put(_isAutoWiki, jjTools.getParameter(request, _isAutoWiki));
             map.put(_uniqueComplete, jjTools.getParameter(request, _uniqueComplete));
             map.put(_showResultToQuestioner, jjTools.getParameter(request, _showResultToQuestioner));
             map.put(_showAllResultToQuestioner, jjTools.getParameter(request, _showAllResultToQuestioner));
@@ -376,6 +394,18 @@ public class Forms {
             map.put(_css, jjTools.getParameter(request, _css));
             map.put(_javaScript, jjTools.getParameter(request, _javaScript));
             map.put(_htmlContent, jjTools.getParameter(request, _htmlContent));
+            String needToAutoWiki = jjTools.getParameter(request, _hasAutoWikiInContent);
+            if ("1".equalsIgnoreCase(needToAutoWiki)) {//اگر تیک خورده که محتوایش شامل اتو ویکی باشد که در اکثر مواقع اینطور است
+                String autoWikeContent = ConvertToWiki(request, jjTools.getParameter(request, _htmlContent), db, false);
+                map.put(_htmlContentWithWikiLinks, autoWikeContent);
+            } else {//اگر تیک اتوویکی ندارد نیاز نیست محتوایش اتوویکی داشته باشد
+                map.put(_htmlContentWithWikiLinks, jjTools.getParameter(request, _htmlContent));
+                map.put(_autoWikIsUpdate, jjTools.getParameter(request, _autoWikIsUpdate));
+            }
+            map.put(_isAutoWiki, jjTools.getParameter(request, _isAutoWiki));
+            if ("1".equals(jjTools.getParameter(request, _isAutoWiki).toString())) {
+                resetAllAutoWikies(request, db);
+            }
             map.put(_description, jjTools.getParameter(request, _description));
             if (db.update(tableName, map, _id + "=" + id)) {
                 Server.outPrinter(request, response, Js.modal("ویرایش بدرستی انجام شد", "پیام سامانه"));
@@ -561,6 +591,201 @@ public class Forms {
      * <br/>
      * یا هر فردی چند بار این فرم را پر کرده است
      * <br/>
+     * یا در یک بازه ی زمانی چطور این فرم را تکمیل کرده اند
+     * <br/>
+     *
+     * @param request
+     * @param response
+     * @param db
+     * @param needString
+     * @return
+     * @throws Exception
+     */
+    public static String formCountResult_period(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        try {
+            String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
+//            if (!hasAccess.equals("")) {
+//                Server.outPrinter(request, response, Js.modal(hasAccess, "پیام سامانه"));
+//                return "";
+//            } else {
+//                String id = jjTools.getParameter(request, _id);
+//                if (!jjNumber.isDigit(id)) {
+//                    Server.outPrinter(request, response, Js.modal("کد صحیح نیست", "پیام سامانه"));
+//                    return "";
+//                }
+//            }
+            String sql = "";
+            String groupBy = " GROUP BY formAnswers_date";
+            String div = "";// برای تقسیم بدنی بر اساس دوره زمانی روزانه
+            String roleOrUserCondition = " ";
+            String labels = "";//برای ایجاد آرایه در چارت جی اس            
+            String axel_y = "";// آنچه کاربر می خواهد؛ مثلا تعداد فرم ها یا مجموع امتیازات هر کاربر یا میانگین
+            String data = "";
+            String dateCondition = " WHERE 1=1 ";// برای اینکه ممکن است تاریخ شروع یا تاریح پایان هر کدام را نداشته باشد
+            if (!jjTools.getParameter(request, "formAnswers_date_from").isEmpty()) {
+                dateCondition += " AND " + FormAnswerSet._date + ">" + jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, "formAnswers_date_from"), false) + " ";//تاریخ را بصورت عددی در میآوریم که راحت مقایسه بشود
+            }
+            if (!jjTools.getParameter(request, "formAnswers_date_to").isEmpty()) {
+                dateCondition += " AND " + FormAnswerSet._date + "<" + jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, "formAnswers_date_to"), false) + " ";//تاریخ را بصورت عددی در میآوریم که راحت مقایسه بشود
+            }
+            String questionId = jjTools.getParameter(request, "axel_y");
+            if (questionId.equals("COUNT(hmis_formanswerset.id)")) {
+                axel_y = "COUNT(hmis_formanswerset.id)";
+            } else if (questionId.equals("avg")) {
+                axel_y = "avg(hmis_formanswerset_avg)";
+            } else if (questionId.equals("sum")) {
+                axel_y = "sum(hmis_formanswerset_sum)";
+            }
+            div = jjTools.getParameter(request, "div").isEmpty() ? "" : " DIV " + jjTools.getParameter(request, "div");
+            sql = "SELECT  " + axel_y + " as val," + FormAnswerSet._date + "  FROM hmis_formanswerset "
+                    //                            + " LEFT JOIN hmis_role on hmis_role.id=formAnswers_userRole "
+                    //                            + " LEFT JOIN hmis_formanswers on hmis_formanswerset.id=formanswers_answerSet_id"
+                    //                            + " LEFT JOIN hmis_formquestionoptions on formanswers_answer=hmis_formquestionoptions.id"
+                    + dateCondition
+                    //                            + " AND " + FormAnswers._questionId + "=" + questionId// ّرای محاسبه ی جاهایی که نوع فیلد عددی و جواب هم حتما عددی باشد
+//                    + roleOrUserCondition
+                    + groupBy + div + ";";
+
+//            
+//            // تعیین محور افقی----------------------------------------------------------------
+//            if (!jjTools.getParameter(request, "axel_x_roles").equals("") && !jjTools.getParameter(request, "axel_x_roles").equals("null")) {// اگر محور افقی را برا اساس نقش ها تعیین خواسته باشد
+//                lableColumn = Role._title;// چون با جدول نقش ها جوین می کنیم
+//                if (jjTools.getParameter(request, "axel_x_roles").equals("formAnswers_userRole")) {
+////                    groupBy = " GROUP BY " + FormAnswerSet._userRole;
+//                } else { // اگر یک یا چند عدد بود یعنی نمودار عملکرد آن نقش ها را می خواهد
+////                    groupBy = " GROUP BY " + FormAnswerSet._userRole;
+//                    lableColumn = Role._title;// چون با جدول نقش ها جوین می کنیم
+//                    String roles[] = jjTools.getParameter(request, "axel_x_roles").split(",");
+//                    roleOrUserCondition += "AND (";
+//                    for (int i = 0; i < roles.length; i++) {
+//                        if (roles.length - 1 == i) {//برای عنصر آخر اور نمیخواهد و باید پرانتز را ببنیدم
+//                            roleOrUserCondition += "" + FormAnswerSet._userRole + "=" + roles[i] + ")";
+//                        } else {
+//                            roleOrUserCondition += FormAnswerSet._userRole + "=" + roles[i] + " OR ";
+//                        }
+//                    }
+//                }
+//            } else if (jjTools.getParameter(request, "axel_x_users").equals("formAnswers_userName")) {// اگر کاربر انتخاب کرده بود که محور افقی بر اساس کاربران باشد کوئری اس کیو ال را بر این اساس گروه بندی می کنیم
+////                groupBy = " GROUP BY " + FormAnswerSet._userName;
+//                lableColumn = FormAnswerSet._userName;
+//            } else if (!jjTools.getParameter(request, "axel_x_users").equals("null")) { // اگر یک یا چند عدد بود یعنی نمودار عملکرد آن افراد خاص را می خواهد
+////                groupBy = " GROUP BY " + FormAnswerSet._userId;
+//                lableColumn = FormAnswerSet._userName;
+//                String users[] = jjTools.getParameter(request, "axel_x_users").split(",");
+//                roleOrUserCondition += "AND (";
+//                for (int i = 0; i < users.length; i++) {
+//                    if (users.length - 1 == i) {//برای عنصر آخر اور نمیخواهد و باید پرانتز را ببنیدم
+//                        roleOrUserCondition += FormAnswerSet._userId + "=" + users[i] + ")";
+//                    } else {
+//                        roleOrUserCondition += FormAnswerSet._userId + "=" + users[i] + " OR ";
+//                    }
+//                }
+//            }
+//            //------------------------------------------------------------------------------------
+//            
+//            div = jjTools.getParameter(request, "div").isEmpty() ? "" : " DIV " + jjTools.getParameter(request, "div");
+//
+//            // تعریف معیار محور عمودی که مثلا تعداد فرم های پر شده باشد یا محموع یا میانگین یا غیره
+//            if (jjNumber.isDigit(questionId)) {// اگر یک سوال را انتخاب کرده بود ینابر این اینجا عدد داریم که آی دی سوال است
+//                // اگر سوال انتخاب شده یک سوال چند گزینه ای باشد و هدف جمع آوری مجموع ارزش های آن باشد
+//                List<Map<String, Object>> questionRow = jjDatabaseWeb.separateRow(db.Select(FormQuestions.tableName, FormQuestions._id + "=" + questionId));
+//                //ّبرای آپشن دار ها بر اساس آپشن ها نمودار می دهیم
+//                if (questionRow.get(0).get(FormQuestions._answersType).equals("radio")
+//                        || questionRow.get(0).get(FormQuestions._answersType).equals("select_option")
+//                        || questionRow.get(0).get(FormQuestions._answersType).equals("checkbox")) {
+//                    axel_y = "sum(formQuestionOptions_value)";
+//                    sql = "SELECT  " + axel_y + " as val" + (lableColumn.isEmpty() ? "" : "," + lableColumn) + "  FROM hmis_formanswerset "
+//                            + " LEFT JOIN hmis_role on hmis_role.id=formAnswers_userRole "
+//                            + " LEFT JOIN hmis_formanswers on hmis_formanswerset.id=formanswers_answerSet_id"
+//                            + " LEFT JOIN hmis_formquestionoptions on formanswers_answer=hmis_formquestionoptions.id"
+//                            + dateCondition
+//                            + " AND " + FormAnswers._questionId + "=" + questionId// ّرای محاسبه ی جاهایی که نوع فیلد عددی و جواب هم حتما عددی باشد
+//                            + roleOrUserCondition
+//                            + groupBy + div + ";";
+//
+//                } else if (questionRow.get(0).get(FormQuestions._answersType).equals("number")) {
+//                    axel_y = "sum(formanswers_answer)";
+//                    sql = "SELECT  " + axel_y + " as val" + (lableColumn.isEmpty() ? "" : "," + lableColumn) + "  FROM hmis_formanswerset "
+//                            + "LEFT JOIN hmis_role on hmis_role.id=formAnswers_userRole "
+//                            + "LEFT JOIN hmis_formanswers on hmis_formanswerset.id=formanswers_answerSet_id"
+//                            + dateCondition
+//                            + " AND " + FormAnswers._questionId + "=" + questionId// ّرای محاسبه ی جاهایی که نوع فیلد عددی و جواب هم حتما عددی باشد
+//                            + roleOrUserCondition
+//                            + groupBy + div + ";";
+//                }
+//            } else {//اگر مورد بررسی پاسخ ها و در واقع  آی دی یک سوال نبود  و مجموع نتایج یا میانگین و یا تعداد فرم های پر شه بود
+//                sql = "SELECT  " + axel_y + " as val" + (lableColumn.isEmpty() ? "" : "," + lableColumn) + " FROM hmis_formanswerset "
+//                        + "LEFT JOIN hmis_role on hmis_role.id=formAnswers_userRole "
+//                        + dateCondition
+//                        + roleOrUserCondition
+//                        + groupBy + div + ";";
+//            }
+            //ّبرای آپشن دار ها بر اساس آپشن ها نمودار می دهیم
+            List<Map<String, Object>> results = jjDatabaseWeb.separateRow(db.otherSelect(sql));
+
+            for (int i = 0; i < results.size(); i++) {// برای هر سطر از جدول یک ستون در محور افق و مقدار آن را هم همان موقع اضافه می کنیم
+                // برای اینکه بفهمیم هر گزینه توسط همه کاربران چند بار انتخاب شده
+                //فقط تعداد سطرهایی که پاسخ ها دقیقا همین آپشن هستند و ست پاسخ هم در وضعیت ثبت نهایی باشد
+                labels += " '" + (results.get(i).get(FormAnswerSet._date ) == null ? "نامشخص" : results.get(i).get(FormAnswerSet._date ).toString()) + "',";// نام هر آپشن
+                String val = results.get(i).get("val").toString();// یک یا بیشتر
+                data += "'" + val + "',";
+            }
+
+            String script = "";
+            script
+                    += "var ctx1 = document.getElementById('chartBar1').getContext('2d');"
+                    + "var myChart1 = new Chart(ctx1, {"
+                    + "type: 'bar', data: {"
+                    + "labels: ["
+                    + labels
+                    + "],"
+                    + "datasets: [{"
+                    + "label: '# of Votes',"
+                    + "data: ["
+                    + data
+                    + "],"
+                    + "backgroundColor: '#324463'"
+                    + "}]"
+                    + "},"
+                    + "options: {"
+                    + "legend: {"
+                    + "display: true,"
+                    + "labels: {"
+                    + "display: true"
+                    + "}"
+                    + "},"
+                    + "scales: {"
+                    + "yAxes: [{"
+                    + "ticks: {"
+                    + "beginAtZero: true,"
+                    + "fontSize: 10,"
+                    + "}"
+                    + "}],"
+                    + "xAxes: [{"
+                    + "ticks: {"
+                    + "beginAtZero: true,"
+                    + "fontSize: 11"
+                    + "}"
+                    + "}]"
+                    + "}"
+                    + "}"
+                    + "});";
+            script += Js.modal("http://kjhkk.com/Server?do=Forms.analysFromByQuestion", "لینک این گزارش را کپی کنید");
+            Server.outPrinter(request, response, script);
+            return script;
+        } catch (Exception ex) {
+            Server.outPrinter(request, response, Server.ErrorHandler(ex));
+            return "";
+        }
+    }
+
+    /**
+     * نمودار یک مقدار در طول زمان
+     * <br/>
+     * مثلا هر نفشی به یک سوال چگونه در دوره های مختلف پاسخ داده
+     * <br/>
+     * و یا یک فرم برای چندین نقش چگونه تکمیل شده است
+     * <br/>
      * یا در بازه های زمانی چطور این فرم را تکمیل کرده اند
      * <br/>
      *
@@ -571,7 +796,7 @@ public class Forms {
      * @return
      * @throws Exception
      */
-    public static String formCountResult_turnover(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+    public static String formCountResult_turnover (HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String hasAccess = Access_User.getAccessDialog(request, db, rul_dlt);
 //            if (!hasAccess.equals("")) {
@@ -586,6 +811,7 @@ public class Forms {
 //            }
             String sql = "";
             String groupBy = "";
+            String roleOrUserCondition = " ";
             String labels = "";//برای ایجاد آرایه در چارت جی اس
             String lableColumn = "";// برای اینکه در نتیجه  کوئری بدانیم بر چه اساسی نام ساتون ها را استحراج کنیم
             String axel_y = "";// آنچه کاربر می خواهد؛ مثلا تعداد فرم ها یا مجموع امتیازات هر کاربر یا میانگین
@@ -598,20 +824,38 @@ public class Forms {
                 dateCondition += " AND " + FormAnswerSet._date + "<" + jjCalendar_IR.getDatabaseFormat_8length(jjTools.getParameter(request, "formAnswers_date_to"), false) + " ";//تاریخ را بصورت عددی در میآوریم که راحت مقایسه بشود
             }
             // تعیین محور افقی----------------------------------------------------------------
-            if (!jjTools.getParameter(request, "axel_x_roles").equals("")) {// اگر محور افقی را برا اساس نقش ها تعیین خواسته باشد
+            if (!jjTools.getParameter(request, "axel_x_roles").equals("") && !jjTools.getParameter(request, "axel_x_roles").equals("null")) {// اگر محور افقی را برا اساس نقش ها تعیین خواسته باشد
                 lableColumn = Role._title;// چون با جدول نقش ها جوین می کنیم
                 if (jjTools.getParameter(request, "axel_x_roles").equals("formAnswers_userRole")) {
                     groupBy = " GROUP BY " + FormAnswerSet._userRole;
                 } else { // اگر یک یا چند عدد بود یعنی نمودار عملکرد آن نقش ها را می خواهد
+                    groupBy = " GROUP BY " + FormAnswerSet._userRole;
+                    lableColumn = Role._title;// چون با جدول نقش ها جوین می کنیم
                     String roles[] = jjTools.getParameter(request, "axel_x_roles").split(",");
-
+                    roleOrUserCondition += "AND (";
+                    for (int i = 0; i < roles.length; i++) {
+                        if (roles.length - 1 == i) {//برای عنصر آخر اور نمیخواهد و باید پرانتز را ببنیدم
+                            roleOrUserCondition += "" + FormAnswerSet._userRole + "=" + roles[i] + ")";
+                        } else {
+                            roleOrUserCondition += FormAnswerSet._userRole + "=" + roles[i] + " OR ";
+                        }
+                    }
                 }
             } else if (jjTools.getParameter(request, "axel_x_users").equals("formAnswers_userName")) {// اگر کاربر انتخاب کرده بود که محور افقی بر اساس کاربران باشد کوئری اس کیو ال را بر این اساس گروه بندی می کنیم
                 groupBy = " GROUP BY " + FormAnswerSet._userName;
                 lableColumn = FormAnswerSet._userName;
-            } else { // اگر یک یا چند عدد بود یعنی نمودار عملکرد آن افراد خاص را می خواهد
-//                    jjTools.getParameter(request, "axel_x_users").st("formAnswers_userRole")) 
-
+            } else if (!jjTools.getParameter(request, "axel_x_users").equals("null")) { // اگر یک یا چند عدد بود یعنی نمودار عملکرد آن افراد خاص را می خواهد
+                groupBy = " GROUP BY " + FormAnswerSet._userId;
+                lableColumn = FormAnswerSet._userName;
+                String users[] = jjTools.getParameter(request, "axel_x_users").split(",");
+                roleOrUserCondition += "AND (";
+                for (int i = 0; i < users.length; i++) {
+                    if (users.length - 1 == i) {//برای عنصر آخر اور نمیخواهد و باید پرانتز را ببنیدم
+                        roleOrUserCondition += FormAnswerSet._userId + "=" + users[i] + ")";
+                    } else {
+                        roleOrUserCondition += FormAnswerSet._userId + "=" + users[i] + " OR ";
+                    }
+                }
             }
             //------------------------------------------------------------------------------------
             String questionId = jjTools.getParameter(request, "axel_y");
@@ -632,27 +876,30 @@ public class Forms {
                         || questionRow.get(0).get(FormQuestions._answersType).equals("select_option")
                         || questionRow.get(0).get(FormQuestions._answersType).equals("checkbox")) {
                     axel_y = "sum(formQuestionOptions_value)";
-                    sql = "SELECT  " + axel_y + " as val," + lableColumn + "  FROM hmis_formanswerset "
+                    sql = "SELECT  " + axel_y + " as val" + (lableColumn.isEmpty() ? "" : "," + lableColumn) + "  FROM hmis_formanswerset "
                             + " LEFT JOIN hmis_role on hmis_role.id=formAnswers_userRole "
                             + " LEFT JOIN hmis_formanswers on hmis_formanswerset.id=formanswers_answerSet_id"
                             + " LEFT JOIN hmis_formquestionoptions on formanswers_answer=hmis_formquestionoptions.id"
                             + dateCondition
                             + " AND " + FormAnswers._questionId + "=" + questionId// ّرای محاسبه ی جاهایی که نوع فیلد عددی و جواب هم حتما عددی باشد
+                            + roleOrUserCondition
                             + groupBy + ";";
 
                 } else if (questionRow.get(0).get(FormQuestions._answersType).equals("number")) {
                     axel_y = "sum(formanswers_answer)";
-                    sql = "SELECT  " + axel_y + " as val," + lableColumn + "  FROM hmis_formanswerset "
+                    sql = "SELECT  " + axel_y + " as val" + (lableColumn.isEmpty() ? "" : "," + lableColumn) + "  FROM hmis_formanswerset "
                             + "LEFT JOIN hmis_role on hmis_role.id=formAnswers_userRole "
                             + "LEFT JOIN hmis_formanswers on hmis_formanswerset.id=formanswers_answerSet_id"
                             + dateCondition
                             + " AND " + FormAnswers._questionId + "=" + questionId// ّرای محاسبه ی جاهایی که نوع فیلد عددی و جواب هم حتما عددی باشد
+                            + roleOrUserCondition
                             + groupBy + ";";
                 }
             } else {//اگر مورد بررسی پاسخ ها و در واقع  آی دی یک سوال نبود  و مجموع نتایج یا میانگین و یا تعداد فرم های پر شه بود
-                sql = "SELECT  " + axel_y + " as val," + lableColumn + " FROM hmis_formanswerset "
+                sql = "SELECT  " + axel_y + " as val" + (lableColumn.isEmpty() ? "" : "," + lableColumn) + " FROM hmis_formanswerset "
                         + "LEFT JOIN hmis_role on hmis_role.id=formAnswers_userRole "
                         + dateCondition
+                        + roleOrUserCondition
                         + groupBy + ";";
             }
 
@@ -714,4 +961,37 @@ public class Forms {
             return "";
         }
     }
+
+    /**
+     * این متد فرم ها را بصورت آپشن برای قرار گرفتن در سلکت بر می گرداند
+     *
+     * @param request panel سلکتور پنل است دقت شود ممکن است نامبر ساین نداشته
+     * باشد یا نخواهد
+     * @param response
+     * @param db
+     * @param needString
+     * @return بصورت کد جی کوئری و یک سری آپشن برای قرار گرفتن در سلکتی که در
+     * پنل معرفی شده
+     * @throws Exception
+     */
+    public static String getSelectOption(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
+        StringBuilder optionHtml = new StringBuilder();
+        try {
+            List<Map<String, Object>> rowAllActiveRols = jjDatabaseWeb.separateRow(db.Select(tableName, _id + "," + _title, "id>=0", _title));// بر اساس حروف الفبا مرتب باشد بهتر است
+            optionHtml.append("<option  value=''>یک فرم را انتخاب کنید</option>");
+            for (int i = 0; i < rowAllActiveRols.size(); i++) {
+                optionHtml.append("<option  value='").append(rowAllActiveRols.get(i).get(_id)).append("'>").append(rowAllActiveRols.get(i).get(_title)).append("</option>");
+            }
+            String panel = jjTools.getParameter(request, "panel");
+            if (panel.isEmpty()) {
+                panel = ".formSelectOption";
+            }
+            Server.outPrinter(request, response, Js.setHtml(panel, optionHtml) + Js.select2(panel, ""));
+            return "";
+        } catch (Exception e) {
+            Server.outPrinter(request, response, Server.ErrorHandler(e));
+            return "";
+        }
+    }
+
 }

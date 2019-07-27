@@ -301,8 +301,9 @@ public class FormQuestionOptions {
     public static String getOptionForFilter(HttpServletRequest request, HttpServletResponse response, jjDatabaseWeb db, boolean needString) throws Exception {
         try {
             String question_id = jjTools.getParameter(request, _question_id);
+            String panel = jjTools.getParameter(request, "panel");
             if (!jjNumber.isDigit(question_id)) {
-                Server.outPrinter(request, response, Js.modal("کد صحیح نیست", "پیام سامانه"));
+                Server.outPrinter(request, response, Js.setHtml(panel, ""));
                 return "";
             }
             StringBuilder html = new StringBuilder();
@@ -312,7 +313,6 @@ public class FormQuestionOptions {
                         + optionRows.get(i).get(_lable) + (optionRows.get(i).get(_value).toString().isEmpty() ? "" : ("(" + optionRows.get(i).get(_value)+")")) 
                         + "</option>");
             }
-            String panel = jjTools.getParameter(request, "panel");
             Server.outPrinter(request, response, Js.setHtml(panel, html));
             return "";
         } catch (Exception ex) {

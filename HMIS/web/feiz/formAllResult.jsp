@@ -97,11 +97,11 @@
                         <div class="sh-pagebody">
                             <div class="row row-sm">
                                 <div class="col-xl-12">
-                                    <div id='CountResultFormByUser' class="card bd-primary">
+                                    <div id='formCountResult_period' class="card bd-primary">
                                         <div class="card-header bg-purple tx-white">آنالیز عملکرد دوره ای  یک نقش و یا یک  فرد برای این فرم :</div>
                                         <div class="card bd-primary sh-pagebody">
                                             <div class="row">
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-9">
                                                     نمودار برای
                                                     <select id="axel_y" name="axel_y" class="form-control" style="width: 100%">
                                                         <option value='COUNT(hmis_formanswerset.id)'>تعداد فرم ثبت نهایی شده</option>
@@ -126,23 +126,18 @@
                                                     </select>
                                                 </div>                                                
                                                 <div class="col-lg-3">
-                                                    محور افقی
-                                                    <select id="axel_x1" name="axel_x" class="form-control" style="width: 100%" onchange="if ($(this).val() != '') {
-                                                                $('#CountResultFormByUser #axel_x2').val('');
-                                                            }">
-                                                        <option value="">اشخاص پر کننده ی این فرم</option>
-                                                        <%= userOptionsHtml%>
+                                                    محور افقی دوره های زمانی :
+                                                    <select id="div" name="div" class="form-control" style="width: 100%">
+                                                        <option value="">انتخاب کنید</option>
+                                                        <option value="1">روزانه</option>
+                                                        <option value="7">7 روزه</option>
+                                                        <option value="30">30 روزه</option>
+                                                        <option value="60">60 روزه</option>
+                                                        <option value="90">90 روزه</option>
+                                                        <option value="180">180 روزه</option>
+                                                        <option value="365">365 روزه</option>
                                                     </select>
-                                                </div>
-                                                <div class="col-lg-3">
-                                                    محور افقی
-                                                    <select id="axel_x2" name="axel_x" class="form-control" style="width: 100%" onchange="if ($(this).val() != '') {
-                                                                $('#CountResultFormByUser #axel_x1').val('');
-                                                            }">
-                                                        <option value="">نقش های پر کننده ی این فرم</option>
-                                                        <%= roleOptionsHtml%>
-                                                    </select>
-                                                </div>
+                                                </div>                                                
                                                 <div class="col-lg-3">
                                                     از تاریخ
                                                     <input id="formAnswers_date_from3" name="formAnswers_date_from" style="direction: ltr;text-align: center;" class="myDateFarsi form-control" placeholder="فرم هایی که از این تاریخ به بعد تکمیل شده اند" type="text">
@@ -157,7 +152,7 @@
                                                             <button   title="رسم نمودار" class="btn btn-outline-warning btn-block mg-b-10" onclick="
                                                                     $('#chartBar1').remove();
                                                                     $('#chartBarDiv1').append('<canvas id=\'chartBar1\'></canvas>');
-                                                                    formCountResult_turnover(<%= formId%>);" id="edit_Forms_new">رسم نمودار</button>
+                                                                    formCountResult_period(<%= formId%>);" id="edit_Forms_new">رسم نمودار</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -194,14 +189,14 @@
                                                     </select>
                                                 </div>                                                                                                
                                                 <div class="col-lg-3">
-                                                    محور افقی :  چند کاربر خاص از بین همه ی تکمیل کنندگان
+                                                    محور افقی  به تفکیک کاربران زیر :
                                                     <select id="userFilter" name="axel_x_users" class="form-control roleSelectOption" style="width: 100%" multiple >
                                                         <option value="formAnswers_userName">همه ی کاربران</option>
                                                         <%=userOptionsHtml%> 
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-3">
-                                                    محور افقی: فیلتر چند نقش خاص از بین همه ی  تکمیل کنندگان
+                                                    محور افقی  به تفکیک نقش های زیر :
                                                     <select id="rolesFilter" name="axel_x_roles" class="form-control roleSelectOption" style="width: 100%" multiple >
                                                         <option value="formAnswers_userRole">همه ی نقش های سیستم</option>
                                                         <%=roleOptionsHtml%> 
@@ -564,6 +559,18 @@
                                                                         $("#userFilter").select2("val", ["formAnswers_userName"]);
                                                                     }
                                                                 });
+                                                                /**
+                                                                 *برای نمایش نتیج در دوره های زمانی مختلف بصورت های مختلف
+                                                                 * @returns {undefined}
+                                                                 */
+                                                                function formCountResult_period(formId) {
+                                                                    var param = "";
+                                                                    param += "do=Forms.formCountResult_period";
+                                                                    param += "&id=" + formId;
+                                                                    param += "&" + new jj('#formCountResult_period').jjSerial();
+                                                                    new jj(param).jjAjax2(false);
+                                                                }
+                                                                ;
                                                                 /**
                                                                  *برای نمایش عملکرد پرسنل بصورت نمودار هایی که محور افقی نشان دهنده زمان است و محور عمودی عدد
                                                                  * @returns {undefined}

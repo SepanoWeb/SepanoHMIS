@@ -174,7 +174,6 @@ var hmisRole = {
        param += "panel=" + panel;
        param += "&userId=" +userId; 
        param += "&do=" +hmisRole.tableName + ".getRoleName";
-        
         new jj(param).jjAjax2(false);
     },
     

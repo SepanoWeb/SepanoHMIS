@@ -598,7 +598,7 @@ public class Role {
             if (panel.isEmpty()) {
                 panel = ".roleSelectOption";
             }
-            Server.outPrinter(request, response, Js.setHtml(panel, optionHtml));
+            Server.outPrinter(request, response, Js.setHtml(panel, optionHtml) +  Js.select2(panel, ""));
             return "";
         } catch (Exception e) {
             Server.outPrinter(request, response, Server.ErrorHandler(e));

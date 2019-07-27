@@ -83,6 +83,21 @@ var hmisFormAnswerSets = {
         new jj(param).jjAjax2(false);
         hmisFormAnswerSets.m_show_tbl();
     },
+            /**
+     * این تابع جدولی از همه ی  فرم هایی که تا کنون پر شده را می آورد 
+     * کاربرد این فرم گزارش گرفتن آماری برای فرم هاست
+     * @param {type} formId
+     * @param {type} containerId
+     * @returns {undefined}
+     */
+    showAllForms: function (panel) {
+        var param = "";
+        param += "do=" + hmisFormAnswerSets.tableName + ".showAllForms";
+        param += "&panel=" + (panel == null ? "swAllAnswerSetsTbl" : panel);
+        param += "&jj=1";
+        new jj(param).jjAjax2(false);
+        hmisFormAnswerSets.m_show_tbl();
+    },
     m_show_form: function () {
         $('#swMyFormsTbl').slideUp('slow');
         $('#swMyFormsForm').slideDown('slow');
@@ -140,7 +155,6 @@ var hmisFormAnswerSets = {
         $("#formQuestions").show();// در سلکت فرم افزودن سوالات را نسان میدهیم چون وقتی فرم نداریم نباید بتوانیم سوالی را ایجاد کنیم
         hmisFormQuestions.m_refresh(id);//ّبرای نشان دادن گزینه های این فرم
     },
-    //<============ BY RASHIDI ========    
     tabSizeTbl: function () {
         $('#swForms').css('height', "auto");
     },
